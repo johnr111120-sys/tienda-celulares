@@ -24,13 +24,9 @@ function cerrarImagen(){
 <body>
 
 <nav>
-    <section class="scroll">
   <a href="#">Inicio</a>
-    <section class="scroll">
   <a href="#servicios">Servicios</a>
-    <section class="scroll">
   <a href="#galeria">Galería</a>
-   <section class="scroll">
   <a href="#contacto">Contacto</a>
 </nav>
 
@@ -186,24 +182,6 @@ setInterval(() => {
   index = (index + 1) % reseñas.length;
   reseñas[index].classList.add("activa");
 }, 4000);
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const elementos = document.querySelectorAll(".scroll");
-
-  const mostrarScroll = () => {
-    const trigger = window.innerHeight * 0.85;
-
-    elementos.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < trigger) {
-        el.classList.add("visible");
-      }
-    });
-  };
-
-  window.addEventListener("scroll", mostrarScroll);
-  mostrarScroll();
 </script>
 
 </body>
