@@ -136,8 +136,14 @@ function cerrarImagen(){
       <span>⭐⭐⭐⭐⭐ – José L.</span>
     </div>
   </div>
+</section>
 
-<section>
+<a href="https://maps.app.goo.gl/zmRPi1JC8QECjScP7?g_st=ic
+" target="_blank" class="btn-google">
+  ⭐ Ver más reseñas en Google
+</a>
+    
+</section>
     <h2>Contacto</h2>
     <p>Visítanos en nuestro local o escríbenos por WhatsApp.</p>
 <iframe
@@ -163,6 +169,16 @@ function cerrarImagen(){
   💬
 </a>
 
-    
+    <script>
+let index = 0;
+const reseñas = document.querySelectorAll(".reseña");
+
+setInterval(() => {
+  reseñas[index].classList.remove("activa");
+  index = (index + 1) % reseñas.length;
+  reseñas[index].classList.add("activa");
+}, 4000);
+</script>
+
 </body>
 </html>
