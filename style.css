@@ -190,3 +190,39 @@ body {
   text-decoration: none;
   font-weight: bold;
 }
+#servicios {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+#servicios h2 {
+  margin-bottom: 30px;
+}
+
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.servicio {
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.servicio span {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.servicio h3 {
+  margin: 10px 0;
+}
+
+.servicio strong {
+  display: block;
+  margin-top: 10px;
+  color: #25d366;
+}
