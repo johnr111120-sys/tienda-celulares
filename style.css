@@ -163,4 +163,21 @@ body {
   color: #f5b301;
   font-weight: bold;
 }
+.carrusel{
+  position: relative;
+  max-width: 700px;
+  margin: auto;
+}
+
+.reseña{
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reseña.activa{
+  display: block;
+}
 
