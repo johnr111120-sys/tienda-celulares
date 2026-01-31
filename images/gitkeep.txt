@@ -1,0 +1,5 @@
+images/local4.png
+images/reparaciones.jpg
+images/accesorios6.jpg
+images/cell6.jpg
+images/tablet2.jpg
