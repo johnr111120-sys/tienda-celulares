@@ -10,6 +10,17 @@
     <div id="modal" onclick="cerrarImagen()">
   <img id="modal-img">
 </div>
+    <script>
+function abrirImagen(src){
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("modal-img").src = src;
+}
+
+function cerrarImagen(){
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
 <body>
 
 <nav>
@@ -42,12 +53,6 @@
     </ul>
 </section>
 
-<footer>
-  <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
-  <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
-  <p>📞 WhatsApp: +1 829 201 7321</p>
-</footer>
-
 <section id="galeria">
   <h2>Galería</h2>
   <div class="galeria">
@@ -70,5 +75,11 @@ allowfullscreen=""
 loading="lazy" 
 referrerpolicy="no-referrer-when-downgrade">
 </iframe>
+    
+    <footer>
+  <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
+  <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
+  <p>📞 WhatsApp: +1 829 201 7321</p>
+</footer>
  
 </section>
