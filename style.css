@@ -226,3 +226,17 @@ body {
   margin-top: 10px;
   color: #25d366;
 }
+.btn-whatsapp {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn-whatsapp:hover {
+  background: #1ebe5d;
+}
