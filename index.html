@@ -162,7 +162,17 @@ function cerrarImagen(){
    class="whatsapp" target="_blank">
   💬
 </a>
-
     
+<script>
+let index = 0;
+const reseñas = document.querySelectorAll(".reseña");
+
+setInterval(() => {
+  reseñas[index].classList.remove("activa");
+  index = (index + 1) % reseñas.length;
+  reseñas[index].classList.add("activa");
+}, 4000);
+</script>
+
 </body>
 </html>
