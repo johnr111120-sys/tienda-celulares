@@ -60,14 +60,15 @@ body {
 .galeria{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .galeria img{
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 .galeria img{
   transition: transform 0.3s ease, box-shadow 0.3s ease;
