@@ -315,6 +315,7 @@ body {
   font-weight: bold;
   z-index: 999;
   display: block;
+  animation: pulse 2s infinite;
 }
 /* Solo móviles */
 @media (max-width: 768px) {
