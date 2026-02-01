@@ -228,12 +228,12 @@ body {
 }
 .btn-whatsapp {
   display: inline-block;
-  margin-top: 40px;
-  padding: 35px 40px;
+  margin-top: 50px;
+  padding: 45px 50px;
   background: #25d366;
   color: #fff;
   text-decoration: none;
-  border-radius: 30px;
+  border-radius: 40px;
   font-weight: bold;
 }
 
