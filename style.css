@@ -1,24 +1,18 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
 }
 
-body::before {
-  content: "";
+/* Fondo con imagen fija y blur */
+.fondo-blur {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("img/Logo1.jpg");
-  background-size: cover;
-  background-position: center;
-  filter: blur(8px);
-  opacity: 0.4;
-  transform: scale(1.1); 
+  background: url("Logo1.jpg") center / cover no-repeat fixed;
+  filter: blur(12px);
+  transform: scale(1.1); /* evita bordes al difuminar */
   z-index: -1;
 }
 
