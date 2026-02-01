@@ -64,7 +64,7 @@ nav a{
 header {
   width: 100%;
   min-height: 300px;
-  background-image: url("img/Logo2.jpg");
+  background: rgba(0,0,0,0.55);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -77,23 +77,6 @@ header {
   color: white;
   text-align: center;
   padding: 30px;
-}
-
-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-}
-
-header {
-  position: relative;
-}
-
-header h1,
-header p {
-  position: relative;
-  z-index: 1;
 }
 
 section {
