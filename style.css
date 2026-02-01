@@ -36,6 +36,23 @@ header {
   text-align: center;
 }
 
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+
+header {
+  position: relative;
+}
+
+header h1,
+header p {
+  position: relative;
+  z-index: 1;
+}
+
 
 body {
     font-family: Arial, sans-serif;
@@ -48,6 +65,7 @@ nav{
   padding:10px;
   text-align:center;
 }
+
 nav a{
   color:white;
   margin:10px;
