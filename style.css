@@ -18,65 +18,61 @@ body {
   z-index: -1;
 }
 
-header {
+.hero {
   width: 100%;
-  min-height: 300px;
-  background-image: url("img/Logo2.jpg");
+  height: 250px; /* ajusta la altura */
+  background-image: url("img/Logo2.jpg"); /* ruta correcta */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  color: white;
-  padding: 30px;
-  text-align: center;
 }
 
-header::before {
-  content: "";
+.hero {
+  position: relative;
+}
+
+.hero h1 {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
+  bottom: 20px;
+  left: 20px;
+  color: white;
 }
 
-header {
-  position: relative;
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("img/Logo2.jpg");
+  z-index: -1;
 }
 
-header h1,
-header p {
-  position: relative;
-  z-index: 1;
-}
-
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-}
 
 nav{
   background:#000;
-  padding:10px;
+  padding:15px;
   text-align:center;
 }
-
 nav a{
   color:white;
-  margin:10px;
+  margin:15px;
   text-decoration:none;
 }
 
+header {
+    background-color: #111;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
 section {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
     padding: 20px;
-    background-color: white;
-    margin: 15px;
-    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 footer {
@@ -107,17 +103,16 @@ body {
   margin: 0;
 }
 
-.galeria{
+.galeria {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   max-width: 1200px;
-  margin: 0 auto; /* centra y “aleja” del borde */
+  margin: 0 auto;
   padding: 20px;
-  margin-bottom: 30px;
 }
 
-.galeria img{
+.galeria img {
   width: 100%;
   height: auto;
   display: block;
@@ -199,7 +194,7 @@ body {
 }
 
 .reseña{
-  max-width: 600px;
+  max-width: 1000px;
   margin: 20px auto;
   background: white;
   padding: 20px;
@@ -218,7 +213,7 @@ body {
 }
 .carrusel{
   position: relative;
-  max-width: 700px;
+  max-width: 1000px;
   margin: auto;
 }
 
@@ -243,6 +238,7 @@ body {
   text-decoration: none;
   font-weight: bold;
 }
+
 #servicios {
   padding: 40px 20px;
   text-align: center;
@@ -252,10 +248,23 @@ body {
   margin-bottom: 30px;
 }
 
-.servicios-grid {
+.servicios {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(2, 1fr));
+  gap: 15px;
+}
+
+/* Desktop */
+@media (max-width: 600px) {
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .servicio {
@@ -281,12 +290,12 @@ body {
 }
 .btn-whatsapp {
   display: inline-block;
-  margin-top: 40px;
-  padding: 35px 40px;
+  margin-top: 50px;
+  padding: 45px 50px;
   background: #25d366;
   color: #fff;
   text-decoration: none;
-  border-radius: 30px;
+  border-radius: 40px;
   font-weight: bold;
 }
 
@@ -296,18 +305,16 @@ body {
 .btn-llamar {
   position: fixed;
   bottom: 120px;
-  right: 20px;
+  right: 15px;
   background: #007bff;
   color: #fff;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
   z-index: 999;
   display: block;
-  animation: pulse 2s infinite;
 }
-
 /* Solo móviles */
 @media (max-width: 768px) {
 .btn-llamar {
