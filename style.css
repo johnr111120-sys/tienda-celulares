@@ -60,7 +60,7 @@ body {
 .galeria{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  gap: 10px;
   margin-bottom: 30px;
 }
 
@@ -68,7 +68,7 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .galeria img{
   transition: transform 0.3s ease, box-shadow 0.3s ease;
