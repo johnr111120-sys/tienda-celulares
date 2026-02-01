@@ -400,3 +400,28 @@ nav ul a {
 nav ul a:hover {
   transform: translateY(-2px);
 }
+
+nav {
+  position: sticky;
+  top: 0;
+  background: #111;
+  padding: 15px 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Estado al hacer scroll */
+nav.scrolled {
+  padding: 8px 30px;
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
