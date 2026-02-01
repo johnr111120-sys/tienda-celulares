@@ -79,8 +79,11 @@ body {
 
 .galeria{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto; /* centra y “aleja” del borde */
+  padding: 20px;
   margin-bottom: 30px;
 }
 
@@ -279,4 +282,9 @@ body {
 .btn-llamar {
   display: block;
 }
+}
+@media (max-width: 768px) {
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
