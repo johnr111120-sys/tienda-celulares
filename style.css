@@ -255,13 +255,13 @@ body {
 }
 
 /* Desktop */
-@media (max-width: 1000px) {
+@media (max-width: 600px) {
   .galeria {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .galeria {
     grid-template-columns: repeat(4, 1fr);
   }
