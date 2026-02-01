@@ -383,3 +383,11 @@ nav ul li:nth-child(4) { animation-delay: 0.65s; }
     transform: translateY(0);
   }
 }
+
+nav ul li a {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover {
+  transform: translateY(-2px);
+}
