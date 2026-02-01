@@ -40,7 +40,7 @@ header::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("img/Logo2.jpg");
+  background: rgba(0,0,0,0.55);
 }
 
 header {
