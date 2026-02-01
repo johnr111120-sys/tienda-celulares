@@ -20,7 +20,7 @@ body {
 
 .hero {
   width: 100%;
-  height: 250px; /* ajusta la altura */
+  height: 25px; /* ajusta la altura */
   background-image: url("img/Logo2.jpg"); /* ruta correcta */
   background-size: cover;
   background-position: center;
