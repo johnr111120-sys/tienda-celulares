@@ -69,11 +69,14 @@ function cerrarImagen(){
 <body>
 
 <nav>
-    <a href="#">Inicio</a>
-  <a href="#servicios">Servicios</a>
-  <a href="#galeria">Galería</a>
-  <a href="#contacto">Contacto</a>
+  <ul>
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
 </nav>
+
 
 <section>
     <h2>Sobre nosotros</h2>
@@ -290,15 +293,3 @@ setInterval(() => {
    </div>
 </body>
 </html>
-
-     <script>
-  const header = document.getElementById("header");
-
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
-</script>
