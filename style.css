@@ -256,7 +256,7 @@ body {
 
 /* Solo móviles */
 @media (max-width: 768px) {
-  .btn-llamar {
-    display: block;
-  }
+.btn-llamar {
+  display: none;
+}
 }
