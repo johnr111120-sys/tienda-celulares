@@ -107,9 +107,9 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 20px;
 }
 
 .galeria img {
@@ -250,20 +250,20 @@ body {
 
 .servicios {
   display: grid;
-  grid-template-columns: repeat(4, minmax(2, 1fr));
+  grid-template-columns: repeat(2, minmax(2, 1fr));
   gap: 15px;
 }
 
 /* Desktop */
 @media (max-width: 600px) {
   .galeria {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 600px) {
   .galeria {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
