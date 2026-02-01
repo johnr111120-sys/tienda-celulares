@@ -63,7 +63,7 @@ nav a{
 }
 
 header {
-    background-image: url("img/Logo2.jpg");
+    background: rgba(0,0,0,0.55);
     color: white;
     padding: 30px;
     text-align: center;
