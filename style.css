@@ -59,13 +59,15 @@ body {
 
 .galeria {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-
-.galeria img, iframe {
-  max-width: 100%;
+.galeria img {
+  width: 100%;
   height: auto;
   display: block;
   border-radius: 8px;
@@ -213,9 +215,9 @@ body {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .galeria {
-    grid-template-columns: 3fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
