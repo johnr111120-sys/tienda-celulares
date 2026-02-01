@@ -250,20 +250,20 @@ body {
 
 .servicios {
   display: grid;
-  grid-template-columns: repeat(2, minmax(2, 1fr));
+  grid-template-columns: repeat(4, minmax(2, 1fr));
   gap: 15px;
 }
 
 /* Desktop */
 @media (max-width: 1000px) {
   .galeria {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .galeria {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
