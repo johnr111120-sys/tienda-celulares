@@ -53,10 +53,10 @@ header {
 }
 
 section {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
     padding: 20px;
-    background-color: white;
-    margin: 15px;
-    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 footer {
