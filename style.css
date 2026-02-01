@@ -242,11 +242,11 @@ body {
 }
 .btn-llamar {
   position: fixed;
-  bottom: 70px;
+  bottom: 100px;
   right: 20px;
   background: #007bff;
   color: #fff;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
