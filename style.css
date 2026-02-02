@@ -519,7 +519,7 @@ nav{
 }
 
 /* Animación general del hero */
-.hero {
+nav {
   animation: heroFade 1.2s ease-out forwards;
 }
 
