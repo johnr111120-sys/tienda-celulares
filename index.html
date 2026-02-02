@@ -125,10 +125,11 @@ function cerrarGaleria(){
     <div class="galeria">
 <img src="images/cell1.jpg"
 onclick="abrirProducto(
-  this.src,
-  'Iphone 17Pro Max',
-  'RD$ 7,500',
-  'Hola, quiero información de este producto'
+  'images/cell1.jpg',
+  'Iphone 17 Pro Max',
+  'Pantalla 6.6, 128GB, batería larga duración',
+  'RD$ 9,500',
+  'https://wa.me/18292017321?text=Hola%20quiero%20información%20del%20Samsung%20A14'
 )">
 
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
@@ -409,24 +410,38 @@ function toggleCategoria(el){
 </script>
 
 <script>
-function abrirProducto(img, titulo, precio, mensaje){
-  const modal = document.getElementById("modal");
+let startY = 0;
+const modal = document.getElementById("modal-producto");
+
+modal.addEventListener("touchstart", e => {
+  startY = e.touches[0].clientY;
+});
+
+modal.addEventListener("touchend", e => {
+  let endY = e.changedTouches[0].clientY;
+  if (endY - startY > 80) cerrarProducto();
+});
+</script>
+
+     
+<script>
+function abrirProducto(img, titulo, descripcion, precio, link) {
   document.getElementById("modal-img").src = img;
-  document.getElementById("modal-title").innerText = titulo;
-  document.getElementById("modal-price").innerText = precio;
+  document.getElementById("modal-titulo").innerText = titulo;
+  document.getElementById("modal-descripcion").innerText = descripcion;
+  document.getElementById("modal-precio").innerText = precio;
+  document.getElementById("modal-whatsapp").href = link;
 
-  document.getElementById("modal-wa").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
-
-  modal.style.display = "flex";
+  document.getElementById("modal-producto")
+    .classList.add("activo");
 }
 
-function cerrarProducto(e){
-  if(e.target.id === "modal"){
-    document.getElementById("modal").style.display = "none";
-  }
+function cerrarProducto() {
+  document.getElementById("modal-producto")
+    .classList.remove("activo");
 }
 </script>
+
 
      <div id="modal-producto" class="modal-producto">
   <div class="modal-contenido">
