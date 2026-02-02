@@ -452,6 +452,25 @@ function cerrarGaleria(){
 const panel = document.getElementById("panelGaleria");
 const btnMenu = document.getElementById("btnMenu");
 
+       <script>
+const panelGaleria = document.getElementById("panelGaleria");
+let startXClose = 0;
+
+panelGaleria.addEventListener("touchstart", e => {
+  startXClose = e.touches[0].clientX;
+});
+
+panelGaleria.addEventListener("touchend", e => {
+  const endX = e.changedTouches[0].clientX;
+  const diffX = endX - startXClose;
+
+  // swipe fuerte a la izquierda
+  if (diffX < -80) {
+    panelGaleria.classList.remove("open", "activo");
+  }
+});
+</script>
+
 // abrir / cerrar con botón
 btnMenu.addEventListener("click", (e) => {
   e.stopPropagation();
