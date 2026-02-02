@@ -573,7 +573,7 @@ nav{
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
-  z-index: 999999999; /* MÁS alto que el menú */
+  z-index: 999999; /* MÁS alto que el menú */
   align-items: center;
   justify-content: center;
 }
