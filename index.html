@@ -95,18 +95,9 @@ function cerrarGaleria(){
 <body>
 
 <nav>
-  <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
-  <div class="app">
-  <!-- TODO tu contenido actual va aquí dentro -->
-</div>
-
-<div class="panel-galeria">
-  <!-- aquí van las categorías + galerías -->
-</div>
-
    <div class="menu-galeria">
-  <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
-  <button class="menu-galeria" onclick="toggleGaleria()">☰</button>
+<button class="menu-galeria" onclick="toggleGaleria()">☰</button>
+<div id="overlay-galeria" onclick="cerrarGaleria()"></div>
 </div>
   
   <a href="#">Inicio</a>
@@ -114,11 +105,9 @@ function cerrarGaleria(){
   <a href="#contacto">Contacto</a>
 
 </nav>
-     
-</nav>
-  
-<div class="panel-galeria">  
-<div id="panel-galeria">
+
+  <div id="panel-galeria" class="panel-galeria">
+
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📍 Nuestro Local</h3>
     <div class="galeria">
