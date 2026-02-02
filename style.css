@@ -589,11 +589,11 @@ nav{
 .modal-producto {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.8);
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 55555; /* MÁS que el menú */
+  z-index: 99999; /* MÁS que el menú */
 }
 
 .modal-producto.activo {
@@ -609,7 +609,7 @@ nav{
   padding: 15px;
   overflow-y: auto;
   position: relative;
-  animation: subir 0.35s ease;
+  animation: subir 0.3s ease;
 }
 
 @keyframes subir {
