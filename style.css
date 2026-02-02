@@ -593,7 +593,7 @@ nav{
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 5000; /* MÁS que el menú */
+  z-index: 55555; /* MÁS que el menú */
 }
 
 .modal-producto.activo {
