@@ -140,14 +140,20 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
+}
+
+.producto-modal.activo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #modal img{
@@ -545,12 +551,12 @@ nav{
 .producto-card{
   background: #fff;
   width: 90%;
-  max-width: 420px;
-  border-radius: 16px;
-  padding: 20px;
+  max-width: 400px;
+  border-radius: 14px;
+  padding: 15px;
   text-align: center;
   position: relative;
-  animation: zoomIn 0.3s ease;
+  animation: subir 0.3s ease;
 }
 
 .producto-card img{
@@ -578,20 +584,20 @@ nav{
 /* Botón cerrar */
 .cerrar-btn{
   position: absolute;
-  top: -15px;
-  left: -15px;
+  top: 10px;
+  left: 10px;
   background: #0000FF;
   color: red;
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 18px;
   cursor: pointer;
 }
 
 /* Animación */
 @keyframes zoomIn{
-  from{ transform: scale(0.85); opacity: 0; }
-  to{ transform: scale(1); opacity: 1; }
+  from{ transform: translateY(40px); opacity: 0; }
+  to{ transform: translateY(0); opacity: 1; }
 }
