@@ -424,42 +424,19 @@ function cerrarGaleria(){
 }
 </script>
      
-<div id="modal-producto" class="modal-producto" onclick="cerrarProducto(event)">
-  <div class="modal-card">
-    <img id="prod-img">
-    <h3 id="prod-nombre"></h3>
-    <p id="prod-desc"></p>
-    <strong id="prod-precio"></strong>
+<!-- MODAL PRODUCTO -->
+<div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
+  <div class="producto-card">
+    <button class="cerrar-btn" onclick="cerrarProducto()">✕</button>
 
-    <a id="prod-whatsapp" class="btn-whatsapp" target="_blank">
-      Comprar por WhatsApp
-    </a>
+    <img id="producto-img" src="" alt="">
+    
+    <h3 id="producto-titulo"></h3>
+    <p id="producto-descripcion"></p>
+    <strong id="producto-precio"></strong>
   </div>
 </div>
 
-<script>
-function abrirProducto(img){
-  document.getElementById("prod-img").src = img.src;
-  document.getElementById("prod-nombre").textContent = img.dataset.nombre;
-  document.getElementById("prod-desc").textContent = img.dataset.descripcion;
-  document.getElementById("prod-precio").textContent = img.dataset.precio;
-
-  const mensaje = `Hola 👋 quiero comprar ${img.dataset.nombre} por ${img.dataset.precio}`;
-  document.getElementById("prod-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
-
-  document.getElementById("modal-producto").style.display = "flex";
-
-  if (navigator.vibrate) navigator.vibrate(15); // haptic
-}
-
-function cerrarProducto(e){
-  if(e.target.id === "modal-producto"){
-    document.getElementById("modal-producto").style.display = "none";
-  }
-}
-</script>
-     
 
 </body>
 </html>
