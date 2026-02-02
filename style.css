@@ -467,16 +467,16 @@ nav{
   margin-left: 10px;
 }
 
-/* BOTÓN HAMBURGUESA */
-.menu-btn{
+/* Botón hamburguesa */
+.hamburger{
   position: fixed;
   top: 15px;
   left: 15px;
-  z-index: 3001;
+  z-index: 2001;
   font-size: 26px;
-  background: #111;
-  color: #fff;
+  background: none;
   border: none;
+  color: white;
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
@@ -486,29 +486,29 @@ nav{
 #menuOverlay{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.4);
-  z-index: 3000;
+  background: rgba(0,0,0,0,.4);
+  z-index: 2000;
   opacity: 0;
   pointer-events: none;
-  transition: opacity .3s ease;
+  transition: 0.3s;
 }
 
 .panel-galeria{
   position: fixed;
-  top: 45px;
+  top: 0px;
   left: 0;
-  width: 280px;
-  max-width: 320px;
-  height: 100%;
+  width: 85px;
+  max-width: 360px;
+  height: 100vh;
   background: #111;
   color: white;
   backdrop-filter: blur(14px);
   box-shadow: 12px 0 40px rgba(0,0,0,0.3);
   overflow-y: auto;
   transform: translateX(-100%);
-  transition: transform 35s cubic-bezier(.4,0,.2,1);
-  z-index: 3002;
-  padding-top: 80px;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  z-index: 2001;
+  padding: 20px;
 }
 
 /* LISTA */
@@ -525,7 +525,7 @@ nav{
 }
 
 /* ACTIVO */
-#sideMenu.open{
+#menuGaleria.activo{
   transform: translateX(0);
 }
 
@@ -538,7 +538,7 @@ nav{
   display: none;
 }
 
-#overlay-galeria.activo{
+#menuOverlay.activo{
   opacity: 1;
   pointer-events: auto;
 }
