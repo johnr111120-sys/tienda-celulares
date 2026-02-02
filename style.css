@@ -63,6 +63,14 @@ nav a{
   text-decoration:none;
 }
 
+nav{
+  justify-content: space-between;
+}
+
+.menu-galeria{
+  margin-left: 10px;
+}
+
 header {
     background: rgba(0,0,0,0.55);
     color: white;
@@ -485,7 +493,7 @@ nav a {
 }
 
 .panel-galeria.activo{
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
 }
 
 #overlay-galeria{
