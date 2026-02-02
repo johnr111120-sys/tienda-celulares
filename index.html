@@ -51,7 +51,20 @@
     <div id="modal" onclick="cerrarImagen()">
   <img id="modal-img">
 </div>
-  
+
+  <script>
+function toggleCat(btn){
+  const cat = btn.parentElement;
+  const todas = document.querySelectorAll(".cat");
+
+  todas.forEach(c => {
+    if (c !== cat) c.classList.remove("activa");
+  });
+
+  cat.classList.toggle("activa");
+}
+</script>
+
     <script>
 function abrirImagen(src){
   document.getElementById("modal").style.display = "flex";
