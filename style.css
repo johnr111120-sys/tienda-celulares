@@ -489,21 +489,14 @@ nav a {
 
 #overlay-galeria{
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent; /* invisible */
   inset: 0;
   background: rgba(0,0,0,0.25);
   backdrop-filter: blur(2px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
-  z-index: 999;
-  display: none;
+  z-index: 998;
 }
-
 #overlay-galeria.activo{
   opacity: 1;
   pointer-events: auto;
@@ -538,43 +531,4 @@ nav a {
 }
 .app.mover{
   transform: translateX(320px);
-}
-
-.cat{
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-}
-
-.cat-btn{
-  width: 100%;
-  padding: 16px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-.cat-btn span{
-  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
-}
-
-.cat-content{
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.22,1,0.36,1),
-              opacity 0.3s ease;
-  opacity: 0;
-  padding: 0 16px;
-}
-
-.cat.activa .cat-content{
-  max-height: 2000px;
-  opacity: 1;
-}
-
-.cat.activa .cat-btn span{
-  transform: rotate(90deg);
 }
