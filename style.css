@@ -478,9 +478,9 @@ nav{
   position: fixed;
   top: 80;
   left: 0;
-  width: 100%;
-  max-width: 420px;
-  height: calc(100vh - 60px);
+  width: 85%;
+  max-width: 380px;
+  height: 100vh;
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(14px);
   box-shadow: 12px 0 40px rgba(0,0,0,0.3);
