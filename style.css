@@ -147,7 +147,7 @@ body {
 #modal{
   display: none;
   position: fixed;
-  z-index: 999;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
@@ -519,7 +519,7 @@ nav a {
   box-shadow: 12px 0 40px rgba(0,0,0,0.3);
   overflow-y: auto;
   transform: translateX(-100%);
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
   z-index: 999;
   padding: 20px;
 }
@@ -536,7 +536,7 @@ nav a {
   height: 100%;
   background: transparent; /* invisible */
   inset: 0;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.4);
   backdrop-filter: blur(2px);
   opacity: 0;
   pointer-events: none;
@@ -548,6 +548,7 @@ nav a {
 #overlay-galeria.activo{
   opacity: 1;
   pointer-events: auto;
+  display: block;
 }
 
 .categoria h3{
