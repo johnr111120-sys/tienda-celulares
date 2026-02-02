@@ -471,6 +471,14 @@ panelGaleria.addEventListener("touchend", e => {
 });
 </script>
 
+    <script>
+function haptic(ms = 15){
+  if (navigator.vibrate) {
+    navigator.vibrate(ms);
+  }
+}
+</script>
+ 
 
 </body>
 </html>
