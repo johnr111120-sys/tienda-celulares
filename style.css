@@ -574,3 +574,8 @@ nav{
   width: 100%;
   border-radius: 8px;
 }
+
+/* Ocultar galería del contenido principal */
+.galeria-principal {
+  display: none;
+}
