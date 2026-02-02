@@ -476,9 +476,9 @@ nav{
 
 .panel-galeria{
   position: fixed;
-  top: 60;
+  top: 80;
   left: 0;
-  width: 150%;
+  width: 100%;
   max-width: 420px;
   height: 100vh;
   background: rgba(255,255,255,0.96);
