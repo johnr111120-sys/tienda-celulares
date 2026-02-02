@@ -127,7 +127,7 @@ function cerrarGaleria(){
     <div class="galeria">
      <img 
   src="images/cell1.jpg"
-  data-nombre="Samsung A15"
+  data-nombre="Iphone 17 Pro Max"
   data-precio="RD$ 8,500"
   data-descripcion="Pantalla 6.5'', 128GB, batería 5000mAh"
   onclick="abrirProducto(this)"
@@ -423,8 +423,8 @@ function cerrarGaleria(){
   overlay.classList.remove("activo");
 }
 </script>
-     
-<div id="modal-producto" class="modal-producto" onclick="cerrarProducto(event)">
+
+     <div id="modal-producto" class="modal-producto" onclick="cerrarProducto(event)">
   <div class="modal-card">
     <img id="prod-img">
     <h3 id="prod-nombre"></h3>
@@ -460,48 +460,8 @@ function cerrarProducto(e){
 }
 </script>
      
-<script>
-const modal = document.getElementById("modal-producto");
-const imgModal = document.getElementById("modal-img");
-const titulo = document.getElementById("modal-titulo");
-const descripcion = document.getElementById("modal-descripcion");
-const precio = document.getElementById("modal-precio");
-const btnCerrar = document.getElementById("cerrar-modal");
-
-function abrirProducto(img, nombre, desc, price){
-  modal.style.display = "block";
-  imgModal.src = img;
-  titulo.innerText = nombre;
-  descripcion.innerText = desc;
-  precio.innerText = price;
-}
-
-function cerrarProducto(){
-  modal.style.display = "none";
-}
-
-/* Botón X */
-btnCerrar.addEventListener("click", cerrarProducto);
-</script>
-
-<script>
-let startY = 0;
-
-modal.addEventListener("touchstart", e => {
-  startY = e.touches[0].clientY;
-});
-
-modal.addEventListener("touchend", e => {
-  const endY = e.changedTouches[0].clientY;
-  const diff = endY - startY;
-
-  // swipe hacia abajo
-  if (diff > 120) {
-    cerrarProducto();
-    if (navigator.vibrate) navigator.vibrate(20);
-  }
-});
-</script>
 
 </body>
 </html>
+
+     
