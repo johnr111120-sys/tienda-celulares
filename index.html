@@ -1,7 +1,4 @@
 
-  <div class="fondo-blur"></div>
-  <div class="hero"></div>
-  <div class="contenido">
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,7 +47,6 @@
     <div id="modal" onclick="cerrarImagen()">
   <img id="modal-img">
 </div>
-  
     <script>
 function abrirImagen(src){
   document.getElementById("modal").style.display = "flex";
@@ -62,136 +58,19 @@ function cerrarImagen(){
 }
 </script>
 
-  <script>
-const panel = document.querySelector(".panel-galeria");
-const overlay = document.getElementById("overlay-galeria");
-
-function toggleGaleria(){
-  panel.classList.toggle("activo");
-  overlay.style.display = panel.classList.contains("activo")
-    ? "block"
-    : "none";
-}
-
-function cerrarGaleria(){
-  panel.classList.remove("activo");
-  overlay.style.display = "none";
-}
-</script>
-
-<body>
-
-<nav>
-  <div class="app">
-</div>
-
-<div class="panel-galeria">
-</div>
-
-<div id="overlay-galeria" onclick="cerrarGaleria()"></div>
-
-   <div class="menu-galeria">
-<button class="menu-galeria" onclick="toggleGaleria()">☰</button>
-<div id="overlay-galeria" onclick="cerrarGaleria()"></div>
-</div>
-  
-  <a href="#">Inicio</a>
-  <a href="#servicios">Servicios</a>
-  <a href="#contacto">Contacto</a>
-
-</nav>
-
-  <div id="panel-galeria" class="panel-galeria">
-
-  <div class="categoria">
-    <h3 onclick="toggleCategoria(this)">📍 Nuestro Local</h3>
-    <div class="galeria">
-      <img src="images/local1.jpg" onclick="abrirImagen(this.src)">
-      <img src="images/local2.jpg" onclick="abrirImagen(this.src)">
-      <img src="images/local3.jpg" onclick="abrirImagen(this.src)">
-    </div>
-  </div>
-
-  <div class="categoria">
-    <h3 onclick="toggleCategoria(this)">🗒️ Servicios</h3>
-    <div class="galeria">
-      <img src="images/servicios1.jpg" onclick="abrirImagen(this.src)">
-      <img src="images/servicios2.jpg" onclick="abrirImagen(this.src)">
-    </div>
-  </div>
-
-  <div class="categoria">
-    <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
-    <div class="galeria">
-<img src="images/cell1.jpg"
-onclick="abrirProducto(
-  'images/cell1.jpg',
-  'Iphone 17 Pro Max',
-  'Pantalla 6.6, 128GB, batería larga duración',
-  'RD$ 9,500',
-  'https://wa.me/18292017321?text=Hola%20quiero%20información%20de%20este%20producto'
-)">
-
- <div class="galeria">
-<img src="images/cell2.jpg"
-onclick="abrirProducto(
-  'images/cell1.jpg',
-  'Iphone 17 Pro Max',
-  'Pantalla 6.6, 128GB, batería larga duración',
-  'RD$ 9,500',
-  'https://wa.me/18292017321?text=Hola%20quiero%20información%20de%20este%20producto'
-)">
-
-    </div>
-  </div>
-
-  <div class="categoria">
-    <h3 onclick="toggleCategoria(this)">🔧 Reparaciones</h3>
-    <div class="galeria">
-      <img src="images/reparaciones1.jpg" onclick="abrirImagen(this.src)">
-      <img src="images/reparaciones2.jpg" onclick="abrirImagen(this.src)">
-    </div>
-  </div>
-
-  <div class="categoria">
-    <h3 onclick="toggleCategoria(this)">🎧 Accesorios</h3>
-    <div class="galeria">
- <div class="galeria">
-<img src="images/cell1.jpg"
-onclick="abrirProducto(
-  'images/accesorios1.jpg',
-  'Iphone 17 Pro Max',
-  'Pantalla 6.6, 128GB, batería larga duración',
-  'RD$ 9,500',
-  'https://wa.me/18292017321?text=Hola%20quiero%20información%20de%20este%20producto'
-)">
-<img src="images/cell1.jpg"
-onclick="abrirProducto(
-  'images/accesorios2.jpg',
-  'Iphone 17 Pro Max',
-  'Pantalla 6.6, 128GB, batería larga duración',
-  'RD$ 9,500',
-  'https://wa.me/18292017321?text=Hola%20quiero%20información%20de%20este%20producto'
-)">
-    </div>
-  </div>
-
-  <div class="categoria">
-    <h3 onclick="toggleCategoria(this)">💻 Tablets</h3>
-    <div class="galeria">
-      <img src="images/tablet1.jpg" onclick="abrirImagen(this.src)">
-      <img src="images/tablet2.jpg" onclick="abrirImagen(this.src)">
-    </div>
-  </div>
-
-</div>
-
 <header>
     <h1>Moises Celulares</h1>
     <p>Venta y reparación de celulares</p>
 </header>
 
+<body>
 
+<nav>
+  <a href="#">Inicio</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#galeria">Galería</a>
+  <a href="#contacto">Contacto</a>
+</nav>
 
 <section>
     <h2>Sobre nosotros</h2>
@@ -267,11 +146,10 @@ al lado de Plaza La Canela.
 
   </div>
 </section>
-  
-<div class="galeria-principal">  
- <div class="container">
     
-  <section id="galeria">
+<div class="container">
+    
+<section id="galeria">
 <h2>📍 Nuestro Local</h2>
   <div class="galeria">
   <img src="images/local1.jpg" alt="Frente del Local Santiago RD" onclick="abrirImagen(this.src)">
@@ -335,8 +213,6 @@ al lado de Plaza La Canela.
 <div class="galeria">
   <img src="images/tablet1.jpg" alt="Venta de Tabletas en Santiago RD" onclick="abrirImagen(this.src)">
   <img src="images/tablet2.jpg" alt="Venta de Tabletas en Santiago RD" onclick="abrirImagen(this.src)">
-  </section>
- </div>
 </div>
     
 <section class="reseñas">
@@ -405,95 +281,7 @@ setInterval(() => {
 </script>
             
 <a href="tel:+18292017321" class="btn-llamar">
-  📞
+  📞 Llamar ahora
 </a>
-        
-   </div>
-
-     <script>
-  const nav = document.querySelector("nav");
-
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      nav.classList.add("scrolled");
-    } else {
-      nav.classList.remove("scrolled");
-    }
-  });
-</script>
-
-<script>
-function toggleGaleria(){
-  document.getElementById("panel-galeria")
-    .classList.toggle("activo");
-}
-
-function toggleCategoria(el){
-  el.parentElement.classList.toggle("activa");
-}
-</script>
-
-<script>
-let startY = 0;
-const modal = document.getElementById("modal-producto");
-
-modal.addEventListener("touchstart", e => {
-  startY = e.touches[0].clientY;
-});
-
-modal.addEventListener("touchend", e => {
-  let endY = e.changedTouches[0].clientY;
-  if (endY - startY > 80) cerrarProducto();
-});
-</script>
-
-     
-<script>
-function abrirProducto(img, titulo, descripcion, precio, link) {
-  document.getElementById("modal-img").src = img;
-  document.getElementById("modal-titulo").innerText = titulo;
-  document.getElementById("modal-descripcion").innerText = descripcion;
-  document.getElementById("modal-precio").innerText = precio;
-  document.getElementById("modal-whatsapp").href = link;
-
-  document.getElementById("modal-producto")
-    .classList.add("activo");
-}
-
-function cerrarProducto() {
-  document.getElementById("modal-producto")
-    .classList.remove("activo");
-}
-</script>
-
-
-     <div id="modal-producto" class="modal-producto">
-  <div class="modal-contenido">
-
-    <!-- Botón cerrar -->
-    <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
-
-    <!-- Imagen -->
-    <img id="modal-img" src="" alt="Producto">
-
-    <!-- Info producto -->
-    <div class="info-producto">
-      <h3 id="modal-titulo"></h3>
-      <p id="modal-descripcion"></p>
-      <strong id="modal-precio"></strong>
-
-      <a id="modal-whatsapp"
-         class="btn-whatsapp"
-         target="_blank">
-         💬 Consultar por WhatsApp
-      </a>
-    </div>
-
-  </div>
-</div>
-
-     
 </body>
 </html>
-
-     
