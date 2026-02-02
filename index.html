@@ -126,9 +126,9 @@ function cerrarGaleria(){
 <img src="images/cell1.jpg"
 onclick="abrirProducto(
   this.src,
-  'Samsung A15',
-  'Pantalla 6.5, 128GB, garantía 30 días',
-  'RD$ 9,500'
+  'Iphone 17Pro Max',
+  'RD$ 7,500',
+  'Hola, quiero información de este producto'
 )">
 
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
@@ -407,31 +407,37 @@ function toggleCategoria(el){
   el.parentElement.classList.toggle("activa");
 }
 </script>
-
-<div id="modal-producto" onclick="cerrarProducto(event)">
-  <div class="modal-contenido">
-    <button class="cerrar-btn" onclick="cerrarProducto()">✖</button>
+     
+<div id="modal" onclick="cerrarProducto(event)">
+  <div class="modal-content">
     <img id="modal-img">
-    <h3 id="modal-titulo"></h3>
-    <p id="modal-descripcion"></p>
-    <strong id="modal-precio"></strong>
+    <h3 id="modal-title"></h3>
+    <p id="modal-price"></p>
+
+    <a id="modal-wa" class="modal-whatsapp" target="_blank">
+      💬 Consultar por WhatsApp
+    </a>
   </div>
 </div>
 
 <script>
-function abrirProducto(img, titulo, descripcion, precio){
-  document.getElementById("modal-producto").style.display = "flex";
+function abrirProducto(img, titulo, precio, mensaje){
+  const modal = document.getElementById("modal");
   document.getElementById("modal-img").src = img;
-  document.getElementById("modal-titulo").innerText = titulo;
-  document.getElementById("modal-descripcion").innerText = descripcion;
-  document.getElementById("modal-precio").innerText = precio;
-}
-function cerrarProducto(e){
-  if(!e || e.target.id === "modal-producto"){
-    document.getElementById("modal-producto").style.display = "none";
-  }
+  document.getElementById("modal-title").innerText = titulo;
+  document.getElementById("modal-price").innerText = precio;
+
+  document.getElementById("modal-wa").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+
+  modal.style.display = "flex";
 }
 
+function cerrarProducto(e){
+  if(e.target.id === "modal"){
+    document.getElementById("modal").style.display = "none";
+  }
+}
 </script>
 
      
