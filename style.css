@@ -1,4 +1,5 @@
 
+
 body {
   margin: 0;
   max-width: 100%;
@@ -573,4 +574,9 @@ nav{
 .categoria img{
   width: 100%;
   border-radius: 8px;
+}
+
+/* Ocultar galería del contenido principal */
+.galeria-principal {
+  display: none;
 }
