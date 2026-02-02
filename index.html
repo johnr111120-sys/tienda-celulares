@@ -451,11 +451,23 @@ function toggleCat(btn){
   const cat = btn.parentElement;
   const todas = document.querySelectorAll(".cat");
 
+  // cerrar las demás
   todas.forEach(c => {
     if (c !== cat) c.classList.remove("activa");
   });
 
+  const abrir = !cat.classList.contains("activa");
   cat.classList.toggle("activa");
+
+  // scroll suave al abrir
+  if (abrir) {
+    setTimeout(() => {
+      cat.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 250); // espera a que arranque la animación
+  }
 }
 </script>
 
