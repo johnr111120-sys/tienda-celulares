@@ -1,4 +1,5 @@
 
+
 body {
   margin: 0;
   max-width: 100%;
@@ -21,7 +22,7 @@ body {
 
 .hero {
   width: 100%;
-  height: 15px; /* ajusta la altura */
+  height: 25px; /* ajusta la altura */
   background-image: url("img/Logo2.jpg"); /* ruta correcta */
   background-size: cover;
   background-position: center;
@@ -34,7 +35,7 @@ body {
 
 .hero h1 {
   position: absolute;
-  bottom: 5px;
+  bottom: 20px;
   left: 20px;
   color: white;
 }
@@ -59,16 +60,8 @@ nav{
 
 nav a{
   color:white;
-  margin:5px;
+  margin:15px;
   text-decoration:none;
-}
-
-nav{
-  justify-content: space-between;
-}
-
-.menu-galeria{
-  margin-left: 10px;
 }
 
 header {
@@ -141,7 +134,7 @@ body {
 
 /* MÓVIL */
 .galeria img:active{
-  transform: scale(0.5);
+  transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 #modal{
@@ -377,38 +370,6 @@ header p {
   }
 }
 
-div {
-  animation: headerFade 1.2s ease-out forwards;
-}
-
-/* Título */
-button {
-  animation: textUp 1s ease-out forwards;
-  animation-delay: 0.3s;
-  opacity: 0;
-}
-
-/* Animaciones */
-@keyframes headerFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes textUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Estado inicial */
 nav ul li {
   opacity: 0;
@@ -499,8 +460,16 @@ nav a {
   }
 }
 
+nav{
+  justify-content: space-between;
+}
+
+.menu-galeria{
+  margin-left: 10px;
+}
+
 .hamburger{
-  font-size: 50px;
+  font-size: 26px;
   background: none;
   border: none;
   color: white;
@@ -509,7 +478,7 @@ nav a {
 
 .panel-galeria{
   position: fixed;
-  top: 40px;
+  top: 65px;
   left: 0;
   width: 45%;
   max-width: 320px;
@@ -519,36 +488,29 @@ nav a {
   box-shadow: 12px 0 40px rgba(0,0,0,0.3);
   overflow-y: auto;
   transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
   z-index: 999;
   padding: 20px;
 }
 
-.panel-galeria.activo{
-  transform: translateX(0);
-}
-
 #overlay-galeria{
   position: fixed;
-  top: 10;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent; /* invisible */
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(2px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
-  z-index: 999;
-  display: none;
+  z-index: 998;
 }
 
 #overlay-galeria.activo{
   opacity: 1;
   pointer-events: auto;
-  display: block;
+}
+
+.panel-galeria.activo{
+  transform: translateX(0) scale(1);
 }
 
 .categoria h3{
@@ -573,11 +535,4 @@ nav a {
 .categoria img{
   width: 100%;
   border-radius: 8px;
-}
-
-.app{
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.app.mover{
-  transform: translateX(320px);
 }
