@@ -415,6 +415,24 @@ function cerrarGaleria(){
 }
 </script>
 
+     <script>
+const panel = document.querySelector(".panel-galeria");
+const overlay = document.getElementById("overlay-galeria");
+const app = document.querySelector(".app");
+
+function toggleGaleria(){
+  panel.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+  app.classList.toggle("mover");
+}
+
+function cerrarGaleria(){
+  panel.classList.remove("activo");
+  overlay.classList.remove("activo");
+  app.classList.remove("mover");
+}
+</script>
+
 
 </body>
 </html>
