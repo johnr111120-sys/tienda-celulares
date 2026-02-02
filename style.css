@@ -575,7 +575,7 @@ nav{
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 5000; /* SIEMPRE arriba */
+  z-index: 99999; /* SIEMPRE arriba */
 }
 
 .modal-contenido{
