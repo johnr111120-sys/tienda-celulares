@@ -82,40 +82,54 @@ function cerrarGaleria(){
 <body>
 
 <nav>
- <!-- BOTÓN HAMBURGUESA -->
-<button id="btnMenu" class="hamburger">
-  ☰
-</button>
+  <div class="app">
+  <!-- TODO tu contenido actual va aquí dentro -->
+</div>
 
-<!-- OVERLAY -->
-<div id="menuOverlay"></div>
+<div class="panel-galeria">
+  <!-- aquí van las categorías + galerías -->
+</div>
 
-<!-- MENÚ DESPLEGABLE -->
-<aside id="menuGaleria">
-  <h3>Nuestro Local</h3>
-  <div class="galeria">...</div>
-
-  <h3>Servicios</h3>
-  <div class="galeria">...</div>
-
-  <h3>Celulares</h3>
-  <div class="galeria">...</div>
-
-  <h3>Reparaciones</h3>
-  <div class="galeria">...</div>
-
-  <h3>Accesorios</h3>
-  <div class="galeria">...</div>
-
-  <h3>Tablets</h3>
-  <div class="galeria">...</div>
-</aside>
-
-<!-- Overlay -->
 <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
 
-<!-- Panel lateral -->
-<aside id="panel-galeria">
+   <div class="menu-galeria">
+<button class="menu-galeria" onclick="toggleGaleria()">☰</button>
+<div id="overlay-galeria" onclick="cerrarGaleria()"></div>
+</div>
+  
+  <a href="#">Inicio</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#contacto">Contacto</a>
+
+</nav>
+
+  <div id="panel-galeria" class="panel-galeria">
+
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">📍 Nuestro Local</h3>
+    <div class="galeria">
+      <img src="images/local1.jpg" onclick="abrirImagen(this.src)">
+      <img src="images/local2.jpg" onclick="abrirImagen(this.src)">
+      <img src="images/local3.jpg" onclick="abrirImagen(this.src)">
+    </div>
+  </div>
+
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">🗒️ Servicios</h3>
+    <div class="galeria">
+      <img src="images/servicios1.jpg" onclick="abrirImagen(this.src)">
+      <img src="images/servicios2.jpg" onclick="abrirImagen(this.src)">
+    </div>
+  </div>
+
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
+    <div class="galeria">
+      <img src="images/cell1.jpg" onclick="abrirImagen(this.src)">
+      <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
+    </div>
+  </div>
+
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">🔧 Reparaciones</h3>
     <div class="galeria">
@@ -139,7 +153,8 @@ function cerrarGaleria(){
       <img src="images/tablet2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
-</aside>
+
+</div>
 
 <header>
     <h1>Moises Celulares</h1>
@@ -388,53 +403,21 @@ function toggleCategoria(el){
 }
 </script>
      
-<script>
-const btn = document.getElementById('btnMenu');
-const menu = document.getElementById('menuGaleria');
-const overlay = document.getElementById('menuOverlay');
+     <script>
+const panel = document.querySelector(".panel-galeria");
+const overlay = document.getElementById("overlay-galeria");
 
-btn.onclick = () => {
-  menu.classList.add('activo');
-  overlay.classList.add('activo');
-};
+function toggleGaleria(){
+  panel.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+}
 
-overlay.onclick = cerrar;
-
-function cerrar(){
-  menu.classList.remove('activo');
-  overlay.classList.remove('activo');
+function cerrarGaleria(){
+  panel.classList.remove("activo");
+  overlay.classList.remove("activo");
 }
 </script>
-     
-<!-- MODAL PRODUCTO -->
-<div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
-  <div class="producto-card">
-    <button class="cerrar-btn" onclick="cerrarProducto()">✕</button>
 
-    <img id="producto-img" src="" alt="">
-    
-    <h3 id="producto-titulo"></h3>
-    <p id="producto-descripcion"></p>
-    <strong id="producto-precio"></strong>
-  </div>
-</div>
-
-<script>
-function abrirProducto(img, titulo, descripcion, precio){
-  document.getElementById("producto-img").src = img;
-  document.getElementById("producto-titulo").innerText = titulo;
-  document.getElementById("producto-descripcion").innerText = descripcion;
-  document.getElementById("producto-precio").innerText = precio;
-
-  document.getElementById("producto-modal").style.display = "flex";
-}
-
-function cerrarProducto(e){
-  if (!e || e.target.id === "producto-modal") {
-    document.getElementById("producto-modal").style.display = "none";
-  }
-}
-</script>
 
 </body>
 </html>
