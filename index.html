@@ -89,6 +89,26 @@ function cerrarGaleria(){
   <a href="#contacto">Contacto</a>
 </nav>
 
+  <!-- BOTÓN HAMBURGUESA -->
+<button id="menuBtn" class="menu-btn">
+  ☰
+</button>
+
+<!-- OVERLAY (para cerrar tocando fuera) -->
+<div id="menuOverlay"></div>
+
+<!-- MENÚ LATERAL -->
+<aside id="sideMenu">
+  <ul>
+    <li data-target="local">Nuestro Local</li>
+    <li data-target="servicios">Servicios</li>
+    <li data-target="celulares">Celulares</li>
+    <li data-target="reparaciones">Reparaciones</li>
+    <li data-target="accesorios">Accesorios</li>
+    <li data-target="tablets">Tablets</li>
+  </ul>
+</aside>
+
 <!-- Overlay -->
 <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
 
