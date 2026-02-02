@@ -387,24 +387,24 @@ function toggleCategoria(el){
 </script>
      
 <script>
-const panel = document.getElementById("panel-galeria");
-const overlay = document.getElementById("overlay-galeria");
-const btnMenu = document.getElementById("btnMenu");
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("menuOverlay");
 
-btnMenu.addEventListener("click", () => {
-  panel.classList.add("activo");
-  overlay.classList.add("activo");
-});
+menuBtn.onclick = () => {
+  sideMenu.classList.add("open");
+  overlay.classList.add("show");
+  if (navigator.vibrate) navigator.vibrate(15);
+};
 
-function cerrarGaleria() {
-  panel.classList.remove("activo");
-  overlay.classList.remove("activo");
-}
+overlay.onclick = closeMenu;
 
-function toggleCategoria(el) {
-  el.parentElement.classList.toggle("activa");
+function closeMenu(){
+  sideMenu.classList.remove("open");
+  overlay.classList.remove("show");
 }
 </script>
+
      
 <!-- MODAL PRODUCTO -->
 <div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
