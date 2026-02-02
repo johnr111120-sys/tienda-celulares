@@ -125,14 +125,11 @@ function cerrarGaleria(){
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
     <div class="galeria">
-      <img 
-  src="images/cell1.jpg"
-  onclick="abrirProducto(
-    this.src,
-    'Samsung Galaxy A15',
-    'Pantalla 6.5”, 128GB, batería 5000mAh',
-    'RD$ 9,500'
-  )">
+<img src="images/cell1.jpg"
+     data-nombre="Samsung A14"
+     data-precio="RD$ 6,500"
+     data-descripcion="Pantalla nueva, liberado, garantía"
+     onclick="abrirProducto(this)">
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
@@ -410,22 +407,28 @@ function toggleCategoria(el){
 }
 </script>
 
-     <script>
-function abrirProducto(img, titulo, descripcion, precio){
-  document.getElementById("producto-img").src = img;
-  document.getElementById("producto-titulo").innerText = titulo;
-  document.getElementById("producto-descripcion").innerText = descripcion;
-  document.getElementById("producto-precio").innerText = precio;
+   function abrirProducto(el){
+  const modal = document.getElementById("producto-modal");
 
-  document.getElementById("producto-modal").style.display = "flex";
+  document.getElementById("prod-img").src = el.src;
+  document.getElementById("prod-nombre").innerText =
+    el.dataset.nombre || "Producto";
+
+  document.getElementById("prod-descripcion").innerText =
+    el.dataset.descripcion || "Consultar disponibilidad";
+
+  document.getElementById("prod-precio").innerText =
+    el.dataset.precio || "Consultar";
+
+  modal.classList.add("activo");
 }
 
 function cerrarProducto(e){
   if (!e || e.target.id === "producto-modal") {
-    document.getElementById("producto-modal").style.display = "none";
+    document.getElementById("producto-modal")
+      .classList.remove("activo");
   }
 }
-</script>
 
      <script>
 const modal = document.getElementById("modal-producto");
@@ -451,7 +454,17 @@ function cerrarProducto(){
 btnCerrar.addEventListener("click", cerrarProducto);
 </script>
 
+<div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
+  <div class="producto-contenido">
+    <button class="cerrar-btn" onclick="cerrarProducto()">✕</button>
+    <img id="prod-img">
+    <h3 id="prod-nombre"></h3>
+    <p id="prod-descripcion"></p>
+    <strong id="prod-precio"></strong>
+  </div>
+</div>
 
+     
 </body>
 </html>
 
