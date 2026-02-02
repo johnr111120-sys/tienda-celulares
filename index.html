@@ -407,16 +407,13 @@ function toggleCategoria(el){
 }
 </script>
 
-<div id="modal-producto" class="modal-producto" onclick="cerrarProducto(event)">
-  <div class="modal-card">
-    <img id="prod-img">
-    <h3 id="prod-nombre"></h3>
-    <p id="prod-desc"></p>
-    <strong id="prod-precio"></strong>
-
-    <a id="prod-whatsapp" class="btn-whatsapp" target="_blank">
-      Comprar por WhatsApp
-    </a>
+<div id="modal-producto" onclick="cerrarProducto(event)">
+  <div class="modal-contenido">
+    <button class="cerrar-btn" onclick="cerrarProducto()">✖</button>
+    <img id="modal-img">
+    <h3 id="modal-titulo"></h3>
+    <p id="modal-descripcion"></p>
+    <strong id="modal-precio"></strong>
   </div>
 </div>
 
