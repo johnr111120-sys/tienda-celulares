@@ -493,7 +493,7 @@ nav{
   backdrop-filter: blur(2px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.3s ease;
   z-index: 999;
 }
 
@@ -585,7 +585,7 @@ nav{
   border-radius: 16px;
   padding: 15px;
   text-align: center;
-  animation: iosUp .35s ease;
+  animation: iosUp 0.3s ease;
 }
 
 .modal-contenido img{
