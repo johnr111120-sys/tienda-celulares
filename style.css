@@ -500,7 +500,7 @@ nav a {
 }
 
 .hamburger{
-  font-size: 26px;
+  font-size: 36px;
   background: none;
   border: none;
   color: white;
@@ -530,7 +530,7 @@ nav a {
 
 #overlay-galeria{
   position: fixed;
-  top: 25;
+  top: 15;
   left: 0;
   width: 100%;
   height: 100%;
