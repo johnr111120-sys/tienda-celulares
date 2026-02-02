@@ -541,55 +541,68 @@ nav{
   display: none;
 }
 
-.modal-producto{
+/* Modal general */
+.producto-modal{
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
   display: none;
-  justify-content: center;
   align-items: center;
-  z-index: 9999; /* MÁS ALTO que el menú */
+  justify-content: center;
+  z-index: 99999; /* MÁS ALTO QUE EL MENÚ */
 }
 
-.modal-card{
+/* Tarjeta del producto */
+.producto-card{
   background: #fff;
   width: 90%;
   max-width: 420px;
   border-radius: 16px;
   padding: 20px;
   text-align: center;
-  animation: iosPop .35s ease;
+  position: relative;
+  animation: zoomIn 0.3s ease;
 }
 
-.modal-card img{
+.producto-card img{
   width: 100%;
   border-radius: 12px;
   margin-bottom: 15px;
 }
 
-.modal-card h3{
-  margin: 10px 0 5px;
+.producto-card h3{
+  margin: 10px 0;
 }
 
-.modal-card p{
-  color: #555;
+.producto-card p{
   font-size: 14px;
+  color: #555;
 }
 
-.modal-card strong{
+.producto-card strong{
   display: block;
-  margin: 15px 0;
+  margin-top: 10px;
   font-size: 20px;
   color: #25d366;
 }
 
-@keyframes iosPop{
-  from{
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to{
-    transform: scale(1);
-    opacity: 1;
-  }
+/* Botón cerrar */
+.cerrar-btn{
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  background: #0000FF;
+  color: red;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Animación */
+@keyframes zoomIn{
+  from{ transform: scale(0.85); opacity: 0; }
+  to{ transform: scale(1); opacity: 1; }
 }
