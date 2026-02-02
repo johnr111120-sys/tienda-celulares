@@ -477,6 +477,26 @@ function haptic(ms = 15){
     navigator.vibrate(ms);
   }
 }
+
+      btnMenu.addEventListener("click", (e) => {
+  e.stopPropagation();
+  panel.classList.toggle("open");
+  haptic(20); // vibración suave
+});
+      
+if (diffX < -80) {
+  panelGaleria.classList.remove("open", "activo");
+  haptic(25);
+}
+      
+if (seAbre) {
+  haptic(15);
+}
+      
+haptic(10);  // ultra sutil (iOS-like)
+haptic(20);  // ideal UI
+haptic(30);  // acción fuerte (cerrar)
+
 </script>
  
 
