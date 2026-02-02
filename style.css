@@ -34,7 +34,7 @@ body {
 
 .hero h1 {
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   left: 20px;
   color: white;
 }
@@ -511,7 +511,7 @@ nav a {
   position: fixed;
   top: 40px;
   left: 0;
-  width: 40%;
+  width: 45%;
   max-width: 320px;
   height: calc(100vh - 60px);
   background: rgba(255,255,255,0.96);
