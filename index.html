@@ -389,24 +389,22 @@ function toggleCategoria(el){
 </script>
      
 <script>
-const menuBtn = document.getElementById("menuBtn");
-const sideMenu = document.getElementById("sideMenu");
-const overlay = document.getElementById("menuOverlay");
+const btn = document.getElementById('btnMenu');
+const menu = document.getElementById('menuGaleria');
+const overlay = document.getElementById('menuOverlay');
 
-menuBtn.onclick = () => {
-  sideMenu.classList.add("open");
-  overlay.classList.add("show");
-  if (navigator.vibrate) navigator.vibrate(15);
+btn.onclick = () => {
+  menu.classList.add('activo');
+  overlay.classList.add('activo');
 };
 
-overlay.onclick = closeMenu;
+overlay.onclick = cerrar;
 
-function closeMenu(){
-  sideMenu.classList.remove("open");
-  overlay.classList.remove("show");
+function cerrar(){
+  menu.classList.remove('activo');
+  overlay.classList.remove('activo');
 }
 </script>
-
      
 <!-- MODAL PRODUCTO -->
 <div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
