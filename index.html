@@ -83,11 +83,9 @@ function cerrarGaleria(){
 
 <nav>
   <div class="app">
-  <!-- TODO tu contenido actual va aquí dentro -->
 </div>
 
 <div class="panel-galeria">
-  <!-- aquí van las categorías + galerías -->
 </div>
 
 <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
@@ -129,7 +127,7 @@ function cerrarGaleria(){
      data-nombre="Samsung A14"
      data-precio="RD$ 6,500"
      data-descripcion="Pantalla nueva, liberado, garantía"
-     onclick="abrirProducto(this)">
+     onclick="abrirProducto(this.src)">
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
@@ -407,37 +405,13 @@ function toggleCategoria(el){
 }
 </script>
 
-   function abrirProducto(el){
-  const modal = document.getElementById("producto-modal");
-
-  document.getElementById("prod-img").src = el.src;
-  document.getElementById("prod-nombre").innerText =
-    el.dataset.nombre || "Producto";
-
-  document.getElementById("prod-descripcion").innerText =
-    el.dataset.descripcion || "Consultar disponibilidad";
-
-  document.getElementById("prod-precio").innerText =
-    el.dataset.precio || "Consultar";
-
-  modal.classList.add("activo");
-}
-
-function cerrarProducto(e){
-  if (!e || e.target.id === "producto-modal") {
-    document.getElementById("producto-modal")
-      .classList.remove("activo");
-  }
-}
-
-
-<div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
-  <div class="producto-contenido">
-    <button class="cerrar-btn" onclick="cerrarProducto()">✕</button>
-    <img id="prod-img">
-    <h3 id="prod-nombre"></h3>
-    <p id="prod-descripcion"></p>
-    <strong id="prod-precio"></strong>
+<div id="modal-producto" onclick="cerrarProducto(event)">
+  <div class="modal-contenido">
+    <button class="cerrar-btn" onclick="cerrarProducto()">✖</button>
+    <img id="modal-img">
+    <h3 id="modal-titulo"></h3>
+    <p id="modal-descripcion"></p>
+    <strong id="modal-precio"></strong>
   </div>
 </div>
 
