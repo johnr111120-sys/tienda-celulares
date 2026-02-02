@@ -476,11 +476,11 @@ nav{
 
 .panel-galeria{
   position: fixed;
-  top: 0px;
+  top: 60px;
   left: 0;
   width: 100%;
   max-width: 420px;
-  height: 100%;
+  height: calc(100vh - 60px);
   background: #111;
   color: white;
   overflow-y: auto;
