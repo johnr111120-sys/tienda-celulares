@@ -20,7 +20,7 @@ body {
 
 .hero {
   width: 100%;
-  height: 10px; /* ajusta la altura */
+  height: 25px; /* ajusta la altura */
   background-image: url("img/Logo2.jpg"); /* ruta correcta */
   background-size: cover;
   background-position: center;
@@ -476,10 +476,10 @@ nav{
 
 .panel-galeria{
   position: fixed;
-  top: 80;
+  top: 60;
   left: 0;
-  width: 85%;
-  max-width: 380px;
+  width: 100%;
+  max-width: 420px;
   height: 100vh;
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(14px);
@@ -495,7 +495,7 @@ nav{
 #overlay-galeria{
   position: fixed;
   inset: 0;
-  background-color: #FD0105;
+  background: rgba(0,0,0,0.25);
   backdrop-filter: blur(3px);
   opacity: 0;
   pointer-events: none;
@@ -568,5 +568,5 @@ nav button {
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .app.mover{
-  transform: translateX(160px);
+  transform: translateX(320px);
 }
