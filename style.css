@@ -476,19 +476,20 @@ nav{
 
 .panel-galeria{
   position: fixed;
-  top: 60px;
+  top: 0px;
   left: 0;
   right: auto;
   width: 100%;
   max-width: 420px;
-  height: calc(100vh - 60px);
-  background: #111;
+  height: 100%
+  background: transparent; /* invisible */
   color: white;
   overflow-y: auto;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 999;
   padding: 20px;
+  display: none;
 }
 
 .panel-galeria.activo{
