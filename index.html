@@ -407,18 +407,6 @@ function toggleCategoria(el){
   el.parentElement.classList.toggle("activa");
 }
 </script>
-     
-<div id="modal" onclick="cerrarProducto(event)">
-  <div class="modal-content">
-    <img id="modal-img">
-    <h3 id="modal-title"></h3>
-    <p id="modal-price"></p>
-
-    <a id="modal-wa" class="modal-whatsapp" target="_blank">
-      💬 Consultar por WhatsApp
-    </a>
-  </div>
-</div>
 
 <script>
 function abrirProducto(img, titulo, precio, mensaje){
@@ -439,6 +427,31 @@ function cerrarProducto(e){
   }
 }
 </script>
+
+     <div id="modal-producto" class="modal-producto">
+  <div class="modal-contenido">
+
+    <!-- Botón cerrar -->
+    <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+
+    <!-- Imagen -->
+    <img id="modal-img" src="" alt="Producto">
+
+    <!-- Info producto -->
+    <div class="info-producto">
+      <h3 id="modal-titulo"></h3>
+      <p id="modal-descripcion"></p>
+      <strong id="modal-precio"></strong>
+
+      <a id="modal-whatsapp"
+         class="btn-whatsapp"
+         target="_blank">
+         💬 Consultar por WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
 
      
 </body>
