@@ -469,21 +469,37 @@ nav a {
 .panel-galeria{
   position: fixed;
   top: 60px;
-  right: 0;
+  left: 0;
   width: 100%;
   max-width: 420px;
   height: calc(100vh - 60px);
-  background: #111;
-  color: white;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 12px 0 40px rgba(0,0,0,0.3);
   overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 999;
   padding: 20px;
 }
 
 .panel-galeria.activo{
   transform: translateX(0);
+}
+
+#overlay-galeria{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+#overlay-galeria.activo{
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .categoria h3{
@@ -508,4 +524,11 @@ nav a {
 .categoria img{
   width: 100%;
   border-radius: 8px;
+}
+
+.app{
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.app.mover{
+  transform: translateX(320px);
 }
