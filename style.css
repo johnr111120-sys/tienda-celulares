@@ -469,7 +469,7 @@ nav a {
 .panel-galeria{
   position: fixed;
   top: 70px;
-  left: -100;
+  left: 0;
   width: 85%;
   max-width: 380px;
   height: 100%;
