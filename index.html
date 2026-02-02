@@ -103,64 +103,52 @@ function cerrarGaleria(){
 
 </nav>
 
- <div class="panel-galeria">
+  <div id="panel-galeria" class="panel-galeria">
 
-  <div class="cat">
-    <button class="cat-btn" onclick="toggleCat(this)">
-      📍 Nuestro Local <span>›</span>
-    </button>
-    <div class="cat-content">
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">📍 Nuestro Local</h3>
+    <div class="galeria">
       <img src="images/local1.jpg" onclick="abrirImagen(this.src)">
       <img src="images/local2.jpg" onclick="abrirImagen(this.src)">
       <img src="images/local3.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
 
- <div class="cat">
-    <button class="cat-btn" onclick="toggleCat(this)">
-      🗒️ Servicios <span>›</span>
-    </button>
-    <div class="cat-content">
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">🗒️ Servicios</h3>
+    <div class="galeria">
       <img src="images/servicios1.jpg" onclick="abrirImagen(this.src)">
       <img src="images/servicios2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
 
- <div class="cat">
-    <button class="cat-btn" onclick="toggleCat(this)">
-      📱 Celulares <span>›</span>
-    </button>
-    <div class="cat-content">
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
+    <div class="galeria">
       <img src="images/cell1.jpg" onclick="abrirImagen(this.src)">
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
 
- <div class="cat">
-    <button class="cat-btn" onclick="toggleCat(this)">
-      🔧 Reparaciones <span>›</span>
-    </button>
-    <div class="cat-content">
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">🔧 Reparaciones</h3>
+    <div class="galeria">
       <img src="images/reparaciones1.jpg" onclick="abrirImagen(this.src)">
       <img src="images/reparaciones2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
 
- <div class="cat">
-    <button class="cat-btn" onclick="toggleCat(this)">
-      🎧 Accesorios <span>›</span>
-    </button>
-    <div class="cat-content">
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">🎧 Accesorios</h3>
+    <div class="galeria">
       <img src="images/accesorios1.jpg" onclick="abrirImagen(this.src)">
       <img src="images/accesorios2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
 
-  <div class="cat">
-    <button class="cat-btn" onclick="toggleCat(this)">
-      💻 Tablets <span>›</span>
-    </button>
-    <div class="cat-content">
+  <div class="categoria">
+    <h3 onclick="toggleCategoria(this)">💻 Tablets</h3>
+    <div class="galeria">
       <img src="images/tablet1.jpg" onclick="abrirImagen(this.src)">
       <img src="images/tablet2.jpg" onclick="abrirImagen(this.src)">
     </div>
@@ -444,31 +432,6 @@ function cerrarGaleria(){
   panel.classList.remove("activo");
   overlay.classList.remove("activo");
   app.classList.remove("mover");
-}
-</script>
-
-<script>
-function toggleCat(btn){
-  const cat = btn.parentElement;
-  const todas = document.querySelectorAll(".cat");
-
-  // cerrar las demás
-  todas.forEach(c => {
-    if (c !== cat) c.classList.remove("activa");
-  });
-
-  const abrir = !cat.classList.contains("activa");
-  cat.classList.toggle("activa");
-
-  // scroll suave al abrir
-  if (abrir) {
-    setTimeout(() => {
-      cat.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }, 250); // espera a que arranque la animación
-  }
 }
 </script>
 
