@@ -568,33 +568,6 @@ nav{
   color: #25d366;
 }
 
-#modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 999999; /* MÁS alto que el menú */
-  align-items: center;
-  justify-content: center;
-}
-
-/* Contenedor del producto */
-.modal-content {
-  background: #fff;
-  width: 92%;
-  max-width: 420px;
-  max-height: 85vh;
-  border-radius: 16px;
-  overflow-y: auto;
-  padding: 15px;
-  animation: slideUp 0.35s ease;
-}
-
-/* Imagen */
-.modal-content img {
-  width: 100%;
-  border-radius: 12px;
-}
 /* Botón WhatsApp */
 .modal-whatsapp {
   display: block;
@@ -608,43 +581,72 @@ nav{
   font-weight: bold;
 }
 
-.cerrar-btn{
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #0000FF;
-  color: red;
-  border: none;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  font-size: 18px;
-}
-
-.producto-modal.activo{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#modal img{
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
-}
-
 @keyframes iosUp{
   from{ transform: translateY(100%); }
   to{ transform: translateY(0); }
 }
 
-/* Animación tipo iOS */
-@keyframes slideUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.modal-producto {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000; /* MÁS que el menú */
+}
+
+.modal-producto.activo {
+  display: flex;
+}
+
+.modal-contenido {
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  max-height: 90vh;
+  border-radius: 16px;
+  padding: 15px;
+  overflow-y: auto;
+  position: relative;
+  animation: subir 0.35s ease;
+}
+
+@keyframes subir {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-contenido img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.info-producto {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.info-producto h3 {
+  margin: 8px 0;
+}
+
+.info-producto strong {
+  display: block;
+  margin: 10px 0;
+  font-size: 20px;
+  color: #25d366;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #0000FF;
+  color: red;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+}
