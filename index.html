@@ -103,8 +103,10 @@ function cerrarGaleria(){
 
 </nav>
 
-  <div id="panel-galeria" class="panel-galeria">
+ <button id="btnMenu">☰</button>
 
+<div class="panel-galeria" id="panelGaleria">
+  
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📍 Nuestro Local</h3>
     <div class="galeria">
@@ -431,6 +433,39 @@ function cerrarGaleria(){
   overlay.classList.remove("activo");
   app.classList.remove("mover");
 }
+</script>
+
+     <script>
+const panel = document.getElementById("panelGaleria");
+const btnMenu = document.getElementById("btnMenu");
+
+// abrir / cerrar con botón
+btnMenu.addEventListener("click", (e) => {
+  e.stopPropagation();
+  panel.classList.toggle("open");
+});
+
+// click fuera
+document.addEventListener("click", (e) => {
+  if (
+    panel.classList.contains("open") &&
+    !panel.contains(e.target) &&
+    !btnMenu.contains(e.target)
+  ) {
+    panel.classList.remove("open");
+  }
+});
+
+// soporte táctil móvil (iOS)
+document.addEventListener("touchstart", (e) => {
+  if (
+    panel.classList.contains("open") &&
+    !panel.contains(e.target) &&
+    !btnMenu.contains(e.target)
+  ) {
+    panel.classList.remove("open");
+  }
+});
 </script>
 
 
