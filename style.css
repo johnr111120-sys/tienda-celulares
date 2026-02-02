@@ -136,19 +136,6 @@ body {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
-#modal{
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-}
 
 .producto-modal.activo{
   display: flex;
@@ -581,19 +568,59 @@ nav{
   color: #25d366;
 }
 
-/* Botón cerrar */
+#modal-producto{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000; /* SIEMPRE arriba */
+}
+
+.modal-contenido{
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+  animation: iosUp .35s ease;
+}
+
+.modal-contenido img{
+  width: 100%;
+  border-radius: 12px;
+}
+
 .cerrar-btn{
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
   background: #0000FF;
   color: red;
   border: none;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   font-size: 18px;
-  cursor: pointer;
+}
+
+.producto-modal.activo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#modal img{
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+@keyframes iosUp{
+  from{ transform: translateY(100%); }
+  to{ transform: translateY(0); }
 }
 
 /* Animación */
