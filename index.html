@@ -446,6 +446,19 @@ function cerrarGaleria(){
 }
 </script>
 
+<script>
+function toggleCat(btn){
+  const cat = btn.parentElement;
+  const todas = document.querySelectorAll(".cat");
+
+  todas.forEach(c => {
+    if (c !== cat) c.classList.remove("activa");
+  });
+
+  cat.classList.toggle("activa");
+}
+</script>
+
 
 </body>
 </html>
