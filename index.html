@@ -125,7 +125,13 @@ function cerrarGaleria(){
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
     <div class="galeria">
-      <img src="images/cell1.jpg" onclick="abrirImagen(this.src)">
+     <img 
+  src="images/cell1.jpg"
+  data-nombre="Iphone 17 Pro Max"
+  data-precio="RD$ 8,500"
+  data-descripcion="Pantalla 6.5'', 128GB, batería 5000mAh"
+  onclick="abrirProducto(this)"
+>
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
@@ -260,13 +266,6 @@ al lado de Plaza La Canela.
 <div class="galeria">
   <img src="images/cell0.jpg" alt="Venta de Celulares en Santiago RD" onclick="abrirImagen(this.src)">
   <img src="images/cell1.jpg" alt="Venta de Celulares en Santiago RD" onclick="abrirImagen(this.src)">
-   <strong>Desde RD$8000</strong>
-         <a 
-    href="https://wa.me/18292017321?text=Hola,%20quiero%20cotizar%20reparación%20de%20celulares"
-    class="btn-whatsapp"
-    target="_blank">
-    Cotizar por WhatsApp
-  </a>
   <img src="images/cell2.jpg" alt="Venta de Celulares en Santiago RD" onclick="abrirImagen(this.src)">
   <img src="images/cell3.jpg" alt="Venta de Celulares en Santiago RD" onclick="abrirImagen(this.src)">
   <img src="images/cell4.jpg" alt="Venta de Celulares en Santiago RD" onclick="abrirImagen(this.src)">
@@ -424,6 +423,19 @@ function cerrarGaleria(){
   overlay.classList.remove("activo");
 }
 </script>
+
+     <div id="modal-producto" class="modal-producto" onclick="cerrarProducto(event)">
+  <div class="modal-card">
+    <img id="prod-img">
+    <h3 id="prod-nombre"></h3>
+    <p id="prod-desc"></p>
+    <strong id="prod-precio"></strong>
+
+    <a id="prod-whatsapp" class="btn-whatsapp" target="_blank">
+      Comprar por WhatsApp
+    </a>
+  </div>
+</div>
 
 
 </body>
