@@ -437,6 +437,29 @@ function cerrarGaleria(){
   </div>
 </div>
 
+     <script>
+function abrirProducto(img){
+  document.getElementById("prod-img").src = img.src;
+  document.getElementById("prod-nombre").textContent = img.dataset.nombre;
+  document.getElementById("prod-desc").textContent = img.dataset.descripcion;
+  document.getElementById("prod-precio").textContent = img.dataset.precio;
+
+  const mensaje = `Hola 👋 quiero comprar ${img.dataset.nombre} por ${img.dataset.precio}`;
+  document.getElementById("prod-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+
+  document.getElementById("modal-producto").style.display = "flex";
+
+  if (navigator.vibrate) navigator.vibrate(15); // haptic
+}
+
+function cerrarProducto(e){
+  if(e.target.id === "modal-producto"){
+    document.getElementById("modal-producto").style.display = "none";
+  }
+}
+</script>
+
      
 </body>
 </html>
