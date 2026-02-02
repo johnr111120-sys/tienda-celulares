@@ -1,3 +1,4 @@
+
 <body>
   <div class="fondo-blur"></div>
   <div class="hero"></div>
@@ -20,9 +21,7 @@
     <meta name="google-site-verification" content="E1YjNhK-kVxveB2pnlhEOUCRjSClBUL6TLK0hY-6Ob0" />
     
     <link rel="stylesheet" href="style.css">
-  
-     </head>
-  
+    
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,25 +44,14 @@
 }
 </script>
     
+</head>
+    
 <a href="https://wa.me/18292017321" class="whatsapp" target="_blank">💬</a>
     
     <div id="modal" onclick="cerrarImagen()">
   <img id="modal-img">
 </div>
-
-  <script>
-function toggleCat(btn){
-  const cat = btn.parentElement;
-  const todas = document.querySelectorAll(".cat");
-
-  todas.forEach(c => {
-    if (c !== cat) c.classList.remove("activa");
-  });
-
-  cat.classList.toggle("activa");
-}
-</script>
-
+  
     <script>
 function abrirImagen(src){
   document.getElementById("modal").style.display = "flex";
@@ -95,6 +83,16 @@ function cerrarGaleria(){
 <body>
 
 <nav>
+  <div class="app">
+  <!-- TODO tu contenido actual va aquí dentro -->
+</div>
+
+<div class="panel-galeria">
+  <!-- aquí van las categorías + galerías -->
+</div>
+
+<div id="overlay-galeria" onclick="cerrarGaleria()"></div>
+
    <div class="menu-galeria">
 <button class="menu-galeria" onclick="toggleGaleria()">☰</button>
 <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
@@ -116,8 +114,7 @@ function cerrarGaleria(){
       <img src="images/local3.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
-</div>
-  
+
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">🗒️ Servicios</h3>
     <div class="galeria">
@@ -410,87 +407,15 @@ const overlay = document.getElementById("overlay-galeria");
 
 function toggleGaleria(){
   panel.classList.toggle("activo");
-  overlay.style.display = panel.classList.contains("activo")
-   ? "block"
-    : "none";
-}
-
-function cerrarGaleria(){
-  panel.classList.remove("activo");
-  overlay.style.display = "none";
-}
-</script>
-
-     <script>
-const panel = document.querySelector(".panel-galeria");
-const overlay = document.getElementById("overlay-galeria");
-const app = document.querySelector(".app");
-
-function toggleGaleria(){
-  panel.classList.toggle("activo");
   overlay.classList.toggle("activo");
-  app.classList.toggle("mover");
 }
 
 function cerrarGaleria(){
   panel.classList.remove("activo");
   overlay.classList.remove("activo");
-  app.classList.remove("mover");
 }
 </script>
 
-     <script>
-const panel = document.getElementById("panelGaleria");
-const btnMenu = document.getElementById("btnMenu");
-
-const panelGaleria = document.getElementById("panelGaleria");
-let startXClose = 0;
-
-panelGaleria.addEventListener("touchstart", e => {
-  startXClose = e.touches[0].clientX;
-});
-
-panelGaleria.addEventListener("touchend", e => {
-  const endX = e.changedTouches[0].clientX;
-  const diffX = endX - startXClose;
-
-  // swipe fuerte a la izquierda
-  if (diffX < -80) {
-    panelGaleria.classList.remove("open", "activo");
-  }
-});
-</script>
-
-    <script>
-function haptic(ms = 15){
-  if (navigator.vibrate) {
-    navigator.vibrate(ms);
-  }
-}
-
-      btnMenu.addEventListener("click", (e) => {
-  e.stopPropagation();
-  panel.classList.toggle("open");
-  haptic(20); // vibración suave
-});
-      
-if (diffX < -80) {
-  panelGaleria.classList.remove("open", "activo");
-  haptic(25);
-}
-      
-if (seAbre) {
-  haptic(15);
-}
-      
-haptic(10);  // ultra sutil (iOS-like)
-haptic(20);  // ideal UI
-haptic(30);  // acción fuerte (cerrar)
-
-</script>
-
-     </script>
-     
 
 </body>
 </html>
