@@ -490,24 +490,8 @@ nav{
   padding: 20px;
 }
 
-#overlay-galeria{
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(2px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-  z-index: 998;
-}
-
-#overlay-galeria.activo{
-  opacity: 1;
-  pointer-events: auto;
-}
-
 .panel-galeria.activo{
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
 }
 
 .categoria h3{
