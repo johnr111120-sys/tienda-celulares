@@ -568,29 +568,44 @@ nav{
   color: #25d366;
 }
 
-#modal-producto{
+#modal {
+  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.85);
-  display: none;
-  justify-content: center;
+  background: rgba(0,0,0,0.85);
+  z-index: 999999999; /* MÁS alto que el menú */
   align-items: center;
-  z-index: 99999; /* SIEMPRE arriba */
+  justify-content: center;
 }
 
-.modal-contenido{
+/* Contenedor del producto */
+.modal-content {
   background: #fff;
-  width: 90%;
-  max-width: 400px;
+  width: 92%;
+  max-width: 420px;
+  max-height: 85vh;
   border-radius: 16px;
+  overflow-y: auto;
   padding: 15px;
-  text-align: center;
-  animation: iosUp 0.3s ease;
+  animation: slideUp 0.35s ease;
 }
 
-.modal-contenido img{
+/* Imagen */
+.modal-content img {
   width: 100%;
   border-radius: 12px;
+}
+/* Botón WhatsApp */
+.modal-whatsapp {
+  display: block;
+  margin-top: 15px;
+  padding: 14px;
+  background: #25D366;
+  color: #fff;
+  text-align: center;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .cerrar-btn{
@@ -623,8 +638,13 @@ nav{
   to{ transform: translateY(0); }
 }
 
-/* Animación */
-@keyframes zoomIn{
-  from{ transform: translateY(40px); opacity: 0; }
-  to{ transform: translateY(0); opacity: 1; }
-}
+/* Animación tipo iOS */
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
