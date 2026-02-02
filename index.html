@@ -406,7 +406,7 @@ function toggleCategoria(el){
   el.parentElement.classList.toggle("activa");
 }
 </script>
-     <script>
+
    function abrirProducto(el){
   const modal = document.getElementById("producto-modal");
 
@@ -429,30 +429,7 @@ function cerrarProducto(e){
       .classList.remove("activo");
   }
 }
-</script>
-     <script>
-const modal = document.getElementById("modal-producto");
-const imgModal = document.getElementById("modal-img");
-const titulo = document.getElementById("modal-titulo");
-const descripcion = document.getElementById("modal-descripcion");
-const precio = document.getElementById("modal-precio");
-const btnCerrar = document.getElementById("cerrar-modal");
 
-function abrirProducto(img, nombre, desc, price){
-  modal.style.display = "block";
-  imgModal.src = img;
-  titulo.innerText = nombre;
-  descripcion.innerText = desc;
-  precio.innerText = price;
-}
-
-function cerrarProducto(){
-  modal.style.display = "none";
-}
-
-/* Botón X */
-btnCerrar.addEventListener("click", cerrarProducto);
-</script>
 
 <div id="producto-modal" class="producto-modal" onclick="cerrarProducto(event)">
   <div class="producto-contenido">
