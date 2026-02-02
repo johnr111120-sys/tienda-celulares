@@ -476,10 +476,10 @@ nav{
 
 .panel-galeria{
   position: fixed;
-  top: 0;
+  top: 60;
   left: 0;
-  width: 85%;
-  max-width: 380px;
+  width: 100%;
+  max-width: 420px;
   height: 100vh;
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(14px);
