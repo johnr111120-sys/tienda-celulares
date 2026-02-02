@@ -124,14 +124,15 @@ function cerrarGaleria(){
 
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
-    <div class="galeria">
-     <img 
+    <img 
   src="images/cell1.jpg"
-  data-nombre="Iphone 17 Pro Max"
-  data-precio="RD$ 8,500"
-  data-descripcion="Pantalla 6.5'', 128GB, batería 5000mAh"
-  onclick="abrirProducto(this)"
->
+  onclick="abrirProducto(
+    this.src,
+    'Iphone 17 Pro Max',
+    'Pantalla 6.5”, batería 5000mAh, liberado',
+    'RD$ 9,500'
+  )">
+
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
@@ -437,6 +438,22 @@ function cerrarGaleria(){
   </div>
 </div>
 
+<script>
+function abrirProducto(img, titulo, descripcion, precio){
+  document.getElementById("producto-img").src = img;
+  document.getElementById("producto-titulo").innerText = titulo;
+  document.getElementById("producto-descripcion").innerText = descripcion;
+  document.getElementById("producto-precio").innerText = precio;
+
+  document.getElementById("producto-modal").style.display = "flex";
+}
+
+function cerrarProducto(e){
+  if (!e || e.target.id === "producto-modal") {
+    document.getElementById("producto-modal").style.display = "none";
+  }
+}
+</script>
 
 </body>
 </html>
