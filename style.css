@@ -467,11 +467,12 @@ nav{
   margin-left: 10px;
 }
 
-.hamburger{
-  font-size: 56px;
+/* BOTÓN HAMBURGUESA */
+.btn-menu {
   background: none;
   border: none;
   color: white;
+  font-size: 26px;
   cursor: pointer;
 }
 
@@ -492,15 +493,13 @@ nav{
   padding: 20px;
 }
 
-#overlay-galeria{
+/* OVERLAY */
+#overlay-galeria {
   position: fixed;
   inset: 0;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(2px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
+  background: rgba(0,0,0,0.5);
   z-index: 999;
+  display: none;
 }
 
 #overlay-galeria.activo{
@@ -508,21 +507,42 @@ nav{
   pointer-events: auto;
 }
 
-.panel-galeria.activo{
-  transform: translateX(0) scale(1);
+/* PANEL LATERAL */
+#panel-galeria {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  background: #111;
+  color: white;
+  overflow-y: auto;
+  transition: left 0.35s cubic-bezier(.4,0,.2,1);
+  z-index: 1000;
+  padding: 15px;
 }
 
-.categoria h3{
-  margin: 15px 0;
-  cursor: pointer;
-  background: #222;
+/* ACTIVO */
+#panel-galeria.activo {
+  left: 0;
+}
+
+#overlay-galeria.activo {
+  display: block;
+}
+
+/* CATEGORÍAS */
+.categoria h3 {
   padding: 12px;
+  margin: 0;
+  cursor: pointer;
+  background: #1c1c1c;
   border-radius: 8px;
 }
 
-.categoria .galeria{
+.categoria .galeria {
   display: none;
-  margin-bottom: 15px;
+  padding: 10px 0;
 }
 
 .categoria.activa .galeria{
