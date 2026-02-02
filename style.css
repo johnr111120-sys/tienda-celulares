@@ -478,7 +478,7 @@ nav{
 .panel-galeria{
   position: fixed;
   top: 60px;
-  right: 0;
+  left: 0;
   width: 45%;
   max-width: 420px;
   height: calc(100vh - 60px);
