@@ -123,13 +123,14 @@ function cerrarGaleria(){
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📱 Celulares</h3>
     <div class="galeria">
-<img 
-  src="images/cell1.jpg"
-  data-nombre="Samsung A15"
-  data-precio="RD$ 8,500"
-  data-descripcion="Pantalla 6.5'', 128GB, batería 5000mAh"
-  onclick="abrirProducto(this)"
->
+<img src="images/cell1.jpg"
+onclick="abrirProducto(
+  this.src,
+  'Samsung A15',
+  'Pantalla 6.5, 128GB, garantía 30 días',
+  'RD$ 9,500'
+)">
+
       <img src="images/cell2.jpg" onclick="abrirImagen(this.src)">
     </div>
   </div>
@@ -417,6 +418,21 @@ function toggleCategoria(el){
   </div>
 </div>
 
+<script>
+function abrirProducto(img, titulo, descripcion, precio){
+  document.getElementById("modal-producto").style.display = "flex";
+  document.getElementById("modal-img").src = img;
+  document.getElementById("modal-titulo").innerText = titulo;
+  document.getElementById("modal-descripcion").innerText = descripcion;
+  document.getElementById("modal-precio").innerText = precio;
+}
+function cerrarProducto(e){
+  if(!e || e.target.id === "modal-producto"){
+    document.getElementById("modal-producto").style.display = "none";
+  }
+}
+
+</script>
 
      
 </body>
