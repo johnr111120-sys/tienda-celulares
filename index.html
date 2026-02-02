@@ -50,6 +50,7 @@
     <div id="modal" onclick="cerrarImagen()">
   <img id="modal-img">
 </div>
+  
     <script>
 function abrirImagen(src){
   document.getElementById("modal").style.display = "flex";
@@ -61,12 +62,29 @@ function cerrarImagen(){
 }
 </script>
 
+  <script>
+const panel = document.querySelector(".panel-galeria");
+const overlay = document.getElementById("overlay-galeria");
+
+function toggleGaleria(){
+  panel.classList.toggle("activo");
+  overlay.style.display = panel.classList.contains("activo")
+    ? "block"
+    : "none";
+}
+
+function cerrarGaleria(){
+  panel.classList.remove("activo");
+  overlay.style.display = "none";
+}
+</script>
+
 <body>
 
 <nav>
   <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
    <div class="menu-galeria">
-  <button class="hamburger" onclick="toggleGaleria()">☰</button>
+  <button class="menu-galeria" onclick="toggleGaleria()">☰</button>
 </div>
   
   <a href="#">Inicio</a>
