@@ -495,7 +495,7 @@ nav{
 #overlay-galeria{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.25);
+  background-color: #FD0105;
   backdrop-filter: blur(3px);
   opacity: 0;
   pointer-events: none;
@@ -568,5 +568,5 @@ nav button {
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .app.mover{
-  transform: translateX(320px);
+  transform: translateX(160px);
 }
