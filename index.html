@@ -83,7 +83,8 @@ function cerrarGaleria(){
 
 <nav>
    <div class="menu-galeria">
-  <button class="menu-galeria" onclick="toggleGaleria()">☰</button>
+<button class="menu-galeria" onclick="toggleGaleria()">☰</button>
+<div id="overlay-galeria" onclick="cerrarGaleria()"></div>
 </div>
   
   <a href="#">Inicio</a>
@@ -388,6 +389,22 @@ function toggleCategoria(el){
   el.parentElement.classList.toggle("activa");
 }
 </script>
+     
+     <script>
+const panel = document.querySelector(".panel-galeria");
+const overlay = document.getElementById("overlay-galeria");
+
+function toggleGaleria(){
+  panel.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+}
+
+function cerrarGaleria(){
+  panel.classList.remove("activo");
+  overlay.classList.remove("activo");
+}
+</script>
+
 
 </body>
 </html>
