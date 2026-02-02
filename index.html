@@ -366,18 +366,23 @@ function toggleCategoria(el){
 }
 </script>
      
-     <script>
-const panel = document.querySelector(".panel-galeria");
+<script>
+const panel = document.getElementById("panel-galeria");
 const overlay = document.getElementById("overlay-galeria");
+const btnMenu = document.getElementById("btnMenu");
 
-function toggleGaleria(){
-  panel.classList.toggle("activo");
-  overlay.classList.toggle("activo");
-}
+btnMenu.addEventListener("click", () => {
+  panel.classList.add("activo");
+  overlay.classList.add("activo");
+});
 
-function cerrarGaleria(){
+function cerrarGaleria() {
   panel.classList.remove("activo");
   overlay.classList.remove("activo");
+}
+
+function toggleCategoria(el) {
+  el.parentElement.classList.toggle("activa");
 }
 </script>
      
