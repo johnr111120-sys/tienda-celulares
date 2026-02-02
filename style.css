@@ -468,7 +468,7 @@ nav{
 }
 
 .hamburger{
-  font-size: 26px;
+  font-size: 56px;
   background: none;
   border: none;
   color: white;
@@ -500,7 +500,7 @@ nav{
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
-  z-index: 998;
+  z-index: 999;
 }
 
 #overlay-galeria.activo{
@@ -513,7 +513,7 @@ nav{
 }
 
 .categoria h3{
-  margin: 15px 0;
+  margin: 5px 0;
   cursor: pointer;
   background: #222;
   padding: 12px;
