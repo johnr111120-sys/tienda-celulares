@@ -477,14 +477,14 @@ nav{
 .panel-galeria{
   position: fixed;
   top: 60px;
-  right: 0;
+  left: 0;
   width: 100%;
   max-width: 420px;
   height: calc(100vh - 60px);
   background: #111;
   color: white;
   overflow-y: auto;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 999;
   padding: 20px;
