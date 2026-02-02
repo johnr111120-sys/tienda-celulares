@@ -467,123 +467,62 @@ nav{
   margin-left: 10px;
 }
 
-/* Botón hamburguesa */
 .hamburger{
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 2001;
-  font-size: 26px;
+  font-size: 56px;
   background: none;
   border: none;
   color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
   cursor: pointer;
-}
-
-/* OVERLAY */
-#menuOverlay{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0,.4);
-  z-index: 2000;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
 }
 
 .panel-galeria{
   position: fixed;
-  top: 0px;
+  top: 45px;
   left: 0;
-  width: 85px;
-  max-width: 360px;
-  height: 100vh;
-  background: #111;
-  color: white;
+  width: 45%;
+  max-width: 320px;
+  height: calc(100vh - 60px);
+  background: rgba(255,255,255,0.96);
   backdrop-filter: blur(14px);
   box-shadow: 12px 0 40px rgba(0,0,0,0.3);
   overflow-y: auto;
   transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
-  z-index: 2001;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  z-index: 999;
   padding: 20px;
 }
 
-/* LISTA */
-#sideMenu ul{
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#sideMenu li{
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255,255,255,.1);
-  cursor: pointer;
-}
-
-/* ACTIVO */
-#menuGaleria.activo{
-  transform: translateX(0);
-}
-
-/* OVERLAY */
-#overlay-galeria {
+#overlay-galeria{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
   z-index: 999;
-  display: none;
 }
 
-#menuOverlay.activo{
+#overlay-galeria.activo{
   opacity: 1;
   pointer-events: auto;
 }
 
-/* PANEL LATERAL */
-#panel-galeria {
-  position: fixed;
-  top: 0;
-  left: -320px;
-  width: 300px;
-  height: 100vh;
-  background: #111;
-  color: white;
-  overflow-y: auto;
-  transition: left 0.35s cubic-bezier(.4,0,.2,1);
-  z-index: 1000;
-  padding: 15px;
+.panel-galeria.activo{
+  transform: translateX(0) scale(1);
 }
 
-/* ACTIVO */
-#panel-galeria.activo {
-  left: 0;
-}
-
-#menuOverlay.show{
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#overlay-galeria.activo {
-  display: block;
-}
-
-/* CATEGORÍAS */
-.categoria h3 {
-  padding: 12px;
-  margin: 0;
+.categoria h3{
+  margin: 15px 0;
   cursor: pointer;
-  background: #1c1c1c;
+  background: #222;
+  padding: 12px;
   border-radius: 8px;
 }
 
-.categoria .galeria {
+.categoria .galeria{
   display: none;
-  padding: 10px 0;
+  margin-bottom: 15px;
 }
 
 .categoria.activa .galeria{
@@ -599,70 +538,4 @@ nav{
 
 .galeria-principal {
   display: none;
-}
-
-/* Modal general */
-.producto-modal{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999; /* MÁS ALTO QUE EL MENÚ */
-}
-
-/* Tarjeta del producto */
-.producto-card{
-  background: #fff;
-  width: 90%;
-  max-width: 420px;
-  border-radius: 16px;
-  padding: 20px;
-  text-align: center;
-  position: relative;
-  animation: zoomIn 0.3s ease;
-}
-
-.producto-card img{
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-
-.producto-card h3{
-  margin: 10px 0;
-}
-
-.producto-card p{
-  font-size: 14px;
-  color: #555;
-}
-
-.producto-card strong{
-  display: block;
-  margin-top: 10px;
-  font-size: 20px;
-  color: #25d366;
-}
-
-/* Botón cerrar */
-.cerrar-btn{
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  background: #0000FF;
-  color: red;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* Animación */
-@keyframes zoomIn{
-  from{ transform: scale(0.85); opacity: 0; }
-  to{ transform: scale(1); opacity: 1; }
 }
