@@ -511,7 +511,7 @@ nav a {
   position: fixed;
   top: 40px;
   left: 0;
-  width: 45%;
+  width: 40%;
   max-width: 320px;
   height: calc(100vh - 60px);
   background: rgba(255,255,255,0.96);
