@@ -457,3 +457,55 @@ nav a {
     transform: translateY(0);
   }
 }
+
+.hamburger{
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.panel-galeria{
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  max-width: 420px;
+  height: calc(100vh - 60px);
+  background: #111;
+  color: white;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 999;
+  padding: 20px;
+}
+
+.panel-galeria.activo{
+  transform: translateX(0);
+}
+
+.categoria h3{
+  margin: 15px 0;
+  cursor: pointer;
+  background: #222;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.categoria .galeria{
+  display: none;
+  margin-bottom: 15px;
+}
+
+.categoria.activa .galeria{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.categoria img{
+  width: 100%;
+  border-radius: 8px;
+}
