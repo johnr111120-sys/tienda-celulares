@@ -405,12 +405,14 @@ const overlay = document.getElementById("overlay-galeria");
 
 function toggleGaleria(){
   panel.classList.toggle("activo");
-  overlay.classList.toggle("activo");
+  overlay.style.display = panel.classList.contains("activo")
+   ? "block"
+    : "none";
 }
 
 function cerrarGaleria(){
   panel.classList.remove("activo");
-  overlay.classList.remove("activo");
+  overlay.style.display = "none";
 }
 </script>
 
