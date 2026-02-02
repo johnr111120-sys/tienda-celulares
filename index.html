@@ -105,18 +105,19 @@ function cerrarGaleria(){
 </div>
 
    <div class="menu-galeria">
-  <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
-  <button class="menu-galeria" onclick="toggleGaleria()">☰</button>
-</div>
-  
+     
+  <nav>
+  <button id="btnMenu" onclick="toggleGaleria()">☰</button>
+
   <a href="#">Inicio</a>
   <a href="#servicios">Servicios</a>
   <a href="#contacto">Contacto</a>
-
 </nav>
-
-  <div id="panel-galeria" class="panel-galeria">
-
+     
+</nav>
+  <div id="overlay-galeria" onclick="cerrarGaleria()"></div>
+  
+<div id="panel-galeria">
   <div class="categoria">
     <h3 onclick="toggleCategoria(this)">📍 Nuestro Local</h3>
     <div class="galeria">
