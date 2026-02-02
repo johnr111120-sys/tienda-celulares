@@ -471,8 +471,8 @@ nav a {
   position: fixed;
   top: 70px;
   left: 0;
-  width: 100%;
-  max-width: 420px;
+  width: 75%;
+  max-width: 320px;
   height: calc(100vh - 60px);
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(14px);
