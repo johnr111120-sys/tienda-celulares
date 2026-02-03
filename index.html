@@ -392,6 +392,24 @@ function toggleCategoria(header){
 }
 </script>
 
+    <script>
+document.querySelectorAll(".cat-titulo").forEach(titulo => {
+  titulo.addEventListener("click", () => {
+    const categoria = titulo.parentElement;
+
+    // cerrar todas
+    document.querySelectorAll(".categoria").forEach(cat => {
+      if(cat !== categoria){
+        cat.classList.remove("activa");
+      }
+    });
+
+    // abrir / cerrar la actual
+    categoria.classList.toggle("activa");
+  });
+});
+</script>
+
     
     </body>
 </html>
