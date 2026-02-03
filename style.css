@@ -331,8 +331,8 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;
-  top: 15px;        /* ✅ arriba */
-  left: 25px;       /* ✅ izquierda */
+  top: 18px;        /* ✅ arriba */
+  left: 35px;       /* ✅ izquierda */
   bottom: auto;     /* ❌ anulado */
   right: auto;      /* ❌ anulado */
 
