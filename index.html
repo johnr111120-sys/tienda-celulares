@@ -214,6 +214,21 @@ referrerpolicy="no-referrer-when-downgrade">
       cerrarImgModal();
     }
   });
+
+   function abrirImgModal(src) {
+  imgModalSrc.src = src;
+  imgModal.style.display = "flex";
+  imgModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("no-scroll"); // ← AQUI
+}
+
+   function cerrarImgModal() {
+  imgModal.style.display = "none";
+  imgModalSrc.src = "";
+  imgModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("no-scroll"); // ← AQUI
+}
+       
 </script>
 
     
@@ -254,6 +269,23 @@ function cerrarProducto(){
   document.getElementById("modal-producto")
     .classList.remove("activo");
 }
+    function abrirProducto(img, titulo, desc, precio, mensaje){
+  document.getElementById("mp-img").src = img;
+  document.getElementById("mp-titulo").textContent = titulo;
+  document.getElementById("mp-desc").textContent = desc;
+  document.getElementById("mp-precio").textContent = precio;
+  document.getElementById("mp-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+
+  document.getElementById("modal-producto").classList.add("activo");
+  document.body.classList.add("no-scroll"); // ← AQUI
+}
+
+    function cerrarProducto(){
+  document.getElementById("modal-producto").classList.remove("activo");
+  document.body.classList.remove("no-scroll"); // ← AQUI
+}
+
 </script>
 
     <script>
