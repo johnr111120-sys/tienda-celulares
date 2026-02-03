@@ -273,66 +273,48 @@ body.no-scroll{
   100%{ transform: translate(-50%,0); opacity:.4; }
 }
 
-/* =========================
-   CATEGORÍAS PLEGABLES
-   ========================= */
-
-.categoria{
-  margin-bottom: 20px;
+/* CONTENEDOR DE CATEGORÍA */
+.categoria {
+  margin-bottom: 12px;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid #ddd;
 }
 
-.cat-header{
+/* HEADER */
+.cat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #111;
-  color: #fff;
   padding: 14px 16px;
+  background: #f7f7f7;
   cursor: pointer;
 }
 
-.cat-header h3{
+.cat-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.cat-icon{
+/* ICONO + / - */
+.cat-icon {
   font-size: 22px;
-  transition: transform .25s ease;
+  font-weight: bold;
 }
 
-/* CONTENIDO DE CATEGORÍA */
+/* CONTENIDO (CERRADO) */
 .cat-contenido {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.45s ease;
 }
 
-/* CATEGORÍA ABIERTA */
+/* CONTENIDO (ABIERTO) */
 .categoria.activa .cat-contenido {
-  max-height: 5000px; /* suficiente para cualquier galería */
-}
-.categoria.activa .cat-icon{
-  transform: rotate(45deg); /* + se vuelve X */
+  max-height: 5000px; /* 🔥 CLAVE: altura grande */
 }
 
-.cat-contenido{
-  display: none;
-  margin-top: 10px;
-}
-
-.categoria.activa .cat-contenido{
-  display: grid;
-}
-
-.cat-titulo{
-  cursor: pointer;
-  user-select: none;
-  background: #f1f1f1;
-  padding: 10px;
-  border-radius: 6px;
-  margin-top: 20px;
+/* GALERÍA DENTRO */
+.cat-contenido .galeria {
+  padding: 12px;
 }
