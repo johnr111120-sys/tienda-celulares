@@ -186,7 +186,13 @@ referrerpolicy="no-referrer-when-downgrade">
  
 </section>
 
-    <script>
+    <!-- MODAL DE IMAGEN (AISLADO) -->
+<div id="img-modal" class="img-modal" aria-hidden="true">
+  <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
+  <img id="img-modal-src" src="" alt="Vista ampliada">
+</div>
+
+      <script>
   const imgModal = document.getElementById("img-modal");
   const imgModalSrc = document.getElementById("img-modal-src");
 
@@ -210,13 +216,7 @@ referrerpolicy="no-referrer-when-downgrade">
   });
 </script>
 
-
-    <!-- MODAL DE IMAGEN (AISLADO) -->
-<div id="img-modal" class="img-modal" aria-hidden="true">
-  <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
-  <img id="img-modal-src" src="" alt="Vista ampliada">
-</div>
-
+    
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
 <div id="modal-producto" class="mp-overlay">
   <div class="mp-contenido">
