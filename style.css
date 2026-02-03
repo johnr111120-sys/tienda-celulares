@@ -256,12 +256,6 @@ body.no-scroll{
   touch-action: none;
 }
 
-@keyframes swipeHint{
-  0%{ transform: translate(-50%,0); opacity:.4; }
-  50%{ transform: translate(-50%,6px); opacity:1; }
-  100%{ transform: translate(-50%,0); opacity:.4; }
-}
-
 /* CONTENEDOR DE CATEGORÍA */
 .categoria {
   margin-bottom: 12px;
