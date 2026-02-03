@@ -332,7 +332,7 @@ body.no-scroll{
 .fab-productos{
   position: fixed;
   top: 15px;        /* ✅ arriba */
-  left: 15px;       /* ✅ izquierda */
+  left: 25px;       /* ✅ izquierda */
   bottom: auto;     /* ❌ anulado */
   right: auto;      /* ❌ anulado */
 
