@@ -67,3 +67,39 @@ body {
   width: 100%;
   border-radius: 8px;
 }
+
+/* =========================
+   MODAL DE IMAGEN AISLADO
+   ========================= */
+
+.img-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* por delante de todo */
+}
+
+.img-modal img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 12px;
+}
+
+/* Botón cerrar */
+.img-modal-close {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #0000FF; /* azul */
+  color: red;          /* X roja */
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
