@@ -417,8 +417,9 @@ function toggleCategoria(header){
 
     <script>
 function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
+  document.getElementById("menu-productos").classList.toggle("activo");
+  document.getElementById("overlay-productos").classList.toggle("activo");
+}
 
   menu.classList.toggle("activo");
   overlay.classList.toggle("activo");
