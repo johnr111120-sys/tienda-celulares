@@ -357,7 +357,7 @@ body.no-scroll{
   right: 15px;
   height: auto;           /* 👈 ya no pantalla completa */
   max-height: 75vh;       /* 👈 límite visible */
-  background: #fff;
+  background-color: transparent (0,0,0,0.85);
   z-index: 9998;
   transform: translateY(-20px);
   opacity: 0;
@@ -366,6 +366,7 @@ body.no-scroll{
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,.25);
   display: none;
+
 }
 
 
