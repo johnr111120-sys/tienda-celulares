@@ -296,17 +296,15 @@ body.no-scroll{
   font-size: 16px;
 }
 
-/* ICONO + / - */
-.cat-icon {
+.cat-icon{
   font-size: 22px;
   font-weight: bold;
+  transition: transform 0.35s ease;
 }
 
-/* CONTENIDO (CERRADO) */
-.cat-contenido {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s ease;
+/* cuando la categoría está abierta */
+.categoria.activa .cat-icon{
+  transform: rotate(45deg); /* + → × */
 }
 
 /* CONTENIDO (ABIERTO) */
