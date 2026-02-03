@@ -330,6 +330,22 @@ body.no-scroll{
   color: #128c7e;
 }
 
+/* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
+.fab-productos{
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
 /* ===== MENÚ PRODUCTOS ===== */
 .menu-productos{
   position: fixed;
