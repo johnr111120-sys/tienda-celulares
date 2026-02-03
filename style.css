@@ -318,3 +318,52 @@ body.no-scroll{
 .cat-contenido .galeria {
   padding: 12px;
 }
+/* =========================
+   CATEGORÍAS PLEGABLES
+   ========================= */
+
+.categoria{
+  margin-bottom: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Header táctil */
+.cat-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cat-header:active{
+  background: #f0f0f0; /* feedback táctil */
+}
+
+.cat-icon{
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+/* Contenido plegable */
+.cat-contenido{
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.45s ease,
+    opacity 0.3s ease;
+}
+
+/* ACTIVO */
+.categoria.activa .cat-contenido{
+  opacity: 1;
+}
+
+.categoria.activa .cat-icon{
+  transform: rotate(45deg); /* + → × */
+}
