@@ -256,5 +256,46 @@ function cerrarProducto(){
 }
 </script>
 
+    <script>
+/* =========================
+   SWIPE DOWN PARA CERRAR
+   ========================= */
+
+let startY = 0;
+let endY = 0;
+
+// Modal imagen
+const imgModalSwipe = document.getElementById("img-modal");
+
+// Modal producto
+const productoModalSwipe = document.getElementById("modal-producto");
+
+// Función genérica
+function activarSwipe(modal, cerrarFn){
+  if(!modal) return;
+
+  modal.addEventListener("touchstart", e => {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener("touchmove", e => {
+    endY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener("touchend", () => {
+    if(endY - startY > 80){ // distancia swipe
+      cerrarFn();
+    }
+    startY = 0;
+    endY = 0;
+  });
+}
+
+// Activar swipe
+activarSwipe(imgModalSwipe, cerrarImgModal);
+activarSwipe(productoModalSwipe, cerrarProducto);
+</script>
+
+
     </body>
 </html>
