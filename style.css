@@ -264,10 +264,10 @@ body.no-scroll{
 
 /* imagen */
 .img-modal{
-  animation: modalIn 0.35s ease-out;
+  animation: modalIn 0.30s ease-out;
 }
 
 /* producto */
 .mp-overlay.activo .mp-contenido{
-  animation: modalIn 0.35s ease-out;
+  animation: modalIn 0.30s ease-out;
 }
