@@ -103,3 +103,81 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
+/* =========================
+   MODAL PRODUCTO (AISLADO)
+   ========================= */
+
+.mp-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* siempre arriba */
+}
+
+.mp-overlay.activo{
+  display: flex;
+}
+
+.mp-contenido{
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+}
+
+.mp-contenido img{
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.mp-contenido h3{
+  margin: 10px 0 5px;
+}
+
+.mp-contenido p{
+  font-size: 14px;
+  color: #555;
+}
+
+.mp-contenido strong{
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  color: #25d366;
+}
+
+/* BOTÓN WHATSAPP */
+.mp-wsp{
+  display: block;
+  margin-top: 15px;
+  padding: 12px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* BOTÓN X */
+.mp-cerrar{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #0000FF;
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
