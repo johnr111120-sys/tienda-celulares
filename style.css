@@ -247,3 +247,21 @@ body {
   background-color: #0000FF;
   color: red;
 }
+/* =========================
+   X MÁS RELLENA Y FUERTE
+   ========================= */
+
+.img-modal-close,
+.mp-cerrar{
+  width: 56px;
+  height: 56px;
+  font-size: 30px;
+  font-weight: 900;          /* ← hace la X más gruesa */
+  line-height: 1;
+  border: 3px solid #0000FF; /* círculo azul */
+  background: transparent;
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
