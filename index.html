@@ -52,7 +52,7 @@
 
     <!-- 📍 LOCAL -->
    <div class="categoria activa">
-      <div class="cat-header" onclick="toggleCategoriaGaleria(this)">
+      <div class="cat-header" onclick="toggleCategoria(this)">
         <h3>📍 Local</h3>
         <span class="cat-icon">+</span>
       </div>
@@ -222,29 +222,23 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 </script>
 
 <script>
-function toggleCategoriaGaleria(header){
+function toggleCategoria(header){
   const categoria = header.parentElement;
+  const contenido = categoria.querySelector('.cat-contenido');
   const icono = header.querySelector('.cat-icon');
   const abierta = categoria.classList.contains('activa');
 
- function toggleCategoria(header){
-  const categoria = header.parentElement;
-  const icono = header.querySelector('.cat-icon');
-
-  const abierta = categoria.classList.contains('activa');
-
-  // cerrar solo las otras
+  // cerrar TODAS
   document.querySelectorAll('.categoria').forEach(cat => {
-    if(cat !== categoria){
-      cat.classList.remove('activa');
-      const ic = cat.querySelector('.cat-icon');
-      if(ic) ic.textContent = '+';
-    }
+    cat.classList.remove('activa');
+    cat.querySelector('.cat-icon').textContent = '+';
   });
 
-  // alternar la tocada
-  categoria.classList.toggle('activa', !abierta);
-  icono.textContent = abierta ? '+' : '−';
+  // si estaba cerrada, abrir SOLO esta
+  if(!abierta){
+    categoria.classList.add('activa');
+    icono.textContent = '−';
+  }
 }
 </script>
 
@@ -254,7 +248,7 @@ function toggleCategoriaGaleria(header){
 
   <!-- 📱 CELULARES -->
   <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoriaMenu(this)">
+    <div class="cat-header" onclick="toggleCategoria(this)">
       <h4>📱 Celulares</h4>
       <span class="cat-icon">+</span>
     </div>
@@ -418,7 +412,6 @@ function toggleCategoriaGaleria(header){
     
 <!-- BOTÓN PRODUCTOS -->
 <button class="fab-productos" onclick="toggleMenuProductos()">
- <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
   <span class="icono-menu">☰</span>
 </button>
 
@@ -427,15 +420,16 @@ function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
 
-  if(!menu || !overlay) return;
-
   const activo = menu.classList.toggle("activo");
-  overlay.classList.toggle("activo", activo);
+  overlay.classList.toggle("activo");
 
+  // 🔒 Bloquear / liberar scroll
   document.body.style.overflow = activo ? "hidden" : "";
 }
 </script>
 
+    
+<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
 
     </body>
 </html>
