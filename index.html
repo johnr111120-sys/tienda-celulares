@@ -43,46 +43,58 @@
 <section id="galeria">
   <h2>Galería</h2>
 
-  <!-- 📍 LOCAL -->
-  <div class="categoria activa">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h3>📍 Local</h3>
-      <span class="cat-icon">+</span>
+  <!-- ===================== -->
+  <!-- 📸 GALERÍA DEL LOCAL -->
+  <!-- ===================== -->
+  <div class="bloque-galeria">
+    <h2 class="bloque-titulo">📸 Nuestro Local & Reparaciones</h2>
+
+    <!-- 📍 LOCAL -->
+    <div class="categoria activa">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <h3>📍 Local</h3>
+        <span class="cat-icon">+</span>
+      </div>
+      <div class="cat-contenido">
+        <div class="galeria">
+          <img src="images/local4.jpg" onclick="abrirImgModal(this.src)">
+          <img src="images/local3.jpg" onclick="abrirImgModal(this.src)">
+          <img src="images/local2.jpg" onclick="abrirImgModal(this.src)">
+          <img src="images/local1.jpg" onclick="abrirImgModal(this.src)">
+        </div>
+      </div>
     </div>
-    <div class="cat-contenido">
-      <div class="galeria">
-        <img src="images/local4.jpg" onclick="abrirImgModal(this.src)">
-        <img src="images/local3.jpg" onclick="abrirImgModal(this.src)">
-        <img src="images/local2.jpg" onclick="abrirImgModal(this.src)">
-        <img src="images/local1.jpg" onclick="abrirImgModal(this.src)">
+
+    <!-- 🔧 REPARACIONES -->
+    <div class="categoria">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <h3>🔧 Reparaciones</h3>
+        <span class="cat-icon">+</span>
+      </div>
+      <div class="cat-contenido">
+        <div class="galeria">
+          <img src="images/reparaciones1.jpg" onclick="abrirImgModal(this.src)">
+          <img src="images/reparaciones2.jpg" onclick="abrirImgModal(this.src)">
+          <img src="images/reparaciones3.jpg" onclick="abrirImgModal(this.src)">
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 🔧 REPARACIONES -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h3>🔧 Reparaciones</h3>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
-        <img src="images/reparaciones1.jpg" onclick="abrirImgModal(this.src)">
-        <img src="images/reparaciones2.jpg" onclick="abrirImgModal(this.src)">
-        <img src="images/reparaciones3.jpg" onclick="abrirImgModal(this.src)">
+  <!-- ===================== -->
+  <!-- 🛒 PRODUCTOS -->
+  <!-- ===================== -->
+  <div class="bloque-galeria">
+    <h2 class="bloque-titulo">🛒 Productos</h2>
+
+    <!-- 🎧 ACCESORIOS -->
+    <div class="categoria">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <h3>🎧 Accesorios</h3>
+        <span class="cat-icon">+</span>
       </div>
-    </div>
-  </div>
-
-  <!-- 🎧 ACCESORIOS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h3>🎧 Accesorios</h3>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
-
+      <div class="cat-contenido">
+        <div class="galeria">
         <img src="images/accesorios4.jpg"
         onclick="abrirProducto(
           'images/accesorios4.jpg',
@@ -123,15 +135,14 @@
     </div>
   </div>
 
-  <!-- 📱 CELULARES -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h3>📱 Celulares</h3>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
-
+    <!-- 📱 CELULARES -->
+    <div class="categoria">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <h3>📱 Celulares</h3>
+        <span class="cat-icon">+</span>
+      </div>
+      <div class="cat-contenido">
+        <div class="galeria">
         <img src="images/cell1.jpg"
         onclick="abrirProducto(
           'images/cell1.jpg',
@@ -182,13 +193,13 @@
   </div>
 
   <!-- 📟 TABLETS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h3>📟 Tablets</h3>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
+    <div class="categoria">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <h3>📟 Tablets</h3>
+        <span class="cat-icon">+</span>
+      </div>
+      <div class="cat-contenido">
+        <div class="galeria">
 
         <img src="images/tablet1.jpg"
         onclick="abrirProducto(
