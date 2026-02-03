@@ -386,14 +386,3 @@ body.no-scroll{
   text-align: center;
   margin-bottom: 10px;
 }
-/* =====================
-   BOTÓN PRODUCTOS ☰
-===================== */
-.btn-productos{
-  position: fixed;
-  top: 15px;        /* 👈 arriba */
-  left: 15px;       /* 👈 izquierda */
-  bottom: auto;     /* ❌ elimina abajo */
-  right: auto;      /* ❌ elimina derecha */
-  z-index: 9999;
-}
