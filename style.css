@@ -356,7 +356,7 @@ body.no-scroll{
   position: fixed;
   top: 60px;              /* deja ver el header */
   left: 0px;
-  right: 400px;
+  right: 600px;
   height: auto;           /* 👈 ya no pantalla completa */
   max-height: 75vh;       /* 👈 límite visible */
   background: #fff;
