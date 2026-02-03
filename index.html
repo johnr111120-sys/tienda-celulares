@@ -118,14 +118,20 @@ referrerpolicy="no-referrer-when-downgrade">
     imgModalSrc.src = src;
     imgModal.style.display = "flex";
     imgModal.setAttribute("aria-hidden", "false");
-  }
-
+      
+  /* 🔒 BLOQUEA EL FONDO */
+  document.body.style.overflow = "hidden";
+}
+          
   function cerrarImgModal() {
     imgModal.style.display = "none";
     imgModalSrc.src = "";
     imgModal.setAttribute("aria-hidden", "true");
-  }
-
+      
+  /* 🔓 RESTAURA EL FONDO */          
+document.body.style.overflow = "";
+}
+          
   // Cerrar tocando fuera de la imagen
   imgModal.addEventListener("click", (e) => {
     if (e.target === imgModal) {
@@ -194,18 +200,23 @@ function abrirProducto(img, titulo, desc, precio, mensaje){
   document.getElementById("mp-titulo").textContent = titulo;
   document.getElementById("mp-desc").textContent = desc;
   document.getElementById("mp-precio").textContent = precio;
-
   document.getElementById("mp-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
-
-  document.getElementById("modal-producto")
+      "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+document.getElementById("modal-producto")
     .classList.add("activo");
+    
+ /* 🔒 BLOQUEA EL FONDO */    
+  document.body.style.overflow = "hidden";
 }
-
+    
 function cerrarProducto(){
   document.getElementById("modal-producto")
     .classList.remove("activo");
+    
+  /* 🔓 RESTAURA EL FONDO */
+  document.body.style.overflow = "";
 }
+    
     function abrirProducto(img, titulo, desc, precio, mensaje){
   document.getElementById("mp-img").src = img;
   document.getElementById("mp-titulo").textContent = titulo;
