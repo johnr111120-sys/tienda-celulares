@@ -226,19 +226,17 @@ function toggleCategoria(header){
   const categoria = header.parentElement;
   const contenido = categoria.querySelector('.cat-contenido');
   const icono = header.querySelector('.cat-icon');
-  const abierta = categoria.classList.contains('abierta');
+  const abierta = categoria.classList.contains('activa');
 
   // cerrar TODAS
   document.querySelectorAll('.categoria').forEach(cat => {
-    cat.classList.remove('abierta');
-    cat.querySelector('.cat-contenido').style.maxHeight = null;
+    cat.classList.remove('activa');
     cat.querySelector('.cat-icon').textContent = '+';
   });
 
   // si estaba cerrada, abrir SOLO esta
   if(!abierta){
-    categoria.classList.add('abierta');
-    contenido.style.maxHeight = contenido.scrollHeight + "px";
+    categoria.classList.add('activa');
     icono.textContent = '−';
   }
 }
