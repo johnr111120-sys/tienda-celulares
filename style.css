@@ -1,42 +1,19 @@
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
 }
-
-/* Fondo con imagen fija y blur */
-.fondo-blur {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("Logo1.jpg") center / cover no-repeat fixed;
-  filter: blur(8px);
-  transform: scale(1.1); /* evita bordes al difuminar */
-  z-index: -1;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: -1;
-}
-
 
 nav{
   background:#000;
-  padding:15px;
+  padding:10px;
   text-align:center;
+  margin-top: 20px;
 }
 nav a{
   color:white;
-  margin:15px;
+  margin:30px;
   text-decoration:none;
 }
 
@@ -48,10 +25,10 @@ header {
 }
 
 section {
-    background: rgba(255,255,255,0.9);
-    border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
+    background-color: white;
+    margin: 15px;
+    border-radius: 8px;
 }
 
 footer {
@@ -61,7 +38,7 @@ footer {
     padding: 15px;
 }
 
-.whatsapp{ +1 829 201 7321
+.whatsapp{
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -78,235 +55,388 @@ footer {
   h1{ font-size:24px; }
 }
 
-body {
-  margin: 0;
-}
-
-.galeria {
+.galeria{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
 }
 
-.galeria img {
+.galeria img{
   width: 100%;
-  height: auto;
-  display: block;
   border-radius: 8px;
 }
-.galeria img{
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+/* =========================
+   MODAL DE IMAGEN AISLADO
+   ========================= */
+
+.img-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* por delante de todo */
+}
+
+.img-modal img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 12px;
+}
+
+/* Botón cerrar */
+.img-modal-close {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0000FF; /* azul */
+  color: red;          /* X roja */
+  font-size: 22px;
+  font-weight: bold;
   cursor: pointer;
 }
 
-/* PC */
-.galeria img:hover{
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
+/* =========================
+   MODAL PRODUCTO (AISLADO)
+   ========================= */
 
-/* MÓVIL */
-.galeria img:active{
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-#modal{
-  display: none;
+.mp-overlay{
   position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
   align-items: center;
+  justify-content: center;
+  z-index: 9999; /* siempre arriba */
 }
 
-#modal img{
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
-}
-.whatsapp{
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  color: white;
-  font-size: 28px;
-  padding: 15px 18px;
-  border-radius: 50%;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  z-index: 999;
+.mp-overlay.activo{
+  display: flex;
 }
 
-.whatsapp:hover{
-  background: #1ebe5d;
-}
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-  }
-  70% {
-    transform: scale(1.08);
-    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-  }
-}
-
-.whatsapp{
-  animation: pulse 2s infinite;
-}
-.reseñas{
-  background: #f9f9f9;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.reseña{
-  max-width: 600px;
-  margin: 20px auto;
-  background: white;
+.mp-contenido{
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 14px;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.reseña p{
-  font-style: italic;
-  margin-bottom: 10px;
-}
-
-.reseña span{
-  color: #f5b301;
-  font-weight: bold;
-}
-.carrusel{
   position: relative;
-  max-width: 700px;
-  margin: auto;
+  text-align: center;
 }
 
-.reseña{
-  display: none;
-  background: white;
-  padding: 20px;
+.mp-contenido img{
+  width: 100%;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
 }
 
-.reseña.activa{
-  display: block;
+.mp-contenido h3{
+  margin: 10px 0 5px;
 }
-.btn-google{
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 20px;
-  background: #4285F4;
-  color: white;
-  border-radius: 6px;
+
+.mp-contenido p{
+  font-size: 14px;
+  color: #555;
+}
+
+.mp-contenido strong{
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  color: #25d366;
+}
+
+/* BOTÓN WHATSAPP */
+.mp-wsp{
+  display: block;
+  margin-top: 15px;
+  padding: 12px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
 }
 
-#servicios {
-  padding: 40px 20px;
-  text-align: center;
+/* BOTÓN X */
+.mp-cerrar{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 4px solid #0000FF; /* círculo azul LINEAL */
+  background: transparent;  /* sin relleno */
+  color: red;               /* X roja */
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
 }
+/* =========================
+   ORDEN VISUAL DE GALERÍA
+   ========================= */
 
-#servicios h2 {
-  margin-bottom: 30px;
-}
-
-.servicios {
+/* Contenedor */
+.galeria{
   display: grid;
-  grid-template-columns: repeat(2, minmax(2, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 15px;
 }
 
-/* Desktop */
-@media (max-width: 768px) {
-  .galeria {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Tarjeta visual */
+.galeria img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-@media (max-width: 768px) {
-  .galeria {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Efecto al pasar el dedo / mouse */
+.galeria img:hover{
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
-.servicio {
-  background: #f7f7f7;
-  padding: 20px;
+/* Móvil: imágenes un poco más bajas */
+@media (max-width: 600px){
+  .galeria img{
+    height: 180px;
+  }
+}
+/* =========================
+   CATEGORÍAS GALERÍA
+   ========================= */
+.cat-titulo{
+  margin: 25px 10px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+}
+
+/* =========================
+   AGRANDAR BOTÓN X (AMBOS MODALES)
+   ========================= */
+
+/* Modal imagen */
+.img-modal-close{
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  border: 4px solid #0000FF; /* círculo azul lineal */
+  background: transparent;  /* sin relleno */
+  color: red;               /* X roja */
+}
+
+/* Modal producto */
+.mp-cerrar{
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  border: 3px solid #0000FF;
+  background-color: #0000FF;
+  color: red;
+}
+
+/* =========================
+   BLOQUEAR SCROLL FONDO
+   ========================= */
+body.no-scroll{
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* CONTENEDOR DE CATEGORÍA */
+.categoria {
+  margin-bottom: 12px;
   border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
 }
 
-.servicio span {
-  font-size: 40px;
+/* HEADER */
+.cat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.cat-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* ICONO + / - */
+.cat-icon {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* CONTENIDO (CERRADO) */
+.cat-contenido {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+
+/* CONTENIDO (ABIERTO) */
+.categoria.activa .cat-contenido {
+  max-height: 5000px; /* 🔥 CLAVE: altura grande */
+}
+
+/* GALERÍA DENTRO */
+.cat-contenido .galeria {
+  padding: 12px;
+}
+.bloque-galeria{
+  margin-top: 30px;
+}
+
+.bloque-titulo{
+  text-align: center;
+  margin: 30px 0 15px;
+  font-size: 22px;
+  font-weight: bold;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+.producto-item{
+  text-align: center;
+}
+
+.producto-precio{
   display: block;
+  margin-top: 6px;
+  font-weight: bold;
+  color: #25d366;
+  font-size: 15px;
+}
+
+/* Precio resalta */
+.producto-item:hover .producto-precio{
+  color: #128c7e;
+}
+
+/* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
+.fab-productos{
+  position: fixed;
+  top: 18px;        /* ✅ arriba */
+  left: 35px;       /* ✅ izquierda */
+  bottom: auto;     /* ❌ anulado */
+  right: auto;      /* ❌ anulado */
+
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+/* =====================
+   MENÚ PRODUCTOS (SUPERIOR)
+===================== */
+.menu-productos{
+  position: fixed;
+  top: 90px;              /* deja ver el header */
+  left: 15px;
+  right: 15px;
+  height: auto;           /* 👈 ya no pantalla completa */
+  max-height: 75vh;       /* 👈 límite visible */
+  background: #fff;
+  z-index: 9998;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+  overflow-y: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  display: none;
+}
+
+
+/* ACTIVO */
+.menu-productos.activo{
+  transform: translateY(0);
+  opacity: 1;
+  display: block;
+}
+
+.menu-productos.activo{
+  display: block;
+}
+
+.menu-titulo{
+  text-align: center;
   margin-bottom: 10px;
 }
 
-.servicio h3 {
-  margin: 10px 0;
-}
-
-.servicio strong {
-  display: block;
-  margin-top: 10px;
-  color: #25d366;
-}
-.btn-whatsapp {
+/* ===== ICONO BOTÓN PRODUCTOS ===== */
+.icono-menu{
   display: inline-block;
-  margin-top: 50px;
-  padding: 45px 50px;
-  background: #25d366;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 40px;
-  font-weight: bold;
+  transition: transform 0.35s ease, opacity 0.2s ease;
 }
 
-.btn-whatsapp:hover {
-  background: #1ebe5d;
+/* Cuando el menú está abierto */
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  transform: rotate(90deg);
 }
-.btn-llamar {
+
+/* Cambiar ☰ por ✕ visualmente */
+.menu-productos.activo ~ .fab-productos .icono-menu::before{
+  content: "✕";
+}
+
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  color: #fff;
+}
+
+/* ===== OVERLAY OSCURO ===== */
+.overlay-productos{
   position: fixed;
-  bottom: 120px;
-  right: 15px;
-  background: #007bff;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  z-index: 999;
-  display: block;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9997;
 }
 
-/* Solo móviles */
-@media (max-width: 768px) {
-.btn-llamar {
-  display: block;
+.overlay-productos.activo{
+  opacity: 1;
+  pointer-events: auto;
 }
+/* =========================
+   FONDO CON IMAGEN + BLUR
+   ========================= */
+
+body{
+  position: relative;
+  z-index: 0;
 }
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 30px;
+
+/* Capa de fondo */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)),
+  background: url("images/Logo1.jpg") center / cover no-repeat;
+  filter: blur(12px);
+  transform: scale(1.1); /* evita bordes blancos */
+  z-index: -1;
 }
