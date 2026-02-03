@@ -214,3 +214,12 @@ body {
     height: 180px;
   }
 }
+/* =========================
+   CATEGORÍAS GALERÍA
+   ========================= */
+.cat-titulo{
+  margin: 25px 10px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+}
