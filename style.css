@@ -320,3 +320,21 @@ body.no-scroll{
 .categoria.activa .cat-icon{
   transform: rotate(45deg); /* + se vuelve X */
 }
+
+.cat-contenido{
+  display: none;
+  margin-top: 10px;
+}
+
+.categoria.activa .cat-contenido{
+  display: grid;
+}
+
+.cat-titulo{
+  cursor: pointer;
+  user-select: none;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 20px;
+}
