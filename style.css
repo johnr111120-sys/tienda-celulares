@@ -174,9 +174,9 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: none;
-  background: #0000FF;
-  color: red;
+  border: 2px solid #0000FF; /* círculo azul LINEAL */
+  background: transparent;  /* sin relleno */
+  color: red;               /* X roja */
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
