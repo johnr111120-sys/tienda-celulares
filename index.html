@@ -227,17 +227,25 @@ function toggleCategoriaGaleria(header){
   const icono = header.querySelector('.cat-icon');
   const abierta = categoria.classList.contains('activa');
 
-  document.querySelectorAll('#galeria .categoria').forEach(cat => {
-    cat.classList.remove('activa');
-    cat.querySelector('.cat-icon').textContent = '+';
+ function toggleCategoria(header){
+  const categoria = header.parentElement;
+  const icono = header.querySelector('.cat-icon');
+
+  const abierta = categoria.classList.contains('activa');
+
+  // cerrar solo las otras
+  document.querySelectorAll('.categoria').forEach(cat => {
+    if(cat !== categoria){
+      cat.classList.remove('activa');
+      const ic = cat.querySelector('.cat-icon');
+      if(ic) ic.textContent = '+';
+    }
   });
 
-  if(!abierta){
-    categoria.classList.add('activa');
-    icono.textContent = '−';
-  }
+  // alternar la tocada
+  categoria.classList.toggle('activa', !abierta);
+  icono.textContent = abierta ? '+' : '−';
 }
-
 </script>
 
 <div id="menu-productos" class="menu-productos">
@@ -410,30 +418,24 @@ function toggleCategoriaGaleria(header){
     
 <!-- BOTÓN PRODUCTOS -->
 <button class="fab-productos" onclick="toggleMenuProductos()">
+ <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
   <span class="icono-menu">☰</span>
 </button>
 
 <script>
-function toggleCategoriaMenu(header){
-  const categoria = header.parentElement;
-  const icono = header.querySelector('.cat-icon');
-  const abierta = categoria.classList.contains('activa');
+function toggleMenuProductos(){
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
 
-  document.querySelectorAll('#menu-productos .categoria').forEach(cat => {
-    cat.classList.remove('activa');
-    cat.querySelector('.cat-icon').textContent = '+';
-  });
+  if(!menu || !overlay) return;
 
-  if(!abierta){
-    categoria.classList.add('activa');
-    icono.textContent = '−';
-  }
+  const activo = menu.classList.toggle("activo");
+  overlay.classList.toggle("activo", activo);
+
+  document.body.style.overflow = activo ? "hidden" : "";
 }
-
 </script>
 
-    
-<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
 
     </body>
 </html>
