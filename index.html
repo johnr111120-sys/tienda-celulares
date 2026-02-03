@@ -110,69 +110,29 @@ referrerpolicy="no-referrer-when-downgrade">
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
 
-      <script>
-  const imgModal = document.getElementById("img-modal");
-  const imgModalSrc = document.getElementById("img-modal-src");
+  <script>
+const imgModal = document.getElementById("img-modal");
+const imgModalSrc = document.getElementById("img-modal-src");
 
-  function abrirImgModal(src) {
-    imgModalSrc.src = src;
-    imgModal.style.display = "flex";
-    imgModal.setAttribute("aria-hidden", "false");
-      
-  /* 🔒 BLOQUEA EL FONDO */
-  document.body.style.overflow = "hidden";
-}
-          
-  function cerrarImgModal() {
-    imgModal.style.display = "none";
-    imgModalSrc.src = "";
-    imgModal.setAttribute("aria-hidden", "true");
-      
-  /* 🔓 RESTAURA EL FONDO */          
-document.body.style.overflow = "";
-}
-          
-  // Cerrar tocando fuera de la imagen
-  imgModal.addEventListener("click", (e) => {
-    if (e.target === imgModal) {
-      cerrarImgModal();
-    }
-  });
-
-   function abrirImgModal(src) {
+function abrirImgModal(src){
   imgModalSrc.src = src;
   imgModal.style.display = "flex";
-  imgModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("no-scroll"); // ← AQUI
+  imgModal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
 }
 
-   function cerrarImgModal() {
+function cerrarImgModal(){
   imgModal.style.display = "none";
   imgModalSrc.src = "";
-  imgModal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("no-scroll"); // ← AQUI
-}
-      
-function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
-
-  menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
+  imgModal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
 }
 
-const overlay = document.querySelector(".img-modal, .mp-overlay");
-
-if (overlay) {
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      cerrarImgModal?.();
-      cerrarProducto?.();
-      document.body.style.overflow = "";
-    }
-  });
-}       
+imgModal.addEventListener("click", e=>{
+  if(e.target === imgModal) cerrarImgModal();
+});
 </script>
+
 
     
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
@@ -195,29 +155,9 @@ if (overlay) {
 </div>
 
 <script>
-function abrirProducto(img, titulo, desc, precio, mensaje){
-  document.getElementById("mp-img").src = img;
-  document.getElementById("mp-titulo").textContent = titulo;
-  document.getElementById("mp-desc").textContent = desc;
-  document.getElementById("mp-precio").textContent = precio;
-  document.getElementById("mp-whatsapp").href =
-      "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
-document.getElementById("modal-producto")
-    .classList.add("activo");
-    
- /* 🔒 BLOQUEA EL FONDO */    
-  document.body.style.overflow = "hidden";
-}
-    
-function cerrarProducto(){
-  document.getElementById("modal-producto")
-    .classList.remove("activo");
-    
-  /* 🔓 RESTAURA EL FONDO */
-  document.body.style.overflow = "";
-}
-    
-    function abrirProducto(img, titulo, desc, precio, mensaje){
+const modalProducto = document.getElementById("modal-producto");
+
+function abrirProducto(img,titulo,desc,precio,mensaje){
   document.getElementById("mp-img").src = img;
   document.getElementById("mp-titulo").textContent = titulo;
   document.getElementById("mp-desc").textContent = desc;
@@ -225,16 +165,20 @@ function cerrarProducto(){
   document.getElementById("mp-whatsapp").href =
     "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
 
-  document.getElementById("modal-producto").classList.add("activo");
-  document.body.classList.add("no-scroll"); // ← AQUI
+  modalProducto.classList.add("activo");
+  document.body.style.overflow = "hidden";
 }
 
-    function cerrarProducto(){
-  document.getElementById("modal-producto").classList.remove("activo");
-  document.body.classList.remove("no-scroll"); // ← AQUI
+function cerrarProducto(){
+  modalProducto.classList.remove("activo");
+  document.body.style.overflow = "";
 }
 
+modalProducto.addEventListener("click", e=>{
+  if(e.target === modalProducto) cerrarProducto();
+});
 </script>
+
 
     <script>
 /* =========================
