@@ -370,3 +370,22 @@ body.no-scroll{
   text-align: center;
   margin-bottom: 10px;
 }
+/* =====================
+   BOTÓN PRODUCTOS ☰
+===================== */
+.btn-productos{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 10000;
+
+  background: #000;
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+
+  font-size: 22px;
+  cursor: pointer;
+}
