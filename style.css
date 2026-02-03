@@ -419,3 +419,22 @@ body.no-scroll{
   opacity: 1;
   pointer-events: auto;
 }
+/* =========================
+   FONDO CON IMAGEN + BLUR
+   ========================= */
+
+body{
+  position: relative;
+  z-index: 0;
+}
+
+/* Capa de fondo */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("images/fondo.jpg") center / cover no-repeat;
+  filter: blur(12px);
+  transform: scale(1.1); /* evita bordes blancos */
+  z-index: -1;
+}
