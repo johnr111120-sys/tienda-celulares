@@ -318,3 +318,15 @@ body.no-scroll{
 .cat-contenido .galeria {
   padding: 12px;
 }
+.bloque-galeria{
+  margin-top: 30px;
+}
+
+.bloque-titulo{
+  text-align: center;
+  margin: 30px 0 15px;
+  font-size: 22px;
+  font-weight: bold;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
