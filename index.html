@@ -421,7 +421,7 @@ function toggleMenuProductos(){
   const overlay = document.getElementById("overlay-productos");
 
   const activo = menu.classList.toggle("activo");
-  overlay.classList.toggle("activo", activo);
+  overlay.classList.toggle("activo");
 
   // 🔒 Bloquear / liberar scroll
   document.body.style.overflow = activo ? "hidden" : "";
