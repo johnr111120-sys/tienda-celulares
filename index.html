@@ -50,7 +50,7 @@
   <h2>Galería</h2>
 
   <!-- 📍 LOCAL -->
-  <div class="categoria">
+  <div class="categoria activa">
     <div class="cat-header" onclick="toggleCategoria(this)">
       <h3>📍 Local</h3>
       <span class="cat-icon">+</span>
@@ -405,6 +405,14 @@ function toggleCategoria(header){
 }
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const abierta = document.querySelector(".categoria.activa .cat-contenido");
+  if(abierta){
+    abierta.style.maxHeight = abierta.scrollHeight + "px";
+  }
+});
+</script>
 
     
     </body>
