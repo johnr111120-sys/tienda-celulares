@@ -415,22 +415,21 @@ function toggleCategoria(header){
   <span class="icono-menu">☰</span>
 </button>
 
-    <script>
+<script>
 function toggleMenuProductos(){
-  document.getElementById("menu-productos").classList.toggle("activo");
-  document.getElementById("overlay-productos").classList.toggle("activo");
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+
+  const activo = menu.classList.toggle("activo");
+  overlay.classList.toggle("activo", activo);
+
+  // 🔒 Bloquear / liberar scroll
+  document.body.style.overflow = activo ? "hidden" : "";
 }
+</script>
 
-  menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
-
-  document.body.style.overflow =
-    menu.classList.contains("activo") ? "hidden" : "";
-}
-
-<div id="overlay-productos"class="overlay-productos"onclick="toggleMenuProductos()"></div>     
-
-    </script>
+    
+<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
 
     </body>
 </html>
