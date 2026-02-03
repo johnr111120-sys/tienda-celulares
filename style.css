@@ -355,8 +355,8 @@ body.no-scroll{
 .menu-productos{
   position: fixed;
   top: 60px;              /* deja ver el header */
-  left: 10px;
-  right: 50px;
+  left: 0px;
+  right: 400px;
   height: auto;           /* 👈 ya no pantalla completa */
   max-height: 75vh;       /* 👈 límite visible */
   background: #fff;
