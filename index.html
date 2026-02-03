@@ -71,6 +71,31 @@ referrerpolicy="no-referrer-when-downgrade">
  
 </section>
 
+    <script>
+  const imgModal = document.getElementById("img-modal");
+  const imgModalSrc = document.getElementById("img-modal-src");
+
+  function abrirImgModal(src) {
+    imgModalSrc.src = src;
+    imgModal.style.display = "flex";
+    imgModal.setAttribute("aria-hidden", "false");
+  }
+
+  function cerrarImgModal() {
+    imgModal.style.display = "none";
+    imgModalSrc.src = "";
+    imgModal.setAttribute("aria-hidden", "true");
+  }
+
+  // Cerrar tocando fuera de la imagen
+  imgModal.addEventListener("click", (e) => {
+    if (e.target === imgModal) {
+      cerrarImgModal();
+    }
+  });
+</script>
+
+
     <!-- MODAL DE IMAGEN (AISLADO) -->
 <div id="img-modal" class="img-modal" aria-hidden="true">
   <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
