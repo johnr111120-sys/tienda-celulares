@@ -313,3 +313,14 @@ body.no-scroll{
   border-bottom: 2px solid #eee;
   padding-bottom: 10px;
 }
+.producto-item{
+  text-align: center;
+}
+
+.producto-precio{
+  display: block;
+  margin-top: 6px;
+  font-weight: bold;
+  color: #25d366;
+  font-size: 15px;
+}
