@@ -9,6 +9,7 @@ nav{
   background:#000;
   padding:10px;
   text-align:center;
+  margin-top: 20px;
 }
 nav a{
   color:white;
@@ -351,7 +352,7 @@ body.no-scroll{
 ===================== */
 .menu-productos{
   position: fixed;
-  top: 60px;              /* deja ver el header */
+  top: 90px;              /* deja ver el header */
   left: 15px;
   right: 15px;
   height: auto;           /* 👈 ya no pantalla completa */
