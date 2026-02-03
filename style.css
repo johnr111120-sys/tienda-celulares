@@ -97,7 +97,7 @@ body {
   height: 42px;
   border-radius: 50%;
   border: none;
-  background: #0000FF; /* azul */
+  background-color: #0000FF; /* azul */
   color: red;          /* X roja */
   font-size: 22px;
   font-weight: bold;
@@ -174,8 +174,8 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border-color: black; /* círculo azul LINEAL */
-  background: FFFF;  /* sin relleno */
+  border: 2px solid #0000FF; /* círculo azul LINEAL */
+  background-color: #0000FF;  /* sin relleno */
   color: red;               /* X roja */
   font-size: 30px;
   font-weight: bold;
@@ -222,4 +222,28 @@ body {
   font-size: 20px;
   font-weight: bold;
   color: #111;
+}
+
+/* =========================
+   AGRANDAR BOTÓN X (AMBOS MODALES)
+   ========================= */
+
+/* Modal imagen */
+.img-modal-close{
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  border: 3px solid #0000FF; /* círculo azul lineal */
+  background-color: #0000FF;  /* sin relleno */
+  color: red;               /* X roja */
+}
+
+/* Modal producto */
+.mp-cerrar{
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  border: 3px solid #0000FF;
+  background-color: #0000FF;
+  color: red;
 }
