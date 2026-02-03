@@ -389,30 +389,26 @@ function toggleCategoria(header){
 <script>
 function toggleCategoria(header){
   const categoria = header.parentElement;
+  const contenido = categoria.querySelector('.cat-contenido');
+  const icono = header.querySelector('.cat-icon');
+  const abierta = categoria.classList.contains('abierta');
 
-  // cerrar todas
+  // cerrar TODAS
   document.querySelectorAll('.categoria').forEach(cat => {
-    if(cat !== categoria){
-      cat.classList.remove('activa');
-      cat.querySelector('.cat-icon').textContent = '+';
-    }
+    cat.classList.remove('abierta');
+    cat.querySelector('.cat-contenido').style.maxHeight = null;
+    cat.querySelector('.cat-icon').textContent = '+';
   });
 
-  // abrir / cerrar actual
-  categoria.classList.toggle('activa');
-  const icon = header.querySelector('.cat-icon');
-  icon.textContent = categoria.classList.contains('activa') ? '−' : '+';
+  // si estaba cerrada, abrir SOLO esta
+  if(!abierta){
+    categoria.classList.add('abierta');
+    contenido.style.maxHeight = contenido.scrollHeight + "px";
+    icono.textContent = '−';
+  }
 }
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const abierta = document.querySelector(".categoria.activa .cat-contenido");
-  if(abierta){
-    abierta.style.maxHeight = abierta.scrollHeight + "px";
-  }
-});
-</script>
 
     
     </body>
