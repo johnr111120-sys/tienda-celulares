@@ -333,7 +333,7 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;
-  top: 50px;        /* ✅ arriba */
+  top: 38px;        /* ✅ arriba */
   left: 15px;       /* ✅ izquierda */
   bottom: auto;     /* ❌ anulado */
   right: auto;      /* ❌ anulado */
@@ -385,4 +385,24 @@ body.no-scroll{
 .menu-titulo{
   text-align: center;
   margin-bottom: 10px;
+}
+
+/* ===== ICONO BOTÓN PRODUCTOS ===== */
+.icono-menu{
+  display: inline-block;
+  transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+/* Cuando el menú está abierto */
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  transform: rotate(90deg);
+}
+
+/* Cambiar ☰ por ✕ visualmente */
+.menu-productos.activo ~ .fab-productos .icono-menu::before{
+  content: "✕";
+}
+
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  color: #fff;
 }
