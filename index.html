@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -53,7 +52,7 @@
 
     <!-- 📍 LOCAL -->
    <div class="categoria activa">
-      <div class="cat-header" onclick="toggleCategoria(this)">
+      <div class="cat-header" onclick="toggleCategoriaGaleria(this)">
         <h3>📍 Local</h3>
         <span class="cat-icon">+</span>
       </div>
@@ -223,24 +222,22 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 </script>
 
 <script>
-function toggleCategoria(header){
+function toggleCategoriaGaleria(header){
   const categoria = header.parentElement;
-  const contenido = categoria.querySelector('.cat-contenido');
   const icono = header.querySelector('.cat-icon');
   const abierta = categoria.classList.contains('activa');
 
-  // cerrar TODAS
-  document.querySelectorAll('.categoria').forEach(cat => {
+  document.querySelectorAll('#galeria .categoria').forEach(cat => {
     cat.classList.remove('activa');
     cat.querySelector('.cat-icon').textContent = '+';
   });
 
-  // si estaba cerrada, abrir SOLO esta
   if(!abierta){
     categoria.classList.add('activa');
     icono.textContent = '−';
   }
 }
+
 </script>
 
 <div id="menu-productos" class="menu-productos">
@@ -249,7 +246,7 @@ function toggleCategoria(header){
 
   <!-- 📱 CELULARES -->
   <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
+    <div class="cat-header" onclick="toggleCategoriaMenu(this)">
       <h4>📱 Celulares</h4>
       <span class="cat-icon">+</span>
     </div>
@@ -417,16 +414,22 @@ function toggleCategoria(header){
 </button>
 
 <script>
-function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
+function toggleCategoriaMenu(header){
+  const categoria = header.parentElement;
+  const icono = header.querySelector('.cat-icon');
+  const abierta = categoria.classList.contains('activa');
 
-  const activo = menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
+  document.querySelectorAll('#menu-productos .categoria').forEach(cat => {
+    cat.classList.remove('activa');
+    cat.querySelector('.cat-icon').textContent = '+';
+  });
 
-  // 🔒 Bloquear / liberar scroll
-  document.body.style.overflow = activo ? "hidden" : "";
+  if(!abierta){
+    categoria.classList.add('activa');
+    icono.textContent = '−';
+  }
 }
+
 </script>
 
     
