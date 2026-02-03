@@ -324,3 +324,8 @@ body.no-scroll{
   color: #25d366;
   font-size: 15px;
 }
+
+/* Precio resalta */
+.producto-item:hover .producto-precio{
+  color: #128c7e;
+}
