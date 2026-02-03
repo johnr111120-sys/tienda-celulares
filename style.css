@@ -53,12 +53,6 @@ footer {
   h1{ font-size:24px; }
 }
 
-.galeria{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
-}
-
 .galeria img{
   width: 100%;
   border-radius: 8px;
@@ -226,22 +220,15 @@ footer {
 
 /* Modal imagen */
 .img-modal-close{
-  width: 56px;
-  height: 56px;
-  font-size: 28px;
-  border: 4px solid #0000FF; /* círculo azul lineal */
-  background: transparent;  /* sin relleno */
-  color: red;               /* X roja */
-}
-
-/* Modal producto */
 .mp-cerrar{
   width: 56px;
   height: 56px;
   font-size: 28px;
-  border: 3px solid #0000FF;
-  background-color: #0000FF;
-  color: red;
+  border: 3px solid #0000FF; /* círculo azul lineal */
+  background: transparent;  /* sin relleno */
+  color: red;  /* X roja */
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 /* =========================
