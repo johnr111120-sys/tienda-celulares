@@ -406,3 +406,20 @@ body.no-scroll{
 .menu-productos.activo ~ .fab-productos .icono-menu{
   color: #fff;
 }
+
+/* ===== OVERLAY OSCURO ===== */
+.overlay-productos{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9997;
+}
+
+/* Cuando el menú está activo */
+.menu-productos.activo + .overlay-productos{
+  opacity: 1;
+  pointer-events: auto;
+}
