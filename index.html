@@ -6,10 +6,11 @@
     <title>Mi Negocio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<a href="https://wa.me/18292017321" class="whatsapp" target="_blank">💬</a>
 
 <body>
-
+    
+<a href="https://wa.me/18292017321" class="whatsapp" target="_blank">💬</a>
+    
 <nav>
   <a href="#">Inicio</a>
   <a href="#servicios">Servicios</a>
@@ -50,7 +51,7 @@
     <h2 class="bloque-titulo">📸 Nuestro Local & Reparaciones</h2>
 
     <!-- 📍 LOCAL -->
-    <div class="categoria activa">
+   <div class="categoria abierta">
       <div class="cat-header" onclick="toggleCategoria(this)">
         <h3>📍 Local</h3>
         <span class="cat-icon">+</span>
@@ -218,13 +219,6 @@ function activarSwipe(modal, cerrarFn){
 // Activar swipe
 activarSwipe(imgModalSwipe, cerrarImgModal);
 activarSwipe(productoModalSwipe, cerrarProducto);
-</script>
-
-<script>
-function toggleCategoria(header){
-  const categoria = header.parentElement;
-  categoria.classList.toggle("activa");
-}
 </script>
 
 <script>
@@ -423,8 +417,21 @@ function toggleCategoria(header){
   <span class="icono-menu">☰</span>
 </button>
 
-<div id="overlay-productos"class="overlay-productos"onclick="toggleMenuProductos()">
-</div>
+    <script>
+function toggleMenuProductos(){
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+
+  menu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+
+  document.body.style.overflow =
+    menu.classList.contains("activo") ? "hidden" : "";
+}
+
+<div id="overlay-productos"class="overlay-productos"onclick="toggleMenuProductos()"></div>     
+
+    </script>
 
     </body>
 </html>
