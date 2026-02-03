@@ -1,440 +1,420 @@
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mi Negocio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    
-<a href="https://wa.me/18292017321" class="whatsapp" target="_blank">💬</a>
-    
-<nav>
-  <a href="#">Inicio</a>
-  <a href="#servicios">Servicios</a>
-  <a href="#galeria">Galería</a>
-  <a href="#contacto">Contacto</a>
-</nav>
-
-<header>
-    <h1>Moises Celulares</h1>
-    <p>Venta y reparación de celulares</p>
-</header>
-
-<section>
-    <h2>Sobre nosotros</h2>
-    <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
-</section>
-
-<section>
-    <h2>Servicios</h2>
-    <ul>
-        <li>🔧 Reparación de pantallas</li>
-        <li>🔋 Cambio de batería</li>
-        <li>⚡ Reparación de pin de carga</li>
-        <li>📱 Venta de celulares</li>
-        <li>🎧 Accesorios y fundas</li>
-        <li>📲 Activaciones</li>
-        <li>🔓 Desbloqueos</li>
-    </ul>
-</section>
-
-<section id="galeria">
-  <h2>Galería</h2>
-
-  <!-- ===================== -->
-  <!-- 📸 GALERÍA DEL LOCAL -->
-  <!-- ===================== -->
-  <div class="bloque-galeria">
-    <h2 class="bloque-titulo">📸 Nuestro Local & Reparaciones</h2>
-
-    <!-- 📍 LOCAL -->
-   <div class="categoria activa">
-      <div class="cat-header" onclick="toggleCategoriaGaleria(this)">
-        <h3>📍 Local</h3>
-        <span class="cat-icon">+</span>
-      </div>
-      <div class="cat-contenido">
-        <div class="galeria">
-          <img src="images/local4.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/local3.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/local2.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/local1.jpg" onclick="abrirImgModal(this.src)">
-        </div>
-      </div>
-    </div>
-
-    <!-- 🔧 REPARACIONES -->
-    <div class="categoria">
-      <div class="cat-header" onclick="toggleCategoria(this)">
-        <h3>🔧 Reparaciones</h3>
-        <span class="cat-icon">+</span>
-      </div>
-      <div class="cat-contenido">
-        <div class="galeria">
-          <img src="images/reparaciones1.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/reparaciones2.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/reparaciones3.jpg" onclick="abrirImgModal(this.src)">
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-
-<section>
-    <h2>Contacto</h2>
-    <p>Visítanos en nuestro local o escríbenos por WhatsApp.</p>
-   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470.19965643254886!2d-70.8152473101403!3d19.472923799663075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1c790f7f8f709%3A0x6c4137e1bd132ae4!2sMoises%20Celulares!5e0!3m2!1ses-419!2suy!4v1769823875907!5m2!1ses-419!2suy" 
-width="600" 
-height="450" 
-style="border:0;" 
-allowfullscreen="" 
-loading="lazy" 
-referrerpolicy="no-referrer-when-downgrade">
-</iframe>
- 
-</section>
-    
-    <footer>
-  <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
-  <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
-  <p>📞 WhatsApp: +1 829 201 7321</p>
-</footer>
-    
-    <!-- MODAL DE IMAGEN (AISLADO) -->
-<div id="img-modal" class="img-modal" aria-hidden="true">
-  <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
-  <img id="img-modal-src" src="" alt="Vista ampliada">
-</div>
-
-  <script>
-const imgModal = document.getElementById("img-modal");
-const imgModalSrc = document.getElementById("img-modal-src");
-
-function abrirImgModal(src){
-  imgModalSrc.src = src;
-  imgModal.style.display = "flex";
-  imgModal.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
-function cerrarImgModal(){
-  imgModal.style.display = "none";
-  imgModalSrc.src = "";
-  imgModal.setAttribute("aria-hidden","true");
-  document.body.style.overflow = "";
+nav{
+  background:#000;
+  padding:10px;
+  text-align:center;
+}
+nav a{
+  color:white;
+  margin:10px;
+  text-decoration:none;
 }
 
-imgModal.addEventListener("click", e=>{
-  if(e.target === imgModal) cerrarImgModal();
-});
-</script>
-
-
-    
-    <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="mp-overlay">
-  <div class="mp-contenido">
-    
-    <button class="mp-cerrar" onclick="cerrarProducto()">✕</button>
-
-    <img id="mp-img" src="" alt="Producto">
-
-    <h3 id="mp-titulo"></h3>
-    <p id="mp-desc"></p>
-    <strong id="mp-precio"></strong>
-
-    <a id="mp-whatsapp" class="mp-wsp" target="_blank">
-      💬 Consultar por WhatsApp
-    </a>
-
-  </div>
-</div>
-
-<script>
-const modalProducto = document.getElementById("modal-producto");
-
-function abrirProducto(img,titulo,desc,precio,mensaje){
-  document.getElementById("mp-img").src = img;
-  document.getElementById("mp-titulo").textContent = titulo;
-  document.getElementById("mp-desc").textContent = desc;
-  document.getElementById("mp-precio").textContent = precio;
-  document.getElementById("mp-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
-
-  modalProducto.classList.add("activo");
-  document.body.style.overflow = "hidden";
+header {
+    background-color: #111;
+    color: white;
+    padding: 30px;
+    text-align: center;
 }
 
-function cerrarProducto(){
-  modalProducto.classList.remove("activo");
-  document.body.style.overflow = "";
+section {
+    padding: 20px;
+    background-color: white;
+    margin: 15px;
+    border-radius: 8px;
 }
 
-modalProducto.addEventListener("click", e=>{
-  if(e.target === modalProducto) cerrarProducto();
-});
-</script>
+footer {
+    background-color: #111;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
 
+.whatsapp{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    color: white;
+    font-size: 30px;
+    padding: 15px;
+    border-radius: 50%;
+    text-decoration: none;
+}
 
-    <script>
+@media (max-width:600px){
+  section{ margin:10px; }
+  h1{ font-size:24px; }
+}
+
+.galeria{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.galeria img{
+  width: 100%;
+  border-radius: 8px;
+}
+
 /* =========================
-   SWIPE DOWN PARA CERRAR
+   MODAL DE IMAGEN AISLADO
    ========================= */
 
-let startY = 0;
-let endY = 0;
-
-// Modal imagen
-const imgModalSwipe = document.getElementById("img-modal");
-
-// Modal producto
-const productoModalSwipe = document.getElementById("modal-producto");
-
-// Función genérica
-function activarSwipe(modal, cerrarFn){
-  if(!modal) return;
-
-  modal.addEventListener("touchstart", e => {
-    startY = e.touches[0].clientY;
-  }, { passive: true });
-
-  modal.addEventListener("touchmove", e => {
-    endY = e.touches[0].clientY;
-  }, { passive: true });
-
-  modal.addEventListener("touchend", () => {
-    if(endY - startY > 80){ // distancia swipe
-      cerrarFn();
-    }
-    startY = 0;
-    endY = 0;
-  });
+.img-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* por delante de todo */
 }
 
-// Activar swipe
-activarSwipe(imgModalSwipe, cerrarImgModal);
-activarSwipe(productoModalSwipe, cerrarProducto);
-</script>
+.img-modal img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 12px;
+}
 
-<script>
-function toggleCategoriaGaleria(header){
-  const categoria = header.parentElement;
-  const icono = header.querySelector('.cat-icon');
-  const abierta = categoria.classList.contains('activa');
+/* Botón cerrar */
+.img-modal-close {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0000FF; /* azul */
+  color: red;          /* X roja */
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-  document.querySelectorAll('#galeria .categoria').forEach(cat => {
-    cat.classList.remove('activa');
-    cat.querySelector('.cat-icon').textContent = '+';
-  });
+/* =========================
+   MODAL PRODUCTO (AISLADO)
+   ========================= */
 
-  if(!abierta){
-    categoria.classList.add('activa');
-    icono.textContent = '−';
+.mp-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* siempre arriba */
+}
+
+.mp-overlay.activo{
+  display: flex;
+}
+
+.mp-contenido{
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+}
+
+.mp-contenido img{
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.mp-contenido h3{
+  margin: 10px 0 5px;
+}
+
+.mp-contenido p{
+  font-size: 14px;
+  color: #555;
+}
+
+.mp-contenido strong{
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  color: #25d366;
+}
+
+/* BOTÓN WHATSAPP */
+.mp-wsp{
+  display: block;
+  margin-top: 15px;
+  padding: 12px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* BOTÓN X */
+.mp-cerrar{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 4px solid #0000FF; /* círculo azul LINEAL */
+  background: transparent;  /* sin relleno */
+  color: red;               /* X roja */
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* =========================
+   ORDEN VISUAL DE GALERÍA
+   ========================= */
+
+/* Contenedor */
+.galeria{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* Tarjeta visual */
+.galeria img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto al pasar el dedo / mouse */
+.galeria img:hover{
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Móvil: imágenes un poco más bajas */
+@media (max-width: 600px){
+  .galeria img{
+    height: 180px;
   }
 }
-
-</script>
-
-<div id="menu-productos" class="menu-productos">
-
-  <h3 class="menu-titulo">🛒 Productos</h3>
-
-  <!-- 📱 CELULARES -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoriaMenu(this)">
-      <h4>📱 Celulares</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">
-        <img src="images/cell1.jpg"
-        onclick="abrirProducto(
-          'images/cell1.jpg',
-          'iPhone 17 Pro Max',
-          '256GB · Negro / Naranja · Sellado',
-          'RD$ 57,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 57,000</span>
-</div>
-  <div class="producto-item">
-        <img src="images/cell6.jpg"
-        onclick="abrirProducto(
-          'images/cell6.jpg',
-          'iPhone 14 Pro Max',
-          'E‑SIM · Morado · 128GB · Sellado',
-          'RD$ 25,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 25,000</span>
-</div>
-   <div class="producto-item">
-        <img src="images/cell7.jpg"
-        onclick="abrirProducto(
-          'images/cell7.jpg',
-          'Z Blade',
-          '128GB · Negro · Sellado',
-          'RD$ 8,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 8,000</span>
-</div>
-    <div class="producto-item">
-        <img src="images/cell8.jpg"
-        onclick="abrirProducto(
-          'images/cell8.jpg',
-          'ZTE',
-          '64GB · Negro · Sellado',
-          'RD$ 7,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 7,000</span>
-</div>
-    <div class="producto-item">
-        <img src="images/cell9.jpg"
-        onclick="abrirProducto(
-          'images/cell9.jpg',
-          'Galaxy A03s',
-          '64GB · Azul · Sellado',
-          'RD$ 9,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 9,000</span>
-</div>      
-      </div>
-    </div>
-  </div>
-
-  <!-- 🎧 ACCESORIOS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>🎧 Accesorios</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">       
-        <img src="images/accesorios4.jpg"
-        onclick="abrirProducto(
-          'images/accesorios4.jpg',
-          'Cover 360 Iphone 11 Pro Max',
-          'Cover 360 transparente con magsafe · Sellado',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios13.jpg"
-        onclick="abrirProducto(
-          'images/accesorios13.jpg',
-          'AirPods 2da generación',
-          'Blancos · Originales · Sellados',
-          'RD$ 3,500',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 3,500</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios14.jpg"
-        onclick="abrirProducto(
-          'images/accesorios14.jpg',
-          'Apple Watch Serie 3',
-          'Negro · 38mm · GPS',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios1.jpg"
-        onclick="abrirProducto(
-          'images/accesorios1.jpg',
-          'Pendrive VIDVIE',
-          'USB 3.2 · 128GB · Tipo C',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 📟 TABLETS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>📟 Tablets</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
-<div class="producto-item">
-        <img src="images/tablet1.jpg"
-        onclick="abrirProducto(
-          'images/tablet1.jpg',
-          'SKY T8 Plus',
-          '64GB · Negra · Sellada',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-<div class="producto-item">
-        <img src="images/tablet2.jpg"
-        onclick="abrirProducto(
-          'images/tablet2.jpg',
-          'iPad 4',
-          '64GB · Gris · Usada',
-          'RD$ 8,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 8,000</span>
-</div>
-
-      </div>
-    </div>
-  </div>
-
-</div>
-    
-<!-- BOTÓN PRODUCTOS -->
-<button class="fab-productos" onclick="toggleMenuProductos()">
-  <span class="icono-menu">☰</span>
-</button>
-
-<script>
-function toggleCategoriaMenu(header){
-  const categoria = header.parentElement;
-  const icono = header.querySelector('.cat-icon');
-  const abierta = categoria.classList.contains('activa');
-
-  document.querySelectorAll('#menu-productos .categoria').forEach(cat => {
-    cat.classList.remove('activa');
-    cat.querySelector('.cat-icon').textContent = '+';
-  });
-
-  if(!abierta){
-    categoria.classList.add('activa');
-    icono.textContent = '−';
-  }
+/* =========================
+   CATEGORÍAS GALERÍA
+   ========================= */
+.cat-titulo{
+  margin: 25px 10px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
 }
 
-</script>
+/* =========================
+   AGRANDAR BOTÓN X (AMBOS MODALES)
+   ========================= */
 
-    
-<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+/* Modal imagen */
+.img-modal-close{
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  border: 4px solid #0000FF; /* círculo azul lineal */
+  background: transparent;  /* sin relleno */
+  color: red;               /* X roja */
+}
 
-    </body>
-</html>
+/* Modal producto */
+.mp-cerrar{
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  border: 3px solid #0000FF;
+  background-color: #0000FF;
+  color: red;
+}
 
+/* =========================
+   BLOQUEAR SCROLL FONDO
+   ========================= */
+body.no-scroll{
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* CONTENEDOR DE CATEGORÍA */
+.categoria {
+  margin-bottom: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+/* HEADER */
+.cat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.cat-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* ICONO + / - */
+.cat-icon {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* CONTENIDO (CERRADO) */
+.cat-contenido {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+
+/* CONTENIDO (ABIERTO) */
+.categoria.activa .cat-contenido {
+  max-height: 5000px; /* 🔥 CLAVE: altura grande */
+}
+
+/* GALERÍA DENTRO */
+.cat-contenido .galeria {
+  padding: 12px;
+}
+.bloque-galeria{
+  margin-top: 30px;
+}
+
+.bloque-titulo{
+  text-align: center;
+  margin: 30px 0 15px;
+  font-size: 22px;
+  font-weight: bold;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+.producto-item{
+  text-align: center;
+}
+
+.producto-precio{
+  display: block;
+  margin-top: 6px;
+  font-weight: bold;
+  color: #25d366;
+  font-size: 15px;
+}
+
+/* Precio resalta */
+.producto-item:hover .producto-precio{
+  color: #128c7e;
+}
+
+/* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
+.fab-productos{
+  position: fixed;
+  top: 38px;        /* ✅ arriba */
+  left: 15px;       /* ✅ izquierda */
+  bottom: auto;     /* ❌ anulado */
+  right: auto;      /* ❌ anulado */
+
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+/* =====================
+   MENÚ PRODUCTOS (SUPERIOR)
+===================== */
+.menu-productos{
+  position: fixed;
+  top: 60px;              /* deja ver el header */
+  left: 15px;
+  right: 15px;
+  height: auto;           /* 👈 ya no pantalla completa */
+  max-height: 75vh;       /* 👈 límite visible */
+  background: #fff;
+  z-index: 9998;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+  overflow-y: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  display: none;
+}
+
+
+/* ACTIVO */
+.menu-productos.activo{
+  transform: translateY(0);
+  opacity: 1;
+  display: block;
+}
+
+.menu-productos.activo{
+  display: block;
+}
+
+.menu-titulo{
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* ===== ICONO BOTÓN PRODUCTOS ===== */
+.icono-menu{
+  display: inline-block;
+  transition: transform 0.35s ease, opacity 0.2s ease;
+}
+
+/* Cuando el menú está abierto */
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  transform: rotate(90deg);
+}
+
+/* Cambiar ☰ por ✕ visualmente */
+.menu-productos.activo ~ .fab-productos .icono-menu::before{
+  content: "✕";
+}
+
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  color: #fff;
+}
+
+/* ===== OVERLAY OSCURO ===== */
+.overlay-productos{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9997;
+}
+
+.overlay-productos.activo{
+  opacity: 1;
+  pointer-events: auto;
+}
