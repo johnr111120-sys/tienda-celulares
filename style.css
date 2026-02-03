@@ -355,8 +355,8 @@ body.no-scroll{
 .menu-productos{
   position: fixed;
   top: 60px;              /* deja ver el header */
-  left: 0px;
-  right: 600px;
+  left: 15px;
+  right: 15px;
   height: auto;           /* 👈 ya no pantalla completa */
   max-height: 75vh;       /* 👈 límite visible */
   background: #fff;
@@ -416,8 +416,7 @@ body.no-scroll{
   z-index: 9997;
 }
 
-/* Cuando el menú está activo */
-.menu-productos.activo + .overlay-productos{
+.overlay-productos.activo{
   opacity: 1;
   pointer-events: auto;
 }
