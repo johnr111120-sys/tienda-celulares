@@ -304,19 +304,17 @@ body.no-scroll{
   transition: transform .25s ease;
 }
 
-/* contenido oculto */
-.cat-contenido{
+/* CONTENIDO DE CATEGORÍA */
+.cat-contenido {
   max-height: 0;
   overflow: hidden;
-  transition: max-height .35s ease;
-  background: #fff;
+  transition: max-height 0.45s ease;
 }
 
-/* abierto */
-.categoria.activa .cat-contenido{
-  max-height: 2000px; /* suficiente para imágenes */
+/* CATEGORÍA ABIERTA */
+.categoria.activa .cat-contenido {
+  max-height: 5000px; /* suficiente para cualquier galería */
 }
-
 .categoria.activa .cat-icon{
   transform: rotate(45deg); /* + se vuelve X */
 }
