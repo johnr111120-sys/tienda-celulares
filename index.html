@@ -387,25 +387,24 @@ function toggleCategoria(header){
 </script>
 
 <script>
-function toggleCategoria(header) {
+function toggleCategoria(header){
   const categoria = header.parentElement;
-  const contenido = categoria.querySelector(".cat-contenido");
-  const icono = header.querySelector(".cat-icon");
 
-  // Cerrar todas las demás
-  document.querySelectorAll(".categoria").forEach(cat => {
-    if (cat !== categoria) {
-      cat.querySelector(".cat-contenido").style.display = "none";
-      cat.querySelector(".cat-icon").textContent = "+";
+  // cerrar todas
+  document.querySelectorAll('.categoria').forEach(cat => {
+    if(cat !== categoria){
+      cat.classList.remove('activa');
+      cat.querySelector('.cat-icon').textContent = '+';
     }
   });
 
-  // Toggle actual
-  const abierto = contenido.style.display === "block";
-  contenido.style.display = abierto ? "none" : "block";
-  icono.textContent = abierto ? "+" : "−";
+  // abrir / cerrar actual
+  categoria.classList.toggle('activa');
+  const icon = header.querySelector('.cat-icon');
+  icon.textContent = categoria.classList.contains('activa') ? '−' : '+';
 }
 </script>
+
 
     
     </body>
