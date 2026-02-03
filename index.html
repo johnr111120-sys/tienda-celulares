@@ -146,13 +146,15 @@ referrerpolicy="no-referrer-when-downgrade">
   imgModal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("no-scroll"); // ← AQUI
 }
-
-          
+      
 function toggleMenuProductos(){
-  document.getElementById("menu-productos")
-    .classList.toggle("activo");
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+
+  menu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
 }
-    
+
 </script>
 
     
@@ -449,10 +451,14 @@ function toggleCategoria(header){
   </div>
 
 </div>
+    
+<!-- BOTÓN PRODUCTOS -->
+<button class="fab-productos" onclick="toggleMenuProductos()">☰</button>
 
-<button class="fab-productos" onclick="toggleMenuProductos()">
-  ☰
-</button>
+<div id="overlay-productos"
+     class="overlay-productos"
+     onclick="toggleMenuProductos()">
+</div>
 
     </body>
 </html>
