@@ -441,3 +441,13 @@ body::before{
   transform: scale(1.1); /* evita bordes blancos */
   z-index: -1;
 }
+
+@media (max-width: 600px){
+  .fab-productos{
+    width: 72px;      /* tamaño botón */
+    height: 72px;
+    font-size: 32px;  /* icono ☰ */
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  }
+}
