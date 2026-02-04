@@ -36,6 +36,7 @@ nav{
   margin-top: 15px;
 }
 nav a{
+  background-color: #000;
   color:white;
   margin:30px;
   text-decoration:none;
