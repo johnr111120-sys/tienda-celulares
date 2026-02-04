@@ -1,7 +1,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    margin: 10;
+    margin: 0;
     background-color: #f4f4f4;
 }
 
@@ -24,11 +24,14 @@ header {
     text-align: center;
 }
 
-section {
-    padding: 20px;
-    background-color: white;
-    margin: 15px;
-    border-radius: 8px;
+section{
+  padding: 20px;
+  margin: 15px;
+  border-radius: 12px;
+
+background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 footer {
@@ -431,16 +434,16 @@ body{
 }
 
 /* Capa de fondo */
-body::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)),
-  background: url("images/Logo1.jpg") center / cover no-repeat;
-  filter: blur(12px);
-  transform: scale(1.1); /* evita bordes blancos */
-  z-index: -1;
+body{
+  font-family: Arial, sans-serif;
+  margin: 0;
+
+  background-image: url("images/Logo1.jpg"); /* 👈 tu imagen */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
+
 
 @media (max-width: 600px){
   .fab-productos{
