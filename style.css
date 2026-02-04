@@ -597,3 +597,11 @@ body.inicio::before{
 
   z-index: -1;
 }
+body.inicio section{
+  background: rgba(255,255,255,0.75);
+}
+
+body.inicio header,
+body.inicio footer{
+  background: rgba(0,0,0,0.8);
+}
