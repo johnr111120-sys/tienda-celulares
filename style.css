@@ -566,26 +566,3 @@ body{
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
-.btn-llamar {
-  position: fixed;
-  bottom: 130px;
-  right: 20px;
-  background: #007bff;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  z-index: 999;
-  display: block;
-.whatsapp{
-  animation: pulse 2s infinite;
-}
-
-/* Solo móviles */
-@media (max-width: 900px) {
-  .btn-llamar {
-    display: block;
-  }
-}
