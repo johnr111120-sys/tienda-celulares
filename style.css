@@ -468,7 +468,6 @@ body{
   .fab-productos .icono-menu{
     font-size: 34px;   /* 👈 CLAVE */
     line-height: 72px; /* centra vertical */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.85);
   }
 }
 .whatsapp:hover{
