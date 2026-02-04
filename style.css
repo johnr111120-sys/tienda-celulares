@@ -627,3 +627,17 @@ body.inicio footer{
     padding: 18px;
   }
 }
+
+@media (max-width: 600px){
+  body{
+    font-size: 18px;
+  }
+
+  h1{ font-size: 28px; }
+  h2{ font-size: 24px; }
+  h3{ font-size: 20px; }
+
+  p{
+    line-height: 1.6;
+  }
+}
