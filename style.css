@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 10;
-    background-color: #000ff;
+    background-color: #f4f4f4;
 }
 
 /* Fondo con imagen fija y blur */
@@ -16,7 +16,6 @@ body {
   filter: blur(8px);
   transform: scale(1.1); /* evita bordes al difuminar */
   z-index: -1;
-  background-color: #f4f4f4;
 }
 
 .hero {
@@ -54,8 +53,6 @@ section {
     background-color: white;
     margin: 15px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.85); /* 👈 TRANSPARENCIA */
-    backdrop-filter: blur(4px);            /* 👈 blur suave */
 }
 
 footer {
@@ -383,7 +380,8 @@ body.no-scroll{
   left: 15px;
   right: 15px;
   height: auto;           /* 👈 ya no pantalla completa */
-  max-height: 75vh;       /* 👈 límite visible */ 
+  max-height: 75vh;       /* 👈 límite visible */
+  background : #000; 
   z-index: 9998;
   transform: translateY(-20px);
   opacity: 0;
@@ -392,8 +390,7 @@ body.no-scroll{
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,.25);
   display: none;
-  background: rgba(255, 255, 255, 0.85); /* 👈 TRANSPARENCIA */
-  backdrop-filter: blur(4px);            /* 👈 blur suave */
+
 }
 
 
