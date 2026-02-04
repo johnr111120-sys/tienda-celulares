@@ -444,10 +444,14 @@ body::before{
 
 @media (max-width: 600px){
   .fab-productos{
-    width: 72px;      /* tamaño botón */
+    width: 72px;
     height: 72px;
-    font-size: 32px;  /* icono ☰ */
     border-radius: 18px;
+  }
+
+  .fab-productos .icono-menu{
+    font-size: 34px;   /* 👈 CLAVE */
+    line-height: 72px; /* centra vertical */
     box-shadow: 0 8px 20px rgba(0,0,0,0.35);
   }
 }
