@@ -30,7 +30,7 @@ body {
 
 
 nav{
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.90);
   padding:10px;
   text-align:center;
   margin-top: 15px;
@@ -42,7 +42,7 @@ nav a{
 }
 
 header {
-    background-color: #111;
+    background: rgba(0,0,0,0.90);
     color: white;
     padding: 30px;
     text-align: center;
