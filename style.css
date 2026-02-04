@@ -76,6 +76,7 @@ footer {
   text-decoration: none;
 
   z-index: 10000; /* 👈 CLAVE */
+  pointer-events: auto;   /* asegura que se pueda tocar */
 }
 
 
@@ -515,6 +516,12 @@ body.no-scroll{
   margin: auto;
 }
 
+.reseñas,
+.reviews,
+.testimonios{
+  padding-bottom: 90px;
+}
+
 .reseña{
   display: none;
   background: white;
@@ -602,6 +609,7 @@ body.inicio::before{
 
   z-index: -1;
 }
+
 body.inicio section{
   background: rgba(255,255,255,0.75);
 }
@@ -609,4 +617,13 @@ body.inicio section{
 body.inicio header,
 body.inicio footer{
   background: rgba(0,0,0,0.8);
+}
+
+@media (max-width: 600px){
+  .whatsapp{
+    bottom: 25px;
+    right: 15px;
+    font-size: 34px;
+    padding: 18px;
+  }
 }
