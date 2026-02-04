@@ -67,16 +67,18 @@ footer {
   position: fixed;
   bottom: 20px;
   right: 20px;
-
+  width: 56px;
+  height: 56px;
   background: #25D366;
   color: white;
-  font-size: 30px;
-  padding: 15px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
   text-decoration: none;
-
-  z-index: 10000; /* 👈 CLAVE */
-  pointer-events: auto;   /* asegura que se pueda tocar */
+  z-index: 10000; /* 👈 CLAVE para que no se tape */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
 
@@ -639,5 +641,15 @@ body.inicio footer{
 
   p{
     line-height: 1.6;
+  }
+}
+
+@media (max-width: 600px){
+  .whatsapp{
+    width: 76px;
+    height: 76px;
+    font-size: 42px;   /* 👈 icono grande */
+    bottom: 25px;
+    right: 18px;
   }
 }
