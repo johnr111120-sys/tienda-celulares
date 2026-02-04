@@ -582,7 +582,7 @@ body{
 }
 
 /* Solo móviles */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .btn-llamar {
     display: block;
   }
