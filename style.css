@@ -22,11 +22,11 @@ nav{
   background:#000;
   padding:10px;
   text-align:center;
-  margin-top: 15px;
 }
+
 nav a{
   color:white;
-  margin:30px;
+  margin:10px;
   text-decoration:none;
 }
 
@@ -37,10 +37,12 @@ header {
     text-align: center;
 }
 
-section{
-  padding: 20px;
-  margin: 15px;
-  border-radius: 12px;
+section {
+    padding: 20px;
+    background-color: white;
+    margin: 15px;
+    border-radius: 8px;
+}
 
 background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(8px);
