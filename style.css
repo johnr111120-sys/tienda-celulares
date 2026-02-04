@@ -578,7 +578,7 @@ body{
   text-decoration: none;
   font-weight: bold;
   z-index: 999;
-  display: none;
+  display: block;
 }
 
 /* Solo móviles */
