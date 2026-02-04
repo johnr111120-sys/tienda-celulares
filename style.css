@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 10;
-    background-color: #f4f4f4;
+    background-color: #000ff;
 }
 
 /* Fondo con imagen fija y blur */
@@ -16,6 +16,7 @@ body {
   filter: blur(8px);
   transform: scale(1.1); /* evita bordes al difuminar */
   z-index: -1;
+  background-color: #f4f4f4;
 }
 
 .hero {
