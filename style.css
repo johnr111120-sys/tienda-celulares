@@ -567,3 +567,23 @@ body{
   }
 }
 
+.btn-llamar {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background: #007bff;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 999;
+  display: none;
+}
+
+/* Solo móviles */
+@media (max-width: 768px) {
+  .btn-llamar {
+    display: block;
+  }
+}
