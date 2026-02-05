@@ -305,24 +305,36 @@ function toggleCategoria(header){
   <h3 class="menu-titulo">🛒 Productos</h3>
 
   <!-- 📱 CELULARES -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>📱 Celulares</h4>
-      <span class="cat-icon">+</span>
-    </div>
+<div class="categoria">
+  <div class="cat-header" onclick="toggleCategoria(this)">
+    <h4>📱 Celulares</h4>
+    <span class="cat-icon">+</span>
+  </div>
+    
     <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">
-        <img src="images/cell1.jpg"
-        onclick="abrirProducto(
-          'images/cell1.jpg',
-          'iPhone 17 Pro Max',
-          '256GB · Negro / Naranja · Sellado',
-          'RD$ 57,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 57,000</span>
-</div>
+        
+      <!-- 🔹 SUBCATEGORÍA IPHONE -->
+    <div class="subcategoria">
+      <div class="sub-header" onclick="toggleSubCategoria(this)">
+        <h5>🍎 iPhone</h5>
+        <span class="sub-icon">+</span>
+      </div>
+
+      <div class="sub-contenido">
+        <div class="galeria">
+
+          <div class="producto-item">
+            <img src="images/cell1.jpg"
+              onclick="abrirProducto(
+                'images/cell1.jpg',
+                'iPhone 17 Pro Max',
+                '256GB · Sellado',
+                'RD$ 57,000',
+                'Hola, quiero info del iPhone 17 Pro Max'
+              )">
+            <span class="producto-precio">RD$ 57,000</span>
+          </div>
+            
   <div class="producto-item">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
@@ -334,7 +346,18 @@ function toggleCategoria(header){
         )">
 <span class="producto-precio">RD$ 25,000</span>
 </div>
-   <div class="producto-item">
+            
+  <!-- 🔹 SUBCATEGORÍA ANDROID -->
+    <div class="subcategoria">
+      <div class="sub-header" onclick="toggleSubCategoria(this)">
+        <h5>🤖 Android</h5>
+        <span class="sub-icon">+</span>
+      </div>
+
+      <div class="sub-contenido">
+        <div class="galeria">
+            
+        <div class="producto-item">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
           'images/cell7.jpg',
@@ -356,6 +379,17 @@ function toggleCategoria(header){
         )">
 <span class="producto-precio">RD$ 7,000</span>
 </div>
+
+     <!-- 🔹 SUBCATEGORÍA SAMSUNG -->
+    <div class="subcategoria">
+      <div class="sub-header" onclick="toggleSubCategoria(this)">
+        <h5>📱 Samsung</h5>
+        <span class="sub-icon">+</span>
+      </div>
+
+      <div class="sub-contenido">
+        <div class="galeria">
+            
     <div class="producto-item">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
@@ -377,9 +411,18 @@ function toggleCategoria(header){
       <h4>🎧 Accesorios</h4>
       <span class="cat-icon">+</span>
     </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">       
+
+   <!-- 🔹 SUBCATEGORÍA ACCESORIOS -->
+    <div class="subcategoria">
+      <div class="sub-header" onclick="toggleSubCategoria(this)">
+        <h5>🎧 Accesorios</h5>
+        <span class="sub-icon">+</span>
+      </div>
+
+      <div class="sub-contenido">
+        <div class="galeria">
+ 
+    <div class="producto-item">       
         <img src="images/accesorios4.jpg"
         onclick="abrirProducto(
           'images/accesorios4.jpg',
@@ -436,8 +479,19 @@ function toggleCategoria(header){
       <h4>📟 Tablets</h4>
       <span class="cat-icon">+</span>
     </div>
+      
     <div class="cat-contenido">
-      <div class="galeria">
+
+   <!-- 🔹 SUBCATEGORÍA TABLET -->
+    <div class="subcategoria">
+      <div class="sub-header" onclick="toggleSubCategoria(this)">
+        <h5>📟 Tablets</h5>
+        <span class="sub-icon">+</span>
+      </div>
+
+      <div class="sub-contenido">
+         <div class="galeria">
+             
 <div class="producto-item">
         <img src="images/tablet1.jpg"
         onclick="abrirProducto(
