@@ -703,7 +703,6 @@ body.modal-abierto .whatsapp{
   font-weight: bold;
 }
 
-.sub-header,
-.producto-item img{
+.sub-header{
   touch-action: manipulation;
 }
