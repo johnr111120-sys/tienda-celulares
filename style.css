@@ -368,27 +368,19 @@ body.no-scroll{
   color: #128c7e;
 }
 
-/* BOTÓN PRODUCTOS */
-.fab-productos{
+/* BOTÓN FLOTANTE */
+#fab-productos {
   position: fixed;
-  top: 18px;
-  left: 18px;
-
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-
-  background: #000;
-  color: #fff;
-
-  display: none;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 34px;
-  cursor: pointer;
-
-  z-index: 20000; /* 🔥 MÁS ALTO QUE TODO */
+  bottom: 20px;
+  right: 20px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #25d366;
+  color: white;
+  font-size: 32px;
+  border: none;
+  z-index: 9999; /* siempre arriba */
 }
 
 /* MENÚ */
@@ -442,7 +434,7 @@ body.no-scroll{
   background: rgba(0,0,0,.6);
   opacity: 0;
   pointer-events: none;
-  z-index: 15000;
+  z-index: 9998;
 }
 
 .overlay-productos.activo{
