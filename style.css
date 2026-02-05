@@ -69,6 +69,24 @@ nav a{
   width: auto;
 }
 
+/* ====== ESTILO BASE (móvil primero) ====== */
+.header-principal {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  height: 70px;              /* más chico en móvil */
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+
+.header-logo {
+  height: 45px;              /* logo chico en móvil */
+  width: auto;
+}
+
 /* ====== DESKTOP ====== */
 @media (min-width: 1024px) {
   .header-principal {
@@ -77,7 +95,7 @@ nav a{
   }
 
   .header-logo {
-    height: 85px;            /* logo grande */
+    height: 160px;            /* logo grande */
   }
 }
 
