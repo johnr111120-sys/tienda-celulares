@@ -366,20 +366,15 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;
-  top: 18px;        /* ✅ arriba */
-  left: 35px;       /* ✅ izquierda */
-  bottom: auto;     /* ❌ anulado */
-  right: auto;      /* ❌ anulado */
-
+  top: 18px;
+  left: 35px;
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  border: none;
   background: #000;
   color: #fff;
   font-size: 22px;
-  cursor: pointer;
-  z-index: 10000;
+  z-index: 11000; /* 🔥 MÁS ALTO que overlay y modales */
 }
 
 /* =====================
@@ -393,7 +388,7 @@ body.no-scroll{
   height: auto;           /* 👈 ya no pantalla completa */
   max-height: 75vh;       /* 👈 límite visible */
   background : #fff; 
-  z-index: 9998;
+  z-index: 9500;
   transform: translateY(-20px);
   opacity: 0;
   transition: transform .35s ease, opacity .35s ease;
@@ -448,7 +443,7 @@ body.no-scroll{
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 9997;
+  z-index: 9000;
 }
 
 .overlay-productos.activo{
@@ -712,15 +707,6 @@ body.modal-abierto .whatsapp{
   display: flex !important;
   align-items: center;
   justify-content: center;
-}
-
-.icono-menu::before{
-  content: "☰";
-}
-
-/* Cuando el menú está abierto */
-.menu-productos.activo ~ .fab-productos .icono-menu::before{
-  content: "✕";
 }
 
 body .fab-productos{
