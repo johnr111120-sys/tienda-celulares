@@ -392,23 +392,22 @@ body.no-scroll{
 }
 
 /* MENÚ */
-.menu-productos{
+#menu-productos {
   position: fixed;
-  top: 90px;
-  left: 15px;
-  right: 15px;
-  max-height: 75vh;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
   background: #fff;
-  z-index: 20000; /* 🔥 MÁS ALTO QUE TODO */
-  border-radius: 16px;
-  overflow-y: auto;
-  display: none;
+  z-index: 9999;
+  transition: right .3s ease;
 }
+
 .menu-productos.activo{
   right: 0;
   display: none;
 }
-
 
 /* ACTIVO */
 .menu-productos.activo{
