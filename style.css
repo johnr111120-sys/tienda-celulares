@@ -366,21 +366,24 @@ body.no-scroll{
   color: #128c7e;
 }
 
-/* EL MENÚ DE PRODUCTOS */
+/* EL CONTENEDOR DEL MENÚ (Debe ser flotante) */
 .menu-productos {
-    position: fixed !important;
-    top: 90px;
-    left: 10px;
-    right: 10px;
-    max-height: 80vh;
-    background: #ffffff !important; /* Fondo blanco sólido */
-    border-radius: 15px;
-    padding: 15px;
-    z-index: 2000000 !important; /* Por encima de TODO */
-    display: none; 
+    position: fixed !important; /* 🔥 Esto lo saca del flujo y lo hace flotar */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.9); /* Centrado en pantalla */
+    width: 90% !important;
+    max-width: 450px !important;
+    max-height: 80vh !important;
+    background: white !important;
+    border-radius: 20px;
+    padding: 20px;
     overflow-y: auto !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    pointer-events: auto !important; /* Asegura que responda a clics */
+    z-index: 2000000 !important; /* Por encima de todo */
+    display: none; /* 👈 Se oculta por defecto */
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 .menu-productos img{
@@ -388,11 +391,11 @@ body.no-scroll{
   z-index: 1;
 }
 
-/* ACTIVO */
-.menu-productos.activo{
-  transform: translateY(0);
-  opacity: 1;
-  display: block !important;
+/* CUANDO EL MENÚ ESTÁ ABIERTO */
+.menu-productos.activo {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .menu-titulo{
@@ -415,15 +418,13 @@ body.no-scroll{
   color: #fff;
 }
 
-/* OVERLAY */
-.overlay-productos{
-  position: fixed;
-  inset:0;
-  background: rgba(0,0,0,0.8);
-  opacity:0;
-  pointer-events:none;
-  z-index: 1500000; /* Debajo del menú, arriba del blur */
-  display: none;
+/* LA CAPA OSCURA DETRÁS */
+.overlay-productos {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.8) !important;
+    z-index: 1999999 !important; /* Justo debajo del menú */
+    display: none;
 }
 
 .overlay-productos.activo{
