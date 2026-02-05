@@ -739,4 +739,22 @@ body { border: none !important; }
     box-shadow: 0 10px 50px rgba(0,0,0,0.8) !important;
 }
 
-    
+    /* Esto asegura que el modal del producto gane SIEMPRE */
+.mp-overlay {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999999 !important; /* Más que el menú */
+    background: rgba(0,0,0,0.95) !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.mp-overlay.activo {
+    display: flex !important;
+}
+
+/* Forzar que el menú se oculte de la página principal */
+.menu-productos:not(.activo) {
+    display: none !important;
+}
