@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Mi Negocio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Mi Negocio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="inicio">
 
-<a href="https://wa.me/18292017321?text=Hola%20quiero%20cotizar%20una%20reparación%20de%20celular" 
-   class="whatsapp" target="_blank">
- 💬
-</a>
+<!-- BOTÓN WHATSAPP -->
+<a href="https://wa.me/18292017321?text=Hola%20quiero%20cotizar"
+   class="whatsapp" target="_blank">💬</a>
     
 <nav>
   <a href="#">Inicio</a>
@@ -22,10 +20,10 @@
 </nav>
 
 <header>
-    <h1>Moises Celulares</h1>
-    <p>Venta y reparación de celulares</p>
+  <h1>Moises Celulares</h1>
+  <p>Venta y reparación de celulares</p>
 </header>
-
+    
 <section>
     <h2>Sobre nosotros</h2>
     <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
@@ -322,10 +320,11 @@ function toggleSubCategoria(header){
 }
 </script>
 
-
+<!-- MENÚ PRODUCTOS -->
 <div id="menu-productos" class="menu-productos">
-
   <h3 class="menu-titulo">🛒 Productos</h3>
+  <p style="text-align:center"></p>
+</div>
 
   <!-- 📱 CELULARES -->
 <div class="categoria">
@@ -536,7 +535,8 @@ function toggleSubCategoria(header){
         )">
 <span class="producto-precio">RD$ 8,000</span>
 </div>
-
+</p>
+             
       </div>
     </div>
 
@@ -544,31 +544,35 @@ function toggleSubCategoria(header){
     
 
 <script>
-function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos"); // 👈 FALTABA
-  const overlay = document.getElementById("overlay-productos");
-  const icono = document.querySelector(".icono-menu");
+const fab = document.getElementById("fab-productos");
+const menu = document.getElementById("menu-productos");
+const overlay = document.getElementById("overlay-productos");
+const icono = fab.querySelector(".icono-menu");
 
+function toggleMenuProductos(){
   const activo = menu.classList.toggle("activo");
   overlay.classList.toggle("activo", activo);
 
   if(activo){
     document.body.classList.add("no-scroll");
     icono.textContent = "✕";
-  } else {
+  }else{
     document.body.classList.remove("no-scroll");
     icono.textContent = "☰";
   }
 }
+
+fab.addEventListener("click", toggleMenuProductos);
+overlay.addEventListener("click", toggleMenuProductos);
 </script>
 
 
-    
-<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+<!-- OVERLAY -->
+<div id="overlay-productos" class="overlay-productos"></div>
 
-<!-- BOTÓN PRODUCTOS -->
-<button class="fab-productos" id="fab-productos" onclick="toggleMenuProductos()">
-  <span class="icono-menu" id="icono-fab">☰</span>
+<!-- BOTÓN FLOTANTE -->
+<button id="fab-productos" class="fab-productos">
+  <span class="icono-menu">☰</span>
 </button>
 
 
