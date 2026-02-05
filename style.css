@@ -35,7 +35,7 @@ nav{
   top: 0;
   z-index: 9999;
   height: 80px;
-  background: #000;
+  background-image: url("../img/Logo3Expand.png");
   display: flex;
   align-items: center;
   justify-content: center;
