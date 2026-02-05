@@ -492,11 +492,31 @@ function toggleMenuProductos(){
     document.body.classList.remove("modal-abierto");
   }
 }
+    
 </script>
 
     
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const reseñas = document.querySelectorAll(".reseña");
+  let indice = 0;
 
+  if (reseñas.length === 0) return;
+
+  // Mostrar solo la primera
+  reseñas.forEach(r => r.classList.remove("activa"));
+  reseñas[0].classList.add("activa");
+
+  setInterval(() => {
+    reseñas[indice].classList.remove("activa");
+    indice = (indice + 1) % reseñas.length;
+    reseñas[indice].classList.add("activa");
+  }, 4000); // ⏱ cambia cada 4 segundos
+});
+</script>
+
+    
 
     </body>
 </html>
