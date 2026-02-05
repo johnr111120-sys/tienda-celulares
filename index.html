@@ -9,6 +9,8 @@
 
 <body class="inicio">
   
+<div id="overlay-productos" class="overlay-productos"></div>  
+  
 <button class="fab-productos" onclick="toggleMenuProductos()">
   <span id="icono-menu">☰</span>
 </button>
@@ -328,8 +330,23 @@ function toggleSubCategoria(header){
 
 <!-- MENÚ PRODUCTOS -->
 <div id="menu-productos" class="menu-productos">
-  <h3 class="menu-titulo">🛒 Productos</h3>
+  <h3 class="menu-titulo">🛒 Catálogo de Productos</h3>
+  </div>
 
+  <script>
+function toggleMenuProductos(){
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+  const icono = document.getElementById("icono-menu");
+
+  const activo = menu.classList.toggle("activo");
+  overlay.classList.toggle("activo", activo);
+
+  icono.textContent = activo ? "✕" : "☰";
+  document.body.classList.toggle("no-scroll", activo);
+}
+</script>
+  
   <!-- 📱 CELULARES -->
 <div class="categoria">
   <div class="cat-header" onclick="toggleCategoria(this)">
@@ -566,29 +583,6 @@ function toggleSubCategoria(header){
 </div>
 
 </div>
-    
-
-<script>
-function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-menu"); // Asegúrate que el ID sea correcto
-
-  const activo = menu.classList.toggle("activo");
-  overlay.classList.toggle("activo", activo);
-
-  // Esto cambia el icono de ☰ a ✕
-  if(activo) {
-    icono.textContent = "✕";
-  } else {
-    icono.textContent = "☰";
-  }
-}
-</script>
-
-
-
-<div id="overlay-productos" class="overlay-productos"></div>
 
 
 </body>
