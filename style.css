@@ -54,7 +54,6 @@ nav a{
 }
 
 .header-principal {
-  position: sticky;
   top: 0;
   z-index: 9999;
   height: 80px;
