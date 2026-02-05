@@ -799,3 +799,24 @@ div#menu-flotante-final.menu-productos-nuevo.activo {
 .mp-overlay, .img-modal {
   z-index: 9999999 !important; /* Un nivel superior al del menú */
 }
+
+
+    /* Ajuste para que los productos quepan de 2 en 2 en el menú */
+#menu-final .galeria {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px 0;
+}
+
+#menu-final .producto-item img {
+    height: 120px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px;
+}
+
+    /* Esto garantiza que al abrir un producto, la imagen esté por encima del menú azul */
+.mp-overlay {
+    z-index: 9999999 !important; 
+}
