@@ -61,7 +61,7 @@ nav a{
   background: #000;
   display: flex;
   align-items: center;
-  justify-content: flex-end;  /* ⬅️ al margen derecho */
+  justify-content: center;  /* ⬅️ al margen derecho */
   padding-right: 0px;        /* separación del borde */
 }
 
