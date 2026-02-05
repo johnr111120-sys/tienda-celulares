@@ -426,7 +426,8 @@ body.no-scroll{
 
 /* Cuando el menú está abierto */
 .menu-productos.activo ~ .fab-productos .icono-menu{
-  transform: rotate(90deg);
+    transform: rotate(90deg);
+
 }
 
 /* Cambiar ☰ por ✕ visualmente */
@@ -708,4 +709,9 @@ body.modal-abierto .whatsapp{
 body .fab-productos{
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+.icono-menu::before{
+  content: "☰";
+  font-size: 34px;
 }
