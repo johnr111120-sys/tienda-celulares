@@ -47,6 +47,7 @@ header {
     color: white;
     padding: 30px;
     text-align: center;
+    font-size: 28px;
 }
 
 section {
@@ -666,4 +667,13 @@ body.modal-abierto .whatsapp{
   touch-action: manipulation; /* 👈 elimina retraso táctil */
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
   user-select: none;
+}
+
+.reseña{
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.reseña.activa{
+  opacity: 1;
 }
