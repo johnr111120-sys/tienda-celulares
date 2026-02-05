@@ -475,25 +475,20 @@ function toggleCategoria(header){
 
 <script>
 function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
+  const menu = document.getElementById("menu-flotante-final");
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
+
   const activo = menu.classList.toggle("activo");
 
-  // Overlay sincronizado
   overlay.classList.toggle("activo", activo);
+  icono.textContent = activo ? "✕" : "☰";
 
-  // Bloquear scroll + ocultar WhatsApp
-  if (activo) {
-    document.body.classList.add("no-scroll");
-    document.body.classList.add("modal-abierto");
-  } else {
-    document.body.classList.remove("no-scroll");
-    document.body.classList.remove("modal-abierto");
-  }
+  document.body.classList.toggle("no-scroll", activo);
+  document.body.classList.toggle("modal-abierto", activo); // WhatsApp
 }
-    
 </script>
+
 
     
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
