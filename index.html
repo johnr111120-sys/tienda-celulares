@@ -544,26 +544,18 @@ function toggleSubCategoria(header){
     
 
 <script>
-const fab = document.getElementById("fab-productos");
-const menu = document.getElementById("menu-productos");
-const overlay = document.getElementById("overlay-productos");
-const icono = fab.querySelector(".icono-menu");
-
 function toggleMenuProductos(){
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+  const icono = document.getElementById("icono-fab");
+
   const activo = menu.classList.toggle("activo");
   overlay.classList.toggle("activo", activo);
 
-  if(activo){
-    document.body.classList.add("no-scroll");
-    icono.textContent = "✕";
-  }else{
-    document.body.classList.remove("no-scroll");
-    icono.textContent = "☰";
-  }
-}
+  document.body.classList.toggle("no-scroll", activo);
 
-fab.addEventListener("click", toggleMenuProductos);
-overlay.addEventListener("click", toggleMenuProductos);
+  icono.textContent = activo ? "✕" : "☰";
+}
 </script>
 
 
@@ -571,8 +563,8 @@ overlay.addEventListener("click", toggleMenuProductos);
 <div id="overlay-productos" class="overlay-productos"></div>
 
 <!-- BOTÓN FLOTANTE -->
-<button id="fab-productos" class="fab-productos">
-  <span class="icono-menu">☰</span>
+<button class="fab-productos" onclick="toggleMenuProductos()">
+  <span class="icono-menu" id="icono-fab">☰</span>
 </button>
 
   
