@@ -55,36 +55,40 @@ nav a{
 
 .header-principal{
   top: 0;
-  z-index: 99999;
-  height: 80px;              /* ⬅️ más alto */
+  z-index: 9999;            
+  height: clamp(70px, 10vh, 110px);
   background: #000;
   display: flex;
   align-items: center;
-  justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 250px;        /* separación del borde */
+  padding-inline: clamp(12px, 3vw, 30px);
 }
 
 .header-logo{
-  height: 600px;               /* ⬅️ controla el tamaño real */
+  height: clamp(40px, 6vh, 85px);
+  max-height: 80%;
   width: auto;
+  object-fit: contain;
 }
 
 /* ====== ESTILO BASE (móvil primero) ====== */
-.header-principal {
+.header-principal{
   top: 0;
-  z-index: 9999;
-  height: 150px;              /* más chico en móvil */
+  z-index: 9999;            
+  height: clamp(70px, 10vh, 110px);
   background: #000;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-right: 15px;
+  padding-inline: clamp(12px, 3vw, 30px);
 }
 
-.header-logo {
-  height: 400px;              /* logo chico en móvil */
+
+.header-logo{
+  height: clamp(40px, 6vh, 85px);
+  max-height: 80%;
   width: auto;
+  object-fit: contain;
 }
+
 
 /* ====== DESKTOP ====== */
 @media (min-width: 1024px) {
@@ -93,9 +97,34 @@ nav a{
     padding-right: 30px;
   }
 
-  .header-logo {
-    height: 450px;            /* logo grande */
-  }
+.header-logo{
+  height: clamp(40px, 6vh, 85px);
+  max-height: 80%;
+  width: auto;
+  object-fit: contain;
+}
+
+    .header-left{
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  justify-content: center;        
+}
+
+.header-center{
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.header-right{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.header-principal,
+.header-logo{
+  transition: height 0.25s ease, padding 0.25s ease;
 }
 
 section {
