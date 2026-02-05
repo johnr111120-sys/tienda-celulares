@@ -417,7 +417,6 @@ body.no-scroll{
 .menu-productos.activo{
   transform: translateY(0);
   opacity: 1;
-  display: block;
 }
 
 .menu-titulo{
@@ -448,6 +447,7 @@ body.no-scroll{
   opacity:0;
   pointer-events:none;
   z-index:9999;
+  display: none;
 }
 
 .overlay-productos.activo{
