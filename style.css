@@ -628,11 +628,10 @@ body.no-scroll{
   color: #f5b301;
   font-weight: bold;
 }
-
-.reseñas,
-.reviews,
-.testimonios{
-  padding-bottom: 90px;
+.carrusel{
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .reseña{
@@ -641,6 +640,10 @@ body.no-scroll{
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.85);
+}
+
+.reseña.activa{
+  display: block;
 }
 
 .btn-google{
@@ -776,37 +779,9 @@ body.modal-abierto .whatsapp{
   user-select: none;
 }
 
-.carrusel{
-  position: relative;
-  max-width: 1000px;
-  margin: auto;
-  overflow: hidden; /* 🔥 clave para el slide */  
-}
-
-.reseña{
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-}
-
-.reseña.activa{
-   position: relative;
-  left: 0;
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.reseña.salida{
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
 #menu-flotante-final{
   position: fixed;
-  top: 0;
+  top: 30;
   left: 0;
   width: 85%;
   height: 100vh;
