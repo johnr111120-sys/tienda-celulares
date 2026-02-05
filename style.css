@@ -722,3 +722,8 @@ body.modal-abierto .whatsapp{
 .menu-productos.activo ~ .fab-productos .icono-menu::before{
   content: "✕";
 }
+
+body .fab-productos{
+  visibility: visible !important;
+  opacity: 1 !important;
+}
