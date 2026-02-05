@@ -301,7 +301,6 @@ function toggleCategoria(header){
 </script>
 
 <div id="menu-productos" class="menu-productos">
-
   <h3 class="menu-titulo">🛒 Productos</h3>
 
   <!-- 📱 CELULARES -->
@@ -467,6 +466,8 @@ function toggleCategoria(header){
   </div>
 
 </div>
+
+<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
     
 <!-- BOTÓN PRODUCTOS -->
 <button class="fab-productos" onclick="toggleMenuProductos()">
@@ -475,23 +476,27 @@ function toggleCategoria(header){
 
 <script>
 function toggleMenuProductos(){
-  const menu = document.getElementById("menu-flotante-final");
+  const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
+
+  if (!menu || !overlay || !icono) {
+    console.error("Falta menu, overlay o icono");
+    return;
+  }
 
   const activo = menu.classList.toggle("activo");
 
   overlay.classList.toggle("activo", activo);
-  icono.textContent = activo ? "✕" : "☰";
 
   document.body.classList.toggle("no-scroll", activo);
-  document.body.classList.toggle("modal-abierto", activo); // WhatsApp
+  document.body.classList.toggle("modal-abierto", activo);
+
+  // Cambiar icono SIN romper animación
+  icono.textContent = activo ? "✕" : "☰";
 }
 </script>
 
-
-    
-<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
     
 <script>
 const reseñas = document.querySelectorAll(".reseña");
