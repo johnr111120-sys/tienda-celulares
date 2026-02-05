@@ -56,12 +56,12 @@ nav a{
 .header-principal{
   top: 0;
   z-index: 99999;
-  height: 100px;              /* ⬅️ más alto */
+  height: 80px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 0px;        /* separación del borde */
+  padding-right: -20px;        /* separación del borde */
 }
 
 .header-logo{
