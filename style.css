@@ -35,20 +35,16 @@ body {
   top: 0;
   z-index: 9999;
   height: 80px;
-  background: red !important;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* IMAGEN DEL NAV */
 .nav-logo{
-  height: 70%;
+  max-height: 60px;
   width: auto;
-  object-fit: contain;
 }
-
-
 
 nav a{
   background-color: #000;
