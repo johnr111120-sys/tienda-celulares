@@ -572,13 +572,17 @@ function toggleSubCategoria(header){
 function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-menu-fijo"); // <--- Cambiado aquí
+  const icono = document.getElementById("icono-menu"); // Asegúrate que el ID sea correcto
 
   const activo = menu.classList.toggle("activo");
   overlay.classList.toggle("activo", activo);
 
-  icono.textContent = activo ? "✕" : "☰";
-  document.body.classList.toggle("no-scroll", activo);
+  // Esto cambia el icono de ☰ a ✕
+  if(activo) {
+    icono.textContent = "✕";
+  } else {
+    icono.textContent = "☰";
+  }
 }
 </script>
 
