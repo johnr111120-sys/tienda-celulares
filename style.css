@@ -42,7 +42,7 @@ nav{
 
 /* Sombra SOLO cuando hay scroll */
 nav.scrolled{
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
 }
 
 
