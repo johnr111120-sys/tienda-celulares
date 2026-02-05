@@ -546,16 +546,16 @@ function toggleSubCategoria(header){
 function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-fab");
+  const icono = document.querySelector(".icono-menu");
 
   const activo = menu.classList.toggle("activo");
   overlay.classList.toggle("activo", activo);
 
-  document.body.classList.toggle("no-scroll", activo);
-
-  icono.textContent = activo ? "✕" : "☰";
+  icono.textContent = activo ? "✕" : "≡";
+  document.body.style.overflow = activo ? "hidden" : "";
 }
 </script>
+
 
 
 <!-- OVERLAY -->
