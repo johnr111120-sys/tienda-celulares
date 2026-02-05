@@ -321,14 +321,14 @@ body.no-scroll{
 .cat-contenido {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.45s ease;
+  transition: max-height 0.5s ease-out;
 }
 
 /* CONTENIDO (ABIERTO) */
 .categoria.activa .cat-contenido {
-  max-height: 5000px; /* 🔥 CLAVE: altura grande */
+  max-height: 2000px !important; /* Forzamos la apertura */
+    padding: 10px 0;
 }
-
 /* GALERÍA DENTRO */
 .cat-contenido .galeria {
   padding: 12px;
@@ -370,14 +370,15 @@ body.no-scroll{
   top: 90px;
   left: 15px;
   right: 15px;
-  max-height: 70vh;
-  background: #fff;
+  max-height: 80vh;
+  background: #ffffff;
   border-radius: 16px;
   overflow-y: auto;
   padding: 20px;
   overflow: auto;
   display: none;
   z-index: 1000000 !important; /* Menos que el modal */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   isolation: isolate;
 }
 
@@ -390,7 +391,7 @@ body.no-scroll{
 .menu-productos.activo{
   transform: translateY(0);
   opacity: 1;
-  display: block
+  display: block !important;
 }
 
 .menu-titulo{
@@ -417,17 +418,17 @@ body.no-scroll{
 .overlay-productos{
   position: fixed;
   inset:0;
-  background: rgba(0,0,0,.6);
+  background: rgba(0,0,0,.7);
   opacity:0;
   pointer-events:none;
-  z-index:9999;
+  z-index:999999; /* Justo debajo del menú */
   display: none;
 }
 
 .overlay-productos.activo{
   opacity:1;
   pointer-events:auto;
-  display: block;
+  display: block !important;
 }
 
 @media (max-width: 600px){
@@ -665,11 +666,11 @@ body.modal-abierto .whatsapp{
 .sub-contenido{
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
+  transition: max-height 0.5s ease-out;
 }
 
 .subcategoria.activa .sub-contenido{
-  max-height: 3000px;
+  max-height: 1500px !important;
   padding: 10px 0;
 }
 
