@@ -2,22 +2,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Negocio</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Mi Negocio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="inicio">
-  
-<div id="overlay-productos" class="overlay-productos"></div>  
-  
-<button class="fab-productos" onclick="toggleMenuProductos()">
-  <span id="icono-menu">☰</span>
-</button>
-  
-<!-- BOTÓN WHATSAPP -->
-<a href="https://wa.me/18292017321?text=Hola%20quiero%20cotizar"
-   class="whatsapp" target="_blank">💬</a>
+
+<a href="https://wa.me/18292017321?text=Hola%20quiero%20cotizar%20una%20reparación%20de%20celular" 
+   class="whatsapp" target="_blank">
+ 💬
+</a>
     
 <nav>
   <a href="#">Inicio</a>
@@ -27,10 +22,10 @@
 </nav>
 
 <header>
-  <h1>Moises Celulares</h1>
-  <p>Venta y reparación de celulares</p>
+    <h1>Moises Celulares</h1>
+    <p>Venta y reparación de celulares</p>
 </header>
-    
+
 <section>
     <h2>Sobre nosotros</h2>
     <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
@@ -112,24 +107,23 @@ al lado de Plaza La Canela.
 
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
-  
+
   <div class="carrusel">
     <div class="reseña activa">
       <p>“Excelente servicio, repararon mi celular el mismo día.”</p>
       <span>⭐⭐⭐⭐⭐ – Carlos M.</span>
-    </div>
-    <div class="reseña">
+        
+   <div class="carrusel">
+    <div class="reseña activa">
       <p>“Muy buena atención y precios justos. Recomendados.”</p>
       <span>⭐⭐⭐⭐⭐ – Ana R.</span>
-    </div>
-    <div class="reseña">
+        
+  <div class="carrusel">
+    <div class="reseña activa">
       <p>“Compré accesorios y todo de buena calidad.”</p>
       <span>⭐⭐⭐⭐⭐ – José L.</span>
     </div>
   </div>
-  <a href="#" target="_blank" class="btn-google">
-    ⭐ Ver más reseñas en Google
-  </a>
 </section>
 
 <a href="https://maps.app.goo.gl/zmRPi1JC8QECjScP7?g_st=ic
@@ -158,49 +152,177 @@ referrerpolicy="no-referrer-when-downgrade">
   <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
   <p>📞 WhatsApp: +1 829 201 7321</p>
 </footer>
-  
-  <div
- <div id="overlay-final" onclick="toggleMenuFinal()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000000; display: none;"></div>
+    
+    <!-- MODAL DE IMAGEN (AISLADO) -->
+<div id="img-modal" class="img-modal" aria-hidden="true">
+  <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
+  <img id="img-modal-src" src="" alt="Vista ampliada">
+</div>
 
-<button onclick="toggleMenuFinal()" style="position: fixed; top: 20px; left: 20px; width: 60px; height: 60px; background: #007bff; color: white; border-radius: 50%; border: 2px solid white; font-size: 30px; z-index: 2000001; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
-  <span id="icono-final">☰</span>
-</button>
+  <script>
+const imgModal = document.getElementById("img-modal");
+const imgModalSrc = document.getElementById("img-modal-src");
 
-<div id="menu-final" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; max-height: 80vh; background: white; border-radius: 20px; padding: 20px; z-index: 1000001; display: none; overflow-y: auto; box-shadow: 0 0 50px rgba(0,0,0,0.8); color: black; font-family: sans-serif;">
-  
-  <h2 style="text-align: center; margin-top: 0; color: #333;">🛒 Catálogo</h2>
-    </div>
- <!-- 📱 CELULARES -->
-<div class="categoria">
-  <div class="cat-header" onclick="toggleCategoria(this)">
-    <h4>📱 Celulares</h4>
-    <span class="cat-icon">+</span>
+function abrirImgModal(src){
+  imgModalSrc.src = src;
+  imgModal.style.display = "flex";
+  imgModal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  document.body.classList.add("modal-abierto");
+}
+
+function cerrarImgModal(){
+  imgModal.style.display = "none";
+  imgModalSrc.src = "";
+  imgModal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+  document.body.classList.remove("modal-abierto");
+}
+
+imgModal.addEventListener("click", e=>{
+  if(e.target === imgModal) cerrarImgModal();
+});
+</script>
+
+
+    
+    <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
+<div id="modal-producto" class="mp-overlay">
+  <div class="mp-contenido">
+    
+    <button class="mp-cerrar" onclick="cerrarProducto()">✕</button>
+
+    <img id="mp-img" src="" alt="Producto">
+
+    <h3 id="mp-titulo"></h3>
+    <p id="mp-desc"></p>
+    <strong id="mp-precio"></strong>
+
+    <a id="mp-whatsapp" class="mp-wsp" target="_blank">
+      💬 Consultar por WhatsApp
+    </a>
+
   </div>
+</div>
 
-   <div class="cat-contenido">
-  
-      <!-- 🔹 SUBCATEGORÍA IPHONE -->
-   <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🍎 iPhone</h5>
-        <span class="sub-icon">+</span>
-      </div>
+<script>
+const modalProducto = document.getElementById("modal-producto");
 
-      <div class="sub-contenido">
-        <div class="galeria">
+function abrirProducto(img, titulo, desc, precio, mensaje){
+  document.getElementById("mp-img").src = img;
+  document.getElementById("mp-titulo").textContent = titulo;
+  document.getElementById("mp-desc").textContent = desc;
+  document.getElementById("mp-precio").textContent = precio;
 
-          <div class="producto-item">
-            <img src="images/cell1.jpg"
-              onclick="abrirProducto(
-                'images/cell1.jpg',
-                'iPhone 17 Pro Max',
-                '256GB · Sellado',
-                'RD$ 57,000',
-                'Hola, quiero info del iPhone 17 Pro Max'
-              )">
-            <span class="producto-precio">RD$ 57,000</span>
-          </div>
-            
+  // Link WhatsApp correcto
+  document.getElementById("mp-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+
+  // Abrir modal
+  modalProducto.classList.add("activo");
+
+  // Bloquear fondo + ocultar WhatsApp flotante
+  document.body.classList.add("no-scroll");
+  document.body.classList.add("modal-abierto");
+}
+
+function cerrarProducto(){
+  modalProducto.classList.remove("activo");
+  document.body.classList.remove("no-scroll");
+  document.body.classList.remove("modal-abierto");
+}
+
+// Cerrar tocando fuera
+modalProducto.addEventListener("click", e => {
+  if (e.target === modalProducto) cerrarProducto();
+});
+</script>
+
+
+    <script>
+/* =========================
+   SWIPE DOWN PARA CERRAR
+   ========================= */
+
+let startY = 0;
+let endY = 0;
+
+// Modal imagen
+const imgModalSwipe = document.getElementById("img-modal");
+
+// Modal producto
+const productoModalSwipe = document.getElementById("modal-producto");
+
+// Función genérica
+function activarSwipe(modal, cerrarFn){
+  if(!modal) return;
+
+  modal.addEventListener("touchstart", e => {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener("touchmove", e => {
+    endY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener("touchend", () => {
+    if(endY - startY > 80){ // distancia swipe
+      cerrarFn();
+    }
+    startY = 0;
+    endY = 0;
+  });
+}
+
+// Activar swipe
+activarSwipe(imgModalSwipe, cerrarImgModal);
+activarSwipe(productoModalSwipe, cerrarProducto);
+</script>
+
+<script>
+function toggleCategoria(header){
+  const categoria = header.parentElement;
+  const contenido = categoria.querySelector('.cat-contenido');
+  const icono = header.querySelector('.cat-icon');
+  const abierta = categoria.classList.contains('activa');
+
+  // cerrar TODAS
+  document.querySelectorAll('.categoria').forEach(cat => {
+    cat.classList.remove('activa');
+    cat.querySelector('.cat-icon').textContent = '+';
+  });
+
+  // si estaba cerrada, abrir SOLO esta
+  if(!abierta){
+    categoria.classList.add('activa');
+    icono.textContent = '−';
+  }
+}
+</script>
+
+<div id="menu-productos" class="menu-productos">
+
+  <h3 class="menu-titulo">🛒 Productos</h3>
+
+  <!-- 📱 CELULARES -->
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>📱 Celulares</h4>
+      <span class="cat-icon">+</span>
+    </div>
+    <div class="cat-contenido">
+      <div class="galeria">
+ <div class="producto-item">
+        <img src="images/cell1.jpg"
+        onclick="abrirProducto(
+          'images/cell1.jpg',
+          'iPhone 17 Pro Max',
+          '256GB · Negro / Naranja · Sellado',
+          'RD$ 57,000',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 57,000</span>
+</div>
   <div class="producto-item">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
@@ -212,24 +334,7 @@ referrerpolicy="no-referrer-when-downgrade">
         )">
 <span class="producto-precio">RD$ 25,000</span>
 </div>
-          </div>
-        </div>
-     </div>
-  </div>
-
-   <div class="cat-contenido">
-  
-  <!-- 🔹 SUBCATEGORÍA ANDROID -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🤖 Android</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-            
-        <div class="producto-item">
+   <div class="producto-item">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
           'images/cell7.jpg',
@@ -240,7 +345,6 @@ referrerpolicy="no-referrer-when-downgrade">
         )">
 <span class="producto-precio">RD$ 8,000</span>
 </div>
-          
     <div class="producto-item">
         <img src="images/cell8.jpg"
         onclick="abrirProducto(
@@ -252,23 +356,6 @@ referrerpolicy="no-referrer-when-downgrade">
         )">
 <span class="producto-precio">RD$ 7,000</span>
 </div>
-          </div>
-        </div>
-      </div>
-      </div>
-     
-   <div class="cat-contenido">
-     
-     <!-- 🔹 SUBCATEGORÍA SAMSUNG -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>📱 Samsung</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-            
     <div class="producto-item">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
@@ -283,28 +370,16 @@ referrerpolicy="no-referrer-when-downgrade">
       </div>
     </div>
   </div>
-  </div>
-  
+
   <!-- 🎧 ACCESORIOS -->
   <div class="categoria">
     <div class="cat-header" onclick="toggleCategoria(this)">
       <h4>🎧 Accesorios</h4>
       <span class="cat-icon">+</span>
     </div>
-
-<div class="cat-contenido">
-    
-   <!-- 🔹 SUBCATEGORÍA ACCESORIOS -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🎧 Accesorios</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
- 
-    <div class="producto-item">       
+    <div class="cat-contenido">
+      <div class="galeria">
+ <div class="producto-item">       
         <img src="images/accesorios4.jpg"
         onclick="abrirProducto(
           'images/accesorios4.jpg',
@@ -354,30 +429,74 @@ referrerpolicy="no-referrer-when-downgrade">
       </div>
     </div>
   </div>
+
+  <!-- 📟 TABLETS -->
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>📟 Tablets</h4>
+      <span class="cat-icon">+</span>
+    </div>
+    <div class="cat-contenido">
+      <div class="galeria">
+<div class="producto-item">
+        <img src="images/tablet1.jpg"
+        onclick="abrirProducto(
+          'images/tablet1.jpg',
+          'SKY T8 Plus',
+          '64GB · Negra · Sellada',
+          'RD$ 6,000',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 6,000</span>
 </div>
+            
+<div class="producto-item">
+        <img src="images/tablet2.jpg"
+        onclick="abrirProducto(
+          'images/tablet2.jpg',
+          'iPad 4',
+          '64GB · Gris · Usada',
+          'RD$ 8,000',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 8,000</span>
 </div>
-</div>  
-  
+
+      </div>
+    </div>
+  </div>
+
+</div>
+    
+<!-- BOTÓN PRODUCTOS -->
+<button class="fab-productos" onclick="toggleMenuProductos()">
+  <span class="icono-menu">☰</span>
+</button>
+
 <script>
-function toggleMenuFinal() {
-  const menu = document.getElementById('menu-final');
-  const overlay = document.getElementById('overlay-final');
-  const icono = document.getElementById('icono-final');
-  
-  if (menu.style.display === 'none' || menu.style.display === '') {
-    menu.style.display = 'block';
-    overlay.style.display = 'block';
-    icono.textContent = '✕';
-    document.body.style.overflow = 'hidden';
+function toggleMenuProductos(){
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+
+  const activo = menu.classList.toggle("activo");
+
+  // Overlay sincronizado
+  overlay.classList.toggle("activo", activo);
+
+  // Bloquear scroll + ocultar WhatsApp
+  if (activo) {
+    document.body.classList.add("no-scroll");
+    document.body.classList.add("modal-abierto");
   } else {
-    menu.style.display = 'none';
-    overlay.style.display = 'none';
-    icono.textContent = '☰';
-    document.body.style.overflow = '';
+    document.body.classList.remove("no-scroll");
+    document.body.classList.remove("modal-abierto");
   }
 }
 </script>
 
-  
-</body>
+    
+<div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+
+
+    </body>
 </html>
