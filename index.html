@@ -554,19 +554,16 @@ function toggleSubCategoria(header){
 function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
-
   const activo = menu.classList.toggle("activo");
 
-  // Overlay sincronizado
   overlay.classList.toggle("activo", activo);
 
-  // Bloquear scroll + ocultar WhatsApp
   if (activo) {
     document.body.classList.add("no-scroll");
-    document.body.classList.add("modal-abierto");
+    document.body.classList.add("menu-abierto"); // 👈 NUEVO
   } else {
     document.body.classList.remove("no-scroll");
-    document.body.classList.remove("modal-abierto");
+    document.body.classList.remove("menu-abierto"); // 👈 NUEVO
   }
 }
 </script>
