@@ -29,14 +29,22 @@ body {
 }
 
 
+/* Nav base (sin sombra al inicio) */
 nav{
   position: sticky;
   top: 0;
-  z-index: 9999; /* por encima del contenido */
+  z-index: 9999;
   background-color: #000;
   padding: 20px;
   text-align: center;
+  transition: box-shadow 0.3s ease;
 }
+
+/* Sombra SOLO cuando hay scroll */
+nav.scrolled{
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
 
 nav a{
   background-color: #000;
@@ -48,7 +56,7 @@ nav a{
 header {
     background-color: #000;
     color: white;
-    padding: 30px;
+    padding: 40px;
     text-align: center;
     font-size: 28px;
 }
