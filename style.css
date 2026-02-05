@@ -653,3 +653,10 @@ body.inicio footer{
     right: 18px;
   }
 }
+
+/* Ocultar WhatsApp cuando hay un modal abierto */
+body.modal-abierto .whatsapp{
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
