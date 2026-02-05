@@ -331,7 +331,9 @@ function toggleSubCategoria(header){
     <h4>📱 Celulares</h4>
     <span class="cat-icon">+</span>
   </div>
-        
+
+   <div class="cat-contenido">
+  
       <!-- 🔹 SUBCATEGORÍA IPHONE -->
    <div class="subcategoria">
       <div class="sub-header" onclick="toggleSubCategoria(this)">
@@ -430,6 +432,7 @@ function toggleSubCategoria(header){
 </div>      
       </div>
     </div>
+  </div>
   </div>
 
   <!-- 🎧 ACCESORIOS -->
@@ -557,10 +560,12 @@ function toggleSubCategoria(header){
 function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
+  const icono = document.getElementById("icono-menu");
 
   const activo = menu.classList.toggle("activo");
   overlay.classList.toggle("activo", activo);
 
+  icono.textContent = activo ? "✕" : "☰";
   document.body.classList.toggle("no-scroll", activo);
 }
 </script>
@@ -572,7 +577,7 @@ function toggleMenuProductos(){
 
 <!-- BOTÓN FLOTANTE -->
 <button class="fab-productos" onclick="toggleMenuProductos()">
-  <span class="icono-menu" id="icono-fab">☰</span>
+  <span id="icono-menu" id=">☰</span>
 </button>
 
   
