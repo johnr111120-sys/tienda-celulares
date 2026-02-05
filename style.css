@@ -64,6 +64,7 @@ footer {
 }
 
 .whatsapp{
+  top: 40;
   position: fixed;
   bottom: 20px;
   right: 20px;
