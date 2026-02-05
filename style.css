@@ -794,3 +794,8 @@ div#menu-flotante-final.menu-productos-nuevo.activo {
     height: 120px !important;
     object-fit: cover !important;
 }
+
+    /* Esto obliga al modal de producto a estar por encima del menú nuevo */
+.mp-overlay, .img-modal {
+  z-index: 9999999 !important; /* Un nivel superior al del menú */
+}
