@@ -2,12 +2,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moises Celulares</title>
-
-  <!-- CSS principal -->
-  <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Mi Negocio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="inicio">
@@ -17,44 +15,41 @@
  💬
 </a>
 
-   <!-- =========================
-       HEADER PRINCIPAL
-  ========================== -->
-  <header class="header-principal">
-        
-       <!-- 🔹 DERECHA: LOGO -->
-      <div class="nav-logo-contenedor">
-        <img 
-          src="./images/Logo3Expand.png"
-          alt="Moises Celulares"
-          class="header-logo"
-        >
-      </div>
+    <nav class="nav-principal">
+  <!-- DERECHA -->
+  <div class="nav-right">
+     <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
+  </div>
 
+  <!-- CENTRO -->
+  <div class="nav-center">
+    <input type="text" placeholder="🔎 BUSCAR..." />
+  </div>
 
-      <!-- 🔹 CENTRO: BUSCADOR -->
-      <div class="buscador">
-        <input type="text" placeholder="🔎 BUSCAR..." />
-      </div>
+  <!-- IZQUIERDA -->
+  <div class="nav-left">
+    <button class="nav-icon" title="Mi cuenta">👤</button>
+    <button class="nav-icon" title="Carrito">🛒</button>
+    <button class="nav-icon" title="Favoritos">❤️</button>
 
+  </div>
+</nav>
 
-     <!-- 🔹 IZQUIERDA: ICONOS -->
-      <div class="nav-iconos">
-        <button aria-label="Perfil">👤</button>
-        <button aria-label="Carrito">🛒</button>
-        <button aria-label="Favoritos">❤️</button>
-      </div>
+<header class="header-principal">
+  <h1 class="header-title">
+    <img src="./images/Logo1Porta.png"
+         alt="Moises Celulares"
+         class="header-logo">
+  </h1>
 </header>
 
-     <main>
-
-    <!-- Banner / Hero -->
-    <section class="banner">
+<section>
     <h2>Sobre nosotros</h2>
     <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
 </section>
 
  <section>
+
   <h2>Servicio técnico de celulares en La Canela, Santiago</h2>
 
   <p>
@@ -68,8 +63,8 @@ baterías, conectores de carga y mantenimiento general. te atendemos rápido en 
 al lado de Plaza La Canela.
 
   </p>
- </section>    
 
+</section>
     
 <section>
     <h2>Servicios</h2>
@@ -93,9 +88,6 @@ al lado de Plaza La Canela.
   <div class="bloque-galeria">
     <h2 class="bloque-titulo">📸 Nuestro Local & Reparaciones</h2>
 
-       <!-- Productos -->
-    <section class="productos">
-        
     <!-- 📍 LOCAL -->
    <div class="categoria activa">
       <div class="cat-header" onclick="toggleCategoria(this)">
@@ -129,9 +121,7 @@ al lado de Plaza La Canela.
   </div>
 
 </section>
-  </section>
 
-  </main>
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
 
@@ -170,13 +160,7 @@ referrerpolicy="no-referrer-when-downgrade">
 </iframe>
  
 </section>
-
-<!-- =========================
-       FOOTER
-========================== -->
-  <footer class="footer">
-    <p>© 2026 Moises Celulares</p>
-  </footer>
+    
     <footer>
   <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
   <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
@@ -189,14 +173,6 @@ referrerpolicy="no-referrer-when-downgrade">
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
 
-      <script>
-    const header = document.querySelector('.header-principal');
-
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 10);
-    });
-  </script>
-    
   <script>
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
@@ -560,6 +536,19 @@ setInterval(() => {
   siguiente.classList.add("activa");
 }, 4000); // ⏱ cambia cada 4 segundos
 </script>
+
+<script>
+const nav = document.querySelector("nav");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 10) {
+    nav.classList.add("scrolled");
+  } else {
+    nav.classList.remove("scrolled");
+  }
+});
+</script>
+
 
     
 
