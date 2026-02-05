@@ -661,3 +661,9 @@ body.modal-abierto .whatsapp{
   transform: scale(0.8);
   display: none;
 }
+
+.galeria img{
+  touch-action: manipulation; /* 👈 elimina retraso táctil */
+  -webkit-tap-highlight-color: transparent; /* quita flash azul */
+  user-select: none;
+}
