@@ -35,21 +35,18 @@ nav{
   top: 0;
   z-index: 9999;
   height: 80px;
-  background-image: url("images/Logo3Expand.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-
-    transition: box-shadow 0.3s ease;
 }
 
-.nav-img{
-  height: 60px;
+.nav-banner{
+  height: 100%;
+  width: auto;
   object-fit: contain;
 }
+
 
 nav a{
   background-color: #000;
