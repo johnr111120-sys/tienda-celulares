@@ -704,7 +704,3 @@ body .fab-productos{
   opacity: 1 !important;
 }
 
-.galeria, .producto-item, img {
-  position: relative;
-  z-index: 1;
-}
