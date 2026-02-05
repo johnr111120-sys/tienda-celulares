@@ -69,6 +69,18 @@ nav a{
   width: auto;
 }
 
+/* ====== DESKTOP ====== */
+@media (min-width: 1024px) {
+  .header-principal {
+    height: 150px;           /* header más alto */
+    padding-right: 30px;
+  }
+
+  .header-logo {
+    height: 85px;            /* logo grande */
+  }
+}
+
 section {
     padding: 20px;
     background: rgba(255,255,255,0.85);
