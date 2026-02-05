@@ -511,6 +511,14 @@ function toggleMenuProductos(){
 }
 </script>
 
+    <script>
+  const header = document.querySelector('.header-principal');
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+
     
 <script>
 const reseñas = document.querySelectorAll(".reseña");
