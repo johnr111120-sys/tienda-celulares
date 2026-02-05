@@ -11,7 +11,7 @@
 
 <a href="https://wa.me/18292017321?text=Hola%20quiero%20cotizar%20una%20reparación%20de%20celular" 
    class="whatsapp" target="_blank">
-  💬
+  <a target="_blank" href="https://icons8.com/icon/u1NG2uJaIZiK/whatsapp">WhatsApp</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 </a>
     
 <nav>
@@ -168,6 +168,7 @@ function abrirImgModal(src){
   imgModal.style.display = "flex";
   imgModal.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
+  document.body.classList.add("modal-abierto");
 }
 
 function cerrarImgModal(){
@@ -175,6 +176,7 @@ function cerrarImgModal(){
   imgModalSrc.src = "";
   imgModal.setAttribute("aria-hidden","true");
   document.body.style.overflow = "";
+  document.body.classList.remove("modal-abierto");
 }
 
 imgModal.addEventListener("click", e=>{
@@ -212,6 +214,7 @@ function abrirProducto(img,titulo,desc,precio,mensaje){
   document.getElementById("mp-desc").textContent = desc;
   document.getElementById("mp-precio").textContent = precio;
   document.getElementById("mp-whatsapp").href =
+  document.body.classList.add("modal-abierto");
     "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
 
   modalProducto.classList.add("activo");
@@ -221,6 +224,7 @@ function abrirProducto(img,titulo,desc,precio,mensaje){
 function cerrarProducto(){
   modalProducto.classList.remove("activo");
   document.body.style.overflow = "";
+  document.body.classList.remove("modal-abierto");
 }
 
 modalProducto.addEventListener("click", e=>{
