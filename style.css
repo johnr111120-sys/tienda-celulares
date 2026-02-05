@@ -517,6 +517,7 @@ body.no-scroll{
   position: relative;
   max-width: 1000px;
   margin: auto;
+  overflow: hidden; /* 🔥 clave para el slide */  
 }
 
 .reseñas,
@@ -533,9 +534,6 @@ body.no-scroll{
   box-shadow: 0 4px 10px rgba(0,0,0,0.85);
 }
 
-.reseña.activa{
-  display: block;
-}
 .btn-google{
   display: inline-block;
   margin-top: 20px;
@@ -670,10 +668,22 @@ body.modal-abierto .whatsapp{
 }
 
 .reseña{
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
 .reseña.activa{
+   position: relative;
+  left: 0;
+  transform: translateX(0);
   opacity: 1;
+}
+
+.reseña.salida{
+  transform: translateX(-100%);
+  opacity: 0;
 }
