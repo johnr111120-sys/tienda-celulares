@@ -550,15 +550,15 @@ function toggleSubCategoria(header){
 function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-fab");
+  const icono = document.querySelector(".icono-menu");
 
   const activo = menu.classList.toggle("activo");
   overlay.classList.toggle("activo", activo);
 
-  if (activo) {
+  if(activo){
     document.body.classList.add("no-scroll");
     icono.textContent = "✕";
-  } else {
+  }else{
     document.body.classList.remove("no-scroll");
     icono.textContent = "☰";
   }
