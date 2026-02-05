@@ -71,7 +71,6 @@ nav a{
 
 /* ====== ESTILO BASE (móvil primero) ====== */
 .header-principal {
-  position: sticky;
   top: 0;
   z-index: 9999;
   height: 70px;              /* más chico en móvil */
