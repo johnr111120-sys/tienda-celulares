@@ -89,7 +89,7 @@ nav a{
 /* ====== DESKTOP ====== */
 @media (min-width: 1024px) {
   .header-principal {
-    height: 330px;           /* header más alto */
+    height: 360px;           /* header más alto */
     padding-right: 30px;
   }
 
