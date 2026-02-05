@@ -513,12 +513,6 @@ body.no-scroll{
   color: #f5b301;
   font-weight: bold;
 }
-.carrusel{
-  position: relative;
-  max-width: 1000px;
-  margin: auto;
-  overflow: hidden; /* 🔥 clave para el slide */  
-}
 
 .reseñas,
 .reviews,
@@ -665,6 +659,13 @@ body.modal-abierto .whatsapp{
   touch-action: manipulation; /* 👈 elimina retraso táctil */
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
   user-select: none;
+}
+
+.carrusel{
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+  overflow: hidden; /* 🔥 clave para el slide */  
 }
 
 .reseña{
