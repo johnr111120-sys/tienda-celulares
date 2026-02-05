@@ -379,7 +379,7 @@ body.no-scroll{
   color: #fff;
   font-size: 22px;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 10000;
 }
 
 /* =====================
