@@ -324,224 +324,230 @@ function toggleSubCategoria(header){
 <!-- MENÚ PRODUCTOS -->
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
-  </div>
-      
-  <!-- 📱 CELULARES -->
-<div class="categoria">
-  <div class="cat-header" onclick="toggleCategoria(this)">
-    <h4>📱 Celulares</h4>
-    <span class="cat-icon">+</span>
-  </div>
-        
-      <!-- 🔹 SUBCATEGORÍA IPHONE -->
-   <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🍎 iPhone</h5>
-        <span class="sub-icon">+</span>
-      </div>
 
-      <div class="sub-contenido">
-        <div class="galeria">
+  <!-- ================= CELULARES ================= -->
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>📱 Celulares</h4>
+      <span class="cat-icon">+</span>
+    </div>
 
-          <div class="producto-item">
-            <img src="images/cell1.jpg"
-              onclick="abrirProducto(
+    <div class="cat-contenido">
+
+      <!-- iPhone -->
+      <div class="subcategoria">
+        <div class="sub-header" onclick="toggleSubCategoria(this)">
+          <h5>🍎 iPhone</h5>
+          <span class="sub-icon">+</span>
+        </div>
+
+        <div class="sub-contenido">
+          <div class="galeria">
+
+            <div class="producto-item">
+              <img src="images/cell1.jpg" onclick="abrirProducto(
                 'images/cell1.jpg',
                 'iPhone 17 Pro Max',
                 '256GB · Sellado',
                 'RD$ 57,000',
                 'Hola, quiero info del iPhone 17 Pro Max'
               )">
-            <span class="producto-precio">RD$ 57,000</span>
+              <span class="producto-precio">RD$ 57,000</span>
+            </div>
+
+            <div class="producto-item">
+              <img src="images/cell6.jpg" onclick="abrirProducto(
+                'images/cell6.jpg',
+                'iPhone 14 Pro Max',
+                'E‑SIM · Morado · 128GB · Sellado',
+                'RD$ 25,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 25,000</span>
+            </div>
+
           </div>
-            
-  <div class="producto-item">
-        <img src="images/cell6.jpg"
-        onclick="abrirProducto(
-          'images/cell6.jpg',
-          'iPhone 14 Pro Max',
-          'E‑SIM · Morado · 128GB · Sellado',
-          'RD$ 25,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 25,000</span>
-</div>
-            
-  <!-- 🔹 SUBCATEGORÍA ANDROID -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🤖 Android</h5>
-        <span class="sub-icon">+</span>
+        </div>
       </div>
 
-      <div class="sub-contenido">
-        <div class="galeria">
-            
-        <div class="producto-item">
-        <img src="images/cell7.jpg"
-        onclick="abrirProducto(
-          'images/cell7.jpg',
-          'Z Blade',
-          '128GB · Negro · Sellado',
-          'RD$ 8,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 8,000</span>
-</div>
-          
-    <div class="producto-item">
-        <img src="images/cell8.jpg"
-        onclick="abrirProducto(
-          'images/cell8.jpg',
-          'ZTE',
-          '64GB · Negro · Sellado',
-          'RD$ 7,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 7,000</span>
-</div>
+      <!-- Android -->
+      <div class="subcategoria">
+        <div class="sub-header" onclick="toggleSubCategoria(this)">
+          <h5>🤖 Android</h5>
+          <span class="sub-icon">+</span>
+        </div>
 
-     <!-- 🔹 SUBCATEGORÍA SAMSUNG -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>📱 Samsung</h5>
-        <span class="sub-icon">+</span>
+        <div class="sub-contenido">
+          <div class="galeria">
+
+            <div class="producto-item">
+              <img src="images/cell7.jpg" onclick="abrirProducto(
+                'images/cell7.jpg',
+                'Z Blade',
+                '128GB · Negro · Sellado',
+                'RD$ 8,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 8,000</span>
+            </div>
+
+            <div class="producto-item">
+              <img src="images/cell8.jpg" onclick="abrirProducto(
+                'images/cell8.jpg',
+                'ZTE',
+                '64GB · Negro · Sellado',
+                'RD$ 7,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 7,000</span>
+            </div>
+
+          </div>
+        </div>
       </div>
 
-      <div class="sub-contenido">
-        <div class="galeria">
-            
-    <div class="producto-item">
-        <img src="images/cell9.jpg"
-        onclick="abrirProducto(
-          'images/cell9.jpg',
-          'Galaxy A03s',
-          '64GB · Azul · Sellado',
-          'RD$ 9,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 9,000</span>
-</div>      
+      <!-- Samsung -->
+      <div class="subcategoria">
+        <div class="sub-header" onclick="toggleSubCategoria(this)">
+          <h5>📱 Samsung</h5>
+          <span class="sub-icon">+</span>
+        </div>
+
+        <div class="sub-contenido">
+          <div class="galeria">
+
+            <div class="producto-item">
+              <img src="images/cell9.jpg" onclick="abrirProducto(
+                'images/cell9.jpg',
+                'Galaxy A03s',
+                '64GB · Azul · Sellado',
+                'RD$ 9,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 9,000</span>
+            </div>
+
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 
-  <!-- 🎧 ACCESORIOS -->
+  <!-- ================= ACCESORIOS ================= -->
   <div class="categoria">
     <div class="cat-header" onclick="toggleCategoria(this)">
       <h4>🎧 Accesorios</h4>
       <span class="cat-icon">+</span>
     </div>
 
-   <!-- 🔹 SUBCATEGORÍA ACCESORIOS -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🎧 Accesorios</h5>
-        <span class="sub-icon">+</span>
-      </div>
+    <div class="cat-contenido">
+      <div class="subcategoria">
+        <div class="sub-header" onclick="toggleSubCategoria(this)">
+          <h5>🎧 Accesorios</h5>
+          <span class="sub-icon">+</span>
+        </div>
 
-      <div class="sub-contenido">
-        <div class="galeria">
- 
-    <div class="producto-item">       
-        <img src="images/accesorios4.jpg"
-        onclick="abrirProducto(
-          'images/accesorios4.jpg',
-          'Cover 360 Iphone 11 Pro Max',
-          'Cover 360 transparente con magsafe · Sellado',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios13.jpg"
-        onclick="abrirProducto(
-          'images/accesorios13.jpg',
-          'AirPods 2da generación',
-          'Blancos · Originales · Sellados',
-          'RD$ 3,500',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 3,500</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios14.jpg"
-        onclick="abrirProducto(
-          'images/accesorios14.jpg',
-          'Apple Watch Serie 3',
-          'Negro · 38mm · GPS',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios1.jpg"
-        onclick="abrirProducto(
-          'images/accesorios1.jpg',
-          'Pendrive VIDVIE',
-          'USB 3.2 · 128GB · Tipo C',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
+        <div class="sub-contenido">
+          <div class="galeria">
+
+            <div class="producto-item">
+              <img src="images/accesorios4.jpg" onclick="abrirProducto(
+                'images/accesorios4.jpg',
+                'Cover 360 Iphone 11 Pro Max',
+                'Cover 360 transparente con magsafe · Sellado',
+                'RD$ 200',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 200</span>
+            </div>
+
+            <div class="producto-item">
+              <img src="images/accesorios13.jpg" onclick="abrirProducto(
+                'images/accesorios13.jpg',
+                'AirPods 2da generación',
+                'Blancos · Originales · Sellados',
+                'RD$ 3,500',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 3,500</span>
+            </div>
+
+            <div class="producto-item">
+              <img src="images/accesorios14.jpg" onclick="abrirProducto(
+                'images/accesorios14.jpg',
+                'Apple Watch Serie 3',
+                'Negro · 38mm · GPS',
+                'RD$ 6,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 6,000</span>
+            </div>
+
+            <div class="producto-item">
+              <img src="images/accesorios1.jpg" onclick="abrirProducto(
+                'images/accesorios1.jpg',
+                'Pendrive VIDVIE',
+                'USB 3.2 · 128GB · Tipo C',
+                'RD$ 200',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 200</span>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 📟 TABLETS -->
+  <!-- ================= TABLETS ================= -->
   <div class="categoria">
     <div class="cat-header" onclick="toggleCategoria(this)">
       <h4>📟 Tablets</h4>
       <span class="cat-icon">+</span>
     </div>
 
-   <!-- 🔹 SUBCATEGORÍA TABLET -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>📟 Tablets</h5>
-        <span class="sub-icon">+</span>
-      </div>
+    <div class="cat-contenido">
+      <div class="subcategoria">
+        <div class="sub-header" onclick="toggleSubCategoria(this)">
+          <h5>📟 Tablets</h5>
+          <span class="sub-icon">+</span>
+        </div>
 
-      <div class="sub-contenido">
-         <div class="galeria">
-             
-<div class="producto-item">
-        <img src="images/tablet1.jpg"
-        onclick="abrirProducto(
-          'images/tablet1.jpg',
-          'SKY T8 Plus',
-          '64GB · Negra · Sellada',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-<div class="producto-item">
-        <img src="images/tablet2.jpg"
-        onclick="abrirProducto(
-          'images/tablet2.jpg',
-          'iPad 4',
-          '64GB · Gris · Usada',
-          'RD$ 8,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 8,000</span>
-</div>
-</p>
-             
+        <div class="sub-contenido">
+          <div class="galeria">
+
+            <div class="producto-item">
+              <img src="images/tablet1.jpg" onclick="abrirProducto(
+                'images/tablet1.jpg',
+                'SKY T8 Plus',
+                '64GB · Negra · Sellada',
+                'RD$ 6,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 6,000</span>
+            </div>
+
+            <div class="producto-item">
+              <img src="images/tablet2.jpg" onclick="abrirProducto(
+                'images/tablet2.jpg',
+                'iPad 4',
+                '64GB · Gris · Usada',
+                'RD$ 8,000',
+                'Hola, quiero info de este producto'
+              )">
+              <span class="producto-precio">RD$ 8,000</span>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
 </div>
-    
+<!-- FIN MENÚ PRODUCTOS -->
 
 <script>
 function toggleMenuProductos(){
