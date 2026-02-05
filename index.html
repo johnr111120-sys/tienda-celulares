@@ -545,7 +545,7 @@ function toggleSubCategoria(header){
 
 <script>
 function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
+  const menu = document.getElementById("menu-productos"); // 👈 FALTABA
   const overlay = document.getElementById("overlay-productos");
   const icono = document.querySelector(".icono-menu");
 
@@ -555,12 +555,13 @@ function toggleMenuProductos(){
   if(activo){
     document.body.classList.add("no-scroll");
     icono.textContent = "✕";
-  }else{
+  } else {
     document.body.classList.remove("no-scroll");
     icono.textContent = "☰";
   }
 }
 </script>
+
 
     
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
