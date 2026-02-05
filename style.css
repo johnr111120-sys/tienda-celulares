@@ -75,7 +75,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 48px;
+  font-size: 28px;
   text-decoration: none;
   z-index: 10000; /* 👈 CLAVE para que no se tape */
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
@@ -648,7 +648,7 @@ body.inicio footer{
   .whatsapp{
     width: 76px;
     height: 76px;
-    font-size: 62px;   /* 👈 icono grande */
+    font-size: 42px;   /* 👈 icono grande */
     bottom: 25px;
     right: 18px;
   }
