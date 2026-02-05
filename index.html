@@ -208,27 +208,33 @@ imgModal.addEventListener("click", e=>{
 <script>
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProducto(img,titulo,desc,precio,mensaje){
+function abrirProducto(img, titulo, desc, precio, mensaje){
   document.getElementById("mp-img").src = img;
   document.getElementById("mp-titulo").textContent = titulo;
   document.getElementById("mp-desc").textContent = desc;
   document.getElementById("mp-precio").textContent = precio;
+
+  // Link WhatsApp correcto
   document.getElementById("mp-whatsapp").href =
-  document.body.classList.add("modal-abierto");
     "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
 
+  // Abrir modal
   modalProducto.classList.add("activo");
-  document.body.style.overflow = "hidden";
+
+  // Bloquear fondo + ocultar WhatsApp flotante
+  document.body.classList.add("no-scroll");
+  document.body.classList.add("modal-abierto");
 }
 
 function cerrarProducto(){
   modalProducto.classList.remove("activo");
-  document.body.style.overflow = "";
+  document.body.classList.remove("no-scroll");
   document.body.classList.remove("modal-abierto");
 }
 
-modalProducto.addEventListener("click", e=>{
-  if(e.target === modalProducto) cerrarProducto();
+// Cerrar tocando fuera
+modalProducto.addEventListener("click", e => {
+  if (e.target === modalProducto) cerrarProducto();
 });
 </script>
 
@@ -473,10 +479,18 @@ function toggleMenuProductos(){
   const overlay = document.getElementById("overlay-productos");
 
   const activo = menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
 
-  // 🔒 Bloquear / liberar scroll
-  document.body.style.overflow = activo ? "hidden" : "";
+  // Overlay sincronizado
+  overlay.classList.toggle("activo", activo);
+
+  // Bloquear scroll + ocultar WhatsApp
+  if (activo) {
+    document.body.classList.add("no-scroll");
+    document.body.classList.add("modal-abierto");
+  } else {
+    document.body.classList.remove("no-scroll");
+    document.body.classList.remove("modal-abierto");
+  }
 }
 </script>
 
