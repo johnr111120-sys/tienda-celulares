@@ -713,3 +713,12 @@ body.modal-abierto .whatsapp{
   align-items: center;
   justify-content: center;
 }
+
+.icono-menu::before{
+  content: "☰";
+}
+
+/* Cuando el menú está abierto */
+.menu-productos.activo ~ .fab-productos .icono-menu::before{
+  content: "✕";
+}
