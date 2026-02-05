@@ -662,11 +662,6 @@ body.modal-abierto .whatsapp{
   display: none;
 }
 
-/* Ocultar botón productos SOLO cuando el menú está abierto */
-body.menu-abierto .fab-productos{
-  display: none;
-}
-
 .galeria img{
   touch-action: manipulation; /* 👈 elimina retraso táctil */
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
@@ -710,4 +705,11 @@ body.menu-abierto .fab-productos{
 
 .sub-header{
   touch-action: manipulation;
+}
+
+/* 🔥 FORZAR VISIBILIDAD BOTÓN PRODUCTOS */
+.fab-productos{
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
