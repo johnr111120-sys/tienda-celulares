@@ -143,7 +143,7 @@ footer {
     display: none; /* Se activa con JS */
     justify-content: center;
     align-items: center;
-    z-index: 3000000 !important; /* EL VALOR MÁS ALTO */
+    z-index: 3000000 !important; /* Más alto que el menú */
 
 .mp-overlay.activo{
 display: flex !important;
@@ -708,11 +708,11 @@ body { border: none !important; }
     color: white !important;
     border-radius: 50% !important;
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    align-items: center;
+    justify-content: center;
     font-size: 30px !important;
-    z-index: 999999 !important; /* Arriba de todo */
-    border: 2px solid white !important;
+    z-index: 2147483647 !important; /* Arriba de todo */
+    border: none;
     cursor: pointer !important;
 }
 
