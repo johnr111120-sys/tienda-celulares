@@ -712,3 +712,6 @@ body .fab-productos{
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+body { border: 5px solid red !important; } 
+.fab-productos { border: 5px solid yellow !important; background: red !important; }
