@@ -85,7 +85,7 @@ footer {
 
 @media (max-width:600px){
   section{ margin:10px; }
-  h1{ font-size:24px; }
+  h1{ font-size:30px; }
 }
 
 .galeria{
@@ -624,7 +624,7 @@ body.inicio footer{
 
 @media (max-width: 600px){
   .whatsapp{
-    bottom: 25px;
+    bottom: 30px;
     right: 15px;
     font-size: 34px;
     padding: 18px;
@@ -633,7 +633,7 @@ body.inicio footer{
 
 @media (max-width: 600px){
   body{
-    font-size: 18px;
+    font-size: 26px;
   }
 
   h1{ font-size: 34px; }
