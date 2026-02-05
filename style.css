@@ -1,4 +1,5 @@
 
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -362,32 +363,43 @@ body.no-scroll{
   color: #128c7e;
 }
 
-/* BOTÓN FLOTANTE */
-#fab-productos {
+/* BOTÓN PRODUCTOS */
+.fab-productos{
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #25d366;
-  color: white;
-  font-size: 32px;
-  border: none;
-  z-index: 9999; /* siempre arriba */
+  top: 18px;
+  left: 18px;
+
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+
+  background: #000;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 34px;
+  cursor: pointer;
+
+  z-index: 20000; /* 🔥 MÁS ALTO QUE TODO */
 }
 
 /* MENÚ */
-#menu-productos {
+.menu-productos{
   position: fixed;
-  top: 0;
-  right: -100%;
-  width: 100%;
-  max-width: 420px;
-  height: 100vh;
+  top: 100px;
+  left: 15px;
+  right: 15px;
+  max-height: 70vh;
   background: #fff;
+  border-radius: 18px;
+  padding: 20px;
+  overflow: auto;
+  display: none;
   z-index: 9999;
-  transition: right .3s ease;
+  isolation: isolate;
 }
 
 .menu-productos img{
@@ -396,8 +408,10 @@ body.no-scroll{
 }
 
 /* ACTIVO */
-#menu-productos.activo {
-  right: 0;
+.menu-productos.activo{
+  transform: translateY(0);
+  opacity: 1;
+  display: block;
 }
 
 .menu-titulo{
@@ -420,16 +434,16 @@ body.no-scroll{
 }
 
 /* OVERLAY */
-#overlay-productos {
+.overlay-productos{
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.6);
   opacity: 0;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 9000;
 }
 
-#overlay-productos.activo {
+.overlay-productos.activo{
   opacity: 1;
   pointer-events: auto;
 }
