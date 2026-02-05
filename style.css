@@ -407,22 +407,10 @@ body.no-scroll{
   display: block;
 }
 
-.menu-productos.activo{
-  display:block;
-}
-
 .menu-titulo{
   text-align: center;
   margin-bottom: 10px;
 }
-
-/* ===== ICONO BOTÓN PRODUCTOS ===== */
-.icono-menu{
-  display: block;
-  font-size: 34px;
-  line-height: 1;
-}
-
 
 /* Cuando el menú está abierto */
 .menu-productos.activo ~ .fab-productos .icono-menu{
@@ -703,13 +691,6 @@ body.modal-abierto .whatsapp{
 
 .sub-header{
   touch-action: manipulation;
-}
-
-/* 🔥 FORZAR VISIBILIDAD BOTÓN PRODUCTOS */
-.fab-productos{
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
 }
 
 body .fab-productos{
