@@ -1,5 +1,4 @@
 
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -91,15 +90,11 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
-  position: relative;
-  z-index: 1; 
 }
 
 .galeria img{
   width: 100%;
   border-radius: 8px;
-  position: relative;
-  z-index: 1;
 }
 
 /* =========================
@@ -352,8 +347,6 @@ body.no-scroll{
 }
 .producto-item{
   text-align: center;
-  position: relative;
-  z-index: 1;
 }
 
 .producto-precio{
@@ -382,7 +375,7 @@ body.no-scroll{
   background: #000;
   color: #fff;
 
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -395,20 +388,23 @@ body.no-scroll{
 /* MENÚ */
 .menu-productos{
   position: fixed;
-  top: 90px;
+  top: 100px;
   left: 15px;
   right: 15px;
-  max-height: 75vh;
+  max-height: 70vh;
   background: #fff;
-  z-index: 20000; /* 🔥 MÁS ALTO QUE TODO */
-  border-radius: 16px;
-  overflow-y: auto;
+  border-radius: 18px;
+  padding: 20px;
+  overflow: auto;
   display: none;
-}
-.menu-productos.activo{
-  display: none;
+  z-index: 9999;
+  isolation: isolate;
 }
 
+.menu-productos img{
+  position: relative;
+  z-index: 1;
+}
 
 /* ACTIVO */
 .menu-productos.activo{
