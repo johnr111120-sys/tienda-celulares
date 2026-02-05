@@ -90,11 +90,15 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
+  position: relative;
+  z-index: 1; 
 }
 
 .galeria img{
   width: 100%;
   border-radius: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================
@@ -347,6 +351,8 @@ body.no-scroll{
 }
 .producto-item{
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .producto-precio{
@@ -375,7 +381,7 @@ body.no-scroll{
   background: #000;
   color: #fff;
 
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
 
@@ -388,23 +394,20 @@ body.no-scroll{
 /* MENÚ */
 .menu-productos{
   position: fixed;
-  top: 100px;
+  top: 90px;
   left: 15px;
   right: 15px;
-  max-height: 70vh;
+  max-height: 75vh;
   background: #fff;
-  border-radius: 18px;
-  padding: 20px;
-  overflow: auto;
+  z-index: 20000; /* 🔥 MÁS ALTO QUE TODO */
+  border-radius: 16px;
+  overflow-y: auto;
   display: none;
-  z-index: 9999;
-  isolation: isolate;
+}
+.menu-productos.activo{
+  display: none;
 }
 
-.menu-productos img{
-  position: relative;
-  z-index: 1;
-}
 
 /* ACTIVO */
 .menu-productos.activo{
