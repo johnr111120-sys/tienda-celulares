@@ -667,3 +667,38 @@ body.modal-abierto .whatsapp{
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
   user-select: none;
 }
+
+/* ===== SUBCATEGORÍAS MENÚ FLOTANTE ===== */
+.subcategoria{
+  border-top: 1px solid #eee;
+}
+
+.sub-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.sub-header h5{
+  margin: 0;
+  font-size: 15px;
+}
+
+.sub-contenido{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.subcategoria.activa .sub-contenido{
+  max-height: 3000px;
+  padding: 10px 0;
+}
+
+.sub-icon{
+  font-size: 20px;
+  font-weight: bold;
+}
