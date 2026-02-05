@@ -34,7 +34,7 @@ nav{
   top: 0;
   z-index: 9999; /* por encima del contenido */
   background-color: #000;
-  padding: 10px;
+  padding: 20px;
   text-align: center;
 }
 
