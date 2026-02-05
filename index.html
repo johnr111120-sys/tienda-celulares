@@ -8,12 +8,19 @@
 </head>
 
 <body class="inicio">
-  
-<div id="overlay-productos" class="overlay-productos"></div>  
-  
-<button class="fab-productos" onclick="toggleMenuProductos()">
+    
+  <button class="fab-productos" onclick="toggleMenuProductos()" style="position: fixed; top: 20px; left: 20px; z-index: 9999999; width: 60px; height: 60px; background: #007bff; color: white; border-radius: 50%; border: 2px solid white; font-size: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
   <span id="icono-menu">☰</span>
 </button>
+  
+<!-- MENÚ PRODUCTOS -->
+
+<div id="menu-productos" class="menu-productos" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; max-height: 80vh; background: white; z-index: 8888888; display: none; overflow-y: auto; padding: 20px; border-radius: 15px; box-shadow: 0 0 50px rgba(0,0,0,0.8); color: black;">
+  <h3 style="text-align: center;">🛒 Catálogo</h3>
+  </div>
+
+<div id="overlay-productos" onclick="toggleMenuProductos()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 7777777; display: none;"></div>
+
   
 <!-- BOTÓN WHATSAPP -->
 <a href="https://wa.me/18292017321?text=Hola%20quiero%20cotizar"
@@ -328,10 +335,7 @@ function toggleSubCategoria(header){
 }
 </script>
 
-<!-- MENÚ PRODUCTOS -->
-<div id="menu-productos" class="menu-productos">
-  <h3 class="menu-titulo">🛒 Catálogo de Productos</h3>
-  </div>
+
 
   <script>
 function toggleMenuProductos(){
