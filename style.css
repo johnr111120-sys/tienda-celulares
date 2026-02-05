@@ -1,5 +1,4 @@
 
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -91,11 +90,15 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .galeria img{
   width: 100%;
   border-radius: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================
@@ -348,6 +351,8 @@ body.no-scroll{
 }
 .producto-item{
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .producto-precio{
