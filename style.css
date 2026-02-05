@@ -98,8 +98,14 @@ footer {
 }
 
 .galeria img{
-  width: 100%;
-  border-radius: 8px;
+  touch-action: manipulation; /* 👈 elimina retraso táctil */
+  -webkit-tap-highlight-color: transparent; /* quita flash azul */
+  user-select: none;
+}
+
+.galeria img:active{
+  transform: scale(0.96);
+  opacity: 0.85;
 }
 
 /* =========================
