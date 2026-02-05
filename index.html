@@ -105,24 +105,26 @@ al lado de Plaza La Canela.
 
 </section>
 
-<div class="reseñas">
+<section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
 
-  <div class="carrusel" id="carrusel-reseñas">
+  <div class="carrusel">
     <div class="reseña activa">
       <p>“Excelente servicio, repararon mi celular el mismo día.”</p>
       <span>⭐⭐⭐⭐⭐ – Carlos M.</span>
-     </div>    
+     </div> 
+      
    <div class="reseña">
       <p>“Muy buena atención y precios justos. Recomendados.”</p>
       <span>⭐⭐⭐⭐⭐ – Ana R.</span>
-      </div>   
+      </div> 
+      
   <div class="reseña">
       <p>“Compré accesorios y todo de buena calidad.”</p>
       <span>⭐⭐⭐⭐⭐ – José L.</span>
     </div>
   </div>
- </div>
+</section>
 
 <a href="https://maps.app.goo.gl/zmRPi1JC8QECjScP7?g_st=ic
 " target="_blank" class="btn-google">
@@ -497,53 +499,20 @@ function toggleMenuProductos(){
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
     
 <script>
-const reseñas = document.querySelectorAll("#carrusel-reseñas .reseña");
+const reseñas = document.querySelectorAll(".reseña");
 let indice = 0;
-let startX = 0;
-let endX = 0;
 
-// Mostrar reseña por índice
-function mostrarReseña(i){
-  reseñas.forEach(r => r.classList.remove("activa"));
-  reseñas[i].classList.add("activa");
-}
+setInterval(() => {
+  const actual = reseñas[indice];
+  actual.classList.add("salida");
+  actual.classList.remove("activa");
 
-// Avanzar
-function siguiente(){
   indice = (indice + 1) % reseñas.length;
-  mostrarReseña(indice);
-}
+  const siguiente = reseñas[indice];
 
-// Retroceder
-function anterior(){
-  indice = (indice - 1 + reseñas.length) % reseñas.length;
-  mostrarReseña(indice);
-}
-
-// ⏱️ Automático cada 5 segundos
-let auto = setInterval(siguiente, 4000);
-
-// 👉 Swipe táctil
-const carrusel = document.getElementById("carrusel-reseñas");
-
-carrusel.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-}, { passive: true });
-
-carrusel.addEventListener("touchend", e => {
-  endX = e.changedTouches[0].clientX;
-  const diff = startX - endX;
-
-  if(diff > 50){
-    siguiente();
-  } else if(diff < -50){
-    anterior();
-  }
-
-  // reinicia el auto al deslizar
-  clearInterval(auto);
-  auto = setInterval(siguiente, 5000);
-});
+  siguiente.classList.remove("salida");
+  siguiente.classList.add("activa");
+}, 4000); // ⏱ cambia cada 4 segundos
 </script>
 
 
