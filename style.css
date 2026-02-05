@@ -80,6 +80,7 @@ img {
 
 /* Nav base (sin sombra al inicio) */
 .nav-principal {
+  position: sticky;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -117,9 +118,8 @@ nav a{
    HEADER PRINCIPAL
 ================================ */
 .header-principal {
-  position: sticky;
   top: 0;
-  z-index: 9999;
+  z-index: 99999;
 
   height: clamp(80px, 16vh, 160px);
   background: #000;
