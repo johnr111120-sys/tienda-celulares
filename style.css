@@ -87,11 +87,13 @@ img{
   position: sticky;
   top: 0;
   z-index: 9999;
-  height: 80px;
+  height: clamp(60px, 10vh, 80px);
   background: #000;
-  display: flex;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: center;
+  padding-inline: clamp(12px, 3vw, 24px);
 }
 
 .nav-logo{
@@ -107,36 +109,46 @@ nav a{
 }
 
 .header-principal{
-  top: 0;
-  z-index: 99999;
-  height: 80px;              /* ⬅️ más alto */
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 250px;        /* separación del borde */
-}
-
-.header-logo{
-  height: 550px;               /* ⬅️ controla el tamaño real */
-  width: auto;
-}
-
-/* ====== ESTILO BASE (móvil primero) ====== */
-.header-principal {
+  position: sticky;
   top: 0;
   z-index: 9999;
-  height: 150px;              /* más chico en móvil */
+
+  height: clamp(80px, 18vh, 180px);
   background: #000;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 15px;
+  padding-inline: clamp(12px, 4vw, 40px);
 }
 
-.header-logo {
-  height: 400px;              /* logo chico en móvil */
+.header-logo{
+  height: clamp(50px, 12vh, 140px);
+  max-height: 80%;
   width: auto;
+  object-fit: contain;
+}
+
+/* ====== ESTILO BASE (móvil primero) ====== */
+.header-principal{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  height: clamp(80px, 18vh, 180px);
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: clamp(12px, 4vw, 40px);
+}
+
+.header-logo{
+  height: clamp(50px, 12vh, 140px);
+  max-height: 80%;
+  width: auto;
+  object-fit: contain;
 }
 
 /* ====== DESKTOP ====== */
