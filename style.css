@@ -435,16 +435,16 @@ body.no-scroll{
 /* OVERLAY */
 .overlay-productos{
   position: fixed;
-  inset:0;
+  inset: 0;
   background: rgba(0,0,0,.6);
-  opacity:0;
-  pointer-events:none;
-  z-index:9000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9000;
 }
 
 .overlay-productos.activo{
-  opacity:1;
-  pointer-events:auto;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (max-width: 600px){
@@ -702,4 +702,9 @@ body.modal-abierto .whatsapp{
 body .fab-productos{
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+.galeria, .producto-item, img {
+  position: relative;
+  z-index: 1;
 }
