@@ -444,16 +444,16 @@ body.no-scroll{
 .overlay-productos{
   position: fixed;
   inset:0;
-  background: rgba(0,0,0,.55);
+  background: rgba(0,0,0,.6);
   opacity:0;
   pointer-events:none;
   z-index:9999;
-  display: none;
 }
 
 .overlay-productos.activo{
   opacity:1;
   pointer-events:auto;
+  display: block;
 }
 
 @media (max-width: 600px){
