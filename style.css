@@ -61,7 +61,7 @@ nav a{
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 200px;        /* separación del borde */
+  padding-right: 250px;        /* separación del borde */
 }
 
 .header-logo{
@@ -82,7 +82,7 @@ nav a{
 }
 
 .header-logo {
-  height: 100px;              /* logo chico en móvil */
+  height: 400px;              /* logo chico en móvil */
   width: auto;
 }
 
