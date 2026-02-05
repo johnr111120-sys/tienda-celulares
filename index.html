@@ -303,12 +303,25 @@ function toggleCategoria(header){
 <script>
 function toggleSubCategoria(header){
   const sub = header.parentElement;
+  const contenedor = sub.parentElement; // .cat-contenido
   const icon = header.querySelector(".sub-icon");
+  const abierta = sub.classList.contains("activa");
 
-  sub.classList.toggle("activa");
-  icon.textContent = sub.classList.contains("activa") ? "−" : "+";
+  // 🔒 Cerrar TODAS las subcategorías de ESTA categoría
+  contenedor.querySelectorAll(".subcategoria").forEach(sc => {
+    sc.classList.remove("activa");
+    const i = sc.querySelector(".sub-icon");
+    if(i) i.textContent = "+";
+  });
+
+  // 🔓 Si estaba cerrada, abrir SOLO esta
+  if(!abierta){
+    sub.classList.add("activa");
+    icon.textContent = "−";
+  }
 }
-</script>        
+</script>
+
 
 <div id="menu-productos" class="menu-productos">
 
