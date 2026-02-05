@@ -35,7 +35,7 @@ body {
   top: 0;
   z-index: 9999;
   height: 80px;
-  background: #000;
+  background: red !important;
   display: flex;
   align-items: center;
   justify-content: center;
