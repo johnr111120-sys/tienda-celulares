@@ -495,6 +495,7 @@ function toggleMenuProductos(){
 
     
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+    
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const reseñas = document.querySelectorAll(".reseña");
@@ -502,17 +503,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (reseñas.length === 0) return;
 
-  // Mostrar solo la primera
-  reseñas.forEach(r => r.classList.remove("activa"));
-  reseñas[0].classList.add("activa");
-
   setInterval(() => {
+    // ocultar actual
     reseñas[indice].classList.remove("activa");
+
+    // avanzar índice
     indice = (indice + 1) % reseñas.length;
+
+    // mostrar siguiente
     reseñas[indice].classList.add("activa");
-  }, 4000); // ⏱ cambia cada 4 segundos
+  }, 4000); // ⏱️ cambia cada 4 segundos
 });
 </script>
+
 
     
 
