@@ -405,6 +405,7 @@ body.no-scroll{
   display: none;
 }
 .menu-productos.activo{
+  right: 0;
   display: none;
 }
 
