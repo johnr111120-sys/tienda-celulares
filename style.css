@@ -662,6 +662,11 @@ body.modal-abierto .whatsapp{
   display: none;
 }
 
+/* Ocultar botón productos SOLO cuando el menú está abierto */
+body.menu-abierto .fab-productos{
+  display: none;
+}
+
 .galeria img{
   touch-action: manipulation; /* 👈 elimina retraso táctil */
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
