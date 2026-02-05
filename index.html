@@ -300,6 +300,16 @@ function toggleCategoria(header){
 }
 </script>
 
+<script>
+function toggleSubCategoria(header){
+  const sub = header.parentElement;
+  const icon = header.querySelector(".sub-icon");
+
+  sub.classList.toggle("activa");
+  icon.textContent = sub.classList.contains("activa") ? "−" : "+";
+}
+</script>        
+
 <div id="menu-productos" class="menu-productos">
 
   <h3 class="menu-titulo">🛒 Productos</h3>
