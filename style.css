@@ -143,8 +143,7 @@ footer {
     display: none; /* Se activa con JS */
     justify-content: center;
     align-items: center;
-    z-index: 3000000 !important; /* Más alto que el menú */
-}
+    z-index: 3000000 !important; /* EL VALOR MÁS ALTO */
 
 .mp-overlay.activo{
 display: flex !important;
@@ -158,6 +157,7 @@ display: flex !important;
   padding: 20px;
   position: relative;
   text-align: center;
+  z-index: 3000001 !important;
 }
 
 .mp-contenido img{
@@ -326,7 +326,9 @@ body.no-scroll{
 
 /* CONTENIDO (ABIERTO) */
 .categoria.activa .cat-contenido {
-  max-height: 2000px !important; /* Forzamos la apertura */
+  .categoria.activa > .cat-contenido, 
+.subcategoria.activa > .sub-contenido {
+    max-height: 2500px !important; /* Altura suficiente para los productos */
     padding: 10px 0;
 }
 /* GALERÍA DENTRO */
@@ -364,22 +366,21 @@ body.no-scroll{
   color: #128c7e;
 }
 
-/* MENÚ */
-.menu-productos{
-  position: fixed;
-  top: 90px;
-  left: 15px;
-  right: 15px;
-  max-height: 80vh;
-  background: #ffffff;
-  border-radius: 16px;
-  overflow-y: auto;
-  padding: 20px;
-  overflow: auto;
-  display: none;
-  z-index: 1000000 !important; /* Menos que el modal */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  isolation: isolate;
+/* EL MENÚ DE PRODUCTOS */
+.menu-productos {
+    position: fixed !important;
+    top: 90px;
+    left: 10px;
+    right: 10px;
+    max-height: 80vh;
+    background: #ffffff !important; /* Fondo blanco sólido */
+    border-radius: 15px;
+    padding: 15px;
+    z-index: 2000000 !important; /* Por encima de TODO */
+    display: none; 
+    overflow-y: auto !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    pointer-events: auto !important; /* Asegura que responda a clics */
 }
 
 .menu-productos img{
@@ -418,10 +419,10 @@ body.no-scroll{
 .overlay-productos{
   position: fixed;
   inset:0;
-  background: rgba(0,0,0,.7);
+  background: rgba(0,0,0,0.8);
   opacity:0;
   pointer-events:none;
-  z-index:999999; /* Justo debajo del menú */
+  z-index: 1500000; /* Debajo del menú, arriba del blur */
   display: none;
 }
 
