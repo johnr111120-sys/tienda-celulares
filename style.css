@@ -140,11 +140,11 @@ footer {
     display: none; /* Se activa con JS */
     justify-content: center;
     align-items: center;
-    z-index: 999999; /* EL MÁS ALTO DE TODOS */
+    z-index: 999999 !important; /* Nivel máximo */
 }
 
 .mp-overlay.activo{
-  display: flex;
+display: flex !important;
 }
 
 .mp-contenido{
@@ -374,7 +374,7 @@ body.no-scroll{
   padding: 20px;
   overflow: auto;
   display: none;
-  z-index: 10000;
+  z-index: 10000 !important; /* Nivel medio */
   isolation: isolate;
 }
 
@@ -688,31 +688,27 @@ body { border: 5px solid red !important; }
 .fab-productos { border: 5px solid yellow !important; background: red !important; }
 
 
-/* RESET DE FUERZA BRUTA PARA EL BOTÓN */
-.fab-productos-fijo {
-    position: fixed !important;
-    top: 20px !important;
-    left: 20px !important;
-    width: 60px !important;
-    height: 60px !important;
-    background-color: #007bff !important;
-    color: white !important;
-    border-radius: 50% !important;
-    display: flex !important; /* Lo hace visible */
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 30px !important;
-    z-index: 2147483647 !important; /* El valor máximo posible en navegadores */
-    border: 3px solid white !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+/* Elimina el borde rojo de prueba y usa esto */
+.fab-productos {
+  position: fixed !important;
+  top: 20px !important;
+  left: 20px !important;
+  width: 70px !important;
+  height: 70px !important;
+  background-color: #007bff !important;
+  color: white !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 35px !important;
+  z-index: 999999 !important; /* Por encima de todo */
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important;
 }
 
-#icono-menu-fijo {
-    color: white !important;
-    font-family: Arial, sans-serif !important;
-    display: block !important;
-    line-height: 1 !important;
+#icono-menu {
+  color: white !important;
+  line-height: 1 !important;
 }
