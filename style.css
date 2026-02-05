@@ -2,28 +2,24 @@
 /* RESET BÁSICO */
 *,
 *::before,
-*::after{
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 /* BASE GLOBAL */
-html{
+html {
   font-size: 16px;
-}
-
-body{
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-  font-family: system-ui, -apple-system, sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.4;
+  background: #fff;
+  color: #111;
+  overflow-x: hidden;
 }
 
 .page{
@@ -38,7 +34,7 @@ section{
   padding-block: clamp(20px, 5vw, 60px);
 }
 
-img{
+img {
   max-width: 100%;
   height: auto;
   display: block;
@@ -83,17 +79,12 @@ img{
 
 
 /* Nav base (sin sombra al inicio) */
-.nav-principal{
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  height: clamp(60px, 10vh, 80px);
-  background: #000;
-
+.nav-principal {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  padding-inline: clamp(12px, 3vw, 24px);
+  gap: clamp(10px, 3vw, 30px);
+  width: 100%;
 }
 
 .nav-logo{
@@ -108,46 +99,85 @@ nav a{
   text-decoration:none;
 }
 
-.header-principal{
-  top: 0;
-  z-index: 99999;
-
-  height: clamp(80px, 18vh, 180px);
-  background: #000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-inline: clamp(12px, 4vw, 40px);
+.buscador {
+  max-width: 480px;
+  width: 100%;
 }
 
-.header-logo{
-  height: clamp(50px, 12vh, 140px);
-  max-height: 80%;
-  width: auto;
-  object-fit: contain;
+.buscador input {
+  width: 100%;
+  height: 42px;
+  border-radius: 999px;
+  border: none;
+  padding-inline: 18px;
+  font-size: 0.95rem;
 }
 
-/* ====== ESTILO BASE (móvil primero) ====== */
-.header-principal{
+/* ================================
+   HEADER PRINCIPAL
+================================ */
+.header-principal {
+  position: sticky;
   top: 0;
   z-index: 9999;
 
-  height: clamp(80px, 18vh, 180px);
+  height: clamp(80px, 16vh, 160px);
   background: #000;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
   padding-inline: clamp(12px, 4vw, 40px);
+  transition: height 0.3s ease, box-shadow 0.3s ease;
 }
 
-.header-logo{
-  height: clamp(50px, 12vh, 140px);
+/* sombra al hacer scroll (opcional) */
+.header-principal.scrolled {
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+
+.header-logo {
+  height: clamp(50px, 10vh, 120px);
   max-height: 80%;
   width: auto;
   object-fit: contain;
 }
+
+
+/* ====== ESTILO BASE (móvil primero) ====== */
+/* ================================
+   HEADER PRINCIPAL
+================================ */
+.header-principal {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  height: clamp(80px, 16vh, 160px);
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-inline: clamp(12px, 4vw, 40px);
+  transition: height 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* sombra al hacer scroll (opcional) */
+.header-principal.scrolled {
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+
+
+.header-logo {
+  height: clamp(50px, 10vh, 120px);
+  max-height: 80%;
+  width: auto;
+  object-fit: contain;
+}
+
 
 /* ====== DESKTOP ====== */
 @media (min-width: 1024px) {
@@ -807,48 +837,43 @@ body.modal-abierto .whatsapp{
 }
 
 /* NAV PRINCIPAL */
-.nav-principal{
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  height: 80px;
-  background: #000;
+.nav-principal {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  padding: 0 20px;
-  gap: 20px;
+  gap: clamp(10px, 3vw, 30px);
+  width: 100%;
 }
 
 /* DERECHA */
-.nav-right{
+.nav-iconos {
   display: flex;
-  gap: 15px;
+  gap: 16px;
 }
 
-.nav-icon{
+.nav-iconos button {
   background: none;
   border: none;
+  color: #fff;
   font-size: 22px;
   cursor: pointer;
-  color: white;
 }
 
 /* CENTRO - BUSCADOR */
-.nav-center{
-  display: flex;
-  justify-content: center;
+.buscador {
+  max-width: 480px;
+  width: 100%;
 }
 
-.nav-center input{
-  width: 60%;
-  max-width: 500px;
-  padding: 10px 18px;
-  border-radius: 30px;
+.buscador input {
+  width: 100%;
+  height: 42px;
+  border-radius: 999px;
   border: none;
-  font-size: 16px;
-  outline: none;
+  padding-inline: 18px;
+  font-size: 0.95rem;
 }
+
 
 /* IZQUIERDA - LOGO */
 .nav-left{
@@ -871,4 +896,10 @@ body.modal-abierto .whatsapp{
 
 *{
   outline: 1px solid rgba(255,0,0,.2);
+}
+
+@media (max-width: 768px) {
+  .buscador {
+    display: none;
+  }
 }
