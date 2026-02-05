@@ -758,3 +758,39 @@ body { border: none !important; }
 .menu-productos:not(.activo) {
     display: none !important;
 }
+
+    /* RESET TOTAL DEL MENÚ */
+div#menu-flotante-final.menu-productos-nuevo {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 400px !important;
+    max-height: 80vh !important;
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 25px !important;
+    z-index: 9999999 !important; /* Más que cualquier otra cosa */
+    display: none; /* OCULTO POR DEFECTO */
+    overflow-y: auto !important;
+    box-shadow: 0 0 100px rgba(0,0,0,0.7) !important;
+    border: 1px solid #ddd !important;
+}
+
+/* Solo se muestra cuando tiene la clase activo */
+div#menu-flotante-final.menu-productos-nuevo.activo {
+    display: block !important;
+}
+
+/* Asegurar que los productos no se vean gigantes dentro */
+.menu-productos-nuevo .galeria {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+}
+
+.menu-productos-nuevo img {
+    height: 120px !important;
+    object-fit: cover !important;
+}
