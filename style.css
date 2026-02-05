@@ -361,35 +361,6 @@ body.no-scroll{
   color: #128c7e;
 }
 
-/* BOTÓN FLOTANTE PRINCIPAL */
-.fab-productos {
-    position: fixed !important; /* Forzamos posición */
-    top: 20px !important;      /* Lo ponemos arriba */
-    left: 20px !important;     /* A la izquierda */
-    width: 65px !important;
-    height: 65px !important;
-    background-color: #007bff !important;
-    color: #ffffff !important;
-    border-radius: 50% !important;
-    display: flex !important;   /* Forzamos que sea un contenedor flexible */
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    z-index: 100000;            /* Por encima del fondo blur y secciones */
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    border: none;
-    outline: none;
-}
-
-/* ASEGURAR QUE EL ICONO DENTRO SE VEA */
-#icono-menu {
-    display: inline-block !important;
-    color: white !important;
-    font-style: normal;
-    visibility: visible !important;
-}
-
 /* MENÚ */
 .menu-productos{
   position: fixed;
@@ -715,3 +686,33 @@ body .fab-productos{
 
 body { border: 5px solid red !important; } 
 .fab-productos { border: 5px solid yellow !important; background: red !important; }
+
+
+/* RESET DE FUERZA BRUTA PARA EL BOTÓN */
+.fab-productos-fijo {
+    position: fixed !important;
+    top: 20px !important;
+    left: 20px !important;
+    width: 60px !important;
+    height: 60px !important;
+    background-color: #007bff !important;
+    color: white !important;
+    border-radius: 50% !important;
+    display: flex !important; /* Lo hace visible */
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 30px !important;
+    z-index: 2147483647 !important; /* El valor máximo posible en navegadores */
+    border: 3px solid white !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#icono-menu-fijo {
+    color: white !important;
+    font-family: Arial, sans-serif !important;
+    display: block !important;
+    line-height: 1 !important;
+}
