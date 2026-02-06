@@ -57,8 +57,7 @@ html, body {
 /* DERECHA */
 .nav-right{
   display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .nav-icon{
@@ -73,7 +72,6 @@ html, body {
 .nav-center{
   display: flex;
   justify-content: center;
-  align-items: center
 }
 
 .nav-center input{
@@ -94,9 +92,7 @@ html, body {
 
 .nav-logo{
   height: auto;
-  max-height: 42px;   /* tamaño ideal móvil */
-  width: auto;
-  object-fit: contain;
+  width: 100%;
 }
     
 nav a{
@@ -107,9 +103,8 @@ nav a{
 }
 
 .header-principal{
-  position: sticky; 
   top: 0;
-  z-index: 99;
+  z-index: 99999;
   height: 90px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
