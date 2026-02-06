@@ -5,31 +5,6 @@ body {
     background-color: #f4f4f4;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-img, svg {
-  max-width: 100%;
-  height: auto;
-}
-
-.icono,
-button img,
-button svg {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
-
-body {
-  font-size: clamp(14px, 3.5vw, 16px);
-}
-
-h1 {
-  font-size: clamp(20px, 6vw, 32px);
-}
-
 /* Fondo con imagen fija y blur */
 .fondo-blur {
   position: fixed;
@@ -53,13 +28,6 @@ h1 {
   background: rgba(0,0,0,0.8);
 }
 
-header,
-.nav,
-.barra-categorias {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
 
 /* Nav base (sin sombra al inicio) */
 /* NAV PRINCIPAL */
@@ -138,26 +106,10 @@ nav a{
   text-decoration:none;
 }
 
-@media (max-width: 768px) {
-  .nav-principal {
-    height: auto;
-    padding: 10px;
-  }
-
-  .nav-logo {
-    max-height: 40px;
-  }
-
-  .barra-categorias {
-    height: 50px;
-    font-size: 14px;
-  }
-}
-
 .header-principal{
   top: 0;
   z-index: 99999;
-  height: 80px;              /* ⬅️ más alto */
+  height: 90px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
   align-items: center;
