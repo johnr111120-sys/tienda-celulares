@@ -119,7 +119,7 @@ nav a{
 /* ====== DESKTOP ====== */
 @media (min-width: 1024px) {
   .header-principal {
-    height: 380px;           /* header más alto */
+    height: 365px;           /* header más alto */
     padding-right: 30px;
   }
 
@@ -451,7 +451,7 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;
-  top: 20px;
+  top: 80px;
   left: 20px;
   z-index: 9999999;
 
