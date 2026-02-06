@@ -30,21 +30,21 @@ body {
 
 
 /* Nav base (sin sombra al inicio) */
-.nav-principal{
+nav{
   position: sticky;
   top: 0;
   z-index: 9999;
-  height: 80px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
 }
 
-.nav-logo{
-  max-height: 60px;
-  width: auto;
+/* Sombra SOLO cuando hay scroll */
+nav.scrolled{
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
+
 
 nav a{
   background-color: #000;
@@ -53,49 +53,12 @@ nav a{
   text-decoration:none;
 }
 
-.header-principal{
-  top: 0;
-  z-index: 99999;
-  height: 80px;              /* ⬅️ más alto */
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 250px;        /* separación del borde */
-}
-
-.header-logo{
-  height: 600px;               /* ⬅️ controla el tamaño real */
-  width: auto;
-}
-
-/* ====== ESTILO BASE (móvil primero) ====== */
-.header-principal {
-  top: 0;
-  z-index: 9999;
-  height: 150px;              /* más chico en móvil */
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 15px;
-}
-
-.header-logo {
-  height: 400px;              /* logo chico en móvil */
-  width: auto;
-}
-
-/* ====== DESKTOP ====== */
-@media (min-width: 1024px) {
-  .header-principal {
-    height: 360px;           /* header más alto */
-    padding-right: 30px;
-  }
-
-  .header-logo {
-    height: 450px;            /* logo grande */
-  }
+header {
+    background-color: #000;
+    color: white;
+    padding: 40px;
+    text-align: center;
+    font-size: 28px;
 }
 
 section {
@@ -149,7 +112,7 @@ footer {
 }
 
 .galeria img:active{
-  transform: scale(0.99);
+  transform: scale(0.96);
   opacity: 0.85;
 }
 
@@ -766,67 +729,4 @@ body.modal-abierto .whatsapp{
 
 #menu-flotante-final.activo{
   transform: translateX(0);
-}
-
-/* NAV PRINCIPAL */
-.nav-principal{
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  height: 80px;
-  background: #000;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  padding: 0 20px;
-  gap: 20px;
-}
-
-/* DERECHA */
-.nav-right{
-  display: flex;
-  gap: 15px;
-}
-
-.nav-icon{
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: white;
-}
-
-/* CENTRO - BUSCADOR */
-.nav-center{
-  display: flex;
-  justify-content: center;
-}
-
-.nav-center input{
-  width: 60%;
-  max-width: 500px;
-  padding: 10px 18px;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  outline: none;
-}
-
-/* IZQUIERDA - LOGO */
-.nav-left{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.nav-logo{
-  height: 55px;
-  width: auto;
-}
-
-/* SOLO DESKTOP */
-@media (max-width: 768px){
-  .nav-center,
-  .nav-right{
-    display: none;
-  }
 }
