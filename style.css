@@ -103,12 +103,12 @@ nav a{
 .header-principal{
   top: 0;
   z-index: 99999;
-  height: 80px;              /* ⬅️ más alto */
+  height: 90px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 120px;        /* separación del borde */
+  padding-right: 150px;        /* separación del borde */
 }
 
 .header-logo{
@@ -116,27 +116,10 @@ nav a{
   width: auto;
 }
 
-/* ====== ESTILO BASE (móvil primero) ====== */
-.header-principal {
-  top: 0;
-  z-index: 9999;
-  height: 70px;              /* más chico en móvil */
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 15px;
-}
-
-.header-logo {
-  height: 45px;              /* logo chico en móvil */
-  width: auto;
-}
-
 /* ====== DESKTOP ====== */
 @media (min-width: 1024px) {
   .header-principal {
-    height: 360px;           /* header más alto */
+    height: 380px;           /* header más alto */
     padding-right: 30px;
   }
 
