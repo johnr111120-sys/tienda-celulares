@@ -1,3 +1,17 @@
+/* =========================
+   RESET + BASE
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
 /* Fondo con imagen fija y blur */
 .fondo-blur {
   position: fixed;
@@ -25,14 +39,18 @@
 .nav-principal{
   position: sticky;
   top: 0;
-  z-index: 9999;
-  height: 80px;
+  z-index: 1000;
+  height: 64px;
   background: #000;
-  display: grid;
+  display: flex;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  padding: 0 20px;
-  gap: 20px;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+.nav-principal img {
+  max-height: 40px;
 }
 
 /* DERECHA */
@@ -143,6 +161,12 @@ footer {
 /* =========================
    MODAL DE IMAGEN AISLADO
    ========================= */
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
 .img-modal {
   position: fixed;
@@ -528,6 +552,51 @@ body.no-scroll{
     line-height: 72px; /* centra vertical */
   }
 }
+
+/* =========================
+   BARRA CATEGORÍAS (PEGADA)
+========================= */
+.barra-categorias {
+  position: sticky;
+  top: 64px; /* misma altura del nav */
+  z-index: 999;
+
+  height: 52px;
+  background: #007bff;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 16px;
+}
+
+/* =========================
+   BOTÓN / ICONOS
+========================= */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-btn,
+.fab-categorias {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn img,
+.icon-btn svg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 .whatsapp:hover{
   background: #1ebe5d;
 }
@@ -753,11 +822,53 @@ body.modal-abierto .whatsapp{
   transform: translateX(0);
 }
 
+/* =========================
+   MODALES
+========================= */
+.modal-carrito {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 2000;
+}
+
+.modal-carrito.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carrito-contenido {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  width: min(90%, 420px);
+}
+
+/* =========================
+   UTILIDADES
+========================= */
+.oculto {
+  display: none !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
 
 
 /* ===== MOBILE FIRST APP ===== */
-body{
-  font-family: Arial, sans-serif;
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
   margin: 0;
   background: #fff; /* barras blancas */
 }
@@ -768,5 +879,6 @@ body{
   margin: 0 auto;        /* centra en desktop */
   min-height: 100vh;
   background: #fff;      /* fondo real del sitio */
+  position: relative;
   overflow-x: hidden;
 }
