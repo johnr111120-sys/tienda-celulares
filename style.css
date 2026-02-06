@@ -109,7 +109,7 @@ nav a{
 .header-principal{
   position: sticky; 
   top: 0;
-  z-index: 99999;
+  z-index: 99;
   height: 90px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
