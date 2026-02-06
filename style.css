@@ -837,7 +837,6 @@ body.modal-abierto .whatsapp{
   border-radius: 30px;
   border: none;
   font-size: 16px;
-  outline: none;
 }
 
 /* IZQUIERDA - LOGO */
@@ -857,8 +856,4 @@ body.modal-abierto .whatsapp{
   .nav-right{
     display: none;
   }
-}
-
-*{
-  outline: 1px solid rgba(255,0,0,.2);
 }
