@@ -61,6 +61,24 @@ header,
   flex-wrap: wrap;
 }
 
+/* Barra negra de lado a lado */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  background: #000;
+  z-index: 9999;
+}
+/* Contenido alineado y controlado */
+.nav-inner {
+  max-width: 1200px; /* o 100% si querés full */
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
 /* Nav base (sin sombra al inicio) */
 /* NAV PRINCIPAL */
 .nav-principal{
@@ -507,7 +525,7 @@ body.no-scroll{
   position: fixed;
   top: 80px;
   left: 20px;
-  z-index: 9999999;
+  z-index: 9999;
 
   width: 60px;
   height: 60px;
@@ -528,7 +546,8 @@ body.no-scroll{
 /* ===== ICONO BOTÓN PRODUCTOS ===== */
 .icono-menu{
   font-size: 30px;
-  transition: transform 0.35s ease;
+   transform: translateY(-100%);
+  transition: transform 0.3s ease;
 }
 
 /* =====================
@@ -543,9 +562,9 @@ body.no-scroll{
   max-height: 75vh;       /* 👈 límite visible */
   background : #fff; 
   z-index: 9998;
-  transform: translateY(-20px);
+  transform: translateY(-100%);
   opacity: 0;
-  transition: transform .35s ease, opacity .35s ease;
+  transition: transform 0.3s ease;
   overflow-y: auto;
   border-radius: 16px;
   display: none;
@@ -562,6 +581,7 @@ body.no-scroll{
 
 .menu-productos.activo{
   display: block;
+transform: translateY(0);
 }
 
 .menu-titulo{
