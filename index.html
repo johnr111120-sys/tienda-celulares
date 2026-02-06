@@ -14,7 +14,7 @@
    class="whatsapp" target="_blank">
  💬
 </a>
-
+<header class="nav-principal">
 <nav class="nav-principal">
    <div class="nav-right">
   <!-- DERECHA -->
@@ -46,7 +46,14 @@
     <button class="icon-btn" onclick="toggleFavoritos()">❤️</button>
   </div>
 </nav>   
-
+</header>
+<div class="barra-categorias">
+  <button class="fab-categorias" onclick="toggleMenuProductos()">
+    ☰
+  </button>
+  <span class="fab-text">CATEGORÍAS</span>
+</div>
+    
 <header class="header-principal">
   <h1 class="header-title">
     <img src="./images/Logo1Porta.png"
@@ -545,15 +552,6 @@ class="icon-btn"
 </div>
     
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
-    
-<!-- BOTÓN PRODUCTOS -->
-<div class="barra-categorias">
-  <button class="fab-categorias" onclick="toggleMenuProductos()">
-    <span class="fab-icon">☰</span>
-  </button>
-  <span class="fab-text">CATEGORÍAS</span>
-</div>
-
 
 <script>
 function toggleMenuProductos(){
