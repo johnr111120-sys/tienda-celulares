@@ -37,54 +37,60 @@ body {
   z-index: 9999;
   height: 80px;
   background: #000;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
   padding: 0 20px;
-  gap: 20px;
 }
 
-/* IZQUIERDA */
+/* columnas */
+.nav-left,
+.nav-center,
+.nav-right{
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
 .nav-left{
-  display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
-.nav-icon{
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: white;
-}
-
-/* CENTRO - BUSCADOR */
 .nav-center{
-  display: flex;
   justify-content: center;
 }
 
-.nav-center input{
-  width: 60%;
-  max-width: 500px;
-  padding: 10px 18px;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  outline: none;
-}
-
-/* DERECHA - LOGO */
 .nav-right{
-  display: flex;
   justify-content: flex-end;
 }
 
+/* logo */
 .nav-logo{
-  height: 55px;
+  height: 60px;
   width: auto;
 }
 
+/* botones iconos */
+.icon-btn{
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* buscador */
+.search-btn{
+  background: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.nav-principal.scrolled{
+  box-shadow: 0 6px 20px rgba(0,0,0,.35);
+}
 /* SOLO DESKTOP */
 @media (max-width: 768px){
   .nav-center,
