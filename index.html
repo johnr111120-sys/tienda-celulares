@@ -326,11 +326,6 @@ function toggleCategoria(header){
 }
 </script>
 
- <script>
-function toggleMenuProductos(){
-  document.querySelector(".fab-categorias")
-    .classList.toggle("activo");
-}
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
@@ -548,7 +543,6 @@ class="icon-btn"
   </div>
 
 </div>
-</script>
     
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
     
@@ -563,6 +557,9 @@ class="icon-btn"
 
 <script>
 function toggleMenuProductos(){
+function toggleMenuProductos(){
+  document.querySelector(".fab-categorias")
+    .classList.toggle("activo");
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
