@@ -1034,7 +1034,7 @@ body.modal-abierto .whatsapp{
 }
 
 .barra-categorias{
-  position: fixed;
+  position: sticky;
   bottom: 20px;
   left: 20px;
   right: 20px;
