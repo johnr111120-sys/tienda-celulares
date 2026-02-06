@@ -110,7 +110,7 @@ nav a{
 
 .header-principal{
   position: sticky;
-  top: 0;
+  top: 80;
   z-index: 9999;
   height: 80px;
   background: #000;
