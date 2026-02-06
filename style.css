@@ -1,8 +1,62 @@
 
+
+/* RESET BÁSICO */
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BASE GLOBAL */
+html{
+  font-size: 16px;
+}
+
+body{
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #f4f4f4;
+}
+
+.page{
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-inline: clamp(12px, 3vw, 32px);
+}
+
+section{
+  width: 100%;
+  padding-block: clamp(20px, 5vw, 60px);
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* MOBILE BASE */
+.cards{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* DESKTOP */
+@media (min-width: 1024px){
+  .cards{
+    flex-direction: row;
+  }
 }
 
 /* Fondo con imagen fija y blur */
@@ -30,21 +84,21 @@ body {
 
 
 /* Nav base (sin sombra al inicio) */
-nav{
+.nav-principal{
   position: sticky;
   top: 0;
   z-index: 9999;
-  background-color: #000;
-  padding: 20px;
-  text-align: center;
-  transition: box-shadow 0.3s ease;
+  height: 80px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Sombra SOLO cuando hay scroll */
-nav.scrolled{
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+.nav-logo{
+  max-height: 60px;
+  width: auto;
 }
-
 
 nav a{
   background-color: #000;
@@ -53,12 +107,49 @@ nav a{
   text-decoration:none;
 }
 
-header {
-    background-color: #000;
-    color: white;
-    padding: 40px;
-    text-align: center;
-    font-size: 28px;
+.header-principal{
+  top: 0;
+  z-index: 99999;
+  height: 80px;              /* ⬅️ más alto */
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* ⬅️ al margen derecho */
+  padding-right: 250px;        /* separación del borde */
+}
+
+.header-logo{
+  height: 550px;               /* ⬅️ controla el tamaño real */
+  width: auto;
+}
+
+/* ====== ESTILO BASE (móvil primero) ====== */
+.header-principal {
+  top: 0;
+  z-index: 9999;
+  height: 150px;              /* más chico en móvil */
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 15px;
+}
+
+.header-logo {
+  height: 400px;              /* logo chico en móvil */
+  width: auto;
+}
+
+/* ====== DESKTOP ====== */
+@media (min-width: 1024px) {
+  .header-principal {
+    height: 360px;           /* header más alto */
+    padding-right: 30px;
+  }
+
+  .header-logo {
+    height: 450px;            /* logo grande */
+  }
 }
 
 section {
@@ -112,7 +203,7 @@ footer {
 }
 
 .galeria img:active{
-  transform: scale(0.96);
+  transform: scale(0.99);
   opacity: 0.85;
 }
 
@@ -384,7 +475,7 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;
-  top: 20px;
+  top: 80px;
   left: 20px;
   z-index: 9999999;
 
@@ -538,11 +629,10 @@ body.no-scroll{
   color: #f5b301;
   font-weight: bold;
 }
-
-.reseñas,
-.reviews,
-.testimonios{
-  padding-bottom: 90px;
+.carrusel{
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .reseña{
@@ -551,6 +641,10 @@ body.no-scroll{
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.85);
+}
+
+.reseña.activa{
+  display: block;
 }
 
 .btn-google{
@@ -686,37 +780,9 @@ body.modal-abierto .whatsapp{
   user-select: none;
 }
 
-.carrusel{
-  position: relative;
-  max-width: 1000px;
-  margin: auto;
-  overflow: hidden; /* 🔥 clave para el slide */  
-}
-
-.reseña{
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-}
-
-.reseña.activa{
-   position: relative;
-  left: 0;
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.reseña.salida{
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
 #menu-flotante-final{
   position: fixed;
-  top: 0;
+  top: 30;
   left: 0;
   width: 85%;
   height: 100vh;
@@ -729,4 +795,71 @@ body.modal-abierto .whatsapp{
 
 #menu-flotante-final.activo{
   transform: translateX(0);
+}
+
+/* NAV PRINCIPAL */
+.nav-principal{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  height: 80px;
+  background: #000;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0 20px;
+  gap: 20px;
+}
+
+/* DERECHA */
+.nav-right{
+  display: flex;
+  gap: 15px;
+}
+
+.nav-icon{
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: white;
+}
+
+/* CENTRO - BUSCADOR */
+.nav-center{
+  display: flex;
+  justify-content: center;
+}
+
+.nav-center input{
+  width: 60%;
+  max-width: 500px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+}
+
+/* IZQUIERDA - LOGO */
+.nav-left{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-logo{
+  height: 55px;
+  width: auto;
+}
+
+/* SOLO DESKTOP */
+@media (max-width: 768px){
+  .nav-center,
+  .nav-right{
+    display: none;
+  }
+}
+
+*{
+  outline: 1px solid rgba(255,0,0,.2);
 }
