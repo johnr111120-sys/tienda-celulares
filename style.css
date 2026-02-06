@@ -38,7 +38,7 @@ h1 {
   width: 100%;
   height: 100%;
   background: url("Logo1.jpg") center / cover no-repeat fixed;
-  filter: blur(10px);
+  filter: blur(8px);
   transform: scale(1.1); /* evita bordes al difuminar */
   z-index: -1;
 }
@@ -61,24 +61,6 @@ header,
   flex-wrap: wrap;
 }
 
-/* Barra negra de lado a lado */
-.nav-wrap {
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  background: #000;
-  z-index: 9999;
-}
-/* Contenido alineado y controlado */
-.nav-inner {
-  max-width: 100%; /* o 100% si querés full */
-  margin: 0 auto;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
 /* Nav base (sin sombra al inicio) */
 /* NAV PRINCIPAL */
 .nav-principal{
@@ -525,7 +507,7 @@ body.no-scroll{
   position: fixed;
   top: 80px;
   left: 20px;
-  z-index: 9999;
+  z-index: 9999999;
 
   width: 60px;
   height: 60px;
@@ -546,8 +528,7 @@ body.no-scroll{
 /* ===== ICONO BOTÓN PRODUCTOS ===== */
 .icono-menu{
   font-size: 30px;
-   transform: translateY(-100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
 /* =====================
@@ -562,9 +543,9 @@ body.no-scroll{
   max-height: 75vh;       /* 👈 límite visible */
   background : #fff; 
   z-index: 9998;
-  transform: translateY(-100%);
+  transform: translateY(-20px);
   opacity: 0;
-  transition: transform 0.3s ease;
+  transition: transform .35s ease, opacity .35s ease;
   overflow-y: auto;
   border-radius: 16px;
   display: none;
@@ -581,7 +562,6 @@ body.no-scroll{
 
 .menu-productos.activo{
   display: block;
-transform: translateY(0);
 }
 
 .menu-titulo{
