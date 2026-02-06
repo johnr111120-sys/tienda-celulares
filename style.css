@@ -137,13 +137,13 @@ nav a{
 }
 
 .header-logo{
+   z-index: 9999;
   height: 550px;               /* ⬅️ controla el tamaño real */
   width: auto;
 }
 
 /* ====== ESTILO BASE (móvil primero) ====== */
 .header-principal {
-    position: sticky;
   top: 0;
   z-index: 9999;
   height: 150px;              /* más chico en móvil */
