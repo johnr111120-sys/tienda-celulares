@@ -1,9 +1,9 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta charset="UTF-8">
     <title>Mi Negocio</title>
     <link rel="stylesheet" href="style.css">
@@ -15,8 +15,8 @@
    class="whatsapp" target="_blank">
  💬
 </a>
-<header class="nav-wrap">
-  <div class="nav-inner">
+
+<nav class="nav-principal">
    <div class="nav-right">
   <!-- DERECHA -->
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
@@ -29,35 +29,12 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
- <input type="email" id="loginEmail" placeholder="Correo electrónico">
-<input type="password" id="loginPassword" placeholder="Contraseña">
-
-<button class="login-btn" onclick="login()">Entrar</button>
- <button class="icon-btn" id="btnUsuario" title="Mi cuenta">👤</button>
-  <button class="icon-btn" onclick="toggleHistorial()">🧾</button>
-    
-  <button class="icon-btn carrito-btn">
-  🛒 <span id="contador-carrito" class="badge">0</span>
-</button>
-
- <button id="btnUsuario" onclick="toggleSesion()" class="icon-btn">
-  👤 <span id="textoUsuario">Ingresar</span>
-</button>
-
-    <button class="icon-btn" onclick="toggleFavoritos()">❤️</button>
+    <button class="nav-icon" title="Mi cuenta">👤</button>
+    <button class="nav-icon" title="Carrito">🛒</button>
+    <button class="nav-icon" title="Favoritos">❤️</button>
   </div>
 </nav>   
-</header>
-<div class="barra-categorias">
- <button class="fab-productos" onclick="toggleMenuProductos()">
-  <span id="icono-menu">☰</span>
-</button>
 
-  <span class="fab-text">CATEGORÍAS</span>
-  </div>
- </div>
-</header> 
-    
 <header class="header-principal">
   <h1 class="header-title">
     <img src="./images/Logo1Porta.png"
@@ -261,7 +238,6 @@ function abrirProducto(img, titulo, desc, precio, mensaje){
   // Bloquear fondo + ocultar WhatsApp flotante
   document.body.classList.add("no-scroll");
   document.body.classList.add("modal-abierto");
-  document.getElementById("menu-flotante-final")
 }
 
 function cerrarProducto(){
@@ -337,8 +313,7 @@ function toggleCategoria(header){
   }
 }
 </script>
-    
-<div id="menu-flotante-final">...</div>
+
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
@@ -347,7 +322,7 @@ function toggleCategoria(header){
     <div class="cat-header" onclick="toggleCategoria(this)">
       <h4>📱 Celulares</h4>
       <span class="cat-icon">+</span>
-    </div> 
+    </div>
     <div class="cat-contenido">
       <div class="galeria">
  <div class="producto-item">
@@ -359,14 +334,8 @@ function toggleCategoria(header){
           'RD$ 57,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 57,000</span></div>
- <button 
-  class="icon-btn"
-  data-fav="101"
-  onclick="toggleFavorito({id:101,nombre:'iPhone 17 Pro Max',precio:57,000})">
-  🤍
-</button>
-         
+<span class="producto-precio">RD$ 57,000</span>
+</div>
   <div class="producto-item">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
@@ -376,13 +345,8 @@ function toggleCategoria(header){
           'RD$ 25,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 25,000</span></div>
-class="icon-btn"
-  data-fav="102"
-  onclick="toggleFavorito({id:102,nombre:'iPhone 14 Pro Max',precio:25,000})">
-  🤍
-</button>
-          
+<span class="producto-precio">RD$ 25,000</span>
+</div>
    <div class="producto-item">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
@@ -392,13 +356,8 @@ class="icon-btn"
           'RD$ 8,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 8,000</span></div>
-class="icon-btn"
-  data-fav="103"
-  onclick="toggleFavorito({id:103,nombre:'Z Blade',precio:8,000})">
-  🤍
-</button> 
-          
+<span class="producto-precio">RD$ 8,000</span>
+</div>
     <div class="producto-item">
         <img src="images/cell8.jpg"
         onclick="abrirProducto(
@@ -408,13 +367,8 @@ class="icon-btn"
           'RD$ 7,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 7,000</span></div>
-  class="icon-btn"
-  data-fav="104"
-  onclick="toggleFavorito({id:104,nombre:'ZTE',precio:7,000})">
-  🤍
-</button> 
-                    
+<span class="producto-precio">RD$ 7,000</span>
+</div>
     <div class="producto-item">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
@@ -424,13 +378,8 @@ class="icon-btn"
           'RD$ 9,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 9,000</span></div> 
-   class="icon-btn"
-  data-fav="105"
-  onclick="toggleFavorito({id:105,nombre:'Galaxy A03s',precio:9,000})">
-  🤍
-</button> 
-                    
+<span class="producto-precio">RD$ 9,000</span>
+</div>      
       </div>
     </div>
   </div>
@@ -452,13 +401,9 @@ class="icon-btn"
           'RD$ 200',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 200</span></div>
-  class="icon-btn"
-  data-fav="106"
-  onclick="toggleFavorito({id:106,nombre:'Cover 360 Iphone 11 Pro Max',precio:200})">
-  🤍
-</button> 
-          
+<span class="producto-precio">RD$ 200</span>
+</div>
+            
   <div class="producto-item">
         <img src="images/accesorios13.jpg"
         onclick="abrirProducto(
@@ -468,13 +413,9 @@ class="icon-btn"
           'RD$ 3,500',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 3,500</span></div>
-   class="icon-btn"
-  data-fav="107"
-  onclick="toggleFavorito({id:107,nombre:'AirPods 2da generación',precio:3,500})">
-  🤍
-</button>  
-          
+<span class="producto-precio">RD$ 3,500</span>
+</div>
+            
   <div class="producto-item">
         <img src="images/accesorios14.jpg"
         onclick="abrirProducto(
@@ -484,13 +425,9 @@ class="icon-btn"
           'RD$ 6,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 6,000</span></div>
-   class="icon-btn"
-  data-fav="108"
-  onclick="toggleFavorito({id:108,nombre:'Apple Watch Serie 3',precio:6,000})">
-  🤍
-</button>  
-                   
+<span class="producto-precio">RD$ 6,000</span>
+</div>
+            
   <div class="producto-item">
         <img src="images/accesorios1.jpg"
         onclick="abrirProducto(
@@ -500,13 +437,8 @@ class="icon-btn"
           'RD$ 200',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 200</span></div>
-   class="icon-btn"
-  data-fav="109"
-  onclick="toggleFavorito({id:109,nombre:'Pendrive VIDVIE',precio:200})">
-  🤍
-</button>  
-                    
+<span class="producto-precio">RD$ 200</span>
+</div>
       </div>
     </div>
   </div>
@@ -528,47 +460,42 @@ class="icon-btn"
           'RD$ 6,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 6,000</span></div>
-   class="icon-btn"
-  data-fav="110"
-  onclick="toggleFavorito({id:110,nombre:'SKY T8 Plus',precio:6,000})">
-  🤍
-</button>  
-                   
+<span class="producto-precio">RD$ 6,000</span>
+</div>
+            
 <div class="producto-item">
         <img src="images/tablet2.jpg"
         onclick="abrirProducto(
           'images/tablet2.jpg',
-          'IPad 4',
+          'iPad 4',
           '64GB · Gris · Usada',
           'RD$ 8,000',
           'Hola, quiero info de este producto'
         )">
-<span class="producto-precio">RD$ 8,000</span></div>
-   class="icon-btn"
-  data-fav="111"
-  onclick="toggleFavorito({id:111,nombre:'IPad 4',precio:8,000})">
-  🤍
-</button>  
-        
+<span class="producto-precio">RD$ 8,000</span>
+</div>
+
       </div>
     </div>
   </div>
 
 </div>
-    
+
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+    
+<!-- BOTÓN PRODUCTOS -->
+<button class="fab-productos" onclick="toggleMenuProductos()">
+  <span class="icono-menu" id="icono-menu">☰</span>
+</button>
 
 <script>
 function toggleMenuProductos(){
-function toggleMenuProductos(){
-  document.querySelector(".fab-categorias")
-    .classList.toggle("activo");
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
+
   if (!menu || !overlay || !icono) {
-    console.log("CLICK OK");
+    console.error("Falta menu, overlay o icono");
     return;
   }
 
@@ -585,449 +512,13 @@ function toggleMenuProductos(){
 </script>
 
     <script>
-function abrirLogin(){
-  document.getElementById("loginModal").classList.add("activo");
-  document.getElementById("loginOverlay").classList.add("activo");
-  document.body.classList.add("no-scroll");
-}
-
-function cerrarLogin(){
-  document.getElementById("loginModal").classList.remove("activo");
-  document.getElementById("loginOverlay").classList.remove("activo");
-  document.body.classList.remove("no-scroll");
-}
-</script>
-
-    <script>
-// LOGIN
-function login(){
-  const email = document.getElementById("loginEmail").value.trim();
-
-  if(email === ""){
-    alert("Ingresa un correo");
-    return;
-  }
-
-  // simulamos usuario
-  const usuario = {
-    email: email,
-    nombre: email.split("@")[0]
-  };
-
-  // guardar sesión
-  localStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
-
-  cerrarLogin();
-  actualizarHeaderUsuario();
-}
-
-// LOGOUT
-function logout(){
-  localStorage.removeItem("usuarioLogueado");
-  actualizarHeaderUsuario();
-}
-
-// ACTUALIZAR HEADER
-function actualizarHeaderUsuario(){
-  const btn = document.getElementById("btnUsuario");
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
-
-  if(usuario){
-    btn.innerHTML = `Hola, ${usuario.nombre} ⌄`;
-    btn.onclick = logout;
-  }else{
-    btn.innerHTML = "👤";
-    btn.onclick = abrirLogin;
-  }
-}
-
-// AL CARGAR LA PAGINA
-document.addEventListener("DOMContentLoaded", actualizarHeaderUsuario);
-</script>
-
-    <script>
-// Obtener carrito
-function obtenerCarrito(){
-  return JSON.parse(localStorage.getItem("carrito")) || [];
-}
-
-// Guardar carrito
-function guardarCarrito(carrito){
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContadorCarrito();
-}
-
-// Agregar producto
-function agregarAlCarrito(producto){
-  const carrito = obtenerCarrito();
-  carrito.push(producto);
-  guardarCarrito(carrito);
-}
-
-// Actualizar contador
-function actualizarContadorCarrito(){
-  const contador = document.getElementById("contadorCarrito");
-  const carrito = obtenerCarrito();
-  const total = carrito.length;
-
-  if(total > 0){
-    contador.textContent = total;
-    contador.style.display = "inline-block";
-  }else{
-    contador.style.display = "none";
-  }
-}
-
-// Al cargar la página
-document.addEventListener("DOMContentLoaded", actualizarContadorCarrito);
-</script>
-
-    <script>
-// Obtener sesión
-function obtenerSesion(){
-  return JSON.parse(localStorage.getItem("usuario"));
-}
-
-// Guardar sesión
-function guardarSesion(usuario){
-  localStorage.setItem("usuario", JSON.stringify(usuario));
-  actualizarHeaderUsuario();
-}
-
-// Cerrar sesión
-function cerrarSesion(){
-  localStorage.removeItem("usuario");
-  actualizarHeaderUsuario();
-}
-
-// Login simulado
-function iniciarSesion(){
-  const usuario = {
-    id: 1,
-    nombre: "Juan",
-    email: "juan@email.com"
-  };
-  guardarSesion(usuario);
-}
-
-// Botón usuario
-function toggleSesion(){
-  const usuario = obtenerSesion();
-  if(usuario){
-    cerrarSesion();
-  }else{
-    iniciarSesion();
-  }
-}
-
-// Actualizar header
-function actualizarHeaderUsuario(){
-  const texto = document.getElementById("textoUsuario");
-  const usuario = obtenerSesion();
-
-  if(usuario){
-    texto.textContent = usuario.nombre;
-  }else{
-    texto.textContent = "Ingresar";
-  }
-}
-
-// Al cargar la página
-document.addEventListener("DOMContentLoaded", actualizarHeaderUsuario);
-</script>
-
-    <script>
-// === helpers ===
-function obtenerUsuario(){
-  return JSON.parse(localStorage.getItem("usuario"));
-}
-
-function keyCarrito(){
-  const usuario = obtenerUsuario();
-  return usuario ? `carrito_usuario_${usuario.id}` : "carrito_invitado";
-}
-
-function obtenerCarrito(){
-  return JSON.parse(localStorage.getItem(keyCarrito())) || [];
-}
-
-function guardarCarrito(carrito){
-  localStorage.setItem(keyCarrito(), JSON.stringify(carrito));
-  actualizarContadorCarrito();
-}
-
-// === agregar producto ===
-function agregarAlCarrito(producto){
-  const carrito = obtenerCarrito();
-  const existente = carrito.find(p => p.id === producto.id);
-
-  if(existente){
-    existente.cantidad++;
-  }else{
-    carrito.push({...producto, cantidad: 1});
-  }
-
-  guardarCarrito(carrito);
-}
-
-// === eliminar ===
-function eliminarDelCarrito(id){
-  let carrito = obtenerCarrito();
-  carrito = carrito.filter(p => p.id !== id);
-  guardarCarrito(carrito);
-}
-
-// === contador ===
-function actualizarContadorCarrito(cantidad){
-  const badge = document.getElementById("contador-carrito");
-  badge.textContent = cantidad;
-  badge.classList.add("pop");
-  setTimeout(()=>badge.classList.remove("pop"),200);
-}
-actualizarContadorCarrito(carrito.length);
-
-
-document.addEventListener("DOMContentLoaded", actualizarContadorCarrito);
-</script>
-
-    <script>
-// abrir / cerrar
-function toggleCarrito(){
-  document.getElementById("modal-carrito").classList.toggle("activo");
-  renderCarrito();
-}
-document.addEventListener("keydown", e=>{
-  if(e.key==="Escape"){
-    document.querySelectorAll(".modal-carrito.activo")
-      .forEach(m=>m.classList.remove("activo"));
-  }
-});
-body.modal-open{ overflow:hidden; }
-function toggleModal(id){
-  const m = document.getElementById(id);
-  m.classList.toggle("activo");
-  document.body.classList.toggle("modal-open", m.classList.contains("activo"));
-}
-        
-// render
-function renderCarrito(){
-  const lista = document.getElementById("lista-carrito");
-  const totalEl = document.getElementById("total-carrito");
-  const carrito = obtenerCarrito();
-
-  lista.innerHTML = "";
-  let total = 0;
-
-  if(carrito.length === 0){
-    lista.innerHTML = "<p>El carrito está vacío</p>";
-    totalEl.textContent = 0;
-    return;
-  }
-
-  carrito.forEach(p => {
-    total += p.precio * p.cantidad;
-    lista.innerHTML += `
-      <div class="item-carrito">
-        <div>
-          <strong>${p.nombre}</strong><br>
-          Cant: ${p.cantidad}
-        </div>
-        <div>
-          $${p.precio * p.cantidad}
-          <button onclick="eliminarDelCarrito(${p.id})">🗑️</button>
-        </div>
-      </div>
-    `;
-  });
-
-  totalEl.textContent = total;
-}
-</script>
-
-    <script>
-function toggleCheckout(){
-  document.getElementById("modal-checkout").classList.toggle("activo");
-  renderCheckout();
-}
-
-function renderCheckout(){
-  const resumen = document.getElementById("checkout-resumen");
-  const carrito = obtenerCarrito();
-  const usuario = obtenerUsuario();
-
-  if(!usuario){
-    resumen.innerHTML = "<p>Debes iniciar sesión para continuar</p>";
-    return;
-  }
-
-  let total = 0;
-  resumen.innerHTML = "<h4>Resumen</h4>";
-
-  carrito.forEach(p => {
-    total += p.precio * p.cantidad;
-    resumen.innerHTML += `
-      <p>${p.nombre} x${p.cantidad} — $${p.precio * p.cantidad}</p>
-    `;
-  });
-
-  resumen.innerHTML += `<hr><strong>Total: $${total}</strong>`;
-}
-
-function confirmarCompra(){
-  const usuario = obtenerUsuario();
-  const carrito = obtenerCarrito();
-
-  if(!usuario || carrito.length === 0){
-    alert("No se puede completar la compra");
-    return;
-  }
-
-  const historial = JSON.parse(localStorage.getItem("historial_" + usuario.email)) || [];
-
-  historial.push({
-    fecha: new Date().toLocaleString(),
-    items: carrito
-  });
-
-  localStorage.setItem("historial_" + usuario.email, JSON.stringify(historial));
-
-  localStorage.removeItem("carrito_" + usuario.email);
-  actualizarContadorCarrito();
-
-  toggleCheckout();
-  toggleCarrito();
-
-  alert("✅ Compra realizada con éxito");
-}
-</script>
-
-    <script>
-function toggleHistorial(){
-  document.getElementById("modal-historial").classList.toggle("activo");
-  renderHistorial();
-}
-
-function renderHistorial(){
-  const usuario = obtenerUsuario();
-  const contenedor = document.getElementById("lista-historial");
-  contenedor.innerHTML = "";
-
-  if(!usuario){
-    contenedor.innerHTML = "<p>Debes iniciar sesión.</p>";
-    return;
-  }
-
-  const historial = JSON.parse(
-    localStorage.getItem("historial_" + usuario.email)
-  ) || [];
-
-  if(historial.length === 0){
-    contenedor.innerHTML = "<p>No tienes compras aún.</p>";
-    return;
-  }
-
-  historial.forEach((compra, i) => {
-    let total = 0;
-    let itemsHTML = "";
-    compra.items.forEach(p => {
-      total += p.precio * p.cantidad;
-      itemsHTML += `<li>${p.nombre} x${p.cantidad}</li>`;
-    });
-
-    contenedor.innerHTML += `
-      <div class="item-historial">
-        <strong>Compra #${i+1}</strong><br>
-        <small>${compra.fecha}</small>
-        <ul>${itemsHTML}</ul>
-        <strong>Total: $${total}</strong>
-        <hr>
-      </div>
-    `;
-  });
-}
-</script>
-
-    <script>
-function obtenerKeyFavoritos(){
-  const usuario = obtenerUsuario();
-  return usuario ? `favoritos_${usuario.email}` : "favoritos_invitado";
-}
-
-function obtenerFavoritos(){
-  return JSON.parse(localStorage.getItem(obtenerKeyFavoritos())) || [];
-}
-
-function guardarFavoritos(lista){
-  localStorage.setItem(obtenerKeyFavoritos(), JSON.stringify(lista));
-}
-
-// toggle favorito
-function toggleFavorito(producto){
-  let favoritos = obtenerFavoritos();
-  const existe = favoritos.find(p => p.id === producto.id);
-
-  if(existe){
-    favoritos = favoritos.filter(p => p.id !== producto.id);
-  }else{
-    favoritos.push(producto);
-  }
-
-  guardarFavoritos(favoritos);
-  actualizarIconoFavorito(producto.id);
-}
-
-// estado icono
-function actualizarIconoFavorito(id){
-  const favoritos = obtenerFavoritos();
-  const btn = document.querySelector(`[data-fav="${id}"]`);
-  if(!btn) return;
-
-  btn.textContent = favoritos.some(p => p.id === id) ? "❤️" : "🤍";
-}
-</script>
-
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-fav]").forEach(btn => {
-    actualizarIconoFavorito(btn.dataset.fav);
-  });
-});
-</script>
-
-    <script>
-function toggleFavoritos(){
-  document.getElementById("modal-favoritos").classList.toggle("activo");
-  renderFavoritos();
-}
-
-function renderFavoritos(){
-  const cont = document.getElementById("lista-favoritos");
-  const favs = obtenerFavoritos();
-  cont.innerHTML = "";
-
-  if(favs.length === 0){
-    cont.innerHTML = "<p>No tienes favoritos aún.</p>";
-    return;
-  }
-
-  favs.forEach(p=>{
-    cont.innerHTML += `
-      <p>
-        ${p.nombre}
-        <button onclick="toggleFavorito(${JSON.stringify(p)})">❌</button>
-      </p>
-    `;
-  });
-}
-</script>
-
-    <script>
   const header = document.querySelector('.header-principal');
 
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 10);
   });
 </script>
+
     
 <script>
 const reseñas = document.querySelectorAll(".reseña");
@@ -1054,72 +545,12 @@ window.addEventListener("scroll", () => {
     nav.classList.add("scrolled");
   } else {
     nav.classList.remove("scrolled");
-  nav.classList.toggle('scrolled', window.scrollY > 10);
- }    
+  }
 });
 </script>
 
 
-    <div class="login-overlay" id="loginOverlay" onclick="cerrarLogin()"></div>
-
-<div class="login-modal" id="loginModal">
-  <h2>Iniciar sesión</h2>
-
-  <input type="email" placeholder="Correo electrónico">
-  <input type="password" placeholder="Contraseña">
-
-  <button class="login-btn">Entrar</button>
-
-  <p class="login-extra">
-    ¿No tienes cuenta? <a href="#">Regístrate</a>
-  </p>
-
-  <button class="close-btn" onclick="cerrarLogin()">✕</button>
-</div>
-
-    <div id="modal-carrito" class="modal-carrito">
-  <div class="carrito-contenido">
-    <button class="cerrar" onclick="toggleCarrito()">✕</button>
-    <h2>🛒 Tu carrito</h2>
-
-    <div id="lista-carrito"></div>
-
-    <div class="carrito-footer">
-      <strong>Total: $<span id="total-carrito">0</span></strong>
-     <button class="btn-checkout" onclick="toggleCheckout()">
-  Finalizar compra
-</button>
-
-    </div>
-  </div>
-</div>
-<div id="modal-checkout" class="modal-carrito">
-  <div class="carrito-contenido">
-    <button class="cerrar" onclick="toggleCheckout()">✕</button>
-    <h2>Finalizar compra</h2>
-
-    <div id="checkout-resumen"></div>
-
-    <button class="btn-checkout" onclick="confirmarCompra()">
-      Confirmar compra
-    </button>
-  </div>
-</div>
-<div id="modal-historial" class="modal-carrito">
-  <div class="carrito-contenido">
-    <button class="cerrar" onclick="toggleHistorial()">✕</button>
-    <h2>🧾 Mis compras</h2>
-    <div id="lista-historial"></div>
-  </div>
-</div>
-<div id="modal-favoritos" class="modal-carrito">
-  <div class="carrito-contenido">
-    <button class="cerrar" onclick="toggleFavoritos()">✕</button>
-    <h2>⭐ Mis favoritos</h2>
-    <div id="lista-favoritos"></div>
-  </div>
-</div>
-
     
+
     </body>
 </html>
