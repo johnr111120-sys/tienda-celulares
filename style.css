@@ -1,3 +1,4 @@
+
 /* =========================
    RESET + BASE
 ========================= */
@@ -39,7 +40,7 @@ html, body {
 .nav-principal{
   position: sticky;
   top: 0;
-  z-index: 9999;
+  z-index: 1000;
   height: 64px;
   background: #000;
   display: flex;
@@ -538,7 +539,7 @@ body.no-scroll{
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  z-index: 9999;
+  z-index: 9997;
 }
 
 .overlay-productos.activo{
