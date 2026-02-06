@@ -30,20 +30,67 @@ body {
 
 
 /* Nav base (sin sombra al inicio) */
+/* NAV PRINCIPAL */
 .nav-principal{
   position: sticky;
   top: 0;
   z-index: 9999;
   height: 80px;
   background: #000;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
+  padding: 0 20px;
+  gap: 20px;
+}
+
+/* IZQUIERDA */
+.nav-left{
+  display: flex;
+  gap: 15px;
+}
+
+.nav-icon{
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: white;
+}
+
+/* CENTRO - BUSCADOR */
+.nav-center{
+  display: flex;
   justify-content: center;
 }
 
+.nav-center input{
+  width: 60%;
+  max-width: 500px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+}
+
+/* DERECHA - LOGO */
+.nav-right{
+  display: flex;
+  justify-content: flex-end;
+}
+
 .nav-logo{
-  max-height: 60px;
+  height: 55px;
   width: auto;
+}
+
+/* SOLO DESKTOP */
+@media (max-width: 768px){
+  .nav-center,
+  .nav-left{
+    display: none;
+  }
 }
 
 nav a{
