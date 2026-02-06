@@ -107,14 +107,31 @@ nav a{
 }
 
 .header-principal{
+  position: sticky;
   top: 0;
-  z-index: 99999;
-  height: 80px;              /* ⬅️ más alto */
+  z-index: 9999;
+  height: 80px;
   background: #000;
   display: flex;
   align-items: center;
-  justify-content: center;  /* ⬅️ al margen derecho */
-  padding-right: 250px;        /* separación del borde */
+  padding: 0 20px;
+}
+
+.header-left,
+.header-center,
+.header-right{
+  align-items: center; 
+  display: flex;
+  flex: 1;
+}
+
+.header-left{  justify-content: flex-end; }
+.header-center{ justify-content: center; }
+.header-right{ justify-content: flex-start; }
+
+.nav-logo{
+  height: 60px;
+  max-width: 100%;
 }
 
 .header-logo{
@@ -137,6 +154,11 @@ nav a{
 .header-logo {
   height: 400px;              /* logo chico en móvil */
   width: auto;
+}
+
+@media (max-width: 768px){
+  .header-center{ display:none; }
+  .nav-logo{ height: 40px; }
 }
 
 /* ====== DESKTOP ====== */
