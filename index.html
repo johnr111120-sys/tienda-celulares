@@ -28,8 +28,24 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <button class="nav-icon" title="Mi cuenta">👤</button>
-    <button class="nav-icon" title="Carrito">🛒</button>
+ <input type="email" id="loginEmail" placeholder="Correo electrónico">
+<input type="password" id="loginPassword" placeholder="Contraseña">
+
+<button class="login-btn" onclick="login()">Entrar</button>
+ <button class="icon-btn" id="btnUsuario" title="Mi cuenta">👤</button>
+      
+   <button class="icon-btn carrito-btn" title="Carrito">🛒<span id="contadorCarrito"
+   class="contador">0</span>
+</button>
+    <button class="icon-btn" onclick="toggleCarrito()">
+  🛒 <span id="contador-carrito">0</span>
+</button>
+
+
+ <button id="btnUsuario" onclick="toggleSesion()" class="icon-btn">
+  👤 <span id="textoUsuario">Ingresar</span>
+</button>
+
     <button class="nav-icon" title="Favoritos">❤️</button>
   </div>
 </nav>   
@@ -511,6 +527,252 @@ function toggleMenuProductos(){
 </script>
 
     <script>
+function abrirLogin(){
+  document.getElementById("loginModal").classList.add("activo");
+  document.getElementById("loginOverlay").classList.add("activo");
+  document.body.classList.add("no-scroll");
+}
+
+function cerrarLogin(){
+  document.getElementById("loginModal").classList.remove("activo");
+  document.getElementById("loginOverlay").classList.remove("activo");
+  document.body.classList.remove("no-scroll");
+}
+</script>
+
+    <script>
+// LOGIN
+function login(){
+  const email = document.getElementById("loginEmail").value.trim();
+
+  if(email === ""){
+    alert("Ingresa un correo");
+    return;
+  }
+
+  // simulamos usuario
+  const usuario = {
+    email: email,
+    nombre: email.split("@")[0]
+  };
+
+  // guardar sesión
+  localStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
+
+  cerrarLogin();
+  actualizarHeaderUsuario();
+}
+
+// LOGOUT
+function logout(){
+  localStorage.removeItem("usuarioLogueado");
+  actualizarHeaderUsuario();
+}
+
+// ACTUALIZAR HEADER
+function actualizarHeaderUsuario(){
+  const btn = document.getElementById("btnUsuario");
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
+
+  if(usuario){
+    btn.innerHTML = `Hola, ${usuario.nombre} ⌄`;
+    btn.onclick = logout;
+  }else{
+    btn.innerHTML = "👤";
+    btn.onclick = abrirLogin;
+  }
+}
+
+// AL CARGAR LA PAGINA
+document.addEventListener("DOMContentLoaded", actualizarHeaderUsuario);
+</script>
+
+    <script>
+// Obtener carrito
+function obtenerCarrito(){
+  return JSON.parse(localStorage.getItem("carrito")) || [];
+}
+
+// Guardar carrito
+function guardarCarrito(carrito){
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarContadorCarrito();
+}
+
+// Agregar producto
+function agregarAlCarrito(producto){
+  const carrito = obtenerCarrito();
+  carrito.push(producto);
+  guardarCarrito(carrito);
+}
+
+// Actualizar contador
+function actualizarContadorCarrito(){
+  const contador = document.getElementById("contadorCarrito");
+  const carrito = obtenerCarrito();
+  const total = carrito.length;
+
+  if(total > 0){
+    contador.textContent = total;
+    contador.style.display = "inline-block";
+  }else{
+    contador.style.display = "none";
+  }
+}
+
+// Al cargar la página
+document.addEventListener("DOMContentLoaded", actualizarContadorCarrito);
+</script>
+
+    <script>
+// Obtener sesión
+function obtenerSesion(){
+  return JSON.parse(localStorage.getItem("usuario"));
+}
+
+// Guardar sesión
+function guardarSesion(usuario){
+  localStorage.setItem("usuario", JSON.stringify(usuario));
+  actualizarHeaderUsuario();
+}
+
+// Cerrar sesión
+function cerrarSesion(){
+  localStorage.removeItem("usuario");
+  actualizarHeaderUsuario();
+}
+
+// Login simulado
+function iniciarSesion(){
+  const usuario = {
+    id: 1,
+    nombre: "Juan",
+    email: "juan@email.com"
+  };
+  guardarSesion(usuario);
+}
+
+// Botón usuario
+function toggleSesion(){
+  const usuario = obtenerSesion();
+  if(usuario){
+    cerrarSesion();
+  }else{
+    iniciarSesion();
+  }
+}
+
+// Actualizar header
+function actualizarHeaderUsuario(){
+  const texto = document.getElementById("textoUsuario");
+  const usuario = obtenerSesion();
+
+  if(usuario){
+    texto.textContent = usuario.nombre;
+  }else{
+    texto.textContent = "Ingresar";
+  }
+}
+
+// Al cargar la página
+document.addEventListener("DOMContentLoaded", actualizarHeaderUsuario);
+</script>
+
+    <script>
+// === helpers ===
+function obtenerUsuario(){
+  return JSON.parse(localStorage.getItem("usuario"));
+}
+
+function keyCarrito(){
+  const usuario = obtenerUsuario();
+  return usuario ? `carrito_usuario_${usuario.id}` : "carrito_invitado";
+}
+
+function obtenerCarrito(){
+  return JSON.parse(localStorage.getItem(keyCarrito())) || [];
+}
+
+function guardarCarrito(carrito){
+  localStorage.setItem(keyCarrito(), JSON.stringify(carrito));
+  actualizarContadorCarrito();
+}
+
+// === agregar producto ===
+function agregarAlCarrito(producto){
+  const carrito = obtenerCarrito();
+  const existente = carrito.find(p => p.id === producto.id);
+
+  if(existente){
+    existente.cantidad++;
+  }else{
+    carrito.push({...producto, cantidad: 1});
+  }
+
+  guardarCarrito(carrito);
+}
+
+// === eliminar ===
+function eliminarDelCarrito(id){
+  let carrito = obtenerCarrito();
+  carrito = carrito.filter(p => p.id !== id);
+  guardarCarrito(carrito);
+}
+
+// === contador ===
+function actualizarContadorCarrito(){
+  const carrito = obtenerCarrito();
+  const total = carrito.reduce((sum, p) => sum + p.cantidad, 0);
+  const contador = document.getElementById("contador-carrito");
+  if(contador) contador.textContent = total;
+}
+
+document.addEventListener("DOMContentLoaded", actualizarContadorCarrito);
+</script>
+
+    <script>
+// abrir / cerrar
+function toggleCarrito(){
+  document.getElementById("modal-carrito").classList.toggle("activo");
+  renderCarrito();
+}
+
+// render
+function renderCarrito(){
+  const lista = document.getElementById("lista-carrito");
+  const totalEl = document.getElementById("total-carrito");
+  const carrito = obtenerCarrito();
+
+  lista.innerHTML = "";
+  let total = 0;
+
+  if(carrito.length === 0){
+    lista.innerHTML = "<p>El carrito está vacío</p>";
+    totalEl.textContent = 0;
+    return;
+  }
+
+  carrito.forEach(p => {
+    total += p.precio * p.cantidad;
+    lista.innerHTML += `
+      <div class="item-carrito">
+        <div>
+          <strong>${p.nombre}</strong><br>
+          Cant: ${p.cantidad}
+        </div>
+        <div>
+          $${p.precio * p.cantidad}
+          <button onclick="eliminarDelCarrito(${p.id})">🗑️</button>
+        </div>
+      </div>
+    `;
+  });
+
+  totalEl.textContent = total;
+}
+</script>
+
+    <script>
   const header = document.querySelector('.header-principal');
 
   window.addEventListener('scroll', () => {
@@ -550,7 +812,37 @@ window.addEventListener("scroll", () => {
 </script>
 
 
-    
+    <div class="login-overlay" id="loginOverlay" onclick="cerrarLogin()"></div>
 
+<div class="login-modal" id="loginModal">
+  <h2>Iniciar sesión</h2>
+
+  <input type="email" placeholder="Correo electrónico">
+  <input type="password" placeholder="Contraseña">
+
+  <button class="login-btn">Entrar</button>
+
+  <p class="login-extra">
+    ¿No tienes cuenta? <a href="#">Regístrate</a>
+  </p>
+
+  <button class="close-btn" onclick="cerrarLogin()">✕</button>
+</div>
+
+    <div id="modal-carrito" class="modal-carrito">
+  <div class="carrito-contenido">
+    <button class="cerrar" onclick="toggleCarrito()">✕</button>
+    <h2>🛒 Tu carrito</h2>
+
+    <div id="lista-carrito"></div>
+
+    <div class="carrito-footer">
+      <strong>Total: $<span id="total-carrito">0</span></strong>
+      <button class="btn-checkout">Finalizar compra</button>
+    </div>
+  </div>
+</div>
+
+    
     </body>
 </html>
