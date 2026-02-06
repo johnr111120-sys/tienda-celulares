@@ -1,4 +1,5 @@
 
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -34,7 +35,7 @@ body {
 .nav-principal{
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 9999;
   height: 80px;
   background: #000;
   display: flex;
@@ -1033,19 +1034,22 @@ body.modal-abierto .whatsapp{
   transform: scale(1.4);
 }
 
-/* BARRA CATEGORÍAS */
 .barra-categorias{
   position: sticky;
-  top: 80px; /* 👈 exactamente la altura del nav */
-  z-index: 999;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
 
   height: 60px;
   background: #007bff;
+  border-radius: 30px;
 
   display: flex;
   align-items: center;
-  gap: 14px;
   padding: 0 20px;
+  gap: 14px;
+
+  z-index: 9999;
 }
 
 /* Botón */
