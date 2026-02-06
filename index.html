@@ -15,8 +15,8 @@
    class="whatsapp" target="_blank">
  💬
 </a>
-<header class="nav-principal">
-<nav class="nav-principal">
+<header class="nav-wrap">
+  <div class="nav-inner">
    <div class="nav-right">
   <!-- DERECHA -->
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
@@ -49,11 +49,14 @@
 </nav>   
 </header>
 <div class="barra-categorias">
-  <button class="fab-categorias" onclick="toggleMenuProductos()">
-    ☰
-  </button>
+ <button class="fab-productos" onclick="toggleMenuProductos()">
+  <span id="icono-menu">☰</span>
+</button>
+
   <span class="fab-text">CATEGORÍAS</span>
-</div>
+  </div>
+ </div>
+</header> 
     
 <header class="header-principal">
   <h1 class="header-title">
@@ -258,6 +261,7 @@ function abrirProducto(img, titulo, desc, precio, mensaje){
   // Bloquear fondo + ocultar WhatsApp flotante
   document.body.classList.add("no-scroll");
   document.body.classList.add("modal-abierto");
+  document.getElementById("menu-flotante-final")
 }
 
 function cerrarProducto(){
@@ -333,7 +337,8 @@ function toggleCategoria(header){
   }
 }
 </script>
-
+    
+<div id="menu-flotante-final">...</div>
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
@@ -563,7 +568,7 @@ function toggleMenuProductos(){
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
   if (!menu || !overlay || !icono) {
-    console.error("Falta menu, overlay o icono");
+    console.log("CLICK OK");
     return;
   }
 
