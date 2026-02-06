@@ -544,7 +544,8 @@ window.addEventListener("scroll", () => {
     nav.classList.add("scrolled");
   } else {
     nav.classList.remove("scrolled");
-  }
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+ }    
 });
 </script>
 
