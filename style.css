@@ -1032,3 +1032,54 @@ body.modal-abierto .whatsapp{
 .badge.pop{
   transform: scale(1.4);
 }
+
+.barra-categorias{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+
+  height: 60px;
+  background: #007bff;
+  border-radius: 30px;
+
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 14px;
+
+  z-index: 9999;
+}
+
+/* Botón */
+.fab-categorias{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.25);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ícono animado */
+.fab-icon{
+  font-size: 24px;
+  color: #000;
+  transition: transform .3s ease;
+}
+
+/* Animación SOLO del botón */
+.fab-categorias.activo .fab-icon{
+  transform: rotate(90deg);
+}
+
+/* Texto fijo */
+.fab-text{
+  color: #000;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
