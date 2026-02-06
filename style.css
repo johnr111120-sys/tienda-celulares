@@ -957,26 +957,34 @@ body.modal-abierto .whatsapp{
 .modal-carrito{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.6);
-  display: none;
+  background: rgba(0,0,0,.4);
+  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 9999;
 }
 
 .modal-carrito.activo{
-  display: flex;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .carrito-contenido{
   background: #fff;
-  width: 90%;
-  max-width: 400px;
-  max-height: 80vh;
+  border-radius: 16px;
   padding: 20px;
-  border-radius: 12px;
-  overflow-y: auto;
-  position: relative;
+  width: min(90%, 420px);
+  transform: translateY(40px) scale(.95);
+  opacity: 0;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+}
+
+.modal-carrito.activo .carrito-contenido{
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
 
 .cerrar{
@@ -1009,4 +1017,18 @@ body.modal-abierto .whatsapp{
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.badge{
+  background:red;
+  color:white;
+  border-radius:50%;
+  padding:2px 6px;
+  font-size:12px;
+  display:inline-block;
+  transition: transform .2s ease;
+}
+
+.badge.pop{
+  transform: scale(1.4);
 }
