@@ -1,80 +1,8 @@
 
-/* ===== RESET LIMPIO ===== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #fff;
-  color: #000;
-  overflow-x: hidden;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* RESET BÁSICO */
-*,
-*::before,
-*::after{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* BASE GLOBAL */
-html{
-  font-size: 16px;
-}
-
-body{
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #f4f4f4;
-}
-
-.page{
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding-inline: clamp(12px, 3vw, 32px);
-}
-
-section{
-  width: 100%;
-  padding-block: clamp(20px, 5vw, 60px);
-}
-
-img{
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* MOBILE BASE */
-.cards{
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* DESKTOP */
-@media (min-width: 1024px){
-  .cards{
-    flex-direction: row;
-  }
 }
 
 /* Fondo con imagen fija y blur */
@@ -137,7 +65,7 @@ nav a{
 }
 
 .header-logo{
-  height: 550px;               /* ⬅️ controla el tamaño real */
+  height: 600px;               /* ⬅️ controla el tamaño real */
   width: auto;
 }
 
@@ -493,7 +421,7 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;
-  top: 80px;
+  top: 20px;
   left: 20px;
   z-index: 9999999;
 
@@ -647,10 +575,11 @@ body.no-scroll{
   color: #f5b301;
   font-weight: bold;
 }
-.carrusel{
-  position: relative;
-  max-width: 1000px;
-  margin: auto;
+
+.reseñas,
+.reviews,
+.testimonios{
+  padding-bottom: 90px;
 }
 
 .reseña{
@@ -659,10 +588,6 @@ body.no-scroll{
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.85);
-}
-
-.reseña.activa{
-  display: block;
 }
 
 .btn-google{
@@ -798,9 +723,37 @@ body.modal-abierto .whatsapp{
   user-select: none;
 }
 
+.carrusel{
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+  overflow: hidden; /* 🔥 clave para el slide */  
+}
+
+.reseña{
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.reseña.activa{
+   position: relative;
+  left: 0;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.reseña.salida{
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
 #menu-flotante-final{
   position: fixed;
-  top: 30;
+  top: 0;
   left: 0;
   width: 85%;
   height: 100vh;
@@ -876,8 +829,4 @@ body.modal-abierto .whatsapp{
   .nav-right{
     display: none;
   }
-}
-
-*{
-  outline: 1px solid rgba(255,0,0,.2);
 }
