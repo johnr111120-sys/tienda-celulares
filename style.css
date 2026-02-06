@@ -1,9 +1,33 @@
 
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #f4f4f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.icono,
+button img,
+button svg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+body {
+  font-size: clamp(14px, 3.5vw, 16px);
+}
+
+h1 {
+  font-size: clamp(20px, 6vw, 32px);
 }
 
 /* Fondo con imagen fija y blur */
@@ -14,7 +38,7 @@ body {
   width: 100%;
   height: 100%;
   background: url("Logo1.jpg") center / cover no-repeat fixed;
-  filter: blur(8px);
+  filter: blur(10px);
   transform: scale(1.1); /* evita bordes al difuminar */
   z-index: -1;
 }
@@ -29,14 +53,39 @@ body {
   background: rgba(0,0,0,0.8);
 }
 
+header,
+.nav,
+.barra-categorias {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
+/* Barra negra de lado a lado */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  background: #000;
+  z-index: 9999;
+}
+/* Contenido alineado y controlado */
+.nav-inner {
+  max-width: 100%; /* o 100% si querés full */
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
 /* Nav base (sin sombra al inicio) */
 /* NAV PRINCIPAL */
 .nav-principal{
   position: sticky;
   top: 0;
-  z-index: 9999;
-  height: 80px;
+  z-index: 1000;
+  height: 90px;
   background: #000;
   display: flex;
   align-items: center;
@@ -107,10 +156,26 @@ nav a{
   text-decoration:none;
 }
 
+@media (max-width: 768px) {
+  .nav-principal {
+    height: auto;
+    padding: 10px;
+  }
+
+  .nav-logo {
+    max-height: 40px;
+  }
+
+  .barra-categorias {
+    height: 50px;
+    font-size: 14px;
+  }
+}
+
 .header-principal{
   top: 0;
   z-index: 99999;
-  height: 90px;              /* ⬅️ más alto */
+  height: 80px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
   align-items: center;
@@ -460,7 +525,7 @@ body.no-scroll{
   position: fixed;
   top: 80px;
   left: 20px;
-  z-index: 9999999;
+  z-index: 9999;
 
   width: 60px;
   height: 60px;
@@ -481,7 +546,8 @@ body.no-scroll{
 /* ===== ICONO BOTÓN PRODUCTOS ===== */
 .icono-menu{
   font-size: 30px;
-  transition: transform 0.35s ease;
+   transform: translateY(-100%);
+  transition: transform 0.3s ease;
 }
 
 /* =====================
@@ -496,9 +562,9 @@ body.no-scroll{
   max-height: 75vh;       /* 👈 límite visible */
   background : #fff; 
   z-index: 9998;
-  transform: translateY(-20px);
+  transform: translateY(-100%);
   opacity: 0;
-  transition: transform .35s ease, opacity .35s ease;
+  transition: transform 0.3s ease;
   overflow-y: auto;
   border-radius: 16px;
   display: none;
@@ -515,6 +581,7 @@ body.no-scroll{
 
 .menu-productos.activo{
   display: block;
+transform: translateY(0);
 }
 
 .menu-titulo{
@@ -1034,22 +1101,19 @@ body.modal-abierto .whatsapp{
   transform: scale(1.4);
 }
 
+/* BARRA CATEGORÍAS */
 .barra-categorias{
   position: sticky;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
+  top: 80px; /* 👈 exactamente la altura del nav */
+  z-index: 999;
 
   height: 60px;
   background: #007bff;
-  border-radius: 30px;
 
   display: flex;
   align-items: center;
-  padding: 0 20px;
   gap: 14px;
-
-  z-index: 9999;
+  padding: 0 20px;
 }
 
 /* Botón */
