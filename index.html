@@ -110,22 +110,6 @@ al lado de Plaza La Canela.
       </div>
     </div>
 
-    <!-- 🔧 REPARACIONES -->
-    <div class="categoria">
-      <div class="cat-header" onclick="toggleCategoria(this)">
-        <h3>🔧 Reparaciones</h3>
-        <span class="cat-icon">+</span>
-      </div>
-      <div class="cat-contenido">
-        <div class="galeria">
-          <img src="images/reparaciones1.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/reparaciones2.jpg" onclick="abrirImgModal(this.src)">
-          <img src="images/reparaciones3.jpg" onclick="abrirImgModal(this.src)">
-        </div>
-      </div>
-    </div>
-  </div>
-
 </section>
 
 <section class="reseñas">
@@ -229,7 +213,6 @@ imgModal.addEventListener("click", e=>{
 <div class="barra-categorias">
   <button class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
   <span class="txt-categorias">CATEGORÍAS</span>
-</div>
       
 <script>
 const modalProducto = document.getElementById("modal-producto");
@@ -493,7 +476,8 @@ function toggleCategoria(header){
   </div>
  </div>
 </div>
-
+</div>
+    
 <main>
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
       
