@@ -182,7 +182,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
-  padding: 95px 0;    /* separación del borde */
+  padding: 40px 0;    /* separación del borde */
   padding-top: 15px !important; /* 👈 Crea espacio negro arriba del logo */
   padding-bottom: 5px !important;
 }
