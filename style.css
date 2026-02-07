@@ -914,6 +914,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   background: #fff; /* barras blancas */
+  padding-top: 150px;  
 }
 
 /* Contenedor móvil */
