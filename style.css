@@ -106,7 +106,7 @@ nav a{
 /* ===== BARRA CATEGORÍAS ===== */
 .barra-categorias{
   position: sticky;
-  top: 0;              /* MISMA altura del header */
+  top: 45px;              /* MISMA altura del header */
   z-index: 999;           /* debajo del nav */
 
   height: auto;
