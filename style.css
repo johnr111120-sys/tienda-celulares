@@ -122,7 +122,8 @@ nav a{
 
 /* Botón */
 .btn-categorias{
-  width: 40px;
+  left: 0; 
+  width: 60px;
   max-width: 100%;
   height: 40px;
   border-radius: 8px;
