@@ -37,7 +37,7 @@ html, body {
 
 /* NAV PRINCIPAL */
 .nav-principal{
-  left: o;
+  left: 1px;
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -185,7 +185,7 @@ button {
 }
 
 .header-logo{
-  max-width: 55px;
+  max-width: 100%;
   height: auto;
 }
 
