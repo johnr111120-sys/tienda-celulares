@@ -140,7 +140,7 @@ footer {
   bottom: 20px;
   right: 0;
   width: 100%;
-  height: 56px;
+  height: auto;
   background: #25D366;
   color: white;
   border-radius: 50%;
@@ -191,7 +191,7 @@ img, svg {
   top: 70px;
   left: 0;
   width: 100%;
-  height: 42px;
+  height: auto;
   border-radius: 50%;
   border: none;
   background-color: #0000FF; /* azul */
@@ -255,7 +255,7 @@ img, svg {
 /* BOTÓN WHATSAPP */
 .mp-wsp{
   display: block;
-  margin-top: 15px;
+  margin-top: 12px;
   padding: 12px;
   background: #25d366;
   color: #fff;
@@ -270,7 +270,7 @@ img, svg {
   top: 10px;
   left: 0;
   width: 100%;
-  height: 36px;
+  height: auto;
   border-radius: 50%;
   border: 4px solid #0000FF; /* círculo azul LINEAL */
   background: transparent;  /* sin relleno */
@@ -297,7 +297,7 @@ img, svg {
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
   user-select: none;
   width: 100%;
-  height: 220px;
+  height: auto;
   object-fit: cover;
   border-radius: 12px;
   cursor: pointer;
@@ -338,7 +338,7 @@ img, svg {
 /* Modal imagen */
 .img-modal-close{
   width: 100%;
-  height: 56px;
+  height: auto;
   font-size: 28px;
   border: 4px solid #0000FF; /* círculo azul lineal */
   background: transparent;  /* sin relleno */
@@ -348,7 +348,7 @@ img, svg {
 /* Modal producto */
 .mp-cerrar{
   width: 100%;
-  height: 56px;
+  height: auto;
   font-size: 28px;
   border: 3px solid #0000FF;
   background-color: #0000FF;
@@ -474,12 +474,12 @@ body.no-scroll{
    MENÚ PRODUCTOS (SUPERIOR)
 ===================== */
 .menu-productos{
-  position: fixed;
+  position: sticky;
   top: 90px;              /* deja ver el header */
   left: 0;
   right: 0;
   height: auto;           /* 👈 ya no pantalla completa */
-  max-height: 75vh;       /* 👈 límite visible */
+  max-height: auto;       /* 👈 límite visible */
   background : #fff; 
   z-index: 9998;
   transform: translateY(-20px);
@@ -576,7 +576,7 @@ body.no-scroll{
 .btn-categorias{
   width: 100%;
   max-width: 100%;
-  height: 40px;
+  height: auto;
   border-radius: 8px;
 
   background: #007bff;
@@ -618,8 +618,8 @@ button {
 
 .icon-btn img,
 .icon-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
