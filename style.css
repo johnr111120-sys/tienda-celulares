@@ -40,7 +40,7 @@ html, body {
   position: fixed;
   top: 0;
   z-index: 1000;
-  width: 120%;
+  width: 105%;
   height: auto;
   background: #000;
   display: flex;
@@ -515,7 +515,7 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;      /* 👈 CLAVE */
-  top: 55px !important;       /* Ajustado para que quede bajo el nav */
+  top: 52px !important;       /* Ajustado para que quede bajo el nav */
   left: 15px !important;      /* Separado del borde izquierdo */
    
   width: 55px !important;     /* Ancho fijo (no 100%) */
