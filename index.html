@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -315,6 +316,11 @@ function toggleCategoria(header){
 }
 </script>
 
+      <div class="barra-categorias">
+  <button class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
+  <span class="txt-categorias">CATEGORÍAS</span>
+</div>
+
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
@@ -485,10 +491,9 @@ function toggleCategoria(header){
 <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
     
 <!-- BOTÓN PRODUCTOS -->
-<div class="barra-categorias">
-  <button class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
-  <span class="txt-categorias">CATEGORÍAS</span>
-</div>
+<button class="fab-productos" onclick="toggleMenuProductos()">
+  <span class="icono-menu" id="icono-menu">☰</span>
+</button>
 
 <script>
 function toggleMenuProductos(){
