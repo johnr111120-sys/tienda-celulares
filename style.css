@@ -544,28 +544,31 @@ body.no-scroll{
 /* =====================
    MENÚ PRODUCTOS (SUPERIOR)
 ===================== */
-.menu-productos{
-  position: sticky;
-  top: 90px;              /* deja ver el header */
-  left: 0;
-  right: 0;
-  height: auto;           /* 👈 ya no pantalla completa */
-  max-height: 75vh;       /* 👈 límite visible */
-  background : #fff; 
-  z-index: 9998;
-  transform: translateY(-20px);
-  opacity: 0;
-  transition: transform .35s ease, opacity .35s ease;
-  border-radius: 16px;
-  display: none;
+.menu-productos {
+    position: fixed !important; /* Cambiado de sticky a fixed */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.9); /* Centrado */
+    width: 90% !important;
+    max-width: 400px;
+    max-height: 80vh;
+    background: #ffffff !important;
+    border-radius: 20px;
+    padding: 20px;
+    z-index: 1000000 !important; /* Por encima de todo */
+    display: none; /* Se activa con JS */
+    overflow-y: auto !important;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: all 0.3s ease;
 }
 
 
-/* ACTIVO */
-.menu-productos.activo{
-  transform: translateY(0);
-  opacity: 1;
-  display: block;
+/* ESTADO ACTIVO */
+.menu-productos.activo {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .menu-productos.activo{
@@ -609,7 +612,9 @@ body.no-scroll{
 .overlay-productos.activo{
   opacity: 1;
   pointer-events: auto;
+display: block !important;
 }
+
 @media (max-width: 600px){
   .fab-productos{
     width: 100%;
@@ -915,4 +920,9 @@ body {
   margin: 0 auto;         /* centra */
   background: #fff;
   min-height: 100vh;
+}
+
+/* El modal del producto debe ser el REY de los z-index */
+.mp-overlay {
+    z-index: 3000000 !important; 
 }
