@@ -514,17 +514,17 @@ body.no-scroll{
 
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
-  position: sticky;
-  top: 80px;
+  position: fixed;       /* 👈 CLAVE */
+  top: 64px;             /* justo debajo del nav */
   left: 0;
   z-index: 9999999;
 
   width: 100%;
-  height: auto;
+  height: 48px;
   border-radius: 50%;
 
   background: #007bff;
-  color: white;
+  color: #fff;
   border: 2px solid white;
 
   display: flex;
