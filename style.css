@@ -515,13 +515,12 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;      /* 👈 CLAVE */
-  top: 55px;             /* justo debajo del nav */
-  left: 0;
-  z-index: 9999999;
-
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+  top: 65px !important;       /* Ajustado para que quede bajo el nav */
+  left: 15px !important;      /* Separado del borde izquierdo */
+   
+  width: 55px !important;     /* Ancho fijo (no 100%) */
+  height: 55px !important;    /* Alto fijo */
+  border-radius: 50% !important; /* Fuerza la forma circular */
 
   background: #007bff;
   color: #fff;
@@ -532,14 +531,15 @@ body.no-scroll{
   justify-content: center;
 
   cursor: pointer;
-  padding: 0;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  adding: 0;
 }
 
 /* ===== ICONO BOTÓN PRODUCTOS ===== */
 .icono-menu{
-  font-size: 30px;
-  transition: transform 0.35s ease;
+  font-size: 36px !important;
+    line-height: 1 !important;
+    display: block !important;
 }
 
 /* =====================
@@ -618,8 +618,8 @@ display: block !important;
 
 @media (max-width: 600px){
   .fab-productos{
-    width: 100%;
-    height: auto;
+    width: 55px;
+    height: 55px;
     border-radius: 18px;
   }
 
