@@ -514,7 +514,7 @@ body.no-scroll{
 
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
-  position: fixed;       /* 👈 CLAVE */
+  position: sticky;      /* 👈 CLAVE */
   top: 64px;             /* justo debajo del nav */
   left: 0;
   z-index: 9999999;
