@@ -37,7 +37,7 @@ html, body {
 
 /* NAV PRINCIPAL */
 .nav-principal{
-  left: 1px;
+  left: 0px;
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -174,7 +174,7 @@ button {
 }
 
 .header-principal{
-  top: 0;
+  top: 45px;
   z-index: 99999;
   height: 90px;              /* ⬅️ más alto */
   background: #000;
@@ -548,7 +548,7 @@ body.no-scroll{
 ===================== */
 .menu-productos {
     position: fixed !important; /* Cambiado de sticky a fixed */
-    top: 60px !important;
+    top: 55px !important;
     left: 50% !important;
     transform: translate(-50%, -50%) scale(0.9); /* Centrado */
     width: 90% !important;
