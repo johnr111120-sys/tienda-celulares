@@ -839,7 +839,7 @@ body.modal-abierto .whatsapp{
   height: auto;
   background: #fff;
 
-  transform: translateX(-100%);
+  transform: translateX(0);
   transition: transform 0.4s ease;
   z-index: 9998;
 }
