@@ -473,7 +473,7 @@ body.no-scroll{
    MENÚ PRODUCTOS (SUPERIOR)
 ===================== */
 .menu-productos{
-  position: fixed;
+  position: sticky;
   top: 90px;              /* deja ver el header */
   left: 0;
   right: 0;
