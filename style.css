@@ -794,8 +794,9 @@ body.inicio footer{
   .whatsapp{
     width: 56px;
     height: 56px;
-    font-size: 42px;   /* 👈 icono grande */
+    font-size: 28px;   /* 👈 icono grande */
     bottom: 25px;
+    line-height: 0;  /* Evita que el texto empuje los bordes */
     right: 0;
   }
 }
@@ -925,4 +926,16 @@ body {
 /* El modal del producto debe ser el REY de los z-index */
 .mp-overlay {
     z-index: 3000000 !important; 
+}
+
+/* FUERZA EL TAMAÑO CIRCULAR EN CUALQUIER DISPOSITIVO */
+.whatsapp {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important; /* Lo mantiene redondo */
+    right: 20px !important;       /* Lo mantiene a la derecha */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;         /* Evita que el contenido lo estire */
 }
