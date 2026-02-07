@@ -179,7 +179,7 @@ button {
   z-index: 5;
   height: 90px;              /* ⬅️ más alto */
   background: #000;
-  margin-top: 30px !important; /* 👈 Aumenta este número para bajarlo más */
+  margin-top: 50px !important; /* 👈 Aumenta este número para bajarlo más */
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
