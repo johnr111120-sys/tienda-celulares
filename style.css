@@ -40,7 +40,7 @@ html, body {
   position: fixed;
   top: 0;
   z-index: 1000;
-  width: 105%;
+  width: 102%;
   height: auto;
   background: #000;
   display: flex;
@@ -123,7 +123,7 @@ nav a{
 /* Botón */
 .btn-categorias{
   left: 0; 
-  width: 60px;
+  width: 55px;
   max-width: 100%;
   height: 40px;
   border-radius: 8px;
@@ -184,7 +184,7 @@ button {
 }
 
 .header-logo{
-  max-width: 100%;
+  max-width: 55px;
   height: auto;
 }
 
@@ -515,7 +515,7 @@ body.no-scroll{
 /* ===== BOTÓN FLOTANTE PRODUCTOS ===== */
 .fab-productos{
   position: fixed;      /* 👈 CLAVE */
-  top: 52px !important;       /* Ajustado para que quede bajo el nav */
+  top: 45px !important;       /* Ajustado para que quede bajo el nav */
   left: 15px !important;      /* Separado del borde izquierdo */
    
   width: 55px !important;     /* Ancho fijo (no 100%) */
