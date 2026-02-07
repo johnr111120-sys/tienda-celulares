@@ -40,7 +40,7 @@ html, body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: auto;
+  height: 64px;
   background: #000;
   display: flex;
   grid-template-columns: auto 1fr auto;
@@ -557,7 +557,7 @@ body.no-scroll{
 .barra-categorias{
   position: sticky;
   top: 64px;              /* MISMA altura del header */
-  z-index: 900;           /* debajo del nav */
+  z-index: 999;           /* debajo del nav */
 
   height: auto;
   background: #000;       /* mismo negro que el header */
