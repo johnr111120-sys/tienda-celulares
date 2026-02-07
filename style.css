@@ -40,7 +40,7 @@ html, body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 64px;
+  height: auto;
   background: #000;
   display: flex;
   grid-template-columns: auto 1fr auto;
