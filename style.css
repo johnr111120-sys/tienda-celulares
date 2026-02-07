@@ -556,10 +556,8 @@ body.no-scroll{
   transform: translateY(-20px);
   opacity: 0;
   transition: transform .35s ease, opacity .35s ease;
-  overflow-y: auto;
   border-radius: 16px;
   display: none;
-
 }
 
 
