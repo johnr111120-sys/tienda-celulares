@@ -46,7 +46,7 @@ html, body {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 8px 12px;
 }
 
 .nav-principal img {
@@ -137,8 +137,8 @@ footer {
 .whatsapp{
   position: fixed;
   bottom: 20px;
-  right: 0;
-  width: 100%;
+  right: 20px;
+  width: 56%;
   height: 56px;
   background: #25D366;
   color: white;
@@ -557,9 +557,9 @@ body.no-scroll{
 .barra-categorias{
   position: sticky;
   top: 64px;              /* MISMA altura del header */
-  z-index: 999;           /* debajo del nav */
+  z-index: 900;           /* debajo del nav */
 
-  height: auto;
+  width: 100%;
   background: #000;       /* mismo negro que el header */
   color: #fff;
 
@@ -567,7 +567,7 @@ body.no-scroll{
   align-items: center;
   gap: 12px;
 
-  padding: 0 12px;        /* igual que el nav */
+  padding: 8px 12px;        /* igual que el nav */
   border-top: 1px solid rgba(255,255,255,.1); /* separación sutil */
 }
 
@@ -905,7 +905,6 @@ body {
   min-height: 100vh;
   background: #fff;      /* fondo real del sitio */
   position: relative;
-  overflow-x: hidden;
 }
 
 /* Contenedor mobile */
@@ -914,4 +913,5 @@ body {
   margin: 0 auto;         /* centra */
   background: #fff;
   min-height: 100vh;
-}
+  overflow: visible; /* 🔥 obligatorio para sticky */
+   }
