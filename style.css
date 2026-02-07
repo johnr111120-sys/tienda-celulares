@@ -101,6 +101,75 @@ nav a{
   text-decoration:none;
 }
 
+/* ===== BARRA CATEGORÍAS ===== */
+.barra-categorias{
+  position: sticky;
+  top: 64px;              /* MISMA altura del header */
+  z-index: 900;           /* debajo del nav */
+
+  width: 100%;
+  background: #000;       /* mismo negro que el header */
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px 12px;        /* igual que el nav */
+  border-top: 1px solid rgba(255,255,255,.1); /* separación sutil */
+}
+
+/* Botón */
+.btn-categorias{
+  width: 100%;
+  max-width: 100%;
+  height: 40px;
+  border-radius: 8px;
+
+  background: #007bff;
+  color: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+}
+
+/* Texto */
+.txt-categorias{
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+/* =========================
+   BOTÓN / ICONOS
+========================= */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-btn,
+.fab-categorias {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn img,
+.icon-btn svg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 .header-principal{
   top: 0;
   z-index: 99999;
@@ -118,9 +187,10 @@ nav a{
 }
 
 section {
+    width: 100%;
     padding: 20px;
     background: rgba(255,255,255,0.85);
-    margin: 15px;
+    margin: 12px 0;
     border-radius: 12px;
 }
 
@@ -138,7 +208,7 @@ footer {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 56%;
+  width: 56px;
   height: 56px;
   background: #25D366;
   color: white;
@@ -551,75 +621,6 @@ body.no-scroll{
     font-size: 34px;   /* 👈 CLAVE */
     line-height: 72px; /* centra vertical */
   }
-}
-
-/* ===== BARRA CATEGORÍAS ===== */
-.barra-categorias{
-  position: sticky;
-  top: 64px;              /* MISMA altura del header */
-  z-index: 900;           /* debajo del nav */
-
-  width: 100%;
-  background: #000;       /* mismo negro que el header */
-  color: #fff;
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 8px 12px;        /* igual que el nav */
-  border-top: 1px solid rgba(255,255,255,.1); /* separación sutil */
-}
-
-/* Botón */
-.btn-categorias{
-  width: 100%;
-  max-width: 100%;
-  height: 40px;
-  border-radius: 8px;
-
-  background: #007bff;
-  color: #000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-}
-
-/* Texto */
-.txt-categorias{
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: .5px;
-}
-
-/* =========================
-   BOTÓN / ICONOS
-========================= */
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.icon-btn,
-.fab-categorias {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-btn img,
-.icon-btn svg {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
 }
 
 .whatsapp:hover{
