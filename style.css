@@ -37,6 +37,7 @@ html, body {
 
 /* NAV PRINCIPAL */
 .nav-principal{
+  left: o;
   position: fixed;
   top: 0;
   z-index: 1000;
