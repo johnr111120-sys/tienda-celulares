@@ -950,3 +950,14 @@ body {
     justify-content: center !important;
     padding: 0 !important;         /* Evita que el contenido lo estire */
 }
+
+/* Empuja todo el contenido debajo del header */
+.header-principal + section, 
+section:first-of-type {
+    margin-top: 30px !important; /* Ajusta este número si quieres más o menos espacio */
+}
+
+/* Si tienes un ID específico para la primera sección, también puedes usarlo: */
+#sobre-nosotros {
+    margin-top: 30px !important;
+}
