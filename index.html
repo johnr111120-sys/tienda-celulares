@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,9 +9,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="inicio">
+    <body>
   <div class="site-wrapper">
-    <div class="app">
+
+<body class="inicio">
+
+  <div class="app">
       
 <a href="https://wa.me/18292017321?text=Hola%20quiero%20info" 
    class="whatsapp" target="_blank">
@@ -18,6 +22,7 @@
 </a>
 <header class="nav-principal">
     
+<nav class="nav-principal">
    <div class="nav-right">
   <!-- DERECHA -->
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
@@ -33,16 +38,10 @@
     <button class="nav-icon" title="Mi cuenta">👤</button>
     <button class="nav-icon" title="Carrito">🛒</button>
     <button class="nav-icon" title="Favoritos">❤️</button>
-     </div>
-    </div>
-   </div>  
+  </div>
+</nav>   
  </header>
-</body>
-            <!-- BOTÓN PRODUCTOS -->
-<div class="barra-categorias">
-  <button class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
-  <span class="txt-categorias">CATEGORÍAS</span>
-            
+      
 <header class="header-principal">
   <h1 class="header-title">
     <img src="./images/Logo1Porta.png"
@@ -211,7 +210,11 @@ imgModal.addEventListener("click", e=>{
   </div>
 </div>
 
-
+            <!-- BOTÓN PRODUCTOS -->
+<div class="barra-categorias">
+  <button class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
+  <span class="txt-categorias">CATEGORÍAS</span>
+      
 <script>
 const modalProducto = document.getElementById("modal-producto");
 
