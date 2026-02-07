@@ -40,7 +40,7 @@ html, body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: auto;
+  height: 64px;
   background: #000;
   display: flex;
   grid-template-columns: auto 1fr auto;
@@ -115,6 +115,75 @@ nav a{
 .header-logo{
   max-width: 100%;
   height: auto;
+}
+
+/* ===== BARRA CATEGORÍAS ===== */
+.barra-categorias{
+  position: sticky;
+  top: 64px;              /* MISMA altura del header */
+  z-index: 900;           /* debajo del nav */
+
+  height: 52px;
+  background: #000;       /* mismo negro que el header */
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 12px;        /* igual que el nav */
+  border-top: 1px solid rgba(255,255,255,.1); /* separación sutil */
+}
+
+/* Botón */
+.btn-categorias{
+  width: 100%;
+  max-width: 100%;
+  height: 40px;
+  border-radius: 8px;
+
+  background: #007bff;
+  color: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+}
+
+/* Texto */
+.txt-categorias{
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+/* =========================
+   BOTÓN / ICONOS
+========================= */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-btn,
+.fab-categorias {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn img,
+.icon-btn svg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 section {
@@ -358,7 +427,7 @@ img, svg {
    BLOQUEAR SCROLL FONDO
    ========================= */
 body.no-scroll{
-  overflow: hidden;
+  overflow-x: hidden;
   touch-action: none;
 }
 
@@ -437,6 +506,7 @@ body.no-scroll{
   color: #128c7e;
 }
 .app{
+  overflow-x: hidden; 
   position: relative;
 }
 
@@ -553,74 +623,7 @@ body.no-scroll{
   }
 }
 
-/* ===== BARRA CATEGORÍAS ===== */
-.barra-categorias{
-  position: sticky;
-  top: 64px;              /* MISMA altura del header */
-  z-index: 900;           /* debajo del nav */
 
-  height: auto;
-  background: #000;       /* mismo negro que el header */
-  color: #fff;
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 0 12px;        /* igual que el nav */
-  border-top: 1px solid rgba(255,255,255,.1); /* separación sutil */
-}
-
-/* Botón */
-.btn-categorias{
-  width: 100%;
-  max-width: 100%;
-  height: 40px;
-  border-radius: 8px;
-
-  background: #007bff;
-  color: #000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-}
-
-/* Texto */
-.txt-categorias{
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: .5px;
-}
-
-/* =========================
-   BOTÓN / ICONOS
-========================= */
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.icon-btn,
-.fab-categorias {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-btn img,
-.icon-btn svg {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
 
 .whatsapp:hover{
   background: #1ebe5d;
@@ -643,6 +646,7 @@ button {
 .whatsapp{
   animation: pulse 2s infinite;
 }
+
 .reseñas{
   background: #f9f9f9;
   padding: 40px 20px;
@@ -832,7 +836,7 @@ body.modal-abierto .whatsapp{
 
 #menu-flotante-final{
   position: fixed;
-  top: 0;
+  top: 80;
   left: 0;
   width: 100%;
   height: auto;
