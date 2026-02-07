@@ -792,8 +792,8 @@ body.inicio footer{
 
 @media (max-width: 600px){
   .whatsapp{
-    width: 100%;
-    height: auto;
+    width: 56px;
+    height: 56px;
     font-size: 42px;   /* 👈 icono grande */
     bottom: 25px;
     right: 0;
