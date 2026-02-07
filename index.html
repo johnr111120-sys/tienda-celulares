@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,6 +20,10 @@
  💬
 </a>
 <header class="nav-principal">
+    
+<div class="fab-productos" onclick="toggleMenuProductos()">
+  <span id="icono-menu" class="icono-menu">☰</span>
+</div>
     
 <nav class="nav-principal">
    <div class="nav-right">
@@ -210,11 +213,7 @@ imgModal.addEventListener("click", e=>{
   </div>
 </div>
 
-            <!-- BOTÓN PRODUCTOS -->
-<div class="barra-categorias">
-  <button class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
-  <span class="txt-categorias">CATEGORÍAS</span>
-      
+
 <script>
 const modalProducto = document.getElementById("modal-producto");
 
