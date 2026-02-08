@@ -999,7 +999,10 @@ body {
 /* Empuja todo el contenido debajo del header */
 .header-principal + section, 
 section:first-of-type {
-    margin-top: 50px !important; /* Ajusta este número si quieres más o menos espacio */
+    margin-top: 20px !important; /* Aumenta este número hasta que el texto baje lo suficiente */
+    position: relative;
+    background: #fff; /* Para que el texto resalte sobre el fondo de la página */
+    z-index: 10;
 }
 
 /* Si tienes un ID específico para la primera sección, también puedes usarlo: */
