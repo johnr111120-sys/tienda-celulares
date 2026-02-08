@@ -175,7 +175,7 @@ button {
 
 .header-principal{
   position: relative !important; /* Elemento normal */
-  top: 10px !important;
+  top: -5px !important;
   width: 100%;
   z-index: 5;
   height: 90px;              /* ⬅️ más alto */
@@ -187,7 +187,7 @@ button {
 }
 
 .header-logo{
-   padding: 80px
+   padding: 60px
    width: 100% !important; /* Obliga al logo a ocupar todo el ancho del header */
    max-width: 100% !important; /* Asegura que no se pase del borde */
    height: auto !important; /* Mantiene la proporción para que no se vea estirado */
@@ -981,10 +981,10 @@ body {
 /* Empuja todo el contenido debajo del header */
 .header-principal + section, 
 section:first-of-type {
-    margin-top: 10px !important; /* Ajusta este número si quieres más o menos espacio */
+    margin-top: -5px !important; /* Ajusta este número si quieres más o menos espacio */
 }
 
 /* Si tienes un ID específico para la primera sección, también puedes usarlo: */
 #sobre-nosotros {
-    margin-top: 150px !important;
+    margin-top: -5px !important;
 }
