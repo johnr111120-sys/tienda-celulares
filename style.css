@@ -278,24 +278,6 @@ img, svg {
   border-radius: 12px;
 }
 
-/* Botón cerrar */
-.img-modal-close{
-  position: absolute;
-  top: 16px;
-  right: 16px;          /* 🔥 esquina superior derecha */
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid #007bff;
-  background: rgba(0,0,0,0.6);
-  color: #ff3b3b;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 10001;
-  transform: scale(0.9);
-}
-
 /* =========================
    MODAL PRODUCTO (AISLADO)
    ========================= */
@@ -358,22 +340,48 @@ img, svg {
   font-weight: bold;
 }
 
-/* BOTÓN X */
-.mp-cerrar{
+.btn-cerrar-modal{
   position: absolute;
   top: 14px;
-  right: 14px;          /* 🔥 esquina superior derecha */
-  width: 42px;
-  height: 42px;
+  right: 14px;
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 50%;
-  border: 2px solid #007bff;
-  background: rgba(255,255,255,0.9);
+  border: none;
+
+  background: rgba(0,0,0,0.65);
   color: #ff3b3b;
-  font-size: 22px;
+
+  font-size: 26px;
   font-weight: bold;
+
   cursor: pointer;
   z-index: 10001;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.btn-cerrar-modal:active{
   transform: scale(0.9);
+  background: rgba(0,0,0,0.8);
+  z-index: 10001; /* siempre arriba */
+}
+
+.modal-overlay{
+  z-index: 10000;
+}
+
+.modal,
+.modal-producto,
+.modal-galeria{
+  position: fixed;
+  z-index: 10000;
 }
 
 /* =========================
