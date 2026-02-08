@@ -201,7 +201,7 @@ button {
    position: relative !important;
    padding: 60px
    width: 100% !important; /* Obliga al logo a ocupar todo el ancho del header */
-   max-width: 120%; /* Asegura que no se pase del borde */
+   max-width: 150%; /* Asegura que no se pase del borde */
    height: auto !important; /* Mantiene la proporción para que no se vea estirado */
    max-height: 250px; /* Limita que tan "largo" es el logo hacia abajo */
    display: block;
