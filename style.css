@@ -269,13 +269,30 @@ img, svg {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 999999; /* por delante de todo */
+  z-index: 9999; /* por delante de todo */
 }
 
 .img-modal img {
   max-width: 90%;
-  max-height: 90%;
+  max-height: 95%;
   border-radius: 12px;
+}
+
+/* Botón cerrar */
+.img-modal-close {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0000FF; /* azul */
+  color: red;          /* X roja */
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.80);
 }
 
 /* =========================
@@ -298,7 +315,7 @@ img, svg {
 
 .mp-contenido{
   background: #fff;
-  width: 90%;
+  width: 100%;
   max-width: 420px;
   border-radius: 14px;
   padding: 20px;
@@ -340,76 +357,22 @@ img, svg {
   font-weight: bold;
 }
 
-/* BOTÓN CERRAR UNIVERSAL (IMAGEN + PRODUCTOS) */
-.btn-cerrar-modal{
+/* BOTÓN X */
+.mp-cerrar{
   position: absolute;
-  top: 14px;
-  right: 14px;
-
-  width: 44px;
-  height: 44px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  top: 30px;
+  left: 0;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: none;
-
-  background: rgba(0,0,0,0.65);
-  color: #ff3b3b;
-
-  font-size: 26px;
+  border: 4px solid #0000FF; /* círculo azul LINEAL */
+  background: transparent;  /* sin relleno */
+  color: red;               /* X roja */
+  font-size: 22px;
   font-weight: bold;
-
   cursor: pointer;
-  z-index: 1000001;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.80);
 }
-
-.modal-close{
-  position: absolute;
-  top: 12px;
-  right: 12px;
-
-  width: 42px;
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-  border: none;
-
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-
-  font-size: 26px;
-  font-weight: bold;
-
-  cursor: pointer;
-  z-index: 9999999;
-}
-
-.btn-cerrar-modal:active{
-  transform: scale(0.9);
-  background: rgba(0,0,0,0.8);
-  z-index: 1000000; /* siempre arriba */
-}
-
-.modal-overlay{
-  z-index: 10000;
-}
-
-.modal,
-.modal-producto,
-.modal-galeria{
-  position: fixed;
-  z-index: 10000;
-}
-
 /* =========================
    ORDEN VISUAL DE GALERÍA
    ========================= */
@@ -465,8 +428,19 @@ img, svg {
    AGRANDAR BOTÓN X (AMBOS MODALES)
    ========================= */
 
+/* Modal imagen */
+.img-modal-close{
+  width: 100%;
+  height: 56px;
+  font-size: 28px;
+  border: 4px solid #0000FF; /* círculo azul lineal */
+  background: transparent;  /* sin relleno */
+  color: red;  /* X roja */
+}
+
 /* Modal producto */
 .mp-cerrar{
+  width: 100%;
   height: 56px;
   font-size: 28px;
   border: 3px solid #0000FF;
@@ -660,12 +634,7 @@ font-size: 28px !important;
 .menu-productos.activo {
     display: block !important;
     opacity: 1 !important;
-    visibility: visible !important;
-    transform: translate(-50%, -50%) !important;
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    z-index: 1000000 !important;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .menu-productos.activo{
@@ -677,20 +646,9 @@ font-size: 28px !important;
   margin-bottom: 10px;
 }
 
-/* Solo transformamos el BOTÓN cuando el menú está abierto */
-.menu-productos.activo ~ .barra-herramientas-fija .btn-categoria-rect {
-    width: 45px !important;    
-    height: 45px !important;   
-    border-radius: 50% !important; 
-    margin-left: 10px !important;  
-    background: #007bff !important;
-    overflow: hidden;
-}
-
-/* Aseguramos que el contenido del menú no se herede del botón */
-.menu-productos .menu-titulo, 
-.menu-productos .producto-item {
-    display: block !important; /* Evita que el 'display: none' del botón les afecte */
+/* Cuando el menú está abierto */
+.menu-productos.activo ~ .fab-productos .icono-menu{
+  transform: rotate(90deg);
 }
 
 /* Cambiar ☰ por ✕ visualmente */
