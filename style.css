@@ -293,6 +293,7 @@ img, svg {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.80);
+  z-index: 10000
 }
 
 /* =========================
@@ -360,7 +361,7 @@ img, svg {
 /* BOTÓN X */
 .mp-cerrar{
   position: absolute;
-  top: 10px;
+  top: 70px;
   left: 0;
   width: 48px;
   height: 48px;
@@ -368,10 +369,11 @@ img, svg {
   border: 4px solid #0000FF; /* círculo azul LINEAL */
   background: transparent;  /* sin relleno */
   color: red;               /* X roja */
-  font-size: 30px;
+  font-size: 22px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.80);
+  z-index: 10000
 }
 /* =========================
    ORDEN VISUAL DE GALERÍA
@@ -559,7 +561,7 @@ body.no-scroll{
 
 /* El 40% Azul */
 .parte-azul {
-    width: 20%;
+    width: 30%;
     background: #007bff;
     color: white;
     display: flex;
@@ -573,17 +575,17 @@ body.no-scroll{
 
 /* El 60% Negro */
 .parte-negra {
-    width: 80%;
+    width: 70%;
     background: #000;
 }
 
 /* Estilo del icono y texto */
 #icono-menu {
-font-size: 24px !important;
+font-size: 28px !important;
 }
 
 .texto-cat {
-    font-family: sans-serif;
+    font-family: impact;
     letter-spacing: 1px;
 }
 
@@ -593,10 +595,10 @@ font-size: 24px !important;
         font-size: 12px;
     }
     .parte-azul {
-        width: 45%; /* Un poco más de espacio en móvil para el texto */
+        width: 35%; /* Un poco más de espacio en móvil para el texto */
     }
     .parte-negra {
-        width: 55%;
+        width: 65%;
     }
 }
 
@@ -751,7 +753,7 @@ display: block !important;
 }
 
 #servicios h2 {
-  margin-bottom: 30px;
+  margin-bottom: 26px;
 }
 
 .servicios {
@@ -835,7 +837,7 @@ body.inicio footer{
   }
 
   h1{ font-size: 34px; }
-  h2{ font-size: 24px; }
+  h2{ font-size: 20px; }
   h3{ font-size: 20px; }
 
   p{
