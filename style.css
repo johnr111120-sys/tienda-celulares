@@ -184,6 +184,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
+  margin-top: -15px !important; /* Ve ajustando este número hasta que pegue */
   padding: 0;    /* separación del borde */
 }
 
@@ -194,6 +195,7 @@ button {
    height: auto !important; /* Mantiene la proporción para que no se vea estirado */
    max-height: 250px; /* Limita que tan "largo" es el logo hacia abajo */
    display: block;
+   margin: 0 !important;
    object-fit: contain; /* Hace que la imagen se ajuste al espacio sin cortarse */
 }
 
