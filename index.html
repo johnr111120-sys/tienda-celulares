@@ -1,4 +1,4 @@
- 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -160,13 +160,18 @@ referrerpolicy="no-referrer-when-downgrade">
   <p>📞 WhatsApp: +1 829 201 7321</p>
 </footer>
     
+    <!-- MODAL DE IMAGEN (AISLADO) -->
+<div id="img-modal" class="img-modal" aria-hidden="true">
+  <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
+  <img id="img-modal-src" src="" alt="Vista ampliada">
+</div>
 
   <script>
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
 
 function abrirImgModal(src){
-  imgModalImg.src = src;
+  imgModalSrc.src = src;
   imgModal.style.display = "flex";
   imgModal.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
@@ -175,28 +180,14 @@ function abrirImgModal(src){
 
 function cerrarImgModal(){
   imgModal.style.display = "none";
-  imgModalImg.src = "";
+  imgModalSrc.src = "";
   imgModal.setAttribute("aria-hidden","true");
   document.body.style.overflow = "";
   document.body.classList.remove("modal-abierto");
 }
 
-  <!-- MODAL DE IMAGEN (AISLADO) -->
-<div id="imgModal" class="img-modal" aria-hidden="true">
-  <button class="modal-close" aria-label="Cerrar">✕</button>
-  <img id="imgModalSrc">
-</div>   
-
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("modal-close")) {
-    cerrarImgModal();
-  }
-});      
-
 imgModal.addEventListener("click", e=>{
-  if (e.target.id === "imgModal") {
-    cerrarImgModal();
-  }
+  if(e.target === imgModal) cerrarImgModal();
 });
 </script>
 
@@ -206,7 +197,7 @@ imgModal.addEventListener("click", e=>{
 <div id="modal-producto" class="mp-overlay">
   <div class="mp-contenido">
     
-   <button class="btn-cerrar-modal" aria-label="Cerrar">✕</button>
+    <button class="mp-cerrar" onclick="cerrarProducto()">✕</button>
 
     <img id="mp-img" src="" alt="Producto">
 
@@ -231,12 +222,6 @@ function abrirProducto(img, titulo, desc, precio, mensaje){
   document.getElementById("mp-desc").textContent = desc;
   document.getElementById("mp-precio").textContent = precio;
 
-function abrirImg(src) {
-  imgModalImg.src = src;
-  imgModal.style.display = "flex";
-  imgModal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}    
   // Link WhatsApp correcto
   document.getElementById("mp-whatsapp").href =
     "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
@@ -308,13 +293,6 @@ function toggleCategoria(header){
   const contenido = categoria.querySelector('.cat-contenido');
   const icono = header.querySelector('.cat-icon');
   const abierta = categoria.classList.contains('activa');
-
-function abrirImg(src) {
-  imgModalImg.src = src;
-  imgModal.style.display = "flex";
-  imgModal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
 
   // cerrar TODAS
   document.querySelectorAll('.categoria').forEach(cat => {
@@ -507,12 +485,6 @@ function toggleMenuProductos(){
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
 
-function abrirImg(src) {
-  imgModalImg.src = src;
-  imgModal.style.display = "flex";
-  imgModal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}    
   if (!menu || !overlay || !icono) {
     console.error("Falta menu, overlay o icono");
     return;
@@ -528,7 +500,6 @@ function abrirImg(src) {
   // Cambiar icono SIN romper animación
   icono.textContent = activo ? "✕" : "☰";
 }
-
 </script>
 
     <script>
@@ -571,29 +542,6 @@ window.addEventListener("scroll", () => {
  </main>
 
    </div>
-
-    let imgModal, imgModalImg;
-
-function crearImgModal() {
-  if (document.getElementById("imgModal")) return;
-
-  imgModal = document.createElement("div");
-  imgModal.id = "imgModal";
-  imgModal.className = "img-modal";
-  imgModal.setAttribute("aria-hidden", "true");
-
-  imgModal.innerHTML = `
-    <button class="modal-close" aria-label="Cerrar">✕</button>
-    <img id="imgModalImg">
-  `;
-
-  document.body.appendChild(imgModal);
-
-  imgModalImg = document.getElementById("imgModalImg");
-}
-
-crearImgModal();
-
 
     <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
   </body>
