@@ -630,25 +630,30 @@ font-size: 28px !important;
 }
 
 
-/* ESTADO ACTIVO */
-.menu-productos.activo {
-    display: block !important;
-    opacity: 1 !important;
-    transform: translate(-50%, -50%) scale(1);
+/* Cuando el menú está ACTIVO, el botón se vuelve circular y pequeño */
+.menu-productos.activo ~ .barra-herramientas-fija .btn-categoria-rect {
+    width: 45px !important;    /* Ancho de círculo */
+    height: 45px !important;   /* Alto de círculo */
+    border-radius: 50% !important; /* Lo hace redondo */
+    margin-left: 10px !important;  /* Lo mueve un poco a la izquierda */
+    transition: all 0.3s ease;
+    background: #007bff !important; /* Mantenemos el azul */
+    justify-content: center !important;
 }
 
-.menu-productos.activo{
-  display: block;
+/* Ocultamos el texto "CATEGORÍA" y la parte negra cuando está la X */
+.menu-productos.activo ~ .barra-herramientas-fija .texto-cat,
+.menu-productos.activo ~ .barra-herramientas-fija .parte-negra {
+    display: none !important;
 }
 
-.menu-titulo{
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-/* Cuando el menú está abierto */
-.menu-productos.activo ~ .fab-productos .icono-menu{
-  transform: rotate(90deg);
+/* Ajustamos la X para que esté centrada en el círculo */
+.menu-productos.activo ~ .barra-herramientas-fija #icono-menu {
+    font-size: 24px !important;
+    transform: rotate(0deg) !important; /* Quitamos rotaciones raras */
+    margin: 0 !important;
+    width: 100% !important;
+    text-align: center;
 }
 
 /* Cambiar ☰ por ✕ visualmente */
