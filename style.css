@@ -178,7 +178,7 @@ button {
   top: -5px !important;
   width: 100%;
   z-index: 5;
-  height: 90px;              /* ⬅️ más alto */
+  height: 60px;              /* ⬅️ más alto */
   background: #000;
   display: flex;
   align-items: center;
