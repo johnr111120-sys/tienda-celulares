@@ -175,7 +175,7 @@ button {
 
 .header-principal{
   position: relative !important; /* Elemento normal */
-  top: 90px !important;
+  top: 50px !important;
   width: 100%;
   z-index: 5;
   height: 90px;              /* ⬅️ más alto */
