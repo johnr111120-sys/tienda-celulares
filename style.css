@@ -952,6 +952,7 @@ body {
   margin: 0 auto;        /* centra en desktop */
   min-height: 100vh;
   background: #fff;      /* fondo real del sitio */
+  overflow: visible !important; /* Permite que el logo suba sin ser "decapitado" */
   position: relative;
   overflow-x: hidden;
 }
