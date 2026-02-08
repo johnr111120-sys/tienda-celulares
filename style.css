@@ -404,7 +404,7 @@ img, svg {
 }
     
  .galeria img:active{
-  transform: scale(0.99);
+  transform: scale(0.90);
   opacity: 0.85;
 }
 
