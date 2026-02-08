@@ -273,26 +273,27 @@ img, svg {
 }
 
 .img-modal img {
-  max-width: 90%;
-  max-height: 95%;
+  max-width: 85%;
+  max-height: 90%;
   border-radius: 12px;
 }
 
 /* Botón cerrar */
-.img-modal-close {
+.img-modal-close{
   position: absolute;
-  top: 70px;
-  left: 0;
-  width: 28px;
-  height: 28px;
+  top: 16px;
+  right: 16px;          /* 🔥 esquina superior derecha */
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: none;
-  background-color: #0000FF; /* azul */
-  color: red;          /* X roja */
-  font-size: 22px;
+  border: 2px solid #007bff;
+  background: rgba(0,0,0,0.6);
+  color: #ff3b3b;
+  font-size: 24px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.80);
+  z-index: 10001;
+  transform: scale(0.9);
 }
 
 /* =========================
@@ -315,7 +316,7 @@ img, svg {
 
 .mp-contenido{
   background: #fff;
-  width: 100%;
+  width: 90%;
   max-width: 420px;
   border-radius: 14px;
   padding: 20px;
@@ -360,19 +361,21 @@ img, svg {
 /* BOTÓN X */
 .mp-cerrar{
   position: absolute;
-  top: 30px;
-  left: 0;
-  width: 28px;
-  height: 28px;
+  top: 14px;
+  right: 14px;          /* 🔥 esquina superior derecha */
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 4px solid #0000FF; /* círculo azul LINEAL */
-  background: transparent;  /* sin relleno */
-  color: red;               /* X roja */
+  border: 2px solid #007bff;
+  background: rgba(255,255,255,0.9);
+  color: #ff3b3b;
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.80);
+  z-index: 10001;
+  transform: scale(0.9);
 }
+
 /* =========================
    ORDEN VISUAL DE GALERÍA
    ========================= */
@@ -1024,45 +1027,3 @@ section:first-of-type {
     margin-top: 60px !important;
 }
 
-/* RESET TOTAL DEL CONTENEDOR CUANDO ESTÁ ACTIVO */
-.menu-productos.activo ~ .barra-herramientas-fija {
-    width: 50px !important; /* Forzamos al contenedor a ser pequeño */
-    background: transparent !important;
-}
-
-/* FORZAR AL BOTÓN A SER CIRCULAR */
-.menu-productos.activo ~ .barra-herramientas-fija .btn-categoria-rect {
-    width: 45px !important;
-    height: 45px !important;
-    min-width: 45px !important; /* Para que no se estire por el flex */
-    max-width: 45px !important;
-    border-radius: 50% !important; /* Círculo perfecto */
-    margin-left: 10px !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: #007bff !important; /* Azul */
-}
-
-/* ELIMINAR LAS CAPAS INTERNAS (EL 40/60) CUANDO ESTÁ ACTIVO */
-.menu-productos.activo ~ .barra-herramientas-fija .parte-azul {
-    width: 100% !important; /* Ahora el azul es todo el círculo */
-    background: transparent !important;
-    padding: 0 !important;
-    justify-content: center !important;
-}
-
-.menu-productos.activo ~ .barra-herramientas-fija .parte-negra,
-.menu-productos.activo ~ .barra-herramientas-fija .texto-cat {
-    display: none !important; /* Desaparecen por completo */
-}
-
-/* CENTRAR LA X PERFECTAMENTE */
-.menu-productos.activo ~ .barra-herramientas-fija #icono-menu {
-    font-size: 24px !important;
-    width: auto !important;
-    height: auto !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-}
