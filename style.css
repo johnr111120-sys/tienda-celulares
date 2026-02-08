@@ -182,7 +182,7 @@ button {
   position: relative !important; /* Elemento normal */
   top: -5px !important;
   width: 100%;
-  max-width: 100% !important;
+  max-width: 150% !important;
   margin: 0 !important;
   padding: 0 !important;
   z-index: 5;
