@@ -184,7 +184,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
-  margin-top: 15px !important; /* Ve ajustando este número hasta que pegue */
+  margin-top: 13px !important; /* Ve ajustando este número hasta que pegue */
   padding: 0;    /* separación del borde */
 }
 
