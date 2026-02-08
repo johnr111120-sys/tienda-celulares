@@ -160,11 +160,6 @@ referrerpolicy="no-referrer-when-downgrade">
   <p>📞 WhatsApp: +1 829 201 7321</p>
 </footer>
     
-    <!-- MODAL DE IMAGEN (AISLADO) -->
-<div id="img-modal" class="img-modal" aria-hidden="true">
-<button class="modal-close" aria-label="Cerrar" onclick="cerrarImgModal()">✕</button>
-  <img id="img-modal-src" src="" alt="Vista ampliada">
-</div>
 
   <script>
 const imgModal = document.getElementById("img-modal");
@@ -185,6 +180,18 @@ function cerrarImgModal(){
   document.body.style.overflow = "";
   document.body.classList.remove("modal-abierto");
 }
+
+  <!-- MODAL DE IMAGEN (AISLADO) -->
+<div id="imgModal" class="img-modal" aria-hidden="true">
+  <button class="modal-close" aria-label="Cerrar">✕</button>
+  <img id="imgModalSrc">
+</div>   
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("modal-close")) {
+    cerrarImgModal();
+  }
+});      
 
 imgModal.addEventListener("click", e=>{
   if(e.target === imgModal) cerrarImgModal();
