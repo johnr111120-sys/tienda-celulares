@@ -671,12 +671,6 @@ body.no-scroll{
 display: block !important;
 }
 
-  .fab-productos .icono-menu{
-    font-size: 34px;   /* 👈 CLAVE */
-    line-height: 72px; /* centra vertical */
-  }
-}
-
 .whatsapp:hover{
   background: #1ebe5d;
 }
