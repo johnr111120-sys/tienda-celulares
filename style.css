@@ -635,7 +635,7 @@ font-size: 28px !important;
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translate(-50%, -50%) scale(1) !important;
+    transform: translate(-50%, -50%) !important;
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
@@ -1022,4 +1022,48 @@ section:first-of-type {
 /* Si tienes un ID específico para la primera sección, también puedes usarlo: */
 #sobre-nosotros {
     margin-top: 60px !important;
+}
+
+/* 1. Resetear el contenedor de la barra para que no fuerce el ancho total */
+.menu-productos.activo ~ .barra-herramientas-fija {
+    width: auto !important;
+    background: transparent !important;
+}
+
+/* 2. Convertir el botón en un círculo pequeño */
+.menu-productos.activo ~ .barra-herramientas-fija .btn-categoria-rect {
+    width: 45px !important;
+    height: 45px !important;
+    min-width: 45px !important; /* Evita que se estire */
+    border-radius: 50% !important;
+    margin-left: 10px !important;
+    padding: 0 !important;
+    background: #007bff !important; /* Azul sólido */
+    justify-content: center !important;
+    overflow: hidden !important;
+}
+
+/* 3. Forzar que la parte azul ocupe todo el círculo y ocultar el resto */
+.menu-productos.activo ~ .barra-herramientas-fija .parte-azul {
+    width: 100% !important;
+    background: transparent !important; /* Ya el botón tiene el azul */
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+/* 4. OCULTAR COMPLETAMENTE el texto y la parte negra */
+.menu-productos.activo ~ .barra-herramientas-fija .texto-cat,
+.menu-productos.activo ~ .barra-herramientas-fija .parte-negra {
+    display: none !important;
+    width: 0 !important;
+    opacity: 0 !important;
+}
+
+/* 5. Asegurar que la X esté centrada */
+.menu-productos.activo ~ .barra-herramientas-fija #icono-menu {
+    font-size: 24px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
