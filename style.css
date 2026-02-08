@@ -180,10 +180,11 @@ button {
   z-index: 5;
   height: 60px;              /* ⬅️ más alto */
   background: #000;
+  overflow: visible !important;
   display: flex;
   align-items: center;
   justify-content: center;  /* ⬅️ al margen derecho */
-  padding: 40px 0;    /* separación del borde */
+  padding: 0;    /* separación del borde */
 }
 
 .header-logo{
