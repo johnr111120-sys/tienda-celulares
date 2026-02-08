@@ -1024,46 +1024,45 @@ section:first-of-type {
     margin-top: 60px !important;
 }
 
-/* 1. Resetear el contenedor de la barra para que no fuerce el ancho total */
+/* RESET TOTAL DEL CONTENEDOR CUANDO ESTÁ ACTIVO */
 .menu-productos.activo ~ .barra-herramientas-fija {
-    width: auto !important;
+    width: 50px !important; /* Forzamos al contenedor a ser pequeño */
     background: transparent !important;
 }
 
-/* 2. Convertir el botón en un círculo pequeño */
+/* FORZAR AL BOTÓN A SER CIRCULAR */
 .menu-productos.activo ~ .barra-herramientas-fija .btn-categoria-rect {
     width: 45px !important;
     height: 45px !important;
-    min-width: 45px !important; /* Evita que se estire */
-    border-radius: 50% !important;
+    min-width: 45px !important; /* Para que no se estire por el flex */
+    max-width: 45px !important;
+    border-radius: 50% !important; /* Círculo perfecto */
     margin-left: 10px !important;
     padding: 0 !important;
-    background: #007bff !important; /* Azul sólido */
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
-    overflow: hidden !important;
+    background: #007bff !important; /* Azul */
 }
 
-/* 3. Forzar que la parte azul ocupe todo el círculo y ocultar el resto */
+/* ELIMINAR LAS CAPAS INTERNAS (EL 40/60) CUANDO ESTÁ ACTIVO */
 .menu-productos.activo ~ .barra-herramientas-fija .parte-azul {
-    width: 100% !important;
-    background: transparent !important; /* Ya el botón tiene el azul */
-    justify-content: center !important;
+    width: 100% !important; /* Ahora el azul es todo el círculo */
+    background: transparent !important;
     padding: 0 !important;
+    justify-content: center !important;
 }
 
-/* 4. OCULTAR COMPLETAMENTE el texto y la parte negra */
-.menu-productos.activo ~ .barra-herramientas-fija .texto-cat,
-.menu-productos.activo ~ .barra-herramientas-fija .parte-negra {
-    display: none !important;
-    width: 0 !important;
-    opacity: 0 !important;
+.menu-productos.activo ~ .barra-herramientas-fija .parte-negra,
+.menu-productos.activo ~ .barra-herramientas-fija .texto-cat {
+    display: none !important; /* Desaparecen por completo */
 }
 
-/* 5. Asegurar que la X esté centrada */
+/* CENTRAR LA X PERFECTAMENTE */
 .menu-productos.activo ~ .barra-herramientas-fija #icono-menu {
     font-size: 24px !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
     margin: 0 !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
 }
