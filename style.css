@@ -342,47 +342,39 @@ img, svg {
 
 .btn-cerrar-modal{
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 14px;
+  right: 14px;
 
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px;
-  max-width: 40px;
+  width: 44px;
+  height: 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0;
-  margin: 0;
-
   border-radius: 50%;
   border: none;
 
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.65);
   color: #ff3b3b;
 
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
 
   cursor: pointer;
   z-index: 10001;
 
-  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
-
 
 .btn-cerrar-modal:active{
   transform: scale(0.9);
   background: rgba(0,0,0,0.8);
   z-index: 10001; /* siempre arriba */
-  width: 40px !important;
 }
 
 .modal-overlay{
   z-index: 10000;
-  width: 40px !important;
 }
 
 .modal,
@@ -401,14 +393,10 @@ img, svg {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
-    position: fixed;
-  inset: 0;
-  z-index: 10000;
 }
 
 /* Tarjeta visual */
 .galeria img{
-  position: relative; /* 🔥 CLAVE */
   touch-action: manipulation; /* 👈 elimina retraso táctil */
   -webkit-tap-highlight-color: transparent; /* quita flash azul */
   user-select: none;
@@ -1046,4 +1034,3 @@ section:first-of-type {
 #sobre-nosotros {
     margin-top: 60px !important;
 }
-
