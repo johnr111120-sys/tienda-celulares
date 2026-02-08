@@ -999,7 +999,7 @@ body {
 /* Empuja todo el contenido debajo del header */
 .header-principal + section, 
 section:first-of-type {
-    margin-top: 20px !important; /* Aumenta este número hasta que el texto baje lo suficiente */
+    margin-top: 60px !important; /* Aumenta este número hasta que el texto baje lo suficiente */
     position: relative;
     background: #fff; /* Para que el texto resalte sobre el fondo de la página */
     z-index: 10;
