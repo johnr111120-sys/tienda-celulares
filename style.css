@@ -527,9 +527,9 @@ body.no-scroll{
     top: 60px; /* Ajusta este valor a la altura exacta de tu Nav principal */
     left: 0;
     width: 100%;
-    height: 45px; /* Altura de la barra */
-    z-index: 10002;
-    background: transparent;
+    height: 48px; /* Altura de la barra */
+    z-index: 10001;
+    display: flex;
 }
 
 .btn-categoria-rect {
@@ -550,7 +550,7 @@ body.no-scroll{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     font-weight: bold;
     font-size: 14px;
     border-right: 2px solid white; /* Separación sutil */
@@ -559,17 +559,12 @@ body.no-scroll{
 /* El 60% Negro */
 .parte-negra {
     width: 60%;
-    height: 100%;
     background: #000;
 }
 
 /* Estilo del icono y texto */
 #icono-menu {
-    font-size: 24px;
-    transition: transform 0.3s;
-    line-height: 1 !important;
-    display: inline-block !important;
-    margin: 0 !important;
+font-size: 22px !important;
 }
 
 .texto-cat {
