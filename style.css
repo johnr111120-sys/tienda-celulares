@@ -544,7 +544,7 @@ body.no-scroll{
 
 /* El 40% Azul */
 .parte-azul {
-    width: 40%;
+    width: 30%;
     background: #007bff;
     color: white;
     display: flex;
@@ -558,7 +558,7 @@ body.no-scroll{
 
 /* El 60% Negro */
 .parte-negra {
-    width: 60%;
+    width: 70%;
     background: #000;
 }
 
