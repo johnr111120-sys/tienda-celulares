@@ -8,8 +8,11 @@
 }
 
 html, body {
-  width: 100%;
-  height: 100%;
+   overflow-x: hidden !important; /* Evita el scroll lateral al hacer zoom */
+   width: 100% !important;
+   margin: 0 !important;
+   padding: 0 !important;
+   background-color: #000; /* O el color predominante de tu fondo */
 }
 
 /* Fondo con imagen fija y blur */
@@ -37,7 +40,8 @@ html, body {
 
 /* NAV PRINCIPAL */
 .nav-principal{
-  left: 50%;
+  left: 0 !important;
+  right: 0 !important;
   position: fixed;
   top: 0;
   z-index: 10000;
@@ -49,7 +53,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
-  transform: translateX(-50%) !important;
+  transform: none !important;
 }
 
 .nav-principal img {
@@ -178,6 +182,7 @@ button {
   position: relative !important; /* Elemento normal */
   top: -5px !important;
   width: 100%;
+  max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
   z-index: 5;
@@ -194,7 +199,7 @@ button {
 .header-logo{
    padding: 60px
    width: 100% !important; /* Obliga al logo a ocupar todo el ancho del header */
-   max-width: 100% !important; /* Asegura que no se pase del borde */
+   max-width: 600px; /* Asegura que no se pase del borde */
    height: auto !important; /* Mantiene la proporción para que no se vea estirado */
    max-height: 250px; /* Limita que tan "largo" es el logo hacia abajo */
    display: block;
@@ -531,12 +536,13 @@ body.no-scroll{
 .barra-herramientas-fija {
     position: fixed;
     top: 60px; /* Ajusta este valor a la altura exacta de tu Nav principal */
-    left: 50%;
+    left: 0 !important;
+    right: 0 !important;
     width: 100%;
     height: 48px; /* Altura de la barra */
     z-index: 10001;
     display: flex;
-    transform: translateX(-50%) !important;
+    transform: none !important;
 }
 
 .btn-categoria-rect {
