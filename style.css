@@ -635,7 +635,12 @@ font-size: 28px !important;
 .menu-productos.activo {
     display: block !important;
     opacity: 1 !important;
-    transform: translate(-50%, -50%) scale(1);
+    visibility: visible !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    z-index: 1000000 !important;
 }
 
 .menu-productos.activo{
@@ -647,9 +652,20 @@ font-size: 28px !important;
   margin-bottom: 10px;
 }
 
-/* Cuando el menú está abierto */
-.menu-productos.activo ~ .fab-productos .icono-menu{
-  transform: rotate(90deg);
+/* Solo transformamos el BOTÓN cuando el menú está abierto */
+.menu-productos.activo ~ .barra-herramientas-fija .btn-categoria-rect {
+    width: 45px !important;    
+    height: 45px !important;   
+    border-radius: 50% !important; 
+    margin-left: 10px !important;  
+    background: #007bff !important;
+    overflow: hidden;
+}
+
+/* Aseguramos que el contenido del menú no se herede del botón */
+.menu-productos .menu-titulo, 
+.menu-productos .producto-item {
+    display: block !important; /* Evita que el 'display: none' del botón les afecte */
 }
 
 /* Cambiar ☰ por ✕ visualmente */
