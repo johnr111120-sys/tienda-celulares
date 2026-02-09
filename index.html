@@ -410,8 +410,6 @@ function filtrarCategoria(categoria) {
 
   <div class="cat-contenido">
 
-    <div class="galeria">
-
    <!-- 🛡️ Fundas -->
     <div class="subcategoria">
       <h5>🛡️ Fundas</h5>
@@ -474,19 +472,24 @@ function filtrarCategoria(categoria) {
           )">
         <span class="producto-precio">RD$ 200</span>
       </div>
-
     </div>
+      
   </div>
 </div>
 
 
   <!-- 📟 TABLETS -->
-<div class="producto-item" data-category="tablets">
-    <div class="cat-header" onclick="filtrarCategoria('tablets')">
-      <h4>📟 Tablets</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
+<div class="categoria">
+  <div class="cat-header" onclick="toggleCategoria(this)">
+    <h4>📟 Tablets</h4>
+    <span class="cat-icon">+</span>
+  </div>
+
+  <div class="cat-contenido">
+
+    <!-- 📟 Tablets Android -->
+    <div class="subcategoria">
+      <h5>📟 Tablets Android</h5>
       <div class="galeria">
 <div class="producto-item">
         <img src="images/tablet1.jpg"
@@ -498,9 +501,14 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 6,000</span>
+  </div>
+ </div>
 </div>
             
-<div class="producto-item">
+  <!-- 📟 Tablets Ipad -->
+    <div class="subcategoria">
+      <h5>📟 Tablets Ipad</h5>
+      <div class="galeria">
         <img src="images/tablet2.jpg"
         onclick="abrirProducto(
           'images/tablet2.jpg',
@@ -510,13 +518,10 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 8,000</span>
-</div>
-
-      </div>
-    </div>
-  </div>
  </div>
 </div>
+      </div>
+    </div>
 </div>
     
 <main>
