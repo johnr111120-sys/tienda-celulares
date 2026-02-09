@@ -605,7 +605,7 @@ font-size: 28px !important;
 ===================== */
 #menu-productos {
     position: fixed !important; /* Cambiado de sticky a fixed */
-    top: 55% !important;
+    top: 58% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) scale(0.9); /* Centrado */
     width: 90% !important;
