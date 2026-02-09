@@ -590,7 +590,9 @@ window.addEventListener("scroll", () => {
     <script>
 function filtrarSubcategoria(sub) {
   document.querySelectorAll(
-    '.producto-item[data-category="accesorios"]'
+    '.producto-item[data-category="celulares"]'
+      '.producto-item[data-category="accesorios"]'
+    '.producto-item[data-category="tablets"]'
   ).forEach(item => {
     if (sub === 'todos') {
       item.style.display = 'block';
