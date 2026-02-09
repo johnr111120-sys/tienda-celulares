@@ -288,25 +288,23 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 </script>
 
 <script>
-function toggleCategoria(header){
-  const categoria = header.parentElement;
+function toggleCategoria(header) {
+  const categoria = header.closest('.categoria');
   const contenido = categoria.querySelector('.cat-contenido');
   const icono = header.querySelector('.cat-icon');
-  const abierta = categoria.classList.contains('activa');
 
-  // cerrar TODAS
-  document.querySelectorAll('.categoria').forEach(cat => {
-    cat.classList.remove('activa');
-    cat.querySelector('.cat-icon').textContent = '+';
-  });
+  const activa = categoria.classList.toggle('activa');
 
-  // si estaba cerrada, abrir SOLO esta
-  if(!abierta){
-    categoria.classList.add('activa');
+  if (activa) {
+    contenido.style.maxHeight = contenido.scrollHeight + 'px';
     icono.textContent = '−';
+  } else {
+    contenido.style.maxHeight = null;
+    icono.textContent = '+';
   }
 }
 </script>
+
 
       <script>
 function filtrarCategoria(categoria) {
