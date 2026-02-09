@@ -308,47 +308,29 @@ function toggleCategoria(header){
 }
 </script>
 
-      <script>
-function toggleSubcategoria(btn) {
-  const categoria = btn.parentElement;
-  categoria.classList.toggle("activa");
-}
-</script>
 
-
-<!-- MENÚ PRODUCTOS -->
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
   <!-- 📱 CELULARES -->
-<div class="categoria">
-  <div class="cat-header" onclick="toggleCategoria(this)">
-    <h4>📱 Celulares</h4>
-    <span class="cat-icon">+</span>
-  </div>
-        
-      <!-- 🔹 SUBCATEGORÍA IPHONE -->
-   <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🍎 iPhone</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-
-          <div class="producto-item">
-            <img src="images/cell1.jpg"
-              onclick="abrirProducto(
-                'images/cell1.jpg',
-                'iPhone 17 Pro Max',
-                '256GB · Sellado',
-                'RD$ 57,000',
-                'Hola, quiero info del iPhone 17 Pro Max'
-              )">
-            <span class="producto-precio">RD$ 57,000</span>
-          </div>
-            
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>📱 Celulares</h4>
+      <span class="cat-icon">+</span>
+    </div>
+    <div class="cat-contenido">
+      <div class="galeria">
+ <div class="producto-item">
+        <img src="images/cell1.jpg"
+        onclick="abrirProducto(
+          'images/cell1.jpg',
+          'iPhone 17 Pro Max',
+          '256GB · Negro / Naranja · Sellado',
+          'RD$ 57,000',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 57,000</span>
+</div>
   <div class="producto-item">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
@@ -360,18 +342,7 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 25,000</span>
 </div>
-            
-  <!-- 🔹 SUBCATEGORÍA ANDROID -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🤖 Android</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-            
-        <div class="producto-item">
+   <div class="producto-item">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
           'images/cell7.jpg',
@@ -382,7 +353,6 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 8,000</span>
 </div>
-          
     <div class="producto-item">
         <img src="images/cell8.jpg"
         onclick="abrirProducto(
@@ -394,17 +364,6 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 7,000</span>
 </div>
-
-     <!-- 🔹 SUBCATEGORÍA SAMSUNG -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>📱 Samsung</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-            
     <div class="producto-item">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
@@ -426,18 +385,9 @@ function toggleSubcategoria(btn) {
       <h4>🎧 Accesorios</h4>
       <span class="cat-icon">+</span>
     </div>
-
-   <!-- 🔹 SUBCATEGORÍA COVERS -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🛡️ Covers</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
- 
-    <div class="producto-item">       
+    <div class="cat-contenido">
+      <div class="galeria">
+ <div class="producto-item">       
         <img src="images/accesorios4.jpg"
         onclick="abrirProducto(
           'images/accesorios4.jpg',
@@ -448,17 +398,7 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 200</span>
 </div>
-       
-<!-- 🔹 SUBCATEGORÍA AUDIFONOS BLUETOOH  -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>🎧 Audifonos Bluetooh</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-
+            
   <div class="producto-item">
         <img src="images/accesorios13.jpg"
         onclick="abrirProducto(
@@ -470,17 +410,7 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 3,500</span>
 </div>
-          
-<!-- 🔹 SUBCATEGORÍA RELOJES INTELIGENTES  -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>⌚ Relojes Inteligentes</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-  
+            
   <div class="producto-item">
         <img src="images/accesorios14.jpg"
         onclick="abrirProducto(
@@ -492,17 +422,7 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 6,000</span>
 </div>
-       
-<!-- 🔹 SUBCATEGORÍA PENDRIVE  -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>💾 Pendrive</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-        <div class="galeria">
-     
+            
   <div class="producto-item">
         <img src="images/accesorios1.jpg"
         onclick="abrirProducto(
@@ -524,17 +444,8 @@ function toggleSubcategoria(btn) {
       <h4>📟 Tablets</h4>
       <span class="cat-icon">+</span>
     </div>
-
-   <!-- 🔹 SUBCATEGORÍA TABLETS ANDROID -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>📟 Tablets Android</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-         <div class="galeria">
-             
+    <div class="cat-contenido">
+      <div class="galeria">
 <div class="producto-item">
         <img src="images/tablet1.jpg"
         onclick="abrirProducto(
@@ -547,16 +458,6 @@ function toggleSubcategoria(btn) {
 <span class="producto-precio">RD$ 6,000</span>
 </div>
             
- <!-- 🔹 SUBCATEGORÍA TABLET IPAD -->
-    <div class="subcategoria">
-      <div class="sub-header" onclick="toggleSubCategoria(this)">
-        <h5>📟 Tablets Ipad</h5>
-        <span class="sub-icon">+</span>
-      </div>
-
-      <div class="sub-contenido">
-         <div class="galeria">
-
 <div class="producto-item">
         <img src="images/tablet2.jpg"
         onclick="abrirProducto(
@@ -568,14 +469,13 @@ function toggleSubcategoria(btn) {
         )">
 <span class="producto-precio">RD$ 8,000</span>
 </div>
-</p>
-             
+
       </div>
     </div>
   </div>
-
+ </div>
 </div>
-    
+</div>
     
 <main>
 
