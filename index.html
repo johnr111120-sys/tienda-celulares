@@ -289,35 +289,57 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 
 <script>
 function toggleCategoria(header) {
-  // Detecta la categoría clickeada (sirve para galería y menú)
   const categoriaActual = header.closest('.categoria, .categoria-menu');
   if (!categoriaActual) return;
 
-  const contenedor = categoriaActual.parentElement;
+  const esSubcategoria = categoriaActual.classList.contains('subcategoria');
 
-  // Cerrar TODAS las demás categorías del mismo contenedor
-  contenedor
-    .querySelectorAll('.categoria.activa, .categoria-menu.activa')
+  /* ==========================
+     1️⃣ SUBCATEGORÍAS
+  ========================== */
+  if (esSubcategoria) {
+    const contenedorSub = categoriaActual.parentElement;
+
+    // Cerrar otras subcategorías hermanas
+    contenedorSub.querySelectorAll('.subcategoria.activa')
+      .forEach(sub => {
+        if (sub !== categoriaActual) sub.classList.remove('activa');
+      });
+
+    categoriaActual.classList.toggle('activa');
+    return;
+  }
+
+  /* ==========================
+     2️⃣ CATEGORÍAS PRINCIPALES
+  ========================== */
+  const contenedorPrincipal = categoriaActual.parentElement;
+  const estabaActiva = categoriaActual.classList.contains('activa');
+
+  // Cerrar otras categorías principales
+  contenedorPrincipal
+    .querySelectorAll(':scope > .categoria.activa, :scope > .categoria-menu.activa')
     .forEach(cat => {
       if (cat !== categoriaActual) {
         cat.classList.remove('activa');
 
-        const icono = cat.querySelector('.cat-icon');
-        if (icono) icono.textContent = '+';
+        // 🔴 Cerrar TODAS las subcategorías internas
+        cat.querySelectorAll('.subcategoria.activa')
+          .forEach(sub => sub.classList.remove('activa'));
       }
     });
 
-  // Abrir / cerrar la actual
-  const estaActiva = categoriaActual.classList.toggle('activa');
+  // Toggle actual
+  categoriaActual.classList.toggle('activa', !estabaActiva);
 
-  const iconoActual = header.querySelector('.cat-icon');
-  if (iconoActual) {
-    iconoActual.textContent = estaActiva ? '−' : '+';
+  // 🔴 Si se cierra la categoría principal → cerrar subcategorías
+  if (estabaActiva) {
+    categoriaActual
+      .querySelectorAll('.subcategoria.activa')
+      .forEach(sub => sub.classList.remove('activa'));
   }
 }
 </script>
-
-
 
       <script>
 function filtrarCategoria(categoria) {
