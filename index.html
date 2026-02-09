@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,7 +39,7 @@
  </header>
 
 <div class="barra-herramientas-fija">
-   <button onclick="abrirMenu()">CATEGORÍAS</button>
+    <button class="btn-categoria-rect fab-productos" onclick="toggleMenuProductos()">
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
@@ -48,7 +47,6 @@
         <div class="parte-negra"></div>
     </button>
 </div>
-
       
 <header class="header-principal">
     <img src="./images/Logo1Porta.png" class="header-logo">
@@ -310,6 +308,7 @@ function toggleCategoria(header){
 }
 </script>
 
+
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
@@ -477,21 +476,12 @@ function toggleCategoria(header){
  </div>
 </div>
 </div>
-      
+    
 <main>
 
 <script>
 function toggleMenuProductos(){
-  const menu = document.getElementById("menuProductos");
-
-function abrirMenu(){
- document.body.classList.add("menu-open");
-}
-
-function cerrarMenu(){
- document.body.classList.remove("menu-open");
-}
-
+  const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
 
