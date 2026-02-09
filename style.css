@@ -1075,10 +1075,3 @@ iframe {
   font-weight: bold;
 }
 
-#menu-productos {
-  display: block !important;
-  opacity: 1 !important;
-  transform: none !important;
-  visibility: visible !important;
-  z-index: 9999;
-}
