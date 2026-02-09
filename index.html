@@ -380,14 +380,13 @@ function toggleCategoria(header){
   </div>
 
   <!-- 🎧 ACCESORIOS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>🎧 Accesorios</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">       
+<div class="categoria">
+  <button class="categoria-btn" onclick="toggleSubcategoria(this)">
+    Accesorios
+  </button>
+
+  <div class="subcategorias">
+    <button onclick="filtrarProductos('fundas')">Fundas</button>     
         <img src="images/accesorios4.jpg"
         onclick="abrirProducto(
           'images/accesorios4.jpg',
@@ -397,9 +396,8 @@ function toggleCategoria(header){
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 200</span>
-</div>
             
-  <div class="producto-item">
+ <button onclick="filtrarProductos('audifonos')">Audífonos</button>
         <img src="images/accesorios13.jpg"
         onclick="abrirProducto(
           'images/accesorios13.jpg',
@@ -409,9 +407,8 @@ function toggleCategoria(header){
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 3,500</span>
-</div>
             
-  <div class="producto-item">
+ <button onclick="filtrarProductos('audifonos')">Relojes Inteligentes</button>
         <img src="images/accesorios14.jpg"
         onclick="abrirProducto(
           'images/accesorios14.jpg',
@@ -421,9 +418,8 @@ function toggleCategoria(header){
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 6,000</span>
-</div>
             
-  <div class="producto-item">
+ <button onclick="filtrarProductos('audifonos')">Memorias USB</button>
         <img src="images/accesorios1.jpg"
         onclick="abrirProducto(
           'images/accesorios1.jpg',
@@ -433,8 +429,7 @@ function toggleCategoria(header){
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 200</span>
-</div>
-      </div>
+      
     </div>
   </div>
 
