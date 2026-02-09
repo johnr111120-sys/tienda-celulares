@@ -1007,6 +1007,6 @@ section:first-of-type {
 }
 
 footer {
-  background-color: #000; /* color nuevo */
-  color: #fff;            /* texto blanco */
+  background-color: #000 !important;
+  color: #fff;
 }
