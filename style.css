@@ -622,7 +622,7 @@ font-size: 28px !important;
     transition: all 0.3s ease;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   #menu-productos {
     top: -50px; /* más chico para desktop */
     :root {
