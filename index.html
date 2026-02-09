@@ -39,7 +39,7 @@
  </header>
 
 <div class="barra-herramientas-fija">
-    <button class="btn-categoria-rect fab-productos" onclick="toggleMenuProductos()">
+   <button onclick="abrirMenu()">CATEGORÍAS</button>
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
@@ -216,7 +216,9 @@
  </div>
 </div>
 </div>
-      
+
+<main id="contenido">
+    
 <header class="header-principal">
     <img src="./images/Logo1Porta.png" class="header-logo">
 </header>
@@ -477,19 +479,16 @@ function toggleCategoria(header){
 }
 </script>
 
-    
-<main>
-
 <script>
 function toggleMenuProductos(){
   const menu = document.getElementById("menuProductos");
 
 function abrirMenu(){
-  menu.classList.add("open");
+  document.body.classList.add("menu-open");
 }
 
 function cerrarMenu(){
-  menu.classList.remove("open");
+  document.body.classList.remove("menu-open");
 }
 
   const overlay = document.getElementById("overlay-productos");
