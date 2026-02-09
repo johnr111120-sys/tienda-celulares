@@ -1053,13 +1053,13 @@ iframe {
 
 /* ===== CATEGORÍAS ===== */
 
-.cat-contenido {
+.categoria-menu .cat-contenido {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.35s ease;
 }
 
-.categoria.activa .cat-contenido {
+.categoria-menu.activa .cat-contenido {
   max-height: 2000px; /* seguro para móvil */
 }
 
