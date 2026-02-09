@@ -624,7 +624,7 @@ font-size: 28px !important;
 
 @media (min-width: 768px) {
   #menu-productos {
-    top: -50px; /* más chico para desktop */
+    top: 50px; /* más chico para desktop */
   }
 }
 
