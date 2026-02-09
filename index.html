@@ -329,17 +329,11 @@ function filtrarCategoria(categoria) {
   </div>
 
   <div class="cat-contenido">
-
-       <!-- SUBCATEGORÍAS -->
-    <div class="subcategorias">
-      <button onclick="filtrarSubcategoria('iphone')">🍎 iPhone</button>
-      <button onclick="filtrarSubcategoria('zte')">📱 Zte</button>
-      <button onclick="filtrarSubcategoria('samsung')">🤖 Samsung</button>
-      <button onclick="filtrarSubcategoria('todos')">🔁 Todos</button>
-    </div>
       
-    <!-- 🍎 iPhone -->
-  <div class="producto-item" data-category="celulares" data-subcategory="iphone">
+   <!-- 🍎 IPhone -->
+    <div class="subcategoria">
+      <h5>🍎 IPhone</h5>
+      <div class="galeria">
         <img src="images/cell1.jpg"
         onclick="abrirProducto(
           'images/cell1.jpg',
@@ -350,7 +344,7 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 57,000</span>
 </div>
-      <div class="producto-item">
+      <div class="galeria">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
           'images/cell6.jpg',
@@ -361,11 +355,14 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 25,000</span>
   </div>
+  </div>
  </div>
 </div>  
-
-       <!-- 📱 ZTE -->
- <div class="producto-item" data-category="celulares" data-subcategory="zte">
+    
+  <!--  📱 Zte -->
+    <div class="subcategoria">
+      <h5>📱 Zte</h5>
+      <div class="galeria">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
           'images/cell7.jpg',
@@ -375,8 +372,8 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 8,000</span>
-</div>
-    <div class="producto-item">
+</div>  
+      <div class="galeria">
         <img src="images/cell8.jpg"
         onclick="abrirProducto(
           'images/cell8.jpg',
@@ -387,9 +384,12 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 7,000</span>
     </div>
+   </div>       
 
-        <!-- 🤖 Samsung -->
- <div class="producto-item" data-category="celulares" data-subcategory="samsung">
+       <!-- 🤖 Samsung -->
+    <div class="subcategoria">
+      <h5>🤖 Samsung</h5>
+      <div class="galeria">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
           'images/cell9.jpg',
@@ -399,7 +399,8 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 9,000</span>
-</div>      
+ </div>  
+</div>        
 
 <!-- 🎧 ACCESORIOS -->
 <div class="categoria">
@@ -410,19 +411,12 @@ function filtrarCategoria(categoria) {
 
   <div class="cat-contenido">
 
-    <!-- SUBCATEGORÍAS -->
-    <div class="subcategorias">
-      <button onclick="filtrarSubcategoria('fundas')">🛡️ Fundas</button>
-      <button onclick="filtrarSubcategoria('audio')">🎧 Audio</button>
-      <button onclick="filtrarSubcategoria('smartwatch')">⌚ Smartwatch</button>
-      <button onclick="filtrarSubcategoria('usb')">💾 Memorias USB</button>
-      <button onclick="filtrarSubcategoria('todos')">🔁 Todos</button>
-    </div>
-
     <div class="galeria">
 
-      <!-- FUNDA -->
-      <div class="producto-item" data-category="accesorios" data-subcategory="fundas">
+   <!-- 🛡️ Fundas -->
+    <div class="subcategoria">
+      <h5>🛡️ Fundas</h5>
+      <div class="galeria">
         <img src="images/accesorios4.jpg"
           onclick="abrirProducto(
             'images/accesorios4.jpg',
@@ -432,10 +426,13 @@ function filtrarCategoria(categoria) {
             'Hola, quiero info de este producto'
           )">
         <span class="producto-precio">RD$ 200</span>
-      </div>
+        </div>
+    </div>
 
-      <!-- AUDIO -->
-      <div class="producto-item" data-category="accesorios" data-subcategory="audio">
+    <!-- 🎧 Audio -->
+    <div class="subcategoria">
+      <h5>🎧 Audio</h5>
+      <div class="galeria">
         <img src="images/accesorios13.jpg"
           onclick="abrirProducto(
             'images/accesorios13.jpg',
@@ -445,10 +442,13 @@ function filtrarCategoria(categoria) {
             'Hola, quiero info de este producto'
           )">
         <span class="producto-precio">RD$ 3,500</span>
-      </div>
+         </div>
+    </div>
 
-      <!-- SMARTWATCH -->
-      <div class="producto-item" data-category="accesorios" data-subcategory="smartwatch">
+     <!-- ⌚ Smartwatch -->
+    <div class="subcategoria">
+      <h5>⌚ Smartwatch</h5>
+      <div class="galeria">
         <img src="images/accesorios14.jpg"
           onclick="abrirProducto(
             'images/accesorios14.jpg',
@@ -459,9 +459,12 @@ function filtrarCategoria(categoria) {
           )">
         <span class="producto-precio">RD$ 6,000</span>
       </div>
+    </div>
 
-      <!-- USB -->
-      <div class="producto-item" data-category="accesorios" data-subcategory="usb">
+    <!-- 💾 Memorias USB -->
+    <div class="subcategoria">
+      <h5>💾 Memorias USB</h5>
+      <div class="galeria">
         <img src="images/accesorios1.jpg"
           onclick="abrirProducto(
             'images/accesorios1.jpg',
