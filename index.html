@@ -308,13 +308,22 @@ function toggleCategoria(header){
 }
 </script>
 
+      <script>
+function filtrarCategoria(categoria) {
+  document.querySelectorAll('.producto-item').forEach(item => {
+    item.style.display =
+      item.dataset.category === categoria ? 'block' : 'none';
+  });
+}
+</script>
+
 
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
   <!-- 📱 CELULARES -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
+ <div class="producto-item" data-category="celulares">
+   <div class="cat-header" onclick="filtrarCategoria('celulares')">
       <h4>📱 Celulares</h4>
       <span class="cat-icon">+</span>
     </div>
@@ -379,68 +388,85 @@ function toggleCategoria(header){
     </div>
   </div>
 
-  <!-- 🎧 ACCESORIOS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>🎧 Accesorios</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">       
-        <img src="images/accesorios4.jpg"
-        onclick="abrirProducto(
-          'images/accesorios4.jpg',
-          'Cover 360 Iphone 11 Pro Max',
-          'Cover 360 transparente con magsafe · Sellado',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios13.jpg"
-        onclick="abrirProducto(
-          'images/accesorios13.jpg',
-          'AirPods 2da generación',
-          'Blancos · Originales · Sellados',
-          'RD$ 3,500',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 3,500</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios14.jpg"
-        onclick="abrirProducto(
-          'images/accesorios14.jpg',
-          'Apple Watch Serie 3',
-          'Negro · 38mm · GPS',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios1.jpg"
-        onclick="abrirProducto(
-          'images/accesorios1.jpg',
-          'Pendrive VIDVIE',
-          'USB 3.2 · 128GB · Tipo C',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-      </div>
-    </div>
+<!-- 🎧 ACCESORIOS -->
+<div class="categoria">
+  <div class="cat-header">
+    <h4>🎧 Accesorios</h4>
   </div>
 
+  <div class="cat-contenido">
+
+    <!-- SUBCATEGORÍAS -->
+    <div class="subcategorias">
+      <button onclick="filtrarSubcategoria('fundas')">🛡️ Fundas</button>
+      <button onclick="filtrarSubcategoria('audio')">🎧 Audio</button>
+      <button onclick="filtrarSubcategoria('smartwatch')">⌚ Smartwatch</button>
+      <button onclick="filtrarSubcategoria('usb')">💾 Memorias USB</button>
+      <button onclick="filtrarSubcategoria('todos')">🔁 Todos</button>
+    </div>
+
+    <div class="galeria">
+
+      <!-- FUNDA -->
+      <div class="producto-item" data-category="accesorios" data-subcategory="fundas">
+        <img src="images/accesorios4.jpg"
+          onclick="abrirProducto(
+            'images/accesorios4.jpg',
+            'Cover 360 Iphone 11 Pro Max',
+            'Cover 360 transparente con magsafe · Sellado',
+            'RD$ 200',
+            'Hola, quiero info de este producto'
+          )">
+        <span class="producto-precio">RD$ 200</span>
+      </div>
+
+      <!-- AUDIO -->
+      <div class="producto-item" data-category="accesorios" data-subcategory="audio">
+        <img src="images/accesorios13.jpg"
+          onclick="abrirProducto(
+            'images/accesorios13.jpg',
+            'AirPods 2da generación',
+            'Blancos · Originales · Sellados',
+            'RD$ 3,500',
+            'Hola, quiero info de este producto'
+          )">
+        <span class="producto-precio">RD$ 3,500</span>
+      </div>
+
+      <!-- SMARTWATCH -->
+      <div class="producto-item" data-category="accesorios" data-subcategory="smartwatch">
+        <img src="images/accesorios14.jpg"
+          onclick="abrirProducto(
+            'images/accesorios14.jpg',
+            'Apple Watch Serie 3',
+            'Negro · 38mm · GPS',
+            'RD$ 6,000',
+            'Hola, quiero info de este producto'
+          )">
+        <span class="producto-precio">RD$ 6,000</span>
+      </div>
+
+      <!-- USB -->
+      <div class="producto-item" data-category="accesorios" data-subcategory="usb">
+        <img src="images/accesorios1.jpg"
+          onclick="abrirProducto(
+            'images/accesorios1.jpg',
+            'Pendrive VIDVIE',
+            'USB 3.2 · 128GB · Tipo C',
+            'RD$ 200',
+            'Hola, quiero info de este producto'
+          )">
+        <span class="producto-precio">RD$ 200</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
   <!-- 📟 TABLETS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
+<div class="producto-item" data-category="tablets">
+    <div class="cat-header" onclick="filtrarCategoria('tablets')">
       <h4>📟 Tablets</h4>
       <span class="cat-icon">+</span>
     </div>
@@ -539,6 +565,22 @@ window.addEventListener("scroll", () => {
   }
 });
 </script>
+
+    <script>
+function filtrarSubcategoria(sub) {
+  document.querySelectorAll(
+    '.producto-item[data-category="accesorios"]'
+  ).forEach(item => {
+    if (sub === 'todos') {
+      item.style.display = 'block';
+    } else {
+      item.style.display =
+        item.dataset.subcategory === sub ? 'block' : 'none';
+    }
+  });
+}
+</script>
+
  </main>
 
    </div>
