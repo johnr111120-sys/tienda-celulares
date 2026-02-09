@@ -321,13 +321,25 @@ function filtrarCategoria(categoria) {
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
-  <!-- 📱 CELULARES -->
- <div class="producto-item" data-category="celulares">
-   <div class="cat-header" onclick="filtrarCategoria('celulares')">
-      <h4>📱 Celulares</h4>
-      <span class="cat-icon">+</span>
+<!-- 📱 CELULARES -->
+<div class="categoria">
+  <div class="cat-header" onclick="toggleCategoria(this)">
+    <h4>📱 Celulares</h4>
+    <span class="cat-icon">+</span>
+  </div>
+
+  <div class="cat-contenido">
+
+       <!-- SUBCATEGORÍAS -->
+    <div class="subcategorias">
+      <button onclick="filtrarSubcategoria('iphone')">🍎 iPhone</button>
+      <button onclick="filtrarSubcategoria('zte')">📱 Zte</button>
+      <button onclick="filtrarSubcategoria('samsung')">🤖 Samsung</button>
     </div>
-    <div class="cat-contenido">
+      
+    <!-- 🍎 iPhone -->
+    <div class="subcategoria">
+      <h5>🍎 iPhone</h5>
       <div class="galeria">
  <div class="producto-item">
         <img src="images/cell1.jpg"
@@ -350,7 +362,14 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 25,000</span>
-</div>
+  </div>
+ </div>
+</div>  
+
+       <!-- 📱 ZTE -->
+    <div class="subcategoria">
+      <h5>📱 Zte</h5>
+      <div class="galeria">
    <div class="producto-item">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
@@ -372,7 +391,14 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 7,000</span>
+    </div>
+  </div>       
 </div>
+
+        <!-- 🤖 Samsung -->
+    <div class="subcategoria">
+      <h5>🤖 Samsung</h5>
+      <div class="galeria">
     <div class="producto-item">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
@@ -386,12 +412,12 @@ function filtrarCategoria(categoria) {
 </div>      
       </div>
     </div>
-  </div>
 
 <!-- 🎧 ACCESORIOS -->
 <div class="categoria">
-  <div class="cat-header">
+  <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>🎧 Accesorios</h4>
+   <span class="cat-icon">+</span>
   </div>
 
   <div class="cat-contenido">
