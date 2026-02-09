@@ -335,13 +335,11 @@ function filtrarCategoria(categoria) {
       <button onclick="filtrarSubcategoria('iphone')">🍎 iPhone</button>
       <button onclick="filtrarSubcategoria('zte')">📱 Zte</button>
       <button onclick="filtrarSubcategoria('samsung')">🤖 Samsung</button>
+      <button onclick="filtrarSubcategoria('todos')">🔁 Todos</button>
     </div>
       
     <!-- 🍎 iPhone -->
-    <div class="subcategoria">
-      <h5>🍎 iPhone</h5>
-      <div class="galeria">
- <div class="producto-item">
+  <div class="producto-item" data-category="celulares" data-subcategory="iphone">
         <img src="images/cell1.jpg"
         onclick="abrirProducto(
           'images/cell1.jpg',
@@ -352,7 +350,7 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 57,000</span>
 </div>
-  <div class="producto-item">
+      <div class="producto-item">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
           'images/cell6.jpg',
@@ -367,10 +365,7 @@ function filtrarCategoria(categoria) {
 </div>  
 
        <!-- 📱 ZTE -->
-    <div class="subcategoria">
-      <h5>📱 Zte</h5>
-      <div class="galeria">
-   <div class="producto-item">
+ <div class="producto-item" data-category="celulares" data-subcategory="zte">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
           'images/cell7.jpg',
@@ -392,14 +387,9 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 7,000</span>
     </div>
-  </div>       
-</div>
 
         <!-- 🤖 Samsung -->
-    <div class="subcategoria">
-      <h5>🤖 Samsung</h5>
-      <div class="galeria">
-    <div class="producto-item">
+ <div class="producto-item" data-category="celulares" data-subcategory="samsung">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
           'images/cell9.jpg',
@@ -410,8 +400,6 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 9,000</span>
 </div>      
-      </div>
-    </div>
 
 <!-- 🎧 ACCESORIOS -->
 <div class="categoria">
