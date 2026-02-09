@@ -289,20 +289,14 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 
 <script>
 function toggleCategoria(header) {
-  const categoria = header.closest('.categoria');
-  const contenido = categoria.querySelector('.cat-contenido');
+  const categoria = header.closest('.categoria-menu');
+  if (!categoria) return;
+
+  categoria.classList.toggle('activa');
   const icono = header.querySelector('.cat-icon');
-
-  const activa = categoria.classList.toggle('activa');
-
-  if (activa) {
-    contenido.style.maxHeight = contenido.scrollHeight + 'px';
-    icono.textContent = '−';
-  } else {
-    contenido.style.maxHeight = null;
-    icono.textContent = '+';
-  }
+  icono.textContent = categoria.classList.contains('activa') ? '−' : '+';
 }
+
 </script>
 
 
@@ -320,7 +314,7 @@ function filtrarCategoria(categoria) {
   <h3 class="menu-titulo">🛒 Productos</h3>
 
 <!-- 📱 CELULARES -->
-<div class="categoria">
+<div class="categoria-menu">
   <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>📱 Celulares</h4>
     <span class="cat-icon">+</span>
@@ -400,7 +394,7 @@ function filtrarCategoria(categoria) {
       
 
 <!-- 🎧 ACCESORIOS -->
-<div class="categoria">
+<div class="categoria-menu">
   <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>🎧 Accesorios</h4>
    <span class="cat-icon">+</span>
@@ -477,7 +471,7 @@ function filtrarCategoria(categoria) {
 
 
   <!-- 📟 TABLETS -->
-<div class="categoria">
+<div class="categoria-menu">
   <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>📟 Tablets</h4>
     <span class="cat-icon">+</span>
@@ -523,29 +517,6 @@ function filtrarCategoria(categoria) {
 </div>
     
 <main>
-
-<script>
-function toggleMenuProductos() {
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-menu");
-
-  if (!menu || !overlay || !icono) {
-    console.error("Falta menu, overlay o icono");
-    return;
-  }
-
-  const activo = menu.classList.toggle("activo");
-
-  overlay.classList.toggle("activo", activo);
-  document.body.classList.toggle("no-scroll", activo);
-  document.body.classList.toggle("modal-abierto", activo);
-
-  // Icono
-  icono.textContent = activo ? "✕" : "☰";
-}
-</script>
-
 
     <script>
   const header = document.querySelector('.header-principal');
@@ -606,6 +577,30 @@ function filtrarSubcategoria(sub) {
 
    </div>
 
-    <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
+    <div id="overlay-productos" class="overlay-productos"
+        onclick="toggleMenuProductos()"></div>
+
+    <script>
+function toggleMenuProductos() {
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+  const icono = document.getElementById("icono-menu");
+
+  if (!menu || !overlay || !icono) {
+    console.error("Falta menu, overlay o icono");
+    return;
+  }
+
+  const activo = menu.classList.toggle("activo");
+
+  overlay.classList.toggle("activo", activo);
+  document.body.classList.toggle("no-scroll", activo);
+  document.body.classList.toggle("modal-abierto", activo);
+
+  // Icono
+  icono.textContent = activo ? "✕" : "☰";
+}
+</script>
+
   </body>
 </html>
