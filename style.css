@@ -218,8 +218,8 @@ section {
 }
 
 footer {
-    background: rgba(0,0,0,0.8);
-    color: white;
+    background-color: #000; /* negro */
+    color: #fff;
     text-align: center;
     padding: 15px;
 }
