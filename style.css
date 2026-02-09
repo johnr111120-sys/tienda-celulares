@@ -603,7 +603,7 @@ font-size: 28px !important;
 /* =====================
    MENÚ PRODUCTOS (SUPERIOR)
 ===================== */
-.menu-productos {
+#menu-productos {
     position: fixed !important; /* Cambiado de sticky a fixed */
     top: 62% !important;
     left: 50% !important;
