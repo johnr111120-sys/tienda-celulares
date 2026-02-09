@@ -1031,3 +1031,19 @@ iframe {
   width: 100%;
   display: block;
 }
+
+.subcategorias {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.subcategorias button {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: none;
+  background: #111;
+  color: #fff;
+  white-space: nowrap;
+}
