@@ -1005,3 +1005,8 @@ section:first-of-type {
 #sobre-nosotros {
     margin-top: 60px !important;
 }
+
+footer {
+  background-color: #000; /* color nuevo */
+  color: #fff;            /* texto blanco */
+}
