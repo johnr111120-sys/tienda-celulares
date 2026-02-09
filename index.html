@@ -289,78 +289,30 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 
 <script>
 function toggleCategoria(header) {
-  const categoriaActual = header.closest('.categoria, .categoria-menu');
-  if (!categoriaActual) return;
+  const categoria = header.closest('.categoria');
+  const contenido = categoria.querySelector('.cat-contenido');
+  const icono = header.querySelector('.cat-icon');
 
-  const esSubcategoria = categoriaActual.classList.contains('subcategoria');
+  const activa = categoria.classList.toggle('activa');
 
-  /* ==========================
-     1️⃣ SUBCATEGORÍAS
-  ========================== */
-  if (esSubcategoria) {
-    const contenedorSub = categoriaActual.parentElement;
-
-    // Cerrar otras subcategorías hermanas
-    contenedorSub.querySelectorAll('.subcategoria.activa')
-      .forEach(sub => {
-        if (sub !== categoriaActual) sub.classList.remove('activa');
-      });
-
-    categoriaActual.classList.toggle('activa');
-    return;
-  }
-
-  /* ==========================
-     2️⃣ CATEGORÍAS PRINCIPALES
-  ========================== */
-  const contenedorPrincipal = categoriaActual.parentElement;
-  const estabaActiva = categoriaActual.classList.contains('activa');
-
-  // Cerrar otras categorías principales
-  contenedorPrincipal
-    .querySelectorAll(':scope > .categoria.activa, :scope > .categoria-menu.activa')
-    .forEach(cat => {
-      if (cat !== categoriaActual) {
-        cat.classList.remove('activa');
-
-        // 🔴 Cerrar TODAS las subcategorías internas
-        cat.querySelectorAll('.subcategoria.activa')
-          .forEach(sub => sub.classList.remove('activa'));
-      }
-    });
-
-  // Toggle actual
-  categoriaActual.classList.toggle('activa', !estabaActiva);
-
-  // 🔴 Si se cierra la categoría principal → cerrar subcategorías
-  if (estabaActiva) {
-    categoriaActual
-      .querySelectorAll('.subcategoria.activa')
-      .forEach(sub => sub.classList.remove('activa'));
+  if (activa) {
+    contenido.style.maxHeight = contenido.scrollHeight + 'px';
+    icono.textContent = '−';
+  } else {
+    contenido.style.maxHeight = null;
+    icono.textContent = '+';
   }
 }
 </script>
 
+
       <script>
-function toggleCategoria(categoria) {
-  const todas = document.querySelectorAll(".categoria");
-  const activa = categoria.classList.contains("activo");
-
-  // Cerrar todas
-  todas.forEach(cat => {
-    cat.classList.remove("activo");
-
-    // cerrar subcategorías
-    const subs = cat.querySelectorAll(".subcategoria");
-    subs.forEach(sub => sub.classList.remove("activo"));
+function filtrarCategoria(categoria) {
+  document.querySelectorAll('.producto-item').forEach(item => {
+    item.style.display =
+      item.dataset.category === categoria ? 'block' : 'none';
   });
-
-  // Abrir solo si no estaba activa
-  if (!activa) {
-    categoria.classList.add("activo");
-  }
 }
-
 </script>
 
 
@@ -368,8 +320,8 @@ function toggleCategoria(categoria) {
   <h3 class="menu-titulo">🛒 Productos</h3>
 
 <!-- 📱 CELULARES -->
-<div class="categoria-menu">
-  <div class="categoria" onclick="toggleCategoria(this)">
+<div class="categoria">
+  <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>📱 Celulares</h4>
     <span class="cat-icon">+</span>
   </div>
@@ -401,8 +353,8 @@ function toggleCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 25,000</span>
   </div>
- </div>
-</div>    
+  </div>
+    
   <!--  📱 Zte -->
     <div class="subcategoria">
       <h5>📱 Zte</h5>
@@ -448,8 +400,8 @@ function toggleCategoria(categoria) {
       
 
 <!-- 🎧 ACCESORIOS -->
-<div class="categoria-menu">
-  <div class="categoria" onclick="toggleCategoria(this)">
+<div class="categoria">
+  <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>🎧 Accesorios</h4>
    <span class="cat-icon">+</span>
   </div>
@@ -525,8 +477,8 @@ function toggleCategoria(categoria) {
 
 
   <!-- 📟 TABLETS -->
-<div class="categoria-menu">
- <div class="categoria" onclick="toggleCategoria(this)">
+<div class="categoria">
+  <div class="cat-header" onclick="toggleCategoria(this)">
     <h4>📟 Tablets</h4>
     <span class="cat-icon">+</span>
   </div>
@@ -571,6 +523,29 @@ function toggleCategoria(categoria) {
 </div>
     
 <main>
+
+<script>
+function toggleMenuProductos() {
+  const menu = document.getElementById("menu-productos");
+  const overlay = document.getElementById("overlay-productos");
+  const icono = document.getElementById("icono-menu");
+
+  if (!menu || !overlay || !icono) {
+    console.error("Falta menu, overlay o icono");
+    return;
+  }
+
+  const activo = menu.classList.toggle("activo");
+
+  overlay.classList.toggle("activo", activo);
+  document.body.classList.toggle("no-scroll", activo);
+  document.body.classList.toggle("modal-abierto", activo);
+
+  // Icono
+  icono.textContent = activo ? "✕" : "☰";
+}
+</script>
+
 
     <script>
   const header = document.querySelector('.header-principal');
@@ -631,30 +606,6 @@ function filtrarSubcategoria(sub) {
 
    </div>
 
-    <div id="overlay-productos" class="overlay-productos"
-        onclick="toggleMenuProductos()"></div>
-
-    <script>
-function toggleMenuProductos() {
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-menu");
-
-  if (!menu || !overlay || !icono) {
-    console.error("Falta menu, overlay o icono");
-    return;
-  }
-
-  const activo = menu.classList.toggle("activo");
-
-  overlay.classList.toggle("activo", activo);
-  document.body.classList.toggle("no-scroll", activo);
-  document.body.classList.toggle("modal-abierto", activo);
-
-  // Icono
-  icono.textContent = activo ? "✕" : "☰";
-}
-</script>
-
+    <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
   </body>
 </html>
