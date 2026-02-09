@@ -342,12 +342,25 @@ function toggleCategoria(header) {
 </script>
 
       <script>
-function filtrarCategoria(categoria) {
-  document.querySelectorAll('.producto-item').forEach(item => {
-    item.style.display =
-      item.dataset.category === categoria ? 'block' : 'none';
+function toggleCategoria(categoria) {
+  const todas = document.querySelectorAll(".categoria");
+  const activa = categoria.classList.contains("activo");
+
+  // Cerrar todas
+  todas.forEach(cat => {
+    cat.classList.remove("activo");
+
+    // cerrar subcategorías
+    const subs = cat.querySelectorAll(".subcategoria");
+    subs.forEach(sub => sub.classList.remove("activo"));
   });
+
+  // Abrir solo si no estaba activa
+  if (!activa) {
+    categoria.classList.add("activo");
+  }
 }
+
 </script>
 
 
@@ -356,7 +369,7 @@ function filtrarCategoria(categoria) {
 
 <!-- 📱 CELULARES -->
 <div class="categoria-menu">
-  <div class="cat-header" onclick="toggleCategoria(this)">
+  <div class="categoria" onclick="toggleCategoria(this)">
     <h4>📱 Celulares</h4>
     <span class="cat-icon">+</span>
   </div>
@@ -436,7 +449,7 @@ function filtrarCategoria(categoria) {
 
 <!-- 🎧 ACCESORIOS -->
 <div class="categoria-menu">
-  <div class="cat-header" onclick="toggleCategoria(this)">
+  <div class="categoria" onclick="toggleCategoria(this)">
     <h4>🎧 Accesorios</h4>
    <span class="cat-icon">+</span>
   </div>
@@ -513,7 +526,7 @@ function filtrarCategoria(categoria) {
 
   <!-- 📟 TABLETS -->
 <div class="categoria-menu">
-  <div class="cat-header" onclick="toggleCategoria(this)">
+ <div class="categoria" onclick="toggleCategoria(this)">
     <h4>📟 Tablets</h4>
     <span class="cat-icon">+</span>
   </div>
