@@ -288,30 +288,23 @@ activarSwipe(productoModalSwipe, cerrarProducto);
 </script>
 
 <script>
-function toggleCategoria(header) {
-  const categoria = header.closest('.categoria');
+function toggleCategoria(header){
+  const categoria = header.parentElement;
   const contenido = categoria.querySelector('.cat-contenido');
   const icono = header.querySelector('.cat-icon');
+  const abierta = categoria.classList.contains('activa');
 
-  const activa = categoria.classList.toggle('activa');
-
-  if (activa) {
-    contenido.style.maxHeight = contenido.scrollHeight + 'px';
-    icono.textContent = '−';
-  } else {
-    contenido.style.maxHeight = null;
-    icono.textContent = '+';
-  }
-}
-</script>
-
-
-      <script>
-function filtrarCategoria(categoria) {
-  document.querySelectorAll('.producto-item').forEach(item => {
-    item.style.display =
-      item.dataset.category === categoria ? 'block' : 'none';
+  // cerrar TODAS
+  document.querySelectorAll('.categoria').forEach(cat => {
+    cat.classList.remove('activa');
+    cat.querySelector('.cat-icon').textContent = '+';
   });
+
+  // si estaba cerrada, abrir SOLO esta
+  if(!abierta){
+    categoria.classList.add('activa');
+    icono.textContent = '−';
+  }
 }
 </script>
 
@@ -319,19 +312,15 @@ function filtrarCategoria(categoria) {
 <div id="menu-productos" class="menu-productos">
   <h3 class="menu-titulo">🛒 Productos</h3>
 
-<!-- 📱 CELULARES -->
-<div class="categoria">
-  <div class="cat-header" onclick="toggleCategoria(this)">
-    <h4>📱 Celulares</h4>
-    <span class="cat-icon">+</span>
-  </div>
-
-  <div class="cat-contenido">
-      
-   <!-- 🍎 IPhone -->
-    <div class="subcategoria">
-      <h5>🍎 IPhone</h5>
+  <!-- 📱 CELULARES -->
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>📱 Celulares</h4>
+      <span class="cat-icon">+</span>
+    </div>
+    <div class="cat-contenido">
       <div class="galeria">
+ <div class="producto-item">
         <img src="images/cell1.jpg"
         onclick="abrirProducto(
           'images/cell1.jpg',
@@ -342,7 +331,7 @@ function filtrarCategoria(categoria) {
         )">
 <span class="producto-precio">RD$ 57,000</span>
 </div>
-      <div class="galeria">
+  <div class="producto-item">
         <img src="images/cell6.jpg"
         onclick="abrirProducto(
           'images/cell6.jpg',
@@ -352,13 +341,8 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 25,000</span>
-  </div>
-  </div>
-    
-  <!--  📱 Zte -->
-    <div class="subcategoria">
-      <h5>📱 Zte</h5>
-      <div class="galeria">
+</div>
+   <div class="producto-item">
         <img src="images/cell7.jpg"
         onclick="abrirProducto(
           'images/cell7.jpg',
@@ -368,8 +352,8 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 8,000</span>
-</div>  
-      <div class="galeria">
+</div>
+    <div class="producto-item">
         <img src="images/cell8.jpg"
         onclick="abrirProducto(
           'images/cell8.jpg',
@@ -379,13 +363,8 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 7,000</span>
-    </div>
-   </div>       
-
-       <!-- 🤖 Samsung -->
-    <div class="subcategoria">
-      <h5>🤖 Samsung</h5>
-      <div class="galeria">
+</div>
+    <div class="producto-item">
         <img src="images/cell9.jpg"
         onclick="abrirProducto(
           'images/cell9.jpg',
@@ -395,99 +374,77 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 9,000</span>
- </div>  
-</div>  
-      
-
-<!-- 🎧 ACCESORIOS -->
-<div class="categoria">
-  <div class="cat-header" onclick="toggleCategoria(this)">
-    <h4>🎧 Accesorios</h4>
-   <span class="cat-icon">+</span>
+</div>      
+      </div>
+    </div>
   </div>
 
-  <div class="cat-contenido">
-
-   <!-- 🛡️ Fundas -->
-    <div class="subcategoria">
-      <h5>🛡️ Fundas</h5>
+  <!-- 🎧 ACCESORIOS -->
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>🎧 Accesorios</h4>
+      <span class="cat-icon">+</span>
+    </div>
+    <div class="cat-contenido">
       <div class="galeria">
+ <div class="producto-item">       
         <img src="images/accesorios4.jpg"
-          onclick="abrirProducto(
-            'images/accesorios4.jpg',
-            'Cover 360 Iphone 11 Pro Max',
-            'Cover 360 transparente con magsafe · Sellado',
-            'RD$ 200',
-            'Hola, quiero info de este producto'
-          )">
-        <span class="producto-precio">RD$ 200</span>
-        </div>
-    </div>
-
-    <!-- 🎧 Audio -->
-    <div class="subcategoria">
-      <h5>🎧 Audio</h5>
-      <div class="galeria">
-        <img src="images/accesorios13.jpg"
-          onclick="abrirProducto(
-            'images/accesorios13.jpg',
-            'AirPods 2da generación',
-            'Blancos · Originales · Sellados',
-            'RD$ 3,500',
-            'Hola, quiero info de este producto'
-          )">
-        <span class="producto-precio">RD$ 3,500</span>
-         </div>
-    </div>
-
-     <!-- ⌚ Smartwatch -->
-    <div class="subcategoria">
-      <h5>⌚ Smartwatch</h5>
-      <div class="galeria">
-        <img src="images/accesorios14.jpg"
-          onclick="abrirProducto(
-            'images/accesorios14.jpg',
-            'Apple Watch Serie 3',
-            'Negro · 38mm · GPS',
-            'RD$ 6,000',
-            'Hola, quiero info de este producto'
-          )">
-        <span class="producto-precio">RD$ 6,000</span>
-      </div>
-    </div>
-
-    <!-- 💾 Memorias USB -->
-    <div class="subcategoria">
-      <h5>💾 Memorias USB</h5>
-      <div class="galeria">
-        <img src="images/accesorios1.jpg"
-          onclick="abrirProducto(
-            'images/accesorios1.jpg',
-            'Pendrive VIDVIE',
-            'USB 3.2 · 128GB · Tipo C',
-            'RD$ 200',
-            'Hola, quiero info de este producto'
-          )">
-        <span class="producto-precio">RD$ 200</span>
-      </div>
-    </div>
-      
-  </div>
+        onclick="abrirProducto(
+          'images/accesorios4.jpg',
+          'Cover 360 Iphone 11 Pro Max',
+          'Cover 360 transparente con magsafe · Sellado',
+          'RD$ 200',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 200</span>
 </div>
-
+            
+  <div class="producto-item">
+        <img src="images/accesorios13.jpg"
+        onclick="abrirProducto(
+          'images/accesorios13.jpg',
+          'AirPods 2da generación',
+          'Blancos · Originales · Sellados',
+          'RD$ 3,500',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 3,500</span>
+</div>
+            
+  <div class="producto-item">
+        <img src="images/accesorios14.jpg"
+        onclick="abrirProducto(
+          'images/accesorios14.jpg',
+          'Apple Watch Serie 3',
+          'Negro · 38mm · GPS',
+          'RD$ 6,000',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 6,000</span>
+</div>
+            
+  <div class="producto-item">
+        <img src="images/accesorios1.jpg"
+        onclick="abrirProducto(
+          'images/accesorios1.jpg',
+          'Pendrive VIDVIE',
+          'USB 3.2 · 128GB · Tipo C',
+          'RD$ 200',
+          'Hola, quiero info de este producto'
+        )">
+<span class="producto-precio">RD$ 200</span>
+</div>
+      </div>
+    </div>
+  </div>
 
   <!-- 📟 TABLETS -->
-<div class="categoria">
-  <div class="cat-header" onclick="toggleCategoria(this)">
-    <h4>📟 Tablets</h4>
-    <span class="cat-icon">+</span>
-  </div>
-
-  <div class="cat-contenido">
-
-    <!-- 📟 Tablets Android -->
-    <div class="subcategoria">
-      <h5>📟 Tablets Android</h5>
+  <div class="categoria">
+    <div class="cat-header" onclick="toggleCategoria(this)">
+      <h4>📟 Tablets</h4>
+      <span class="cat-icon">+</span>
+    </div>
+    <div class="cat-contenido">
       <div class="galeria">
 <div class="producto-item">
         <img src="images/tablet1.jpg"
@@ -499,14 +456,9 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 6,000</span>
-  </div>
- </div>
 </div>
             
-  <!-- 📟 Tablets Ipad -->
-    <div class="subcategoria">
-      <h5>📟 Tablets Ipad</h5>
-      <div class="galeria">
+<div class="producto-item">
         <img src="images/tablet2.jpg"
         onclick="abrirProducto(
           'images/tablet2.jpg',
@@ -516,16 +468,19 @@ function filtrarCategoria(categoria) {
           'Hola, quiero info de este producto'
         )">
 <span class="producto-precio">RD$ 8,000</span>
- </div>
 </div>
+
       </div>
     </div>
+  </div>
+ </div>
+</div>
 </div>
     
 <main>
 
 <script>
-function toggleMenuProductos() {
+function toggleMenuProductos(){
   const menu = document.getElementById("menu-productos");
   const overlay = document.getElementById("overlay-productos");
   const icono = document.getElementById("icono-menu");
@@ -538,14 +493,14 @@ function toggleMenuProductos() {
   const activo = menu.classList.toggle("activo");
 
   overlay.classList.toggle("activo", activo);
+
   document.body.classList.toggle("no-scroll", activo);
   document.body.classList.toggle("modal-abierto", activo);
 
-  // Icono
+  // Cambiar icono SIN romper animación
   icono.textContent = activo ? "✕" : "☰";
 }
 </script>
-
 
     <script>
   const header = document.querySelector('.header-principal');
@@ -584,24 +539,6 @@ window.addEventListener("scroll", () => {
   }
 });
 </script>
-
-    <script>
-function filtrarSubcategoria(sub) {
-  document.querySelectorAll(
-    '.producto-item[data-category="celulares"]'
-      '.producto-item[data-category="accesorios"]'
-    '.producto-item[data-category="tablets"]'
-  ).forEach(item => {
-    if (sub === 'todos') {
-      item.style.display = 'block';
-    } else {
-      item.style.display =
-        item.dataset.subcategory === sub ? 'block' : 'none';
-    }
-  });
-}
-</script>
-
  </main>
 
    </div>
