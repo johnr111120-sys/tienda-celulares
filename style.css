@@ -1031,23 +1031,3 @@ iframe {
   width: 100%;
   display: block;
 }
-
-.subcategorias {
-  display: none;
-  flex-direction: column;
-  background: #111;
-  padding-left: 10px;
-}
-
-.subcategorias button {
-  background: none;
-  border: none;
-  color: #fff;
-  text-align: left;
-  padding: 8px 12px;
-  font-size: 14px;
-}
-
-.categoria.activa .subcategorias {
-  display: flex;
-}
