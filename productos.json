@@ -1,1 +1,45 @@
+{
+ 
+  "iphone": [
+    { "nombre": "Iphone 14 Pro Max", "precio": "$200" },
+    { "nombre": "Iphone 17 Pro Max", "precio": "$500" }
+  ],
+  "samsung": [
+    { "nombre": "Samsung A15", "precio": "$120" },
+    { "nombre": "Samsung S22", "precio": "$520" }
+  ],
+  "zte": [
+    { "nombre": "ZTE Blade", "precio": "$95" }
+  ],
+  "covers": [
+    { "nombre": "Funda Silicona", "precio": "$5" },
+    { "nombre": "Funda Reforzada", "precio": "$8" }
+  ]
+ "audifonos": [
+    { "nombre": "Aerpods 2da generacion", "precio": "$120" },
+    { "nombre": "Aerpods Pro", "precio": "$520" }
+  ],
+  "smartwatch": [
+    { "nombre": "Applewatch 2da generacion", "precio": "$120" },
+    { "nombre": "Applewatch 4ta generacion", "precio": "$520" }
+  ],
+ "usb": [
+    { "nombre": "Pendrive USB 64GB", "precio": "$120" },
+    { "nombre": "Pendrive USB 128GB", "precio": "$520" }
+  ],
+ "ipad": [
+    { "nombre": "Ipad 4ta generacion", "precio": "$120" },
+    { "nombre": "Ipad Air 5ta generacion", "precio": "$520" }
+  ],
+   "android": [
+    { "nombre": "Sansumg Tab 2ta generacion", "precio": "$120" },
+    { "nombre": "SKY Device T8Plus", "precio": "$520" }
+  ],
+
+
+
+
+
+  
+}
 
