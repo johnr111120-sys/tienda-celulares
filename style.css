@@ -926,7 +926,7 @@ iframe {
 /* ===== MENU ===== */
 #menu-categorias {
   position: fixed;
-  top: 0;
+  top: 108px;
   left: 0;
   width: 280px;
   height: 100vh;
