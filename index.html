@@ -48,45 +48,40 @@
     </button>
 </div>
 
-<div class="layout">
-  <!-- MENÚ LATERAL -->
-  <aside id="menuCategorias" class="menu-lateral">
-    <h3 class="menu-titulo">Categorías</h3>
+<!-- OVERLAY -->
+<div id="menu-overlay"></div>
 
-    <div class="categoria-menu">
-      <div class="cat-header" onclick="toggleCategoria(this)">
-        <span>Celulares</span>
-        <i class="fi fi-bs-angle-up"></i>
-      </div>
-      <div class="cat-contenido">
-        <a href="#">Iphone</a>
-        <a href="#">Samsung</a>
-        <a href="#">ZTE</a>
-      </div>
-    </div>
+<!-- MENU CATEGORÍAS -->
+<aside id="menu-categorias">
+  <h3>Categorías</h3>
 
-    <div class="categoria-menu">
-      <div class="cat-header" onclick="toggleCategoria(this)">
-        <span>Accesorios</span>
-        <i class="fi fi-bs-angle-up"></i>
-      </div>
-      <div class="cat-contenido">
-        <a href="#">Fundas</a>
-        <a href="#">Audio</a>
-        <a href="#">Smartwatch</a>
-        <a href="#">USB</a>
-      </div>
-    </div>
+  <button class="categoria">
+    Celulares
+    <i class="fi fi-bs-angle-up"></i>
+  </button>
+  <div class="subcategorias">
+    <a href="#">Samsung</a>
+    <a href="#">ZTE</a>
+  </div>
 
-       <div class="categoria-menu">
-      <div class="cat-header" onclick="toggleCategoria(this)">
-        <span>Tablets</span>
+  <button class="categoria">
+    Accesorios
+    <i class="fi fi-bs-angle-up"></i>
+  </button>
+  <div class="subcategorias">
+    <a href="#">Fundas</a>
+    <a href="#">Audio</a>
+    <a href="#">Smartwatch</a>
+    <a href="#">USB</a>
+  </div>
+    
+     <button class="categoria">
+       Tablets
         <i class="fi fi-bs-angle-up"></i>
-      </div>
-      <div class="cat-contenido">
+      </button>
+      <div class="subcategorias">
         <a href="#">Ipad</a>
         <a href="#">Android</a>
-      </div>
     </div>
   </aside>
 
@@ -369,34 +364,47 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
-<script>
-const btnCategoria = document.querySelector(".btn-categoria-rect");
-const menu = document.getElementById("menuCategorias");
-const body = document.body;
+<script>    
+const btnMenu = document.getElementById("icono-menu"); // botón azul
+const menu = document.getElementById("menu-categorias");
+const overlay = document.getElementById("menu-overlay");
 
-btnCategoria.addEventListener("click", () => {
+btnMenu.addEventListener("click", () => {
   menu.classList.toggle("activo");
-  body.classList.toggle("menu-abierto");
+  overlay.classList.toggle("activo");
+  document.body.classList.toggle("menu-abierto");
 });
 
-function toggleCategoria(header){
-  const categoria = header.parentElement;
+// cerrar tocando overlay
+overlay.addEventListener("click", () => {
+  menu.classList.remove("activo");
+  overlay.classList.remove("activo");
+  document.body.classList.remove("menu-abierto");
+});
 
-  document.querySelectorAll(".categoria-menu").forEach(c => {
-    if(c !== categoria) c.classList.remove("activa");
+// acordeón (solo uno abierto)
+document.querySelectorAll(".categoria").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const sub = btn.nextElementSibling;
+    const icon = btn.querySelector("i");
+
+    document.querySelectorAll(".subcategorias").forEach(s => {
+      if (s !== sub) s.style.maxHeight = null;
+    });
+
+    document.querySelectorAll(".categoria i").forEach(i => {
+      if (i !== icon) i.className = "fi fi-bs-angle-up";
+    });
+
+    if (sub.style.maxHeight) {
+      sub.style.maxHeight = null;
+      icon.className = "fi fi-bs-angle-up";
+    } else {
+      sub.style.maxHeight = sub.scrollHeight + "px";
+      icon.className = "fi fi-bs-angle-down";
+    }
   });
-
-  categoria.classList.toggle("activa");
-
-  document.querySelectorAll(".cat-header i").forEach(i => {
-    i.className = "fi fi-bs-angle-up";
-  });
-
-  const icon = header.querySelector("i");
-  if(categoria.classList.contains("activa")){
-    icon.className = "fi fi-bs-angle-down";
-  }
-}
+});
 </script>
 
  </main>
