@@ -110,3 +110,16 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   });
 }
 
+<script>
+document.querySelectorAll(".subcategoria").forEach(item => {
+  item.addEventListener("click", () => {
+    const sub = item.dataset.subcategoria.toLowerCase();
+    navegar(`/productos/${sub}`);
+
+    // cerrar menú
+    document.getElementById("menu-categorias").classList.remove("activo");
+    document.getElementById("menu-overlay").classList.remove("activo");
+    document.body.classList.remove("menu-abierto");
+  });
+});
+</script>
