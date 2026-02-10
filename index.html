@@ -16,7 +16,7 @@
    class="whatsapp" target="_blank">
  💬
 </a>
-<header class="topbar">
+<header class="nav-principal">
     
 <nav class="nav-principal">
    <div class="nav-right">
@@ -38,18 +38,24 @@
 </nav>   
  </header>
 
-<div class="barra-categoria">
-     <button id="btnCategorias">☰ CATEGORÍA</button>
+<div class="barra-herramientas-fija">
+    <button class="btn-categoria-rect fab-productos">
+        <div class="parte-azul">
+            <span id="icono-menu">☰</span>
+            <span>CATEGORÍA</span>
+        </div>
+        <div class="parte-negra"></div>
+    </button>
 </div>
 
 <div class="layout">
   <!-- MENÚ LATERAL -->
- <aside id="menuCategorias" class="menu-categorias">
-    <h3>Categorías</h3>
- <ul>
+  <aside id="menuCategorias" class="menu-lateral">
+    <h3 class="menu-titulo">Categorías</h3>
+
     <div class="categoria-menu">
       <div class="cat-header" onclick="toggleCategoria(this)">
-       <li>Celulares</li>
+        <span>Celulares</span>
         <i class="fi fi-bs-angle-up"></i>
       </div>
       <div class="cat-contenido">
@@ -61,7 +67,7 @@
 
     <div class="categoria-menu">
       <div class="cat-header" onclick="toggleCategoria(this)">
-      <li>Accesorios</li>
+        <span>Accesorios</span>
         <i class="fi fi-bs-angle-up"></i>
       </div>
       <div class="cat-contenido">
@@ -74,7 +80,7 @@
 
        <div class="categoria-menu">
       <div class="cat-header" onclick="toggleCategoria(this)">
-         <li>Tablets</li>
+        <span>Tablets</span>
         <i class="fi fi-bs-angle-up"></i>
       </div>
       <div class="cat-contenido">
@@ -82,10 +88,8 @@
         <a href="#">Android</a>
       </div>
     </div>
-   </ul>   
   </aside>
 
-<main id="contenido" class="contenido">
       
 <header class="header-principal">
     <img src="./images/Logo1Porta.png" class="header-logo">
@@ -153,6 +157,8 @@ al lado de Plaza La Canela.
     </div>
 
 </section>
+
+<main id="contenido" class="contenido">
          
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
@@ -364,16 +370,6 @@ window.addEventListener("scroll", () => {
 </script>
 
 <script>
-const btn = document.getElementById('btnCategorias');
-const menu = document.getElementById('menuCategorias');
-
-btn.addEventListener('click', () => {
-  menu.classList.toggle('activo');
-});
-</script>
-
-    
-<script>
 const btnCategoria = document.querySelector(".btn-categoria-rect");
 const menu = document.getElementById("menuCategorias");
 const body = document.body;
@@ -403,7 +399,8 @@ function toggleCategoria(header){
 }
 </script>
 
-    </main>
-   </div>   
+ </main>
+   </div>
+    
   </body>
 </html>
