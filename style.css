@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+:root {
+  --menu-width: 280px;
+  --top-total: 110px; /* header + barra categoría */
+}
+
 html, body {
    overflow-x: hidden !important; /* Evita el scroll lateral al hacer zoom */
    width: 100% !important;
@@ -217,12 +222,6 @@ section {
     border-radius: 12px;
 }
 
-footer {
-    background-color: #000; /* negro */
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-}
 .app{
   position: relative;
 }
@@ -908,36 +907,10 @@ iframe {
 }
 
 /* ===== LAYOUT BASE ===== */
-.layout{
+.layout {
   display: flex;
   width: 100%;
-  transition: transform .35s ease;
-}
-
-/* ===== MENÚ LATERAL ===== */
-.menu-lateral{
-  position: fixed;
-  top: 108px; /* nav (60) + barra categoría (48) */
-  left: 0;
-  width: 0;
-  height: calc(100vh - 108px);
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition: width .35s ease;
-  z-index: 9999;
-}
-
-/* ABIERTO */
-.menu-lateral.activo{
-  width: 280px;
-}
-
-/* ===== CONTENIDO ===== */
-.contenido{
-  width: 100%;
-  transition: margin-left .35s ease;
+  min-height: calc(100vh - var(--top-total));
 }
 
 /* CUANDO EL MENÚ ESTÁ ABIERTO */
@@ -979,4 +952,48 @@ iframe {
   color: #fff;
   text-decoration: none;
   font-size: 14px;
+}
+
+@media (min-width: 1024px) {
+  .menu-categorias {
+    position: sticky;
+    top: var(--top-total);
+    width: var(--menu-width);
+    height: calc(100vh - var(--top-total));
+    background: #0b0b0b;
+    color: #fff;
+    transform: none !important;
+  }
+
+  .contenido {
+    flex: 1;
+    padding: 20px;
+  }
+
+  #btnCategorias {
+    display: none; /* botón oculto en desktop */
+  }
+}
+
+@media (max-width: 1023px) {
+  .menu-categorias {
+    position: fixed;
+    top: var(--top-total);
+    left: 0;
+    width: var(--menu-width);
+    height: calc(100vh - var(--top-total));
+    background: #0b0b0b;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .menu-categorias.activo {
+    transform: translateX(0);
+  }
+
+  .contenido {
+    width: 100%;
+    padding: 15px;
+  }
 }
