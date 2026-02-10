@@ -4,8 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>Mi Negocio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Mi Tienda</title>
+    
+    <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css">
 </head>
 
 <body class="inicio">
@@ -82,10 +87,15 @@
     </div>
   </aside>
 
-<main id="contenido"> 
+<!-- 🔹 OVERLAY -->
+  <div id="overlay"></div>
+      
+<!-- 🔹 CONTENIDO PRINCIPAL (SOLO UNO) -->
+  <main id="contenido">
 
 <h2 id="titulo-categoria">Productos</h2>
-    
+
+<!-- Aquí el router SPA renderiza -->
 <section id="productos" class="productos-grid"></section>
       
 <section id="sobre-nosotros" style="margin-top: 50px;">
@@ -203,54 +213,6 @@ referrerpolicy="no-referrer-when-downgrade">
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
 
-<script>window.addEventListener("popstate", router);</script>
-
-<script>
-function capitalizar(texto) {
-  return texto.charAt(0).toUpperCase() + texto.slice(1);
-}
-</script>
-    
-<script>
-function router() {
-  const path = window.location.pathname;
-
-  // /productos/iphone
-  if (path.startsWith("/productos/")) {
-    const subcategoria = path.split("/")[2];
-    mostrarProductosPorSubcategoria(
-      capitalizar(subcategoria)
-    );
-  }
-}
-</script>
-    
-  <script>
-const imgModal = document.getElementById("img-modal");
-const imgModalSrc = document.getElementById("img-modal-src");
-
-function abrirImgModal(src){
-  imgModalSrc.src = src;
-  imgModal.style.display = "flex";
-  imgModal.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
-  document.body.classList.add("modal-abierto");
-}
-
-function cerrarImgModal(){
-  imgModal.style.display = "none";
-  imgModalSrc.src = "";
-  imgModal.setAttribute("aria-hidden","true");
-  document.body.style.overflow = "";
-  document.body.classList.remove("modal-abierto");
-}
-
-imgModal.addEventListener("click", e=>{
-  if(e.target === imgModal) cerrarImgModal();
-});
-</script>
-
-
     
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
 <div id="modal-producto" class="mp-overlay">
@@ -305,6 +267,52 @@ modalProducto.addEventListener("click", e => {
 });
 </script>
 
+<script>window.addEventListener("popstate", router);</script>
+
+<script>
+function capitalizar(texto) {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+</script>
+    
+<script>
+function router() {
+  const path = window.location.pathname;
+
+  // /productos/iphone
+  if (path.startsWith("/productos/")) {
+    const subcategoria = path.split("/")[2];
+    mostrarProductosPorSubcategoria(
+      capitalizar(subcategoria)
+    );
+  }
+}
+</script>
+    
+  <script>
+const imgModal = document.getElementById("img-modal");
+const imgModalSrc = document.getElementById("img-modal-src");
+
+function abrirImgModal(src){
+  imgModalSrc.src = src;
+  imgModal.style.display = "flex";
+  imgModal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  document.body.classList.add("modal-abierto");
+}
+
+function cerrarImgModal(){
+  imgModal.style.display = "none";
+  imgModalSrc.src = "";
+  imgModal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+  document.body.classList.remove("modal-abierto");
+}
+
+imgModal.addEventListener("click", e=>{
+  if(e.target === imgModal) cerrarImgModal();
+});
+</script>
 
     <script>
 /* =========================
