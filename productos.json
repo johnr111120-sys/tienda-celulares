@@ -13,8 +13,8 @@
   "covers": [
     { "nombre": "Funda Silicona", "precio": "$5" },
     { "nombre": "Funda Reforzada", "precio": "$8" }
-  ]
- "audifonos": [
+  ],
+  "audifonos": [
     { "nombre": "Aerpods 2da generacion", "precio": "$120" },
     { "nombre": "Aerpods Pro", "precio": "$520" }
   ],
@@ -22,23 +22,16 @@
     { "nombre": "Applewatch 2da generacion", "precio": "$120" },
     { "nombre": "Applewatch 4ta generacion", "precio": "$520" }
   ],
- "usb": [
+  "usb": [
     { "nombre": "Pendrive USB 64GB", "precio": "$120" },
     { "nombre": "Pendrive USB 128GB", "precio": "$520" }
   ],
- "ipad": [
+  "ipad": [
     { "nombre": "Ipad 4ta generacion", "precio": "$120" },
     { "nombre": "Ipad Air 5ta generacion", "precio": "$520" }
   ],
-   "android": [
-    { "nombre": "Sansumg Tab 2ta generacion", "precio": "$120" },
+  "android": [
+    { "nombre": "Samsung Tab 2da generacion", "precio": "$120" },
     { "nombre": "SKY Device T8Plus", "precio": "$520" }
-  ],
-
-
-
-
-
-  
+  ]
 }
-
