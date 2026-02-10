@@ -425,14 +425,13 @@ fetch("productos.json")
   })
   .catch(err => console.error("Error JSON", err));
 
-    // cerrar menú
-    document.getElementById("menu-categorias").classList.remove("activo");
-    document.getElementById("menu-overlay").classList.remove("activo");
-    document.body.classList.remove("menu-abierto");
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    const subcategoria = sub.dataset.subcategoria;
+    mostrarProductosPorSubcategoria(subcategoria);
   });
 });
 
-/* 3️⃣ Mostrar productos */
 function mostrarProductosPorSubcategoria(subcategoria) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -446,32 +445,28 @@ function mostrarProductosPorSubcategoria(subcategoria) {
     return;
   }
 
-filtrados.forEach(p => {
-  const div = document.createElement("div");
-  div.className = "producto";
+  filtrados.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <h3>${p.nombre}</h3>
+      <p>$${p.precio}</p>
+    `;
 
-  div.innerHTML = `
-    <img src="${p.imagen}" alt="${p.nombre}">
-    <h3>${p.nombre}</h3>
-    <p>$${p.precio}</p>
-  `;
+    div.addEventListener("click", () => {
+      abrirProducto(
+        p.imagen,
+        p.nombre,
+        `Producto ${p.subcategoria}`,
+        `$${p.precio}`,
+        `Hola, quiero información sobre ${p.nombre}`
+      );
+    });
 
-  // 👉 CLICK = ABRIR MODAL
-  div.addEventListener("click", () => {
-      menu.classList.remove("activo");
-      overlay.classList.remove("activo");
-
-    abrirProducto(
-      p.imagen,
-      p.nombre,
-      `Producto de categoría ${p.categoria}`,
-      `$${p.precio}`,
-      `Hola, quiero información sobre ${p.nombre}`
-    );
+    contenedor.appendChild(div);
   });
-
-  contenedor.appendChild(div);
-});
+}
 
 </script>
     
