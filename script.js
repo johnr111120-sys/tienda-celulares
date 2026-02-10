@@ -1,71 +1,112 @@
 
-console.log("script.js cargado correctamente ✅");
-
-// ==========================
-// ELEMENTOS PRINCIPALES
-// ==========================
-const menu = document.getElementById("menu-lateral");
-const btnMenu = document.getElementById("btn-menu");
-const overlay = document.getElementById("overlay");
-const contenedorProductos = document.getElementById("productos");
-
-// ==========================
-// MENÚ OVERLAY
-// ==========================
-btnMenu.addEventListener("click", () => {
-  menu.classList.add("abierto");
-  overlay.classList.add("activo");
-  document.body.style.overflow = "hidden";
-});
-
-overlay.addEventListener("click", cerrarMenu);
-
-function cerrarMenu() {
-  menu.classList.remove("abierto");
-  overlay.classList.remove("activo");
-  document.body.style.overflow = "";
+function capitalizar(texto) {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
-// ==========================
-// ROUTER SPA BÁSICO
-// ==========================
-function navegar(url) {
-  history.pushState({}, "", url);
-  cargarVista(url);
-  cerrarMenu();
-}
+function router() {
+  const path = window.location.pathname;
 
-// cuando el usuario usa atrás / adelante
-window.addEventListener("popstate", () => {
-  cargarVista(location.pathname);
-});
-
-// ==========================
-// CARGA DE VISTAS
-// ==========================
-function cargarVista(ruta) {
-  console.log("Navegando a:", ruta);
-
-  if (ruta.startsWith("/productos/")) {
-    const categoria = ruta.split("/").pop();
-    cargarProductos(categoria);
-  } else {
-    contenedorProductos.innerHTML = "<h2>Bienvenido</h2>";
+  // /productos/iphone
+  if (path.startsWith("/productos/")) {
+    const subcategoria = path.split("/")[2];
+    mostrarProductosPorSubcategoria(
+      capitalizar(subcategoria)
+    );
   }
 }
 
-// ==========================
-// PRODUCTOS (placeholder)
-// ==========================
-function cargarProductos(categoria) {
-  contenedorProductos.innerHTML = `
-    <h2>${categoria.toUpperCase()}</h2>
-    <p>Aquí se cargarán los productos desde JSON</p>
-  `;
+window.addEventListener("popstate", router);
+
+function navegar(url) {
+  history.pushState({}, "", url);
+  router();
 }
 
-// ==========================
-// CARGA INICIAL
-// ==========================
-cargarVista(location.pathname);
+const imgModal = document.getElementById("img-modal");
+const imgModalSrc = document.getElementById("img-modal-src");
+
+function abrirImgModal(src){
+  imgModalSrc.src = src;
+  imgModal.style.display = "flex";
+  document.body.classList.add("modal-abierto");
+}
+
+function cerrarImgModal(){
+  imgModal.style.display = "none";
+  imgModalSrc.src = "";
+  document.body.classList.remove("modal-abierto");
+}
+
+imgModal?.addEventListener("click", e => {
+  if(e.target === imgModal) cerrarImgModal();
+});
+
+const modalProducto = document.getElementById("modal-producto");
+
+function abrirProducto(img, titulo, desc, precio, mensaje){
+  document.getElementById("mp-img").src = img;
+  document.getElementById("mp-titulo").textContent = titulo;
+  document.getElementById("mp-desc").textContent = desc;
+  document.getElementById("mp-precio").textContent = precio;
+
+  document.getElementById("mp-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+
+  modalProducto.classList.add("activo");
+  document.body.classList.add("modal-abierto");
+}
+
+function cerrarProducto(){
+  modalProducto.classList.remove("activo");
+  document.body.classList.remove("modal-abierto");
+}
+
+modalProducto?.addEventListener("click", e => {
+  if (e.target === modalProducto) cerrarProducto();
+});
+
+let productos = [];
+
+fetch("productos.json")
+  .then(res => res.json())
+  .then(data => {
+    productos = data;
+    console.log("JSON cargado OK", productos);
+    router(); // 👈 importante
+  })
+  .catch(err => console.error("Error JSON", err));
+
+function mostrarProductosPorSubcategoria(subcategoria) {
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
+
+  const filtrados = productos.filter(
+    p => p.subcategoria === subcategoria
+  );
+
+  if (!filtrados.length) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
+
+  filtrados.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${p.imagen}">
+      <h3>${p.nombre}</h3>
+      <p>$${p.precio}</p>
+    `;
+
+    div.onclick = () => abrirProducto(
+      p.imagen,
+      p.nombre,
+      `Producto ${p.subcategoria}`,
+      `$${p.precio}`,
+      `Hola, quiero información sobre ${p.nombre}`
+    );
+
+    contenedor.appendChild(div);
+  });
+}
 
