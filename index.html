@@ -470,6 +470,12 @@ fetch('productos.json')
   });
 </script>    
 
+<script>
+fetch('productos.json')
+  .then(r => r.json())
+  .then(d => console.log('Productos cargados:', d));
+    
+</script>  
  </main>
    </div>
     
