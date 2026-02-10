@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
- </head>
 <body class="inicio">
   <div class="app">
       
@@ -17,10 +16,9 @@
  💬
 </a>
 
-<main id="contenido">
-<header class="nav-principal">
-    
+<header class="nav-principal">   
 <nav class="nav-principal">
+    
    <div class="nav-right">
   <!-- DERECHA -->
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
@@ -37,11 +35,11 @@
     <button class="nav-icon" title="Carrito">🛒</button>
     <button class="nav-icon" title="Favoritos">❤️</button>
   </div>
-</nav>   
- </header>
+ </nav>   
+</header>
 
 <div class="barra-herramientas-fija">
-    <button class="btn-categoria-rect fab-productos">
+    <button class="btn-categoria-rect">
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
@@ -50,7 +48,10 @@
     </button>
 </div>
 
-<h2 id="titulo-categoria">Productos</h2>
+<header class="header-principal">
+    <img src="./images/Logo1Porta.png" class="header-logo">
+</header>
+
 <!-- OVERLAY -->
 <div id="menu-overlay"></div>
 
@@ -59,20 +60,14 @@
   <h3>Categorías</h3>
 
 <div id="lista-productos"></div>    
-  <button class="categoria">
-    Celulares
-    <i class="fi fi-bs-angle-up"></i>
-  </button>
+  <button class="categoria">Celulares<i class="fi fi-bs-angle-up"></i></button>
   <div class="subcategorias">
    <li class="subcategoria" onclick="navegar('/productos/iphone')">Iphone</li>
    <li class="subcategoria" onclick="navegar('/productos/samsung')">Samsung</li>
    <li class="subcategoria" onclick="navegar('/productos/zte')">ZTE</li>
   </div>
 
-  <button class="categoria">
-    Accesorios
-    <i class="fi fi-bs-angle-up"></i>
-  </button>
+  <button class="categoria">Accesorios<i class="fi fi-bs-angle-up"></i></button>
   <div class="subcategorias">
    <li class="subcategoria" onclick="navegar('/productos/covers')">Covers</li>
     <li class="subcategoria" onclick="navegar('/productos/audifonos')">Audifonos</li>
@@ -80,22 +75,19 @@
     <li class="subcategoria" onclick="navegar('/productos/usb')">Usb</li>
   </div>
     
-     <button class="categoria">
-       Tablets
-        <i class="fi fi-bs-angle-up"></i>
-      </button>
+     <button class="categoria">Tablets<i class="fi fi-bs-angle-up"></i></button>
       <div class="subcategorias">
         <li class="subcategoria" onclick="navegar('/productos/ipad')">Ipad</li>
         <li class="subcategoria" onclick="navegar('/productos/android')">Android</li>
     </div>
   </aside>
-</main>
+
+<main id="contenido"> 
+
+<h2 id="titulo-categoria">Productos</h2>
+    
 <section id="productos" class="productos-grid"></section>
       
-<header class="header-principal">
-    <img src="./images/Logo1Porta.png" class="header-logo">
-</header>
-
 <section id="sobre-nosotros" style="margin-top: 50px;">
     <h2>Sobre nosotros</h2>
     <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
@@ -158,8 +150,6 @@ al lado de Plaza La Canela.
     </div>
 
 </section>
-
-<main id="contenido" class="contenido">
          
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
@@ -198,7 +188,9 @@ loading="lazy"
 referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </section>
-    
+
+ </main>
+      
     <footer>
   <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
   <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
