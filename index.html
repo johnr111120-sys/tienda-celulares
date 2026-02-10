@@ -453,16 +453,29 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   }
 
   filtrados.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "producto";
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <h3>${p.nombre}</h3>
-      <p>$${p.precio}</p>
-    `;
-    contenedor.appendChild(div);
+  const div = document.createElement("div");
+  div.className = "producto";
+
+  div.innerHTML = `
+    <img src="${p.imagen}" alt="${p.nombre}">
+    <h3>${p.nombre}</h3>
+    <p>$${p.precio}</p>
+  `;
+
+  // 👉 CLICK = ABRIR MODAL
+  div.addEventListener("click", () => {
+    abrirProducto(
+      p.imagen,
+      p.nombre,
+      `Producto de categoría ${p.categoria}`,
+      `$${p.precio}`,
+      `Hola, quiero información sobre ${p.nombre}`
+    );
   });
-}
+
+  contenedor.appendChild(div);
+});
+
 </script>
     
 
