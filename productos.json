@@ -54,7 +54,7 @@
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios9.jpg"
-  }
+  },
    {
     "id": 8,
     "nombre": "Cover Espejo",
@@ -62,7 +62,7 @@
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios19.jpg"
-  }
+  },
    {
     "id": 9,
     "nombre": "Cover Anime",
@@ -70,7 +70,7 @@
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios6.jpg"
-  }
+  },
  {
     "id": 10,
     "nombre": "Aerpods 2da Generacion",
@@ -78,7 +78,7 @@
     "subcategoria": "Audifonos",
     "precio": 1500,
     "imagen": "images/accesorios13.jpg"
-  }
+  },
  {
     "id": 11,
     "nombre": "Apple Watch Serie 3",
@@ -86,7 +86,7 @@
     "subcategoria": "Smartwatch",
     "precio": 3500,
     "imagen": "images/accesorios14.jpg"
-  }
+  },
  {
     "id": 12,
     "nombre": "Pendrive Vidvie",
@@ -94,7 +94,7 @@
     "subcategoria": "Usb",
     "precio": 500,
     "imagen": "images/accesorios1.jpg"
-  }
+  },
  {
     "id": 13,
     "nombre": "Ipad 4ta Generacion",
@@ -102,7 +102,7 @@
     "subcategoria": "Ipad",
     "precio": 8500,
     "imagen": "images/tablet2.jpg"
-  }
+  },
  {
     "id": 14,
     "nombre": "SKY T8Plus",
