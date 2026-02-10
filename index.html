@@ -48,37 +48,47 @@
     </button>
 </div>
 
-<!-- ===== MENU CATEGORIAS DRAWER ===== -->
-<aside id="menu-categorias" class="menu-categorias">
-  <div class="menu-header">
-    <h3>Categorías</h3>
-  </div>
+<div class="layout">
+  <!-- MENÚ LATERAL -->
+  <aside id="menuCategorias" class="menu-lateral">
+    <h3 class="menu-titulo">Categorías</h3>
 
     <div class="categoria-menu">
-    <div class="cat-header">
-      <span>Celulares</span>
-      <i class="fi fi-bs-angle-up"></i>
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <span>Celulares</span>
+        <i class="fi fi-bs-angle-up"></i>
+      </div>
+      <div class="cat-contenido">
+        <a href="#">Iphone</a>
+        <a href="#">Samsung</a>
+        <a href="#">ZTE</a>
+      </div>
     </div>
-    <div class="cat-contenido">
-      <a href="#" class="subcat">Samsung</a>
-      <a href="#" class="subcat">ZTE</a>
-      <a href="#" class="subcat">Xiaomi</a>
+
+    <div class="categoria-menu">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <span>Accesorios</span>
+        <i class="fi fi-bs-angle-up"></i>
+      </div>
+      <div class="cat-contenido">
+        <a href="#">Fundas</a>
+        <a href="#">Audio</a>
+        <a href="#">Smartwatch</a>
+        <a href="#">USB</a>
+      </div>
     </div>
-  </div>
-    
-  <div class="categoria-menu">
-    <div class="cat-header">
-      <span>Accesorios</span>
-      <i class="fi fi-bs-angle-up"></i>
+
+       <div class="categoria-menu">
+      <div class="cat-header" onclick="toggleCategoria(this)">
+        <span>Tablets</span>
+        <i class="fi fi-bs-angle-up"></i>
+      </div>
+      <div class="cat-contenido">
+        <a href="#">Ipad</a>
+        <a href="#">Android</a>
+      </div>
     </div>
-    <div class="cat-contenido">
-      <a href="#" class="subcat">Fundas</a>
-      <a href="#" class="subcat">Audio</a>
-      <a href="#" class="subcat">Smartwatch</a>
-      <a href="#" class="subcat">Memorias USB</a>
-    </div>
-  </div>
-</aside>
+  </aside>
 
       
 <header class="header-principal">
@@ -148,6 +158,8 @@ al lado de Plaza La Canela.
 
 </section>
 
+<main id="contenido" class="contenido">
+         
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
 
@@ -318,8 +330,6 @@ function activarSwipe(modal, cerrarFn){
 activarSwipe(imgModalSwipe, cerrarImgModal);
 activarSwipe(productoModalSwipe, cerrarProducto);
 </script>
-    
-<main>
 
     <script>
   const header = document.querySelector('.header-principal');
@@ -358,31 +368,39 @@ window.addEventListener("scroll", () => {
   }
 });
 </script>
- </main>
-   </div>
 
 <script>
 const btnCategoria = document.querySelector(".btn-categoria-rect");
-const menu = document.getElementById("menu-categorias");
-const categorias = document.querySelectorAll(".categoria-menu");
+const menu = document.getElementById("menuCategorias");
+const body = document.body;
 
 btnCategoria.addEventListener("click", () => {
   menu.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
+  body.classList.toggle("menu-abierto");
 });
 
-/* acordeon: solo una abierta */
-categorias.forEach(cat => {
-  const header = cat.querySelector(".cat-header");
-  header.addEventListener("click", () => {
-    categorias.forEach(c => {
-      if(c !== cat) c.classList.remove("activa");
-    });
-    cat.classList.toggle("activa");
+function toggleCategoria(header){
+  const categoria = header.parentElement;
+
+  document.querySelectorAll(".categoria-menu").forEach(c => {
+    if(c !== categoria) c.classList.remove("activa");
   });
-});
+
+  categoria.classList.toggle("activa");
+
+  document.querySelectorAll(".cat-header i").forEach(i => {
+    i.className = "fi fi-bs-angle-up";
+  });
+
+  const icon = header.querySelector("i");
+  if(categoria.classList.contains("activa")){
+    icon.className = "fi fi-bs-angle-down";
+  }
+}
 </script>
 
+ </main>
+   </div>
     
   </body>
 </html>
