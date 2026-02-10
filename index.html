@@ -16,6 +16,8 @@
    class="whatsapp" target="_blank">
  💬
 </a>
+
+<main id="contenido">
 <header class="nav-principal">
     
 <nav class="nav-principal">
@@ -48,6 +50,7 @@
     </button>
 </div>
 
+<h2 id="titulo-categoria">Productos</h2>
 <!-- OVERLAY -->
 <div id="menu-overlay"></div>
 
@@ -55,14 +58,15 @@
 <aside id="menu-categorias">
   <h3>Categorías</h3>
 
+<div id="lista-productos"></div>    
   <button class="categoria">
     Celulares
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
-    <a href="#">Iphone</a>  
-    <a href="#">Samsung</a>
-    <a href="#">ZTE</a>
+    <a href="#" class="subcat" data-categoria="iphone">Iphone</a>
+    <a href="#" class="subcat" data-categoria="samsung">Samsung</a>
+    <a href="#" class="subcat" data-categoria="zte">ZTE</a>
   </div>
 
   <button class="categoria">
@@ -70,10 +74,10 @@
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
-    <a href="#">Fundas</a>
-    <a href="#">Audio</a>
-    <a href="#">Smartwatch</a>
-    <a href="#">USB</a>
+     <a href="#" class="subcat" data-categoria="covers">Covers</a>
+     <a href="#" class="subcat" data-categoria="audifonos">Audifonos</a>
+     <a href="#" class="subcat" data-categoria="smartwatch">Smartwatch</a>
+     <a href="#" class="subcat" data-categoria="usb">Usb</a>
   </div>
     
      <button class="categoria">
@@ -81,11 +85,11 @@
         <i class="fi fi-bs-angle-up"></i>
       </button>
       <div class="subcategorias">
-        <a href="#">Ipad</a>
-        <a href="#">Android</a>
+         <a href="#" class="subcat" data-categoria="ipad">Ipad</a>
+         <a href="#" class="subcat" data-categoria="android">Android</a>
     </div>
   </aside>
-
+</main>
       
 <header class="header-principal">
     <img src="./images/Logo1Porta.png" class="header-logo">
@@ -407,6 +411,62 @@ document.querySelectorAll(".categoria").forEach(btn => {
   });
 });
 </script>
+
+<script>
+/* ===== DATOS DE EJEMPLO ===== */
+const productos = {
+  samsung: [
+    { nombre: "Samsung A15", precio: "$120" },
+    { nombre: "Samsung S22", precio: "$520" }
+  ],
+  zte: [
+    { nombre: "ZTE Blade", precio: "$95" }
+  ],
+  fundas: [
+    { nombre: "Funda Silicona", precio: "$5" }
+  ]
+};
+
+/* ===== CLICK EN SUBCATEGORÍAS ===== */
+document.querySelectorAll(".subcat").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+
+    const categoria = link.dataset.categoria;
+    cargarProductos(categoria);
+
+    // cerrar menú overlay
+    document.getElementById("menu-categorias").classList.remove("activo");
+    document.getElementById("menu-overlay").classList.remove("activo");
+    document.body.classList.remove("menu-abierto");
+  });
+});
+
+/* ===== FUNCIÓN SPA ===== */
+function cargarProductos(categoria) {
+  const contenedor = document.getElementById("lista-productos");
+  const titulo = document.getElementById("titulo-categoria");
+
+  titulo.textContent = categoria.toUpperCase();
+  contenedor.innerHTML = "";
+
+  if (!productos[categoria]) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
+
+  productos[categoria].forEach(prod => {
+    const card = document.createElement("div");
+    card.className = "producto";
+    card.innerHTML = `
+      <h4>${prod.nombre}</h4>
+      <p>${prod.precio}</p>
+    `;
+    contenedor.appendChild(card);
+  });
+}
+</script>
+    
 
  </main>
    </div>
