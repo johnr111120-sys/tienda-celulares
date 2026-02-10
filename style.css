@@ -917,32 +917,31 @@ iframe {
 /* ===== MENÚ LATERAL ===== */
 .menu-lateral{
   position: fixed;
-  top: 64px; /* altura exacta de tu barra negra+azul */
+  top: 108px; /* nav (60) + barra categoría (48) */
   left: 0;
-  width: 280px;
-  height: calc(100vh - 64px);
-  background: #0d0d0d;
+  width: 0;
+  height: calc(100vh - 108px);
+  background: #000;
   color: #fff;
-  transform: translateX(-100%);
-  transition: transform 0.35s ease;
-  z-index: 1000;
+  overflow-x: hidden;
   overflow-y: auto;
+  transition: width .35s ease;
+  z-index: 9999;
 }
 
-/* abierto */
-.menu-categorias.activo {
-  transform: translateX(0);
+/* ABIERTO */
+.menu-lateral.activo{
+  width: 280px;
 }
 
 /* ===== CONTENIDO ===== */
 .contenido{
   width: 100%;
-  transition: transform 0.35s ease;
+  transition: margin-left .35s ease;
 }
 
 /* CUANDO EL MENÚ ESTÁ ABIERTO */
-body.menu-abierto #contenido {
-  transform: translateX(280px);
+.menu-abierto .contenido{
   margin-left: 280px;
 }
 
