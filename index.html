@@ -64,9 +64,9 @@
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
-    <a href="#" class="subcat" data-categoria="iphone">Iphone</a>
-    <a href="#" class="subcat" data-categoria="samsung">Samsung</a>
-    <a href="#" class="subcat" data-categoria="zte">ZTE</a>
+   <li class="subcategoria" data-subcategoria="Iphone">Iphone</li>
+   <li class="subcategoria" data-subcategoria="Samsung">Samsung</li>
+   <li class="subcategoria" data-subcategoria="ZTE">ZTE</li>
   </div>
 
   <button class="categoria">
@@ -74,10 +74,10 @@
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
-     <a href="#" class="subcat" data-categoria="covers">Covers</a>
-     <a href="#" class="subcat" data-categoria="audifonos">Audifonos</a>
-     <a href="#" class="subcat" data-categoria="smartwatch">Smartwatch</a>
-     <a href="#" class="subcat" data-categoria="usb">Usb</a>
+   <li class="subcategoria" data-subcategoria="Covers">Covers</li>
+    <li class="subcategoria" data-subcategoria="Audifonos">Audifonos</li>
+    <li class="subcategoria" data-subcategoria="Smartwatch">Smartwatch</li>
+    <li class="subcategoria" data-subcategoria="Usb">Usb</li>
   </div>
     
      <button class="categoria">
@@ -85,10 +85,13 @@
         <i class="fi fi-bs-angle-up"></i>
       </button>
       <div class="subcategorias">
-         <a href="#" class="subcat" data-categoria="ipad">Ipad</a>
-         <a href="#" class="subcat" data-categoria="android">Android</a>
+        <li class="subcategoria" data-subcategoria="Ipad">Ipad</li>
+        <li class="subcategoria" data-subcategoria="Android">Android</li>
     </div>
   </aside>
+
+<section id="productos" class="productos-grid"></section>
+    
 </main>
       
 <header class="header-principal">
@@ -459,6 +462,53 @@ function cargarProductos(categoria) {
 }
 </script>
 
+<script>
+ let productos = [];
+
+/* 1️⃣ Cargar JSON */
+fetch("productos.json")
+  .then(res => res.json())
+  .then(data => {
+    productos = data;
+    console.log("JSON cargado OK", productos);
+  })
+  .catch(err => console.error("Error JSON", err));
+
+/* 2️⃣ Click en SUBCATEGORÍAS */
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    const subcategoria = sub.dataset.subcategoria;
+    mostrarProductosPorSubcategoria(subcategoria);
+  });
+});
+
+/* 3️⃣ Filtrar por subcategoría */
+function mostrarProductosPorSubcategoria(subcategoria) {
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
+
+  const filtrados = productos.filter(
+    p => p.subcategoria === subcategoria
+  );
+
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
+
+  filtrados.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <h3>${p.nombre}</h3>
+      <p>$${p.precio}</p>
+    `;
+    contenedor.appendChild(div);
+  });
+}
+</script>  
+    
 <script>
 fetch('productos.json')
   .then(res => res.json())
