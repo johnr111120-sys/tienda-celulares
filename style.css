@@ -957,57 +957,18 @@ iframe {
   font-size: 16px;
 }
 
-/* Botón de categoría */
-.categoria-btn {
-  width: 100%;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  padding: 14px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-
-/* Icono */
-.categoria-btn .icono {
-  font-size: 14px;
-  transition: transform 0.3s ease;
-}
-
-/* Subcategorías (cerradas) */
 .subcategorias {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
-  background: #111;
+  transition: max-height .3s ease;
   padding-left: 10px;
 }
 
-/* Subcategorías abiertas */
-.categoria.activa .subcategorias {
-  max-height: 500px; /* suficiente para varias */
-}
-
-/* Cambiar icono al abrir */
-.categoria.activa .icono {
-  transform: rotate(180deg);
-}
-
-/* Links subcategorías */
 .subcategorias a {
   display: block;
-  padding: 10px 32px;
+  padding: 6px 0;
   color: #ccc;
-  font-size: 14px;
   text-decoration: none;
-}
-
-.subcategorias a:hover {
-  background: #1e1e1e;
-  color: #fff;
 }
 
 /* ===== BODY BLOQUEADO ===== */
