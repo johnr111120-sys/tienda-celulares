@@ -907,94 +907,76 @@ iframe {
   display: block;
 }
 
-/* ===== MENU DRAWER ===== */
-.menu-categorias{
+/* ===== LAYOUT BASE ===== */
+.layout{
+  display: flex;
+  width: 100%;
+  transition: transform .35s ease;
+}
+
+/* ===== MENÚ LATERAL ===== */
+.menu-lateral{
   position: fixed;
-  top: 108px; /* nav + barra categorias */
+  top: 108px; /* nav (60) + barra categoría (48) */
   left: 0;
-  width: 280px;
+  width: 0;
   height: calc(100vh - 108px);
-  background: #111;
+  background: #000;
   color: #fff;
-  transform: translateX(-100%);
-  transition: transform .35s ease;
-  z-index: 20000;
+  overflow-x: hidden;
   overflow-y: auto;
+  transition: width .35s ease;
+  z-index: 9999;
 }
 
-/* abierto */
-.menu-categorias.activo{
-  transform: translateX(0);
+/* ABIERTO */
+.menu-lateral.activo{
+  width: 280px;
 }
 
-/* empuje contenido */
-body.menu-abierto .app{
-  transform: translateX(280px);
-  transition: transform .35s ease;
+/* ===== CONTENIDO ===== */
+.contenido{
+  width: 100%;
+  transition: margin-left .35s ease;
 }
 
-/* header */
-.menu-header{
+/* CUANDO EL MENÚ ESTÁ ABIERTO */
+.menu-abierto .contenido{
+  margin-left: 280px;
+}
+
+/* ===== CATEGORÍAS ===== */
+.menu-titulo{
   padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
   border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
-/* categoria */
 .categoria-menu{
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .cat-header{
+  padding: 14px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
   cursor: pointer;
 }
 
-.cat-header i{
-  transition: transform .3s ease;
-}
-
-/* contenido acordeon */
 .cat-contenido{
   max-height: 0;
   overflow: hidden;
-  transition: max-height .35s ease;
-  background: #1a1a1a;
+  transition: max-height .3s ease;
+  background: #111;
 }
 
 .categoria-menu.activa .cat-contenido{
   max-height: 500px;
 }
 
-.categoria-menu.activa .cat-header i{
-  transform: rotate(180deg);
-}
-
-/* subcategorias */
-.subcat{
+.cat-contenido a{
   display: block;
-  padding: 12px 20px;
-  font-size: 14px;
-  color: #ddd;
-  text-decoration: none;
-}
-
-.subcat:hover{
-  background: #007bff;
+  padding: 10px 20px;
   color: #fff;
+  text-decoration: none;
+  font-size: 14px;
 }
-
-/* desktop */
-@media (min-width: 900px){
-  .menu-categorias{
-    width: 320px;
-  }
-  body.menu-abierto .app{
-    transform: translateX(320px);
-  }
-}
-
