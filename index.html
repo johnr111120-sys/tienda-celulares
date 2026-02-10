@@ -55,16 +55,20 @@
 <aside id="menu-categorias">
   <h3>Categorías</h3>
 
-  <button class="categoria">
+<div class="categoria"> 
+  <button class="categoria-btn">
     Celulares
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
+    <a href="#">Ipnoe</a>
     <a href="#">Samsung</a>
     <a href="#">ZTE</a>
   </div>
+  </div>   
 
-  <button class="categoria">
+<div class="categoria">    
+ <button class="categoria-btn">
     Accesorios
     <i class="fi fi-bs-angle-up"></i>
   </button>
@@ -74,14 +78,17 @@
     <a href="#">Smartwatch</a>
     <a href="#">USB</a>
   </div>
-    
-     <button class="categoria">
+  </div>   
+
+<div class="categoria">    
+     <button class="categoria-btn">
        Tablets
         <i class="fi fi-bs-angle-up"></i>
       </button>
       <div class="subcategorias">
         <a href="#">Ipad</a>
         <a href="#">Android</a>
+    </div>
     </div>
   </aside>
 
@@ -364,6 +371,23 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
+<script>
+document.querySelectorAll(".categoria-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const categoria = btn.closest(".categoria");
+
+    // cerrar las demás
+    document.querySelectorAll(".categoria").forEach(c => {
+      if (c !== categoria) c.classList.remove("activa");
+    });
+
+    // toggle actual
+    categoria.classList.toggle("activa");
+  });
+});
+</script>
+
+    
 <script>    
 const btnMenu = document.getElementById("icono-menu"); // botón azul
 const menu = document.getElementById("menu-categorias");
