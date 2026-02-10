@@ -95,8 +95,6 @@
     <img src="./images/Logo1Porta.png" class="header-logo">
 </header>
 
-<main id="contenido">
-    
 <section id="sobre-nosotros" style="margin-top: 50px;">
     <h2>Sobre nosotros</h2>
     <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
@@ -159,6 +157,8 @@ al lado de Plaza La Canela.
     </div>
 
 </section>
+
+<main id="contenido" class="contenido">
          
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
@@ -369,17 +369,35 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
-    
 <script>
-const btnCategoria = document.getElementById("btn-categoria");
-const menu = document.querySelector(".menu-categorias");
+const btnCategoria = document.querySelector(".btn-categoria-rect");
+const menu = document.getElementById("menuCategorias");
+const body = document.body;
 
 btnCategoria.addEventListener("click", () => {
   menu.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
+  body.classList.toggle("menu-abierto");
 });
-</script>
 
+function toggleCategoria(header){
+  const categoria = header.parentElement;
+
+  document.querySelectorAll(".categoria-menu").forEach(c => {
+    if(c !== categoria) c.classList.remove("activa");
+  });
+
+  categoria.classList.toggle("activa");
+
+  document.querySelectorAll(".cat-header i").forEach(i => {
+    i.className = "fi fi-bs-angle-up";
+  });
+
+  const icon = header.querySelector("i");
+  if(categoria.classList.contains("activa")){
+    icon.className = "fi fi-bs-angle-down";
+  }
+}
+</script>
 
  </main>
    </div>
