@@ -978,13 +978,13 @@ body.menu-abierto {
 
 /* categoría activa */
 .categoria.activa .categoria-btn{
-  background: #007bff;      /* azul activo */
-  color: #fff;
+  background: #000;      /* azul activo */
+  color: #007bff;
 }
 
 /* icono activo */
 .categoria.activa .icono{
-  color: #fff;
+  color: #0d6efd;
 }
 
 
