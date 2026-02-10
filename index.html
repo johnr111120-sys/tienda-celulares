@@ -211,6 +211,28 @@ referrerpolicy="no-referrer-when-downgrade">
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
 
+<script>window.addEventListener("popstate", router);</script>
+
+<script>
+function capitalizar(texto) {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+</script>
+    
+<script>
+function router() {
+  const path = window.location.pathname;
+
+  // /productos/iphone
+  if (path.startsWith("/productos/")) {
+    const subcategoria = path.split("/")[2];
+    mostrarProductosPorSubcategoria(
+      capitalizar(subcategoria)
+    );
+  }
+}
+</script>
+    
   <script>
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
@@ -425,13 +447,6 @@ fetch("productos.json")
   })
   .catch(err => console.error("Error JSON", err));
 
-document.querySelectorAll(".subcategoria").forEach(sub => {
-  sub.addEventListener("click", () => {
-    const subcategoria = sub.dataset.subcategoria;
-    mostrarProductosPorSubcategoria(subcategoria);
-  });
-});
-
 function mostrarProductosPorSubcategoria(subcategoria) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -470,7 +485,16 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
 </script>
     
+<script>
+function navegar(url) {
+  history.pushState({}, "", url);
+  router();
+}
 
+</script>
+    
+<script>router();</script>
+    
  </main>
    </div>
     
