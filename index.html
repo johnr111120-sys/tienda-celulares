@@ -47,6 +47,39 @@
         <div class="parte-negra"></div>
     </button>
 </div>
+
+<!-- ===== MENU CATEGORIAS DRAWER ===== -->
+<aside id="menu-categorias" class="menu-categorias">
+  <div class="menu-header">
+    <h3>Categorías</h3>
+  </div>
+
+    <div class="categoria-menu">
+    <div class="cat-header">
+      <span>Celulares</span>
+      <i class="fi fi-bs-angle-up"></i>
+    </div>
+    <div class="cat-contenido">
+      <a href="#" class="subcat">Samsung</a>
+      <a href="#" class="subcat">ZTE</a>
+      <a href="#" class="subcat">Xiaomi</a>
+    </div>
+  </div>
+    
+  <div class="categoria-menu">
+    <div class="cat-header">
+      <span>Accesorios</span>
+      <i class="fi fi-bs-angle-up"></i>
+    </div>
+    <div class="cat-contenido">
+      <a href="#" class="subcat">Fundas</a>
+      <a href="#" class="subcat">Audio</a>
+      <a href="#" class="subcat">Smartwatch</a>
+      <a href="#" class="subcat">Memorias USB</a>
+    </div>
+  </div>
+</aside>
+
       
 <header class="header-principal">
     <img src="./images/Logo1Porta.png" class="header-logo">
@@ -326,8 +359,30 @@ window.addEventListener("scroll", () => {
 });
 </script>
  </main>
-
    </div>
 
+<script>
+const btnCategoria = document.querySelector(".btn-categoria-rect");
+const menu = document.getElementById("menu-categorias");
+const categorias = document.querySelectorAll(".categoria-menu");
+
+btnCategoria.addEventListener("click", () => {
+  menu.classList.toggle("activo");
+  document.body.classList.toggle("menu-abierto");
+});
+
+/* acordeon: solo una abierta */
+categorias.forEach(cat => {
+  const header = cat.querySelector(".cat-header");
+  header.addEventListener("click", () => {
+    categorias.forEach(c => {
+      if(c !== cat) c.classList.remove("activa");
+    });
+    cat.classList.toggle("activa");
+  });
+});
+</script>
+
+    
   </body>
 </html>
