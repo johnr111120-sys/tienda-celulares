@@ -1,37 +1,114 @@
-{
-  "iphone": [
-    { "nombre": "Iphone 14 Pro Max", "precio": "$200" },
-    { "nombre": "Iphone 17 Pro Max", "precio": "$500" }
-  ],
-  "samsung": [
-    { "nombre": "Samsung A15", "precio": "$120" },
-    { "nombre": "Samsung S22", "precio": "$520" }
-  ],
-  "zte": [
-    { "nombre": "ZTE Blade", "precio": "$95" }
-  ],
-  "covers": [
-    { "nombre": "Funda Silicona", "precio": "$5" },
-    { "nombre": "Funda Reforzada", "precio": "$8" }
-  ],
-  "audifonos": [
-    { "nombre": "Aerpods 2da generacion", "precio": "$120" },
-    { "nombre": "Aerpods Pro", "precio": "$520" }
-  ],
-  "smartwatch": [
-    { "nombre": "Applewatch 2da generacion", "precio": "$120" },
-    { "nombre": "Applewatch 4ta generacion", "precio": "$520" }
-  ],
-  "usb": [
-    { "nombre": "Pendrive USB 64GB", "precio": "$120" },
-    { "nombre": "Pendrive USB 128GB", "precio": "$520" }
-  ],
-  "ipad": [
-    { "nombre": "Ipad 4ta generacion", "precio": "$120" },
-    { "nombre": "Ipad Air 5ta generacion", "precio": "$520" }
-  ],
-  "android": [
-    { "nombre": "Samsung Tab 2da generacion", "precio": "$120" },
-    { "nombre": "SKY Device T8Plus", "precio": "$520" }
-  ]
-}
+[
+   {
+    "id": 1,
+    "nombre": "Iphone 11",
+    "categoria": "Celulares",
+    "subcategoria": "Iphone",
+    "precio": 12000,
+    "imagen": "images/cell0.jpg"
+  },
+   {
+    "id": 2,
+    "nombre": "Iphone 14 Pro Max",
+    "categoria": "Celulares",
+    "subcategoria": "Iphone",
+    "precio": 12000,
+    "imagen": "images/cell6.jpg"
+  },
+   {
+    "id": 3,
+    "nombre": "Iphone 17 Pro Max",
+    "categoria": "Celulares",
+    "subcategoria": "Iphone",
+    "precio": 12000,
+    "imagen": "images/cell1.jpg"
+  },
+   {
+    "id": 4,
+    "nombre": "Galaxy A03s",
+    "categoria": "Celulares",
+    "subcategoria": "Samsung",
+    "precio": 12000,
+    "imagen": "images/cell9.jpg"
+  },
+   {
+    "id": 5,
+    "nombre": "Zte Blade",
+    "categoria": "Celulares",
+    "subcategoria": "ZTE",
+    "precio": 12000,
+    "imagen": "images/cell8.jpg"
+  },
+  {
+    "id": 6,
+    "nombre": "ZTE Blade L210",
+    "categoria": "Celulares",
+    "subcategoria": "ZTE",
+    "precio": 9000,
+    "imagen": "images/cell7.jpg"
+  },
+  {
+    "id": 7,
+    "nombre": "Cover 360 Magsafe",
+    "categoria": "Accesorios",
+    "subcategoria": "Covers",
+    "precio": 500,
+    "imagen": "images/accesorios9.jpg"
+  }
+   {
+    "id": 8,
+    "nombre": "Cover Espejo",
+    "categoria": "Accesorios",
+    "subcategoria": "Covers",
+    "precio": 500,
+    "imagen": "images/accesorios19.jpg"
+  }
+   {
+    "id": 9,
+    "nombre": "Cover Anime",
+    "categoria": "Accesorios",
+    "subcategoria": "Covers",
+    "precio": 500,
+    "imagen": "images/accesorios6.jpg"
+  }
+ {
+    "id": 10,
+    "nombre": "Aerpods 2da Generacion",
+    "categoria": "Accesorios",
+    "subcategoria": "Audifonos",
+    "precio": 1500,
+    "imagen": "images/accesorios13.jpg"
+  }
+ {
+    "id": 11,
+    "nombre": "Apple Watch Serie 3",
+    "categoria": "Accesorios",
+    "subcategoria": "Smartwatch",
+    "precio": 3500,
+    "imagen": "images/accesorios14.jpg"
+  }
+ {
+    "id": 12,
+    "nombre": "Pendrive Vidvie",
+    "categoria": "Accesorios",
+    "subcategoria": "Usb",
+    "precio": 500,
+    "imagen": "images/accesorios1.jpg"
+  }
+ {
+    "id": 13,
+    "nombre": "Ipad 4ta Generacion",
+    "categoria": "Tablets",
+    "subcategoria": "Ipad",
+    "precio": 8500,
+    "imagen": "images/tablet2.jpg"
+  }
+ {
+    "id": 14,
+    "nombre": "SKY T8Plus",
+    "categoria": "Tablets",
+    "subcategoria": "Android",
+    "precio": 3500,
+    "imagen": "images/tablet1.jpg"
+  }
+]
