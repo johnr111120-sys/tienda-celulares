@@ -425,12 +425,6 @@ fetch("productos.json")
   })
   .catch(err => console.error("Error JSON", err));
 
-/* 2️⃣ Click en SUBCATEGORÍAS */
-document.querySelectorAll(".subcategoria").forEach(sub => {
-  sub.addEventListener("click", () => {
-    const subcategoria = sub.dataset.subcategoria;
-    mostrarProductosPorSubcategoria(subcategoria);
-
     // cerrar menú
     document.getElementById("menu-categorias").classList.remove("activo");
     document.getElementById("menu-overlay").classList.remove("activo");
