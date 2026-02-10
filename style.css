@@ -907,76 +907,71 @@ iframe {
   display: block;
 }
 
-/* ===== LAYOUT BASE ===== */
-.layout{
-  display: flex;
-  width: 100%;
-  transition: transform .35s ease;
-}
-
-/* ===== MENÚ LATERAL ===== */
-.menu-lateral{
+/* ===== OVERLAY ===== */
+#menu-overlay {
   position: fixed;
-  top: 108px; /* nav (60) + barra categoría (48) */
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 999;
+}
+
+#menu-overlay.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== MENU ===== */
+#menu-categorias {
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 0;
-  height: calc(100vh - 108px);
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition: width .35s ease;
-  z-index: 9999;
-}
-
-/* ABIERTO */
-.menu-lateral.activo{
   width: 280px;
+  height: 100vh;
+  background: #111;
+  color: #fff;
+  padding: 16px;
+  transform: translateX(-100%);
+  transition: transform .35s ease;
+  z-index: 1000;
+  overflow-y: auto;
 }
 
-/* ===== CONTENIDO ===== */
-.contenido{
-  width: 100%;
-  transition: margin-left .35s ease;
-}
-
-/* CUANDO EL MENÚ ESTÁ ABIERTO */
-.menu-abierto .contenido{
-  margin-left: 280px;
+#menu-categorias.activo {
+  transform: translateX(0);
 }
 
 /* ===== CATEGORÍAS ===== */
-.menu-titulo{
-  padding: 15px;
-  border-bottom: 1px solid rgba(255,255,255,.1);
-}
-
-.categoria-menu{
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.cat-header{
-  padding: 14px;
+.categoria {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 12px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
+  font-size: 16px;
 }
 
-.cat-contenido{
+.subcategorias {
   max-height: 0;
   overflow: hidden;
   transition: max-height .3s ease;
-  background: #111;
+  padding-left: 10px;
 }
 
-.categoria-menu.activa .cat-contenido{
-  max-height: 500px;
-}
-
-.cat-contenido a{
+.subcategorias a {
   display: block;
-  padding: 10px 20px;
-  color: #fff;
+  padding: 6px 0;
+  color: #ccc;
   text-decoration: none;
-  font-size: 14px;
+}
+
+/* ===== BODY BLOQUEADO ===== */
+body.menu-abierto {
+  overflow: hidden;
 }
