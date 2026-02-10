@@ -452,7 +452,7 @@ function mostrarProductosPorSubcategoria(subcategoria) {
     return;
   }
 
-  filtrados.forEach(p => {
+filtrados.forEach(p => {
   const div = document.createElement("div");
   div.className = "producto";
 
@@ -464,6 +464,9 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
   // 👉 CLICK = ABRIR MODAL
   div.addEventListener("click", () => {
+      menu.classList.remove("activo");
+      overlay.classList.remove("activo");
+
     abrirProducto(
       p.imagen,
       p.nombre,
