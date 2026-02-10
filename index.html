@@ -39,7 +39,7 @@
  </header>
 
 <div class="barra-herramientas-fija">
-    <button class="btn-categoria-rect fab-productos" onclick="toggleMenuProductos()">
+    <button class="btn-categoria-rect fab-productos">
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
@@ -150,8 +150,7 @@ style="border:0;"
 allowfullscreen="" 
 loading="lazy" 
 referrerpolicy="no-referrer-when-downgrade">
-</iframe>
- 
+  </iframe>
 </section>
     
     <footer>
@@ -286,254 +285,8 @@ function activarSwipe(modal, cerrarFn){
 activarSwipe(imgModalSwipe, cerrarImgModal);
 activarSwipe(productoModalSwipe, cerrarProducto);
 </script>
-
-<script>
-function toggleCategoria(header) {
-  const categoriaActual = header.closest('.categoria, .categoria-menu');
-  if (!categoriaActual) return;
-
-  const esSubcategoria = categoriaActual.classList.contains('subcategoria');
-
-  /* ==========================
-     1️⃣ SUBCATEGORÍAS
-  ========================== */
-  if (esSubcategoria) {
-    const contenedorSub = categoriaActual.parentElement;
-
-    // Cerrar otras subcategorías hermanas
-    contenedorSub.querySelectorAll('.subcategoria.activa')
-      .forEach(sub => {
-        if (sub !== categoriaActual) sub.classList.remove('activa');
-      });
-
-    categoriaActual.classList.toggle('activa');
-    return;
-  }
-
-  /* ==========================
-     2️⃣ CATEGORÍAS PRINCIPALES
-  ========================== */
-  const contenedorPrincipal = categoriaActual.parentElement;
-  const estabaActiva = categoriaActual.classList.contains('activa');
-
-  // Cerrar otras categorías principales
-  contenedorPrincipal
-    .querySelectorAll(':scope > .categoria.activa, :scope > .categoria-menu.activa')
-    .forEach(cat => {
-      if (cat !== categoriaActual) {
-        cat.classList.remove('activa');
-
-        // 🔴 Cerrar TODAS las subcategorías internas
-        cat.querySelectorAll('.subcategoria.activa')
-          .forEach(sub => sub.classList.remove('activa'));
-      }
-    });
-
-  // Toggle actual
-  categoriaActual.classList.toggle('activa', !estabaActiva);
-
-  // 🔴 Si se cierra la categoría principal → cerrar subcategorías
-  if (estabaActiva) {
-    categoriaActual
-      .querySelectorAll('.subcategoria.activa')
-      .forEach(sub => sub.classList.remove('activa'));
-  }
-}
-</script>
-
-
-<div id="menu-productos" class="menu-productos">
-  <h3 class="menu-titulo">🛒 Productos</h3>
-
-  <!-- 📱 CELULARES -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>📱 Celulares</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">
-        <img src="images/cell1.jpg"
-        onclick="abrirProducto(
-          'images/cell1.jpg',
-          'iPhone 17 Pro Max',
-          '256GB · Negro / Naranja · Sellado',
-          'RD$ 57,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 57,000</span>
-</div>
-  <div class="producto-item">
-        <img src="images/cell6.jpg"
-        onclick="abrirProducto(
-          'images/cell6.jpg',
-          'iPhone 14 Pro Max',
-          'E‑SIM · Morado · 128GB · Sellado',
-          'RD$ 25,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 25,000</span>
-</div>
-   <div class="producto-item">
-        <img src="images/cell7.jpg"
-        onclick="abrirProducto(
-          'images/cell7.jpg',
-          'Z Blade',
-          '128GB · Negro · Sellado',
-          'RD$ 8,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 8,000</span>
-</div>
-    <div class="producto-item">
-        <img src="images/cell8.jpg"
-        onclick="abrirProducto(
-          'images/cell8.jpg',
-          'ZTE',
-          '64GB · Negro · Sellado',
-          'RD$ 7,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 7,000</span>
-</div>
-    <div class="producto-item">
-        <img src="images/cell9.jpg"
-        onclick="abrirProducto(
-          'images/cell9.jpg',
-          'Galaxy A03s',
-          '64GB · Azul · Sellado',
-          'RD$ 9,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 9,000</span>
-</div>      
-      </div>
-    </div>
-  </div>
-
-  <!-- 🎧 ACCESORIOS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>🎧 Accesorios</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
- <div class="producto-item">       
-        <img src="images/accesorios4.jpg"
-        onclick="abrirProducto(
-          'images/accesorios4.jpg',
-          'Cover 360 Iphone 11 Pro Max',
-          'Cover 360 transparente con magsafe · Sellado',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios13.jpg"
-        onclick="abrirProducto(
-          'images/accesorios13.jpg',
-          'AirPods 2da generación',
-          'Blancos · Originales · Sellados',
-          'RD$ 3,500',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 3,500</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios14.jpg"
-        onclick="abrirProducto(
-          'images/accesorios14.jpg',
-          'Apple Watch Serie 3',
-          'Negro · 38mm · GPS',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-  <div class="producto-item">
-        <img src="images/accesorios1.jpg"
-        onclick="abrirProducto(
-          'images/accesorios1.jpg',
-          'Pendrive VIDVIE',
-          'USB 3.2 · 128GB · Tipo C',
-          'RD$ 200',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 200</span>
-</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 📟 TABLETS -->
-  <div class="categoria">
-    <div class="cat-header" onclick="toggleCategoria(this)">
-      <h4>📟 Tablets</h4>
-      <span class="cat-icon">+</span>
-    </div>
-    <div class="cat-contenido">
-      <div class="galeria">
-<div class="producto-item">
-        <img src="images/tablet1.jpg"
-        onclick="abrirProducto(
-          'images/tablet1.jpg',
-          'SKY T8 Plus',
-          '64GB · Negra · Sellada',
-          'RD$ 6,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 6,000</span>
-</div>
-            
-<div class="producto-item">
-        <img src="images/tablet2.jpg"
-        onclick="abrirProducto(
-          'images/tablet2.jpg',
-          'iPad 4',
-          '64GB · Gris · Usada',
-          'RD$ 8,000',
-          'Hola, quiero info de este producto'
-        )">
-<span class="producto-precio">RD$ 8,000</span>
-</div>
-
-      </div>
-    </div>
-  </div>
- </div>
-</div>
-</div>
     
 <main>
-
-<script>
-function toggleMenuProductos(){
-  const menu = document.getElementById("menu-productos");
-  const overlay = document.getElementById("overlay-productos");
-  const icono = document.getElementById("icono-menu");
-
-  if (!menu || !overlay || !icono) {
-    console.error("Falta menu, overlay o icono");
-    return;
-  }
-
-  const activo = menu.classList.toggle("activo");
-
-  overlay.classList.toggle("activo", activo);
-
-  document.body.classList.toggle("no-scroll", activo);
-  document.body.classList.toggle("modal-abierto", activo);
-
-  // Cambiar icono SIN romper animación
-  icono.textContent = activo ? "✕" : "☰";
-}
-</script>
 
     <script>
   const header = document.querySelector('.header-principal');
@@ -576,6 +329,5 @@ window.addEventListener("scroll", () => {
 
    </div>
 
-    <div id="overlay-productos" class="overlay-productos" onclick="toggleMenuProductos()"></div>
   </body>
 </html>
