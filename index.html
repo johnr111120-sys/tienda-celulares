@@ -413,25 +413,10 @@ document.querySelectorAll(".categoria").forEach(btn => {
 </script>
 
 <script>
-/* ===== DATOS DE EJEMPLO ===== */
-const productos = {
-  samsung: [
-    { nombre: "Samsung A15", precio: "$120" },
-    { nombre: "Samsung S22", precio: "$520" }
-  ],
-  zte: [
-    { nombre: "ZTE Blade", precio: "$95" }
-  ],
-  fundas: [
-    { nombre: "Funda Silicona", precio: "$5" }
-  ]
-};
-
-/* ===== CLICK EN SUBCATEGORÍAS ===== */
+/* CLICK EN SUBCATEGORÍAS */
 document.querySelectorAll(".subcat").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
-
     const categoria = link.dataset.categoria;
     cargarProductos(categoria);
 
@@ -442,28 +427,35 @@ document.querySelectorAll(".subcat").forEach(link => {
   });
 });
 
-/* ===== FUNCIÓN SPA ===== */
+/* FUNCIÓN FETCH */
 function cargarProductos(categoria) {
-  const contenedor = document.getElementById("lista-productos");
-  const titulo = document.getElementById("titulo-categoria");
+  fetch("productos.json")
+    .then(res => res.json())
+    .then(data => {
+      const contenedor = document.getElementById("lista-productos");
+      const titulo = document.getElementById("titulo-categoria");
 
-  titulo.textContent = categoria.toUpperCase();
-  contenedor.innerHTML = "";
+      titulo.textContent = categoria.toUpperCase();
+      contenedor.innerHTML = "";
 
-  if (!productos[categoria]) {
-    contenedor.innerHTML = "<p>No hay productos</p>";
-    return;
-  }
+      if (!data[categoria]) {
+        contenedor.innerHTML = "<p>No hay productos</p>";
+        return;
+      }
 
-  productos[categoria].forEach(prod => {
-    const card = document.createElement("div");
-    card.className = "producto";
-    card.innerHTML = `
-      <h4>${prod.nombre}</h4>
-      <p>${prod.precio}</p>
-    `;
-    contenedor.appendChild(card);
-  });
+      data[categoria].forEach(prod => {
+        const card = document.createElement("div");
+        card.className = "producto";
+        card.innerHTML = `
+          <h4>${prod.nombre}</h4>
+          <p>${prod.precio}</p>
+        `;
+        contenedor.appendChild(card);
+      });
+    })
+    .catch(err => {
+      console.error("Error cargando productos:", err);
+    });
 }
 </script>
     
