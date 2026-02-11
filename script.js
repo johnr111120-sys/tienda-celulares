@@ -3,24 +3,13 @@ function capitalizar(texto) {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
-function router() {
-  const path = window.location.pathname;
-
-  // /productos/iphone
-  if (path.startsWith("/productos/")) {
-    const subcategoria = path.split("/")[2];
-    mostrarProductosPorSubcategoria(
-      capitalizar(subcategoria)
-    );
-  }
-}
-
 window.addEventListener("popstate", router);
 
-function navegar(url) {
+function navegar(url){
   history.pushState({}, "", url);
   router();
 }
+
 
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
@@ -98,7 +87,10 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p>$${p.precio}</p>
     `;
 
-    div.onclick = () => abrirProducto(
+   div.addEventListener("click", () => {
+  navegar(`/producto/${p.slug}`);
+});
+
       p.imagen,
       p.nombre,
       `Producto ${p.subcategoria}`,
@@ -111,10 +103,15 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 }
 
 <script>
-document.querySelectorAll(".subcategoria").forEach(item => {
-  item.addEventListener("click", () => {
-    const sub = item.dataset.subcategoria.toLowerCase();
+document.querySelectorAll(".subcategoria").forEach(li => {
+  li.addEventListener("click", () => {
+    const sub = li.dataset.subcategoria.toLowerCase();
     navegar(`/productos/${sub}`);
+
+    menu.classList.remove("activo");
+    overlay.classList.remove("activo");
+  });
+});
 
     // cerrar menú
     document.getElementById("menu-categorias").classList.remove("activo");
@@ -123,3 +120,40 @@ document.querySelectorAll(".subcategoria").forEach(item => {
   });
 });
 </script>
+
+function mostrarProductoPorSlug(slug){
+  const producto = productos.find(p => p.slug === slug);
+
+  if(!producto){
+    alert("Producto no encontrado");
+    return;
+  }
+
+  abrirProducto(
+    producto.imagen,
+    producto.nombre,
+    producto.descripcion || `Producto ${producto.subcategoria}`,
+    `$${producto.precio}`,
+    `Hola, quiero información sobre ${producto.nombre}`
+  );
+}
+
+function router(){
+  const path = window.location.pathname;
+
+  // /productos/iphone
+  if(path.startsWith("/productos/")){
+    const sub = path.split("/")[2];
+    mostrarProductosPorSubcategoria(capitalizar(sub));
+    cerrarProducto(); // por si estaba abierto
+  }
+
+  // /producto/iphone-13
+  else if(path.startsWith("/producto/")){
+    const slug = path.split("/")[2];
+    mostrarProductoPorSlug(slug);
+  }
+}
+
+window.addEventListener("popstate", router);
+router();
