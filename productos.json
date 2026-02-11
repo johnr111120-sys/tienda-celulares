@@ -2,6 +2,7 @@
    {
     "id": 1,
     "nombre": "Iphone 11",
+      "slug": "iphone-11",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
@@ -10,6 +11,7 @@
    {
     "id": 2,
     "nombre": "Iphone 14 Pro Max",
+      "slug": "iphone-14",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
@@ -18,6 +20,7 @@
    {
     "id": 3,
     "nombre": "Iphone 17 Pro Max",
+      "slug": "iphone-17",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
@@ -26,6 +29,7 @@
    {
     "id": 4,
     "nombre": "Galaxy A03s",
+      "slug": "galxy-a03s",
     "categoria": "Celulares",
     "subcategoria": "Samsung",
     "precio": 12000,
@@ -34,6 +38,7 @@
    {
     "id": 5,
     "nombre": "Zte Blade",
+      "slug": "zte-blade",
     "categoria": "Celulares",
     "subcategoria": "ZTE",
     "precio": 12000,
@@ -42,6 +47,7 @@
   {
     "id": 6,
     "nombre": "ZTE Blade L210",
+     "slug": "zte-l210",
     "categoria": "Celulares",
     "subcategoria": "ZTE",
     "precio": 9000,
@@ -50,6 +56,7 @@
   {
     "id": 7,
     "nombre": "Cover 360 Magsafe",
+     "slug": "cover-360",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
@@ -58,6 +65,7 @@
    {
     "id": 8,
     "nombre": "Cover Espejo",
+      "slug": "cover-espejo",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
@@ -66,6 +74,7 @@
    {
     "id": 9,
     "nombre": "Cover Anime",
+      "slug": "cover-anime",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
@@ -74,6 +83,7 @@
  {
     "id": 10,
     "nombre": "Aerpods 2da Generacion",
+    "slug": "aerpods-2da",
     "categoria": "Accesorios",
     "subcategoria": "Audifonos",
     "precio": 1500,
@@ -82,6 +92,7 @@
  {
     "id": 11,
     "nombre": "Apple Watch Serie 3",
+    "slug": "apple-s3",
     "categoria": "Accesorios",
     "subcategoria": "Smartwatch",
     "precio": 3500,
@@ -90,6 +101,7 @@
  {
     "id": 12,
     "nombre": "Pendrive Vidvie",
+    "slug": "pendrive-vidvie",
     "categoria": "Accesorios",
     "subcategoria": "Usb",
     "precio": 500,
@@ -98,6 +110,7 @@
  {
     "id": 13,
     "nombre": "Ipad 4ta Generacion",
+    "slug": "ipad-4ta",
     "categoria": "Tablets",
     "subcategoria": "Ipad",
     "precio": 8500,
@@ -106,6 +119,7 @@
  {
     "id": 14,
     "nombre": "SKY T8Plus",
+    "slug": "sky-t8",
     "categoria": "Tablets",
     "subcategoria": "Android",
     "precio": 3500,
