@@ -373,17 +373,16 @@ window.addEventListener("scroll", () => {
 </script>
 
 <script>    
-const btnMenu = document.getElementById("icono-menu"); // botón azul
+const btnMenu = document.getElementById("icono-menu");
 const menu = document.getElementById("menu-categorias");
 const overlay = document.getElementById("menu-overlay");
 
 btnMenu.addEventListener("click", () => {
   menu.classList.toggle("activo");
   overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto", abierto);
+  document.body.classList.toggle("menu-abierto");
 });
 
-// cerrar tocando overlay
 overlay.addEventListener("click", () => {
   menu.classList.remove("activo");
   overlay.classList.remove("activo");
@@ -496,6 +495,8 @@ window.addEventListener("popstate", router);
 router();
 
 </script>
+
+<script src="script.js" defer></script>
 
  </main>
    </div>
