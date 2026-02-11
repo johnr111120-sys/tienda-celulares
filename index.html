@@ -373,16 +373,17 @@ window.addEventListener("scroll", () => {
 </script>
 
 <script>    
-const btnMenu = document.getElementById("icono-menu");
+const btnMenu = document.getElementById("icono-menu"); // botón azul
 const menu = document.getElementById("menu-categorias");
 const overlay = document.getElementById("menu-overlay");
 
 btnMenu.addEventListener("click", () => {
   menu.classList.toggle("activo");
   overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
+  document.body.classList.toggle("menu-abierto", abierto);
 });
 
+// cerrar tocando overlay
 overlay.addEventListener("click", () => {
   menu.classList.remove("activo");
   overlay.classList.remove("activo");
@@ -423,29 +424,26 @@ fetch("productos.json")
   .then(data => {
     productos = data;
     console.log("JSON cargado OK", productos);
-     router(); // 👈 importante
   })
   .catch(err => console.error("Error JSON", err));
 
-document.querySelectorAll(".subcategoria").forEach(li => {
-  li.addEventListener("click", () => {
-    const sub = li.dataset.subcategoria.toLowerCase();
-    navegar(`/productos/${sub}`);
-
-    menu.classList.remove("activo");
-    overlay.classList.remove("activo");
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    const subcategoria = sub.dataset.subcategoria;
+    mostrarProductosPorSubcategoria(subcategoria);
   });
 });
 
-function mostrarProductoPorSlug(slug){
-  const producto = productos.find(p => p.slug === slug);
+function mostrarProductosPorSubcategoria(subcategoria) {
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
 
   const filtrados = productos.filter(
     p => p.subcategoria === subcategoria
   );
 
-  if(!producto){
-    alert("Producto no encontrado");
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
     return;
   }
 
@@ -458,45 +456,22 @@ function mostrarProductoPorSlug(slug){
       <p>$${p.precio}</p>
     `;
 
-   div.addEventListener("click", () => {
-  navegar(`/producto/${p.slug}`);
-        abrirProducto(
-    producto.imagen,
-    producto.nombre,
-    producto.descripcion || `Producto ${producto.subcategoria}`,
-    `$${producto.precio}`,
-    `Hola, quiero información sobre ${producto.nombre}`
-  );
-}
+    div.addEventListener("click", () => {
+      abrirProducto(
+        p.imagen,
+        p.nombre,
+        `Producto ${p.subcategoria}`,
+        `$${p.precio}`,
+        `Hola, quiero información sobre ${p.nombre}`
+      );
+    });
+
     contenedor.appendChild(div);
   });
 }
 
 </script>
-
-<script>
-function router(){
-  const path = window.location.pathname;
-
-  // /productos/iphone
-  if(path.startsWith("/productos/")){
-    const sub = path.split("/")[2];
-    mostrarProductosPorSubcategoria(capitalizar(sub));
-    cerrarProducto(); // por si estaba abierto
-  }
-
-  // /producto/iphone-13
-  else if(path.startsWith("/producto/")){
-    const slug = path.split("/")[2];
-    mostrarProductoPorSlug(slug);
-  }
-}
-window.addEventListener("popstate", router);
-router();
-
-</script>
-
-<script src="script.js" defer></script>
+    
 
  </main>
    </div>
