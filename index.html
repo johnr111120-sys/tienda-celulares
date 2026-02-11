@@ -211,28 +211,6 @@ referrerpolicy="no-referrer-when-downgrade">
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
 
-<script>window.addEventListener("popstate", router);</script>
-
-<script>
-function capitalizar(texto) {
-  return texto.charAt(0).toUpperCase() + texto.slice(1);
-}
-</script>
-    
-<script>
-function router() {
-  const path = window.location.pathname;
-
-  // /productos/iphone
-  if (path.startsWith("/productos/")) {
-    const subcategoria = path.split("/")[2];
-    mostrarProductosPorSubcategoria(
-      capitalizar(subcategoria)
-    );
-  }
-}
-</script>
-    
   <script>
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
@@ -447,6 +425,20 @@ fetch("productos.json")
   })
   .catch(err => console.error("Error JSON", err));
 
+/* 2️⃣ Click en SUBCATEGORÍAS */
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    const subcategoria = sub.dataset.subcategoria;
+    mostrarProductosPorSubcategoria(subcategoria);
+
+    // cerrar menú
+    document.getElementById("menu-categorias").classList.remove("activo");
+    document.getElementById("menu-overlay").classList.remove("activo");
+    document.body.classList.remove("menu-abierto");
+  });
+});
+
+/* 3️⃣ Mostrar productos */
 function mostrarProductosPorSubcategoria(subcategoria) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -460,41 +452,36 @@ function mostrarProductosPorSubcategoria(subcategoria) {
     return;
   }
 
-  filtrados.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "producto";
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <h3>${p.nombre}</h3>
-      <p>$${p.precio}</p>
-    `;
+filtrados.forEach(p => {
+  const div = document.createElement("div");
+  div.className = "producto";
 
-    div.addEventListener("click", () => {
-      abrirProducto(
-        p.imagen,
-        p.nombre,
-        `Producto ${p.subcategoria}`,
-        `$${p.precio}`,
-        `Hola, quiero información sobre ${p.nombre}`
-      );
-    });
+  div.innerHTML = `
+    <img src="${p.imagen}" alt="${p.nombre}">
+    <h3>${p.nombre}</h3>
+    <p>$${p.precio}</p>
+  `;
 
-    contenedor.appendChild(div);
+  // 👉 CLICK = ABRIR MODAL
+  div.addEventListener("click", () => {
+      menu.classList.remove("activo");
+      overlay.classList.remove("activo");
+
+    abrirProducto(
+      p.imagen,
+      p.nombre,
+      `Producto de categoría ${p.categoria}`,
+      `$${p.precio}`,
+      `Hola, quiero información sobre ${p.nombre}`
+    );
   });
-}
+
+  contenedor.appendChild(div);
+});
 
 </script>
     
-<script>
-function navegar(url) {
-  history.pushState({}, "", url);
-  router();
-}
 
-</script>
-    
-<script>router();</script>
-    
  </main>
    </div>
     
