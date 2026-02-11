@@ -426,10 +426,8 @@ fetch("productos.json")
   .catch(err => console.error("Error JSON", err));
 
 document.querySelectorAll(".subcategoria").forEach(sub => {
-  sub.addEventListener("click", () => {
-    const subcategoria = sub.dataset.subcategoria;
-    mostrarProductosPorSubcategoria(subcategoria);
-  });
+ sub.addEventListener("click", () => {
+  navegar("/productos/" + sub.dataset.subcategoria);
 });
 
 function crearSlug(texto) {
@@ -499,28 +497,35 @@ function navegar("/productos/" + encodeURIComponent(subcategoria));
 <script>
 function navegar(url) {
   history.pushState({}, "", url);
-  manejarRuta();
+  router(); // 🔥 ESTO ES CLAVE
+}
+</script>
+    
+<script>
+function router() {
+  const path = window.location.pathname;
+
+  if (path.startsWith("/productos/")) {
+    const subcategoria = path.split("/productos/")[1];
+    mostrarProductosPorSubcategoria(subcategoria);
+  }
+
+  if (path.startsWith("/producto/")) {
+    const slug = path.split("/producto/")[1];
+    const producto = productos.find(p => p.slug === slug);
+    if (producto) {
+      abrirProducto(
+        producto.imagen,
+        producto.nombre,
+        `Producto ${producto.subcategoria}`,
+        `$${producto.precio}`,
+        `Hola, quiero información sobre ${producto.nombre}`
+      );
+    }
+  }
 }
 
 window.addEventListener("popstate", manejarRuta);
-
-function manejarRuta() {
-  const path = window.location.pathname;
-
-  // /productos/iphone
-  if (path.startsWith("/productos/")) {
-    const sub = decodeURIComponent(path.split("/productos/")[1]);
-    mostrarProductosPorSubcategoria(sub);
-    return;
-  }
-
-  // /producto/iphone-13
-  if (path.startsWith("/producto/")) {
-    const slug = path.split("/producto/")[1];
-    abrirProductoDesdeSlug(slug);
-    return;
-  }
-}
 </script>
 
 // Ejecutar al cargar
