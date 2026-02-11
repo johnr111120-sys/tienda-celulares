@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
- </head>
 <body class="inicio">
   <div class="app">
       
@@ -21,7 +20,6 @@
     <img src="./images/Logo1Porta.png" class="header-logo">
 </header>
       
-<main id="contenido">
 <header class="nav-principal">
     
 <nav class="nav-principal">
@@ -373,22 +371,22 @@ window.addEventListener("scroll", () => {
 </script>
 
 <script>    
-const btnMenu = document.getElementById("icono-menu"); // botón azul
+const btnMenu = document.getElementById("icono-menu");
 const menu = document.getElementById("menu-categorias");
 const overlay = document.getElementById("menu-overlay");
 
 btnMenu.addEventListener("click", () => {
   menu.classList.toggle("activo");
   overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto", abierto);
+  document.body.classList.toggle("menu-abierto");
 });
 
-// cerrar tocando overlay
 overlay.addEventListener("click", () => {
   menu.classList.remove("activo");
   overlay.classList.remove("activo");
   document.body.classList.remove("menu-abierto");
 });
+
 
 // acordeón (solo uno abierto)
 document.querySelectorAll(".categoria").forEach(btn => {
