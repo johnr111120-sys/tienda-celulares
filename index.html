@@ -424,26 +424,29 @@ fetch("productos.json")
   .then(data => {
     productos = data;
     console.log("JSON cargado OK", productos);
+     router(); // 👈 importante
   })
   .catch(err => console.error("Error JSON", err));
 
-document.querySelectorAll(".subcategoria").forEach(sub => {
-  sub.addEventListener("click", () => {
-    const subcategoria = sub.dataset.subcategoria;
-    mostrarProductosPorSubcategoria(subcategoria);
+document.querySelectorAll(".subcategoria").forEach(li => {
+  li.addEventListener("click", () => {
+    const sub = li.dataset.subcategoria.toLowerCase();
+    navegar(`/productos/${sub}`);
+
+    menu.classList.remove("activo");
+    overlay.classList.remove("activo");
   });
 });
 
-function mostrarProductosPorSubcategoria(subcategoria) {
-  const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = "";
+function mostrarProductoPorSlug(slug){
+  const producto = productos.find(p => p.slug === slug);
 
   const filtrados = productos.filter(
     p => p.subcategoria === subcategoria
   );
 
-  if (filtrados.length === 0) {
-    contenedor.innerHTML = "<p>No hay productos</p>";
+  if(!producto){
+    alert("Producto no encontrado");
     return;
   }
 
@@ -456,22 +459,43 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p>$${p.precio}</p>
     `;
 
-    div.addEventListener("click", () => {
-      abrirProducto(
-        p.imagen,
-        p.nombre,
-        `Producto ${p.subcategoria}`,
-        `$${p.precio}`,
-        `Hola, quiero información sobre ${p.nombre}`
-      );
-    });
-
+   div.addEventListener("click", () => {
+  navegar(`/producto/${p.slug}`);
+        abrirProducto(
+    producto.imagen,
+    producto.nombre,
+    producto.descripcion || `Producto ${producto.subcategoria}`,
+    `$${producto.precio}`,
+    `Hola, quiero información sobre ${producto.nombre}`
+  );
+}
     contenedor.appendChild(div);
   });
 }
 
 </script>
-    
+
+<script>
+function router(){
+  const path = window.location.pathname;
+
+  // /productos/iphone
+  if(path.startsWith("/productos/")){
+    const sub = path.split("/")[2];
+    mostrarProductosPorSubcategoria(capitalizar(sub));
+    cerrarProducto(); // por si estaba abierto
+  }
+
+  // /producto/iphone-13
+  else if(path.startsWith("/producto/")){
+    const slug = path.split("/")[2];
+    mostrarProductoPorSlug(slug);
+  }
+}
+window.addEventListener("popstate", router);
+router();
+
+</script>
 
  </main>
    </div>
