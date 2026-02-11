@@ -10,6 +10,22 @@ function navegar(url){
   router();
 }
 
+const btnMenu = document.getElementById("icono-menu");
+const menu = document.getElementById("menu-categorias");
+const overlay = document.getElementById("menu-overlay");
+
+btnMenu.addEventListener("click", () => {
+  menu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+  document.body.classList.toggle("menu-abierto");
+});
+
+overlay.addEventListener("click", () => {
+  menu.classList.remove("activo");
+  overlay.classList.remove("activo");
+  document.body.classList.remove("menu-abierto");
+});
+
 
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
