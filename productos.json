@@ -26,7 +26,6 @@
     { "nombre": "256GB", "precio": 22000 },
     { "nombre": "512GB", "precio": 25500 }
   ]
-}
   },
    {
     "id": 3,
@@ -41,7 +40,6 @@
     { "nombre": "256GB", "precio": 50500 },
     { "nombre": "512GB", "precio": 56000 }
   ]
-}
   },
    {
     "id": 4,
@@ -54,7 +52,6 @@
       "modelos": [
     { "nombre": "128GB", "precio": 8000 },
   ]
-}
   },
    {
     "id": 5,
@@ -67,7 +64,6 @@
       "modelos": [
     { "nombre": "128GB", "precio": 9000 },
   ]
-}
   },
   {
     "id": 6,
@@ -80,7 +76,6 @@
      "modelos": [
     { "nombre": "128GB", "precio": 799 },
   ]
-}
   },
   {
     "id": 7,
@@ -98,7 +93,6 @@
     { "nombre": "15 Pro Max", "precio": 500 },
     { "nombre": "!6 Pro Max", "precio": 500 }
   ]
-}
   },
    {
     "id": 8,
@@ -116,7 +110,6 @@
     { "nombre": "15 Pro Max", "precio": 300 },
     { "nombre": "!6 Pro Max", "precio": 300 }
   ]
-}
   },
    {
     "id": 9,
@@ -134,7 +127,6 @@
     { "nombre": "15 Pro Max", "precio": 300 },
     { "nombre": "!6 Pro Max", "precio": 300 }
   ]
-}
   },
  {
     "id": 10,
@@ -168,7 +160,6 @@
     { "nombre": "256GB", "precio": 1000 },
     { "nombre": "512GB", "precio": 1500 }
   ]
-}
   },
  {
     "id": 13,
@@ -183,7 +174,6 @@
     { "nombre": "256GB", "precio": 10500 },
     { "nombre": "512GB", "precio": 15000 }
   ]
-}
   },
  {
     "id": 14,
@@ -196,6 +186,5 @@
     "modelos": [
     { "nombre": "128GB", "precio": 3500 },
   ]
-}
   }
 ]
