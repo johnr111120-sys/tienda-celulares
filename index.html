@@ -286,12 +286,10 @@ imgModal.addEventListener("click", e=>{
 const modalProducto = document.getElementById("modal-producto");
 
 function abrirProducto(img, titulo, desc, precio, mensaje){
- document.getElementById("modal-imagen").src = producto.imagen;
-  document.getElementById("modal-nombre").textContent = producto.nombre;
-  document.getElementById("modal-descripcion").textContent =
-    "Disponible en varios modelos";
-  document.getElementById("modal-precio").textContent =
-    "$" + producto.precio;
+     document.getElementById("mp-img").src = img;
+  document.getElementById("mp-titulo").textContent = titulo;
+  document.getElementById("mp-desc").textContent =  "Disponible en varios modelos";
+  document.getElementById("mp-precio").textContent =  "$" + producto.precio;
 
   // 🔥 MODELOS dinámicos
   const selector = document.getElementById("modelo-producto");
