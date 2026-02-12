@@ -404,24 +404,29 @@ overlay.addEventListener("click", () => {
 
 
 // acordeón (solo uno abierto)
-document.addEventListener("click", function(e) {
+document.querySelectorAll(".categoria").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const sub = btn.nextElementSibling;
+    const icon = btn.querySelector("i");
 
-  // ===============================
-  // ABRIR / CERRAR CATEGORIAS
-  // ===============================
-  const categoriaBtn = e.target.closest(".categoria");
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    navegar("/productos/" + sub.dataset.subcategoria);
+  });
+});
 
-  if (categoriaBtn) {
+    document.querySelectorAll(".categoria i").forEach(i => {
+      if (i !== icon) i.className = "fi fi-bs-angle-up";
+    });
 
-    const subcategorias = categoriaBtn.nextElementSibling;
-
-    if (subcategorias && subcategorias.classList.contains("subcategorias")) {
-      subcategorias.classList.toggle("activa");
+    if (sub.style.maxHeight) {
+      sub.style.maxHeight = null;
+      icon.className = "fi fi-bs-angle-up";
+    } else {
+      sub.style.maxHeight = sub.scrollHeight + "px";
+      icon.className = "fi fi-bs-angle-down";
     }
-
-    return;
-  }
-
+  });
 });
 </script>
 
