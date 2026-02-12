@@ -275,6 +275,7 @@ imgModal.addEventListener("click", e=>{
 
 
 <script>
+
 const modalProducto = document.getElementById("modal-producto");
 
 function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
@@ -297,28 +298,34 @@ function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
     </div>
   `;
 
-  modal.style.display = "flex"; // o block según tu CSS
-}
+  modal.style.display = "flex";
 
-  // Bloquear fondo + ocultar WhatsApp flotante
+  // 🔥 Bloquear fondo
   document.body.classList.add("no-scroll");
   document.body.classList.add("modal-abierto");
 }
 
 function cerrarProducto() {
+
   const modal = document.getElementById("modal-producto");
 
   modal.style.display = "none";
-  modal.innerHTML = ""; // 🔥 limpia completamente el contenido
+  modal.innerHTML = "";
+
+  // 🔥 Restaurar scroll
+  document.body.classList.remove("no-scroll");
+  document.body.classList.remove("modal-abierto");
 }
 
-// Cerrar tocando fuera
-modal.addEventListener("click", function(e) {
+// 🔥 Cerrar tocando fuera
+modalProducto.addEventListener("click", function(e) {
   if (e.target.id === "modal-producto") {
     cerrarProducto();
   }
 });
+
 </script>
+
 
     <script>
 function scrollArriba() {
