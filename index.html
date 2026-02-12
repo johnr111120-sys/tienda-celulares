@@ -277,33 +277,46 @@ imgModal.addEventListener("click", e=>{
 <script>
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProducto(img, titulo, desc, precio, mensaje){
-  document.getElementById("mp-img").src = img;
-  document.getElementById("mp-titulo").textContent = titulo;
-  document.getElementById("mp-desc").textContent = desc;
-  document.getElementById("mp-precio").textContent = precio;
+function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 
-  // Link WhatsApp correcto
-  document.getElementById("mp-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
+  const modal = document.getElementById("modal-producto");
 
-  // Abrir modal
-  modalProducto.classList.add("activo");
+  // 🔥 limpiar siempre antes de construir
+  modal.innerHTML = "";
+
+  modal.innerHTML = `
+    <div class="modal-contenido">
+      <span class="cerrar-modal" onclick="cerrarProducto()">×</span>
+      <img src="${imagen}" alt="${nombre}">
+      <h2>${nombre}</h2>
+      <p>${descripcion}</p>
+      <h3>${precio}</h3>
+      <a href="https://wa.me/18292017321?text=${encodeURIComponent(mensajeWhatsApp)}" target="_blank">
+        Consultar por WhatsApp
+      </a>
+    </div>
+  `;
+
+  modal.style.display = "flex"; // o block según tu CSS
+}
 
   // Bloquear fondo + ocultar WhatsApp flotante
   document.body.classList.add("no-scroll");
   document.body.classList.add("modal-abierto");
 }
 
-function cerrarProducto(){
-  modalProducto.classList.remove("activo");
-  document.body.classList.remove("no-scroll");
-  document.body.classList.remove("modal-abierto");
+function cerrarProducto() {
+  const modal = document.getElementById("modal-producto");
+
+  modal.style.display = "none";
+  modal.innerHTML = ""; // 🔥 limpia completamente el contenido
 }
 
 // Cerrar tocando fuera
-modalProducto.addEventListener("click", e => {
-  if (e.target === modalProducto) cerrarProducto();
+modal.addEventListener("click", function(e) {
+  if (e.target.id === "modal-producto") {
+    cerrarProducto();
+  }
 });
 </script>
 
