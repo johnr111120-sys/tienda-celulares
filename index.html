@@ -409,11 +409,9 @@ document.querySelectorAll(".categoria").forEach(btn => {
     const sub = btn.nextElementSibling;
     const icon = btn.querySelector("i");
 
-document.querySelectorAll(".subcategoria").forEach(sub => {
-  sub.addEventListener("click", () => {
-    navegar("/productos/" + sub.dataset.subcategoria);
-  });
-});
+    document.querySelectorAll(".subcategorias").forEach(s => {
+      if (s !== sub) s.style.maxHeight = null;
+    });
 
     document.querySelectorAll(".categoria i").forEach(i => {
       if (i !== icon) i.className = "fi fi-bs-angle-up";
