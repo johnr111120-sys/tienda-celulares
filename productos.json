@@ -50,7 +50,7 @@
     "precio": 8000,
     "imagen": "images/cell9.jpg",
       "modelos": [
-    { "nombre": "128GB", "precio": 8000 },
+    { "nombre": "128GB", "precio": 8000 }
   ]
   },
    {
@@ -62,7 +62,7 @@
     "precio": 9000,
     "imagen": "images/cell8.jpg",
       "modelos": [
-    { "nombre": "128GB", "precio": 9000 },
+    { "nombre": "128GB", "precio": 9000 }
   ]
   },
   {
@@ -74,7 +74,7 @@
     "precio": 9000,
     "imagen": "images/cell7.jpg"
      "modelos": [
-    { "nombre": "128GB", "precio": 799 },
+    { "nombre": "128GB", "precio": 799 }
   ]
   },
   {
@@ -184,7 +184,7 @@
     "precio": 3500,
     "imagen": "images/tablet1.jpg",
     "modelos": [
-    { "nombre": "128GB", "precio": 3500 },
+    { "nombre": "128GB", "precio": 3500 }
   ]
   }
 ]
