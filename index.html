@@ -307,6 +307,14 @@ modalProducto.addEventListener("click", e => {
 });
 </script>
 
+    <script>
+function scrollArriba() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth" // puedes cambiar a "auto" si no quieres animación
+  });
+}
+</script>
 
     <script>
 /* =========================
@@ -484,6 +492,8 @@ function router() {
     if (vistaProductos) vistaProductos.style.display = "block";
 
     mostrarProductosPorSubcategoria(subcategoria);
+
+    scrollArriba(); // 🔥 AQUÍ
     return;
   }
 
@@ -503,6 +513,7 @@ function router() {
       );
     }
 
+    scrollArriba(); // 🔥 AQUÍ  
     return;
   }
 
@@ -511,6 +522,8 @@ function router() {
   if (vistaProductos) vistaProductos.style.display = "none";
 
   document.getElementById("productos").innerHTML = "";
+
+  scrollArriba(); // 🔥 AQUÍ TAMBIÉN
 }
 
 /* ===============================
