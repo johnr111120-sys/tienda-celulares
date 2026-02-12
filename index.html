@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -252,57 +253,60 @@ imgModal.addEventListener("click", e=>{
 });
 </script>
 
+
     
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="modal" style="display:none;">
-  <div class="modal-contenido">
-    <span class="cerrar-modal" onclick="cerrarProducto()">×</span>
-    <img id="modal-imagen">
-    <h2 id="modal-nombre"></h2>
-    <p id="modal-descripcion"></p>
-    <h3 id="modal-precio"></h3>
-    <a id="modal-whatsapp" target="_blank">Consultar por WhatsApp</a>
+<div id="modal-producto" class="mp-overlay">
+  <div class="mp-contenido">
+    
+    <button class="mp-cerrar" onclick="cerrarProducto()">✕</button>
+
+    <img id="mp-img" src="" alt="Producto">
+
+    <h3 id="mp-titulo"></h3>
+    <p id="mp-desc"></p>
+    <strong id="mp-precio"></strong>
+
+    <a id="mp-whatsapp" class="mp-wsp" target="_blank">
+      💬 Consultar por WhatsApp
+    </a>
+
   </div>
 </div>
 
-<script>
 
+<script>
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
+function abrirProducto(img, titulo, desc, precio, mensaje){
+  document.getElementById("mp-img").src = img;
+  document.getElementById("mp-titulo").textContent = titulo;
+  document.getElementById("mp-desc").textContent = desc;
+  document.getElementById("mp-precio").textContent = precio;
 
-  document.getElementById("modal-imagen").src = imagen;
-  document.getElementById("modal-nombre").textContent = nombre;
-  document.getElementById("modal-descripcion").textContent = descripcion;
-  document.getElementById("modal-precio").textContent = precio;
+  // Link WhatsApp correcto
+  document.getElementById("mp-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
 
-  document.getElementById("modal-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
+  // Abrir modal
+  modalProducto.classList.add("activo");
 
-  document.getElementById("modal-producto").style.display = "flex";
-
-  // 🔥 Bloquear fondo
+  // Bloquear fondo + ocultar WhatsApp flotante
   document.body.classList.add("no-scroll");
   document.body.classList.add("modal-abierto");
 }
 
-function cerrarProducto() {
-
-  document.getElementById("modal-producto").style.display = "none";
-
+function cerrarProducto(){
+  modalProducto.classList.remove("activo");
   document.body.classList.remove("no-scroll");
+  document.body.classList.remove("modal-abierto");
 }
 
-
-// 🔥 Cerrar tocando fuera
-modalProducto.addEventListener("click", function(e) {
-  if (e.target.id === "modal-producto") {
-    cerrarProducto();
-  }
+// Cerrar tocando fuera
+modalProducto.addEventListener("click", e => {
+  if (e.target === modalProducto) cerrarProducto();
 });
-
 </script>
-
 
     <script>
 function scrollArriba() {
