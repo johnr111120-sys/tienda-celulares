@@ -432,25 +432,32 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    VARIABLES GLOBALES
 =================================*/
+let productos = [];
+
 
 /* ===============================
    CARGAR JSON
 =================================*/
-let productos = [];
-    
+
 fetch("productos.json")
   .then(res => res.json())
   .then(data => {
     productos = data;
     console.log("✅ Productos cargados");
-    router(); // se ejecuta SOLO cuando los productos ya están cargados
-  });
-
-window.addEventListener("hashchange", router);
-
-
+    router(); // ejecutar router cuando ya cargó el JSON
+  })
   .catch(err => console.error("❌ Error cargando JSON", err));
 
+
+/* ===============================
+   NAVEGACIÓN SPA
+=================================*/
+
+function navegar(url) {
+  window.location.hash = url;
+}
+
+window.addEventListener("hashchange", router);
 
 /* ===============================
    NAVEGACIÓN SPA
