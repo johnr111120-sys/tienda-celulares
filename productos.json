@@ -50,7 +50,7 @@
     "precio": 8000,
     "imagen": "images/cell9.jpg"
      "modelos": [
-        { "nombre": "64GB", "precio": 8000 }
+        { "nombre": "64GB", "precio": 8000 },
     ]
   },
   {
@@ -62,7 +62,7 @@
     "precio": 9000,
     "imagen": "images/cell8.jpg"
      "modelos": [
-        { "nombre": "64GB", "precio": 9000 }
+        { "nombre": "64GB", "precio": 9000 },
    ]
   },
   {
@@ -74,7 +74,7 @@
     "precio": 9000,
     "imagen": "images/cell7.jpg"
      "modelos": [
-        { "nombre": "64GB", "precio": 9000 }
+        { "nombre": "64GB", "precio": 9000 },
    ]
   },
   {
@@ -137,7 +137,7 @@
     "precio": 1500,
     "imagen": "images/accesorios13.jpg"
      "modelos": [
-        { "nombre": "blanco", "precio": 1500 }
+        { "nombre": "blanco", "precio": 1500 },
    ]
   },
   {
@@ -149,7 +149,7 @@
     "precio": 3500,
     "imagen": "images/accesorios14.jpg"
      "modelos": [
-        { "nombre": "Negro", "precio": 3500 }
+        { "nombre": "Negro", "precio": 3500 },
    ]
   },
   {
@@ -190,7 +190,7 @@
     "precio": 3500,
     "imagen": "images/tablet1.jpg"
      "modelos": [
-        { "nombre": "32GB", "precio": 3500 }
+        { "nombre": "32GB", "precio": 3500 },
    ]
   }
 ]
