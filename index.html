@@ -252,27 +252,18 @@ imgModal.addEventListener("click", e=>{
 });
 </script>
 
-
     
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="mp-overlay">
-  <div class="mp-contenido">
-    
-    <button class="mp-cerrar" onclick="cerrarProducto()">✕</button>
-
-    <img id="mp-img" src="" alt="Producto">
-
-    <h3 id="mp-titulo"></h3>
-    <p id="mp-desc"></p>
-    <strong id="mp-precio"></strong>
-
-    <a id="mp-whatsapp" class="mp-wsp" target="_blank">
-      💬 Consultar por WhatsApp
-    </a>
-
+<div id="modal-producto" class="modal" style="display:none;">
+  <div class="modal-contenido">
+    <span class="cerrar-modal" onclick="cerrarProducto()">×</span>
+    <img id="modal-imagen">
+    <h2 id="modal-nombre"></h2>
+    <p id="modal-descripcion"></p>
+    <h3 id="modal-precio"></h3>
+    <a id="modal-whatsapp" target="_blank">Consultar por WhatsApp</a>
   </div>
 </div>
-
 
 <script>
 
@@ -280,25 +271,15 @@ const modalProducto = document.getElementById("modal-producto");
 
 function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 
-  const modal = document.getElementById("modal-producto");
+  document.getElementById("modal-imagen").src = imagen;
+  document.getElementById("modal-nombre").textContent = nombre;
+  document.getElementById("modal-descripcion").textContent = descripcion;
+  document.getElementById("modal-precio").textContent = precio;
 
-  // 🔥 limpiar siempre antes de construir
-  modal.innerHTML = "";
+  document.getElementById("modal-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
 
-  modal.innerHTML = `
-    <div class="modal-contenido">
-      <span class="cerrar-modal" onclick="cerrarProducto()">×</span>
-      <img src="${imagen}" alt="${nombre}">
-      <h2>${nombre}</h2>
-      <p>${descripcion}</p>
-      <h3>${precio}</h3>
-      <a href="https://wa.me/18292017321?text=${encodeURIComponent(mensajeWhatsApp)}" target="_blank">
-        Consultar por WhatsApp
-      </a>
-    </div>
-  `;
-
-  modal.style.display = "flex";
+  document.getElementById("modal-producto").style.display = "flex";
 
   // 🔥 Bloquear fondo
   document.body.classList.add("no-scroll");
@@ -307,15 +288,11 @@ function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 
 function cerrarProducto() {
 
-  const modal = document.getElementById("modal-producto");
+  document.getElementById("modal-producto").style.display = "none";
 
-  modal.style.display = "none";
-  modal.innerHTML = "";
-
-  // 🔥 Restaurar scroll
   document.body.classList.remove("no-scroll");
-  document.body.classList.remove("modal-abierto");
 }
+
 
 // 🔥 Cerrar tocando fuera
 modalProducto.addEventListener("click", function(e) {
