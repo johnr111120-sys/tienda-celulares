@@ -6,7 +6,7 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
-    "imagen": "images/cell0.jpg"
+    "imagen": "images/cell0.jpg",
     "modelos": [
     { "nombre": "64GB", "precio": 12000 },
     { "nombre": "128GB", "precio": 13500 },
@@ -20,7 +20,7 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 19000,
-    "imagen": "images/cell6.jpg"
+    "imagen": "images/cell6.jpg",
       "modelos": [
     { "nombre": "128GB", "precio": 19000 },
     { "nombre": "256GB", "precio": 22000 },
@@ -34,7 +34,7 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 48000,
-    "imagen": "images/cell1.jpg"
+    "imagen": "images/cell1.jpg",
       "modelos": [
     { "nombre": "128GB", "precio": 48000 },
     { "nombre": "256GB", "precio": 50500 },
@@ -48,7 +48,7 @@
     "categoria": "Celulares",
     "subcategoria": "Samsung",
     "precio": 8000,
-    "imagen": "images/cell9.jpg"
+    "imagen": "images/cell9.jpg",
       "modelos": [
     { "nombre": "128GB", "precio": 8000 },
   ]
@@ -60,7 +60,7 @@
     "categoria": "Celulares",
     "subcategoria": "ZTE",
     "precio": 9000,
-    "imagen": "images/cell8.jpg"
+    "imagen": "images/cell8.jpg",
       "modelos": [
     { "nombre": "128GB", "precio": 9000 },
   ]
@@ -84,11 +84,11 @@
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
-    "imagen": "images/accesorios9.jpg"
+    "imagen": "images/accesorios9.jpg",
      "modelos": [
     { "nombre": "11 Pro Max", "precio": 500 },
     { "nombre": "12 Pro max", "precio": 500 },
-    { "nombre": "13 Pro Max", "precio": 500 }
+    { "nombre": "13 Pro Max", "precio": 500 },
     { "nombre": "14 Pro Max", "precio": 500 },
     { "nombre": "15 Pro Max", "precio": 500 },
     { "nombre": "!6 Pro Max", "precio": 500 }
@@ -101,11 +101,11 @@
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
-    "imagen": "images/accesorios19.jpg"
+    "imagen": "images/accesorios19.jpg",
       "modelos": [
     { "nombre": "11 Pro Max", "precio": 300 },
     { "nombre": "12 Pro max", "precio": 300 },
-    { "nombre": "13 Pro Max", "precio": 300 }
+    { "nombre": "13 Pro Max", "precio": 300 },
     { "nombre": "14 Pro Max", "precio": 300 },
     { "nombre": "15 Pro Max", "precio": 300 },
     { "nombre": "!6 Pro Max", "precio": 300 }
@@ -118,11 +118,11 @@
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
-    "imagen": "images/accesorios6.jpg"
+    "imagen": "images/accesorios6.jpg",
       "modelos": [
     { "nombre": "11 Pro Max", "precio": 300 },
     { "nombre": "12 Pro max", "precio": 300 },
-    { "nombre": "13 Pro Max", "precio": 300 }
+    { "nombre": "13 Pro Max", "precio": 300 },
     { "nombre": "14 Pro Max", "precio": 300 },
     { "nombre": "15 Pro Max", "precio": 300 },
     { "nombre": "!6 Pro Max", "precio": 300 }
@@ -153,7 +153,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Usb",
     "precio": 500,
-    "imagen": "images/accesorios1.jpg"
+    "imagen": "images/accesorios1.jpg",
     "modelos": [
     { "nombre": "64GB", "precio": 500 },   
     { "nombre": "128GB", "precio": 800 },
@@ -168,7 +168,7 @@
     "categoria": "Tablets",
     "subcategoria": "Ipad",
     "precio": 8500,
-    "imagen": "images/tablet2.jpg"
+    "imagen": "images/tablet2.jpg",
     "modelos": [
     { "nombre": "128GB", "precio": 8500 },
     { "nombre": "256GB", "precio": 10500 },
@@ -182,7 +182,7 @@
     "categoria": "Tablets",
     "subcategoria": "Android",
     "precio": 3500,
-    "imagen": "images/tablet1.jpg"
+    "imagen": "images/tablet1.jpg",
     "modelos": [
     { "nombre": "128GB", "precio": 3500 },
   ]
