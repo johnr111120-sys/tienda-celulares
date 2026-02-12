@@ -52,8 +52,6 @@
     </button>
 </div>
 
-<section id="productos" class="productos-grid"></section>
-
 <h2 id="titulo-categoria">Productos</h2>
 <!-- OVERLAY -->
 <div id="menu-overlay"></div>
@@ -372,86 +370,93 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
-<script>
-/* ===============================
-   VARIABLES GLOBALES
-=================================*/
+<script>    
+const btnMenu = document.getElementById("icono-menu");
+const menu = document.getElementById("menu-categorias");
+const overlay = document.getElementById("menu-overlay");
 
+btnMenu.addEventListener("click", () => {
+  menu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+  document.body.classList.toggle("menu-abierto");
+});
+
+overlay.addEventListener("click", () => {
+  menu.classList.remove("activo");
+  overlay.classList.remove("activo");
+  document.body.classList.remove("menu-abierto");
+});
+
+
+// acordeón (solo uno abierto)
+document.querySelectorAll(".categoria").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const sub = btn.nextElementSibling;
+    const icon = btn.querySelector("i");
+
+    document.querySelectorAll(".subcategorias").forEach(s => {
+      if (s !== sub) s.style.maxHeight = null;
+    });
+
+    document.querySelectorAll(".categoria i").forEach(i => {
+      if (i !== icon) i.className = "fi fi-bs-angle-up";
+    });
+
+    if (sub.style.maxHeight) {
+      sub.style.maxHeight = null;
+      icon.className = "fi fi-bs-angle-up";
+    } else {
+      sub.style.maxHeight = sub.scrollHeight + "px";
+      icon.className = "fi fi-bs-angle-down";
+    }
+  });
+});
+</script>
+
+<script>
 let productos = [];
 
-
-/* ===============================
-   CARGAR JSON
-=================================*/
-
+/* 1️⃣ Cargar JSON */
 fetch("productos.json")
   .then(res => res.json())
   .then(data => {
     productos = data;
-    console.log("✅ Productos cargados");
-    router(); // ejecutar router cuando ya cargó el JSON
+    console.log("JSON cargado OK", productos);
   })
-  .catch(err => console.error("❌ Error cargando JSON", err));
+  .catch(err => console.error("Error JSON", err));
 
-
-/* ===============================
-   NAVEGACIÓN SPA
-=================================*/
-
-function navegar(url) {
-  history.pushState({}, "", url);
-  router();
-}
-
-window.addEventListener("popstate", router);
-
-
-/* ===============================
-   ROUTER PRINCIPAL
-=================================*/
-
-function router() {
-
-  const path = window.location.pathname;
-
-  // /productos/Iphone
-  if (path.startsWith("/productos/")) {
-    const subcategoria = decodeURIComponent(
-      path.split("/productos/")[1]
-    );
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    const subcategoria = sub.dataset.subcategoria;
     mostrarProductosPorSubcategoria(subcategoria);
-    return;
-  }
+  });
+});
 
-  // /producto/iphone-11
-  if (path.startsWith("/producto/")) {
-    const slug = path.split("/producto/")[1];
-    const producto = productos.find(p => p.slug === slug);
-
-    if (producto) {
-      abrirProducto(
-        producto.imagen,
-        producto.nombre,
-        `Producto ${producto.subcategoria}`,
-        `$${producto.precio}`,
-        `Hola, quiero información sobre ${producto.nombre}`
-      );
-    }
-
-    return;
-  }
-
-  // inicio
-  document.getElementById("productos").innerHTML = "";
+function crearSlug(texto) {
+  return texto
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
 }
 
+function abrirProductoDesdeSlug(slug) {
+  const producto = productos.find(
+    p => crearSlug(p.nombre) === slug
+  );
 
-/* ===============================
-   MOSTRAR PRODUCTOS
-=================================*/
+  if (!producto) return;
 
-function mostrarProductosPorSubcategoria(subcategoria) {
+  const slug = crearSlug(p.nombre);
+navegar("/producto/" + slug);
+    producto.imagen,
+    producto.nombre,
+    `Producto ${producto.subcategoria}`,
+    `$${producto.precio}`,
+    `Hola, quiero información sobre ${producto.nombre}`
+  );
+}
 
+function navegar("/productos/" + encodeURIComponent(subcategoria));
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
 
@@ -465,51 +470,64 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   }
 
   filtrados.forEach(p => {
-
     const div = document.createElement("div");
     div.className = "producto";
-
     div.innerHTML = `
       <img src="${p.imagen}" alt="${p.nombre}">
       <h3>${p.nombre}</h3>
       <p>$${p.precio}</p>
     `;
 
-    // Click abre URL del producto
     div.addEventListener("click", () => {
-      navegar("/producto/" + p.slug);
+      abrirProducto(
+        p.imagen,
+        p.nombre,
+        `Producto ${p.subcategoria}`,
+        `$${p.precio}`,
+        `Hola, quiero información sobre ${p.nombre}`
+      );
     });
 
     contenedor.appendChild(div);
   });
 }
-
-
-/* ===============================
-   CLICK EN SUBCATEGORÍAS
-=================================*/
-
-document.querySelectorAll(".subcategoria").forEach(sub => {
-
-  sub.addEventListener("click", () => {
-
-    const nombre = sub.dataset.subcategoria;
-
-    navegar("/productos/" + encodeURIComponent(nombre));
-
-    // cerrar menú
-    document.getElementById("menu-categorias")
-      .classList.remove("activo");
-
-    document.getElementById("menu-overlay")
-      .classList.remove("activo");
-  });
-
-});
 </script>
+    
+/* =========================
+   SPA ROUTER REAL
+========================= */
+<script>
+function navegar(url) {
+  history.pushState({}, "", url);
+  manejarRuta();
+}
+
+window.addEventListener("popstate", manejarRuta);
+
+function manejarRuta() {
+  const path = window.location.pathname;
+
+  // /productos/iphone
+  if (path.startsWith("/productos/")) {
+    const sub = decodeURIComponent(path.split("/productos/")[1]);
+    mostrarProductosPorSubcategoria(sub);
+    return;
+  }
+
+  // /producto/iphone-13
+  if (path.startsWith("/producto/")) {
+    const slug = path.split("/producto/")[1];
+    abrirProductoDesdeSlug(slug);
+    return;
+  }
+}
+</script>
+
+// Ejecutar al cargar
+<script> document.addEventListener("DOMContentLoaded", manejarRuta);</script>
+
  </main>
    </div>
     
-<script src="script.js"></script>
-</body>
+  </body>
 </html>
