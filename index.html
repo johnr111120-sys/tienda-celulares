@@ -436,15 +436,13 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    CARGAR JSON
 =================================*/
-
 let productos = [];
-
+    
 fetch("productos.json")
   .then(res => res.json())
   .then(data => {
-
     productos = data;
-
+    console.log("✅ Productos cargados");
     router(); // se ejecuta SOLO cuando los productos ya están cargados
   });
 
