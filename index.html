@@ -404,18 +404,27 @@ overlay.addEventListener("click", () => {
 
 
 // acordeón (solo uno abierto)
-document.addEventListener("click", function(e) {
+document.querySelectorAll(".categoria").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const sub = btn.nextElementSibling;
+    const icon = btn.querySelector("i");
 
-  const sub = e.target.closest(".subcategoria");
+    document.querySelectorAll(".subcategorias").forEach(s => {
+      if (s !== sub) s.style.maxHeight = null;
+    });
 
-  if (!sub) return;
+    document.querySelectorAll(".categoria i").forEach(i => {
+      if (i !== icon) i.className = "fi fi-bs-angle-up";
+    });
 
-  const nombre = sub.dataset.subcategoria;
-
-  if (!nombre) return;
-
-  navegar("/productos/" + encodeURIComponent(nombre));
-
+    if (sub.style.maxHeight) {
+      sub.style.maxHeight = null;
+      icon.className = "fi fi-bs-angle-up";
+    } else {
+      sub.style.maxHeight = sub.scrollHeight + "px";
+      icon.className = "fi fi-bs-angle-down";
+    }
+  });
 });
 </script>
 
@@ -450,8 +459,6 @@ function navegar(url) {
 }
 
 window.addEventListener("hashchange", router);
-window.addEventListener("load", router);
-
 
 /* ===============================
    ROUTER PRINCIPAL
@@ -461,29 +468,15 @@ function router() {
 
   const hash = window.location.hash;
 
-  const vistaInicio = document.getElementById("vista-inicio");
-  const vistaProductos = document.getElementById("vista-productos");
-
-  // PRODUCTOS POR SUBCATEGORIA
   if (hash.startsWith("#/productos/")) {
-
     const subcategoria = decodeURIComponent(
       hash.split("#/productos/")[1]
     );
-
-    vistaInicio.style.display = "none";
-    vistaProductos.style.display = "block";
-
-    document.getElementById("titulo-categoria").textContent = subcategoria;
-
     mostrarProductosPorSubcategoria(subcategoria);
-
     return;
   }
 
-  // PRODUCTO INDIVIDUAL
   if (hash.startsWith("#/producto/")) {
-
     const slug = hash.split("#/producto/")[1];
     const producto = productos.find(p => p.slug === slug);
 
@@ -499,11 +492,6 @@ function router() {
 
     return;
   }
-
-  // INICIO
-  vistaInicio.style.display = "block";
-  vistaProductos.style.display = "none";
-}
 
   document.getElementById("productos").innerHTML = "";
 }
