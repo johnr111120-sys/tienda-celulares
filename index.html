@@ -91,11 +91,13 @@
         <li class="subcategoria" data-subcategoria="Android">Android</li>
     </div>
   </aside>
-</main>
       
-<section id="productos" class="productos-grid"></section>
-      
+<main id="contenido" class="contenido">      
 
+ <!-- ========================= -->
+  <!-- VISTA INICIO (HOME) -->
+  <!-- ========================= -->
+  <div id="vista-inicio">
 <section id="sobre-nosotros" style="margin-top: 50px;">
     <h2>Sobre nosotros</h2>
     <p>Somos una tienda especializada en reparación de celulares, venta de accesorios y equipos, con atención rápida y garantía segura.</p>
@@ -158,8 +160,6 @@ al lado de Plaza La Canela.
     </div>
 
 </section>
-
-<main id="contenido" class="contenido">
          
 <section class="reseñas">
   <h2>Opiniones de nuestros clientes</h2>
@@ -185,7 +185,21 @@ al lado de Plaza La Canela.
     ⭐ Ver más reseñas en Google
   </a>
 </section>
-    
+ </div>
+
+ <!-- ========================= -->
+  <!-- VISTA PRODUCTOS (NUEVA) -->
+  <!-- ========================= -->
+  <div id="vista-productos" style="display:none;">
+
+    <h2 id="titulo-categoria"></h2>
+
+    <section id="productos" class="productos-grid"></section>
+
+  </div>
+
+</main>
+      
 <section>
     <h2>Contacto</h2>
     <p>Visítanos en nuestro local o escríbenos por WhatsApp.</p>
@@ -198,6 +212,7 @@ loading="lazy"
 referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </section>
+  </div>
     
     <footer>
   <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
@@ -544,8 +559,6 @@ document.querySelectorAll(".subcategoria").forEach(sub => {
 });
 </script>
     
-
- </main>
    </div>
     
   </body>
