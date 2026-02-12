@@ -547,23 +547,24 @@ function mostrarProductosPorSubcategoria(subcategoria) {
    CLICK EN SUBCATEGORÍAS
 =================================*/
 
-document.querySelectorAll(".subcategoria").forEach(sub => {
+document.addEventListener("click", function(e) {
 
-  sub.addEventListener("click", () => {
+  const sub = e.target.closest(".subcategoria");
+  if (!sub) return;
 
-    const nombre = sub.dataset.subcategoria;
+  const nombre = sub.dataset.subcategoria;
+  if (!nombre) return;
 
-    navegar("/productos/" + encodeURIComponent(nombre));
+  navegar("/productos/" + encodeURIComponent(nombre));
 
-    // cerrar menú
-    document.getElementById("menu-categorias")
-      .classList.remove("activo");
+  // cerrar menú
+  document.getElementById("menu-categorias")
+    ?.classList.remove("activo");
 
-    document.getElementById("menu-overlay")
-      .classList.remove("activo");
-  });
-
+  document.getElementById("menu-overlay")
+    ?.classList.remove("activo");
 });
+
 </script>
 
 <script>
