@@ -459,6 +459,8 @@ function navegar(url) {
 }
 
 window.addEventListener("hashchange", router);
+window.addEventListener("load", router);
+
 
 /* ===============================
    ROUTER PRINCIPAL
@@ -468,15 +470,29 @@ function router() {
 
   const hash = window.location.hash;
 
+  const vistaInicio = document.getElementById("vista-inicio");
+  const vistaProductos = document.getElementById("vista-productos");
+
+  // PRODUCTOS POR SUBCATEGORIA
   if (hash.startsWith("#/productos/")) {
+
     const subcategoria = decodeURIComponent(
       hash.split("#/productos/")[1]
     );
+
+    vistaInicio.style.display = "none";
+    vistaProductos.style.display = "block";
+
+    document.getElementById("titulo-categoria").textContent = subcategoria;
+
     mostrarProductosPorSubcategoria(subcategoria);
+
     return;
   }
 
+  // PRODUCTO INDIVIDUAL
   if (hash.startsWith("#/producto/")) {
+
     const slug = hash.split("#/producto/")[1];
     const producto = productos.find(p => p.slug === slug);
 
@@ -492,6 +508,11 @@ function router() {
 
     return;
   }
+
+  // INICIO
+  vistaInicio.style.display = "block";
+  vistaProductos.style.display = "none";
+}
 
   document.getElementById("productos").innerHTML = "";
 }
