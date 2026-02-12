@@ -433,20 +433,24 @@ document.querySelectorAll(".categoria").forEach(btn => {
    VARIABLES GLOBALES
 =================================*/
 
-let productos = [];
-
-
 /* ===============================
    CARGAR JSON
 =================================*/
 
+let productos = [];
+
 fetch("productos.json")
   .then(res => res.json())
   .then(data => {
+
     productos = data;
-    console.log("✅ Productos cargados");
-    router(); // ejecutar router cuando ya cargó el JSON
-  })
+
+    router(); // se ejecuta SOLO cuando los productos ya están cargados
+  });
+
+window.addEventListener("hashchange", router);
+
+
   .catch(err => console.error("❌ Error cargando JSON", err));
 
 
@@ -457,8 +461,6 @@ fetch("productos.json")
 function navegar(url) {
   window.location.hash = url;
 }
-
-window.addEventListener("hashchange", router);
 
 /* ===============================
    ROUTER PRINCIPAL
