@@ -394,9 +394,11 @@ document.querySelectorAll(".categoria").forEach(btn => {
     const sub = btn.nextElementSibling;
     const icon = btn.querySelector("i");
 
-    document.querySelectorAll(".subcategorias").forEach(s => {
-      if (s !== sub) s.style.maxHeight = null;
-    });
+document.querySelectorAll(".subcategoria").forEach(sub => {
+  sub.addEventListener("click", () => {
+    navegar("/productos/" + sub.dataset.subcategoria);
+  });
+});
 
     document.querySelectorAll(".categoria i").forEach(i => {
       if (i !== icon) i.className = "fi fi-bs-angle-up";
@@ -428,91 +430,42 @@ fetch("productos.json")
 document.querySelectorAll(".subcategoria").forEach(sub => {
  sub.addEventListener("click", () => {
   navegar("/productos/" + sub.dataset.subcategoria);
-});
-
-function crearSlug(texto) {
-  return texto
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
-}
-
-function abrirProductoDesdeSlug(slug) {
-  const producto = productos.find(
-    p => crearSlug(p.nombre) === slug
-  );
-
-  if (!producto) return;
-
-  const slug = crearSlug(p.nombre);
-navegar("/producto/" + slug);
-    producto.imagen,
-    producto.nombre,
-    `Producto ${producto.subcategoria}`,
-    `$${producto.precio}`,
-    `Hola, quiero información sobre ${producto.nombre}`
-  );
-}
-
-function navegar("/productos/" + encodeURIComponent(subcategoria));
-  const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = "";
-
-  const filtrados = productos.filter(
-    p => p.subcategoria === subcategoria
-  );
-
-  if (filtrados.length === 0) {
-    contenedor.innerHTML = "<p>No hay productos</p>";
-    return;
-  }
-
-  filtrados.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "producto";
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}">
-      <h3>${p.nombre}</h3>
-      <p>$${p.precio}</p>
-    `;
-
-    div.addEventListener("click", () => {
-      abrirProducto(
-        p.imagen,
-        p.nombre,
-        `Producto ${p.subcategoria}`,
-        `$${p.precio}`,
-        `Hola, quiero información sobre ${p.nombre}`
-      );
-    });
-
-    contenedor.appendChild(div);
   });
 }
 </script>
-    
+
+// Ejecutar al cargar
+<script> document.addEventListener("DOMContentLoaded", manejarRuta);</script>
+
+    <script>
 /* =========================
-   SPA ROUTER REAL
+   SPA ROUTER LIMPIO
 ========================= */
-<script>
+
 function navegar(url) {
   history.pushState({}, "", url);
-  router(); // 🔥 ESTO ES CLAVE
+  router();
 }
-</script>
-    
-<script>
+
 function router() {
   const path = window.location.pathname;
 
+  // 👉 /productos/Iphone
   if (path.startsWith("/productos/")) {
-    const subcategoria = path.split("/productos/")[1];
+    const subcategoria = decodeURIComponent(
+      path.split("/productos/")[1]
+    );
     mostrarProductosPorSubcategoria(subcategoria);
   }
 
+  // 👉 /producto/iphone-13
   if (path.startsWith("/producto/")) {
     const slug = path.split("/producto/")[1];
-    const producto = productos.find(p => p.slug === slug);
+
+    const producto = productos.find(
+      p => p.nombre.toLowerCase().replace(/ /g,"-") === slug
+    );
+
     if (producto) {
       abrirProducto(
         producto.imagen,
@@ -525,11 +478,12 @@ function router() {
   }
 }
 
-window.addEventListener("popstate", manejarRuta);
-</script>
+// cuando usás atrás/adelante del navegador
+window.addEventListener("popstate", router);
 
-// Ejecutar al cargar
-<script> document.addEventListener("DOMContentLoaded", manejarRuta);</script>
+// ejecutar al cargar
+document.addEventListener("DOMContentLoaded", router);
+</script>
 
  </main>
    </div>
