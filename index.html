@@ -66,9 +66,9 @@
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
-   <li class="subcategoria" data-subcategoria="Iphone">Iphone</li>
-   <li class="subcategoria" data-subcategoria="Samsung">Samsung</li>
-   <li class="subcategoria" data-subcategoria="ZTE">ZTE</li>
+  <li onclick="navegar('/productos/Iphone')">Iphone</li>
+ <li onclick="navegar('/productos/Samsung')">Samsung</li>
+  <li onclick="navegar('/productos/ZTE')">ZTE</li>
   </div>
 
   <button class="categoria">
@@ -76,10 +76,10 @@
     <i class="fi fi-bs-angle-up"></i>
   </button>
   <div class="subcategorias">
-   <li class="subcategoria" data-subcategoria="Covers">Covers</li>
-    <li class="subcategoria" data-subcategoria="Audifonos">Audifonos</li>
-    <li class="subcategoria" data-subcategoria="Smartwatch">Smartwatch</li>
-    <li class="subcategoria" data-subcategoria="Usb">Usb</li>
+   <li onclick="navegar('/productos/Covers')">Covers</li>
+  <li onclick="navegar('/productos/Audifonos')">Audifonos</li>
+   <li onclick="navegar('/productos/Smartwatch')">Smartwatch</li>
+  <li onclick="navegar('/productos/Usb')">Usb</li>
   </div>
     
      <button class="categoria">
@@ -87,8 +87,8 @@
         <i class="fi fi-bs-angle-up"></i>
       </button>
       <div class="subcategorias">
-        <li class="subcategoria" data-subcategoria="Ipad">Ipad</li>
-        <li class="subcategoria" data-subcategoria="Android">Android</li>
+       <li onclick="navegar('/productos/Ipad')">Ipad</li>
+       <li onclick="navegar('/productos/Android')">Android</li>
     </div>
   </aside>
       
@@ -459,8 +459,8 @@ fetch("productos.json")
    NAVEGACIÓN SPA
 =================================*/
 
-function navegar(url) {
-  window.location.hash = url;
+function navegar(ruta) {
+  window.location.hash = "#" + ruta;
 }
 
 window.addEventListener("hashchange", router);
