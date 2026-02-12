@@ -7,8 +7,6 @@
     "subcategoria": "Iphone",
     "precio": 12000,
     "imagen": "images/cell0.jpg"
-    "modelos": [64GB", "128GB", "256GB", "512GB"]
-   "colores": ["#000000", "#ffffff", "#1e90ff"]
   },
    {
     "id": 2,
@@ -18,8 +16,6 @@
     "subcategoria": "Iphone",
     "precio": 12000,
     "imagen": "images/cell6.jpg"
-       "modelos": [64GB", "128GB", "256GB", "512GB"]
-   "colores": ["#000000", "#ffffff", "#1e90ff"]
   },
    {
     "id": 3,
@@ -29,8 +25,6 @@
     "subcategoria": "Iphone",
     "precio": 12000,
     "imagen": "images/cell1.jpg"
-       "modelos": ["128GB", "256GB", "512GB"]
-   "colores": ["#000000", "#ffffff", "#1e90ff"]
   },
    {
     "id": 4,
@@ -40,8 +34,6 @@
     "subcategoria": "Samsung",
     "precio": 12000,
     "imagen": "images/cell9.jpg"
-       "modelos": [64GB", "128GB", "256GB"]
-   "colores": ["#000000", "#ffffff"]
   },
    {
     "id": 5,
@@ -51,8 +43,6 @@
     "subcategoria": "ZTE",
     "precio": 12000,
     "imagen": "images/cell8.jpg"
-        "modelos": [64GB", "128GB", "256GB"]
-   "colores": ["#000000", "#ffffff"]
   },
   {
     "id": 6,
@@ -62,8 +52,6 @@
     "subcategoria": "ZTE",
     "precio": 9000,
     "imagen": "images/cell7.jpg"
-   "modelos": [64GB", "128GB", "256GB"]
-   "colores": ["#000000", "#ffffff"]
   },
   {
     "id": 7,
@@ -73,8 +61,6 @@
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios9.jpg"
-       "modelos": ["iphone 11", "iphone 12", "iphone 13", "iphone 14", "iphone 15", "iphone 16", "iphone 17"]
-   "colores": ["#000000", "#ffffff", "#1e90ff"]
   },
    {
     "id": 8,
@@ -84,7 +70,6 @@
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios19.jpg"
-   "modelos": ["iphone 11", "iphone 12", "iphone 13", "iphone 14", "iphone 15", "iphone 16", "iphone 17"]
   },
    {
     "id": 9,
@@ -94,8 +79,6 @@
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios6.jpg"
-   "modelos": ["iphone 11", "iphone 12", "iphone 13", "iphone 14", "iphone 15", "iphone 16", "iphone 17"]
-   "colores": ["#000000", "#ffffff", "#1e90ff"]
   },
  {
     "id": 10,
@@ -105,7 +88,6 @@
     "subcategoria": "Audifonos",
     "precio": 1500,
     "imagen": "images/accesorios13.jpg"
-      "colores": ["#ffffff"]
   },
  {
     "id": 11,
@@ -115,7 +97,6 @@
     "subcategoria": "Smartwatch",
     "precio": 3500,
     "imagen": "images/accesorios14.jpg"
-    "colores": ["#000000", "#ffffff", "#1e90ff"]
   },
  {
     "id": 12,
@@ -125,7 +106,6 @@
     "subcategoria": "Usb",
     "precio": 500,
     "imagen": "images/accesorios1.jpg"
-     "modelos": [64GB", "128GB", "512GB"]
   },
  {
     "id": 13,
@@ -135,8 +115,6 @@
     "subcategoria": "Ipad",
     "precio": 8500,
     "imagen": "images/tablet2.jpg"
-     "modelos": [64GB", "128GB", "512GB"]
-     "colores": ["#000000", "#ffffff"]
   },
  {
     "id": 14,
@@ -146,7 +124,5 @@
     "subcategoria": "Android",
     "precio": 3500,
     "imagen": "images/tablet1.jpg"
-      "modelos": [64GB", "128GB"]
-     "colores": ["#000000"]
   }
 ]
