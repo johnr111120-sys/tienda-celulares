@@ -556,33 +556,52 @@ function router() {
 function mostrarProductosPorSubcategoria(subcategoria) {
 
   const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
 
   const filtrados = productos.filter(
     p => p.subcategoria === subcategoria
   );
 
-  contenedor.innerHTML = filtrados.map(p => `
-    <div class="producto-card">
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
 
+  filtrados.forEach(p => {
+
+    const div = document.createElement("div");
+    div.className = "producto-card";
+
+    div.innerHTML = `
       <button class="btn-fav">♡</button>
 
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
+      <img src="${p.imagen}" alt="${p.nombre}">
 
       <h3>${p.nombre}</h3>
-      <p>$${p.precio}</p>
+
+      <p class="precio">$${p.precio}</p>
 
       <div class="colores">
-        ${p.colores.map(c =>
-          `<span class="color" style="background:${c}"></span>`
-        ).join("")}
+        ${
+          p.colores
+            ? p.colores.map(c =>
+                `<span class="color" style="background:${c}"></span>`
+              ).join("")
+            : ""
+        }
       </div>
+    `;
 
-    </div>
-  `).join("");
+    // 🔥 CLICK SOLO EN LA IMAGEN (abre producto)
+    div.querySelector("img").addEventListener("click", () => {
+      navegar("/producto/" + p.slug);
+    });
+
+    contenedor.appendChild(div);
+
+  });
 
 }
-
 
 /* ===============================
    CLICK EN SUBCATEGORÍAS
