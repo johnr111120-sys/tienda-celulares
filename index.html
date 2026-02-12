@@ -252,81 +252,57 @@ imgModal.addEventListener("click", e=>{
 });
 </script>
 
-
     
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="mp-overlay">
-  <div class="mp-contenido">
-    
-    <button class="mp-cerrar" onclick="cerrarProducto()">✕</button>
-
-    <img id="mp-img" src="" alt="Producto">
-
-    <h3 id="mp-titulo"></h3>
-    <p id="mp-desc"></p>
-    <strong id="mp-precio"></strong>
-
-      <div class="modelo-selector">
-  <label>Elegir modelo</label>
-  <select id="modelo-producto"></select>
-</div>
-
-<div id="modal-colores" class="colores"></div>
-
-    <a id="mp-whatsapp" class="mp-wsp" target="_blank">
-      💬 Consultar por WhatsApp
-    </a>
-
+<div id="modal-producto" class="modal" style="display:none;">
+  <div class="modal-contenido">
+    <span class="cerrar-modal" onclick="cerrarProducto()">×</span>
+    <img id="modal-imagen">
+    <h2 id="modal-nombre"></h2>
+    <p id="modal-descripcion"></p>
+    <h3 id="modal-precio"></h3>
+    <a id="modal-whatsapp" target="_blank">Consultar por WhatsApp</a>
   </div>
 </div>
 
-
 <script>
+
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProducto(img, titulo, desc, precio, mensaje){
-     document.getElementById("mp-img").src = img;
-  document.getElementById("mp-titulo").textContent = titulo;
-  document.getElementById("mp-desc").textContent =  "Disponible en varios modelos";
-  document.getElementById("mp-precio").textContent =  "$" + producto.precio;
+function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 
-  // 🔥 MODELOS dinámicos
-  const selector = document.getElementById("modelo-producto");
-  selector.innerHTML = producto.modelos
-    .map(m => `<option>${m}</option>`)
-    .join("");
+  document.getElementById("modal-imagen").src = imagen;
+  document.getElementById("modal-nombre").textContent = nombre;
+  document.getElementById("modal-descripcion").textContent = descripcion;
+  document.getElementById("modal-precio").textContent = precio;
 
-  // 🔥 COLORES dinámicos
-  document.getElementById("modal-colores").innerHTML =
-    producto.colores.map(c =>
-      `<span class="color" style="background:${c}"></span>`
-    ).join("");
+  document.getElementById("modal-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
 
   document.getElementById("modal-producto").style.display = "flex";
 
-  // Link WhatsApp correcto
-  document.getElementById("mp-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensaje);
-
-  // Abrir modal
-  modalProducto.classList.add("activo");
-
-  // Bloquear fondo + ocultar WhatsApp flotante
+  // 🔥 Bloquear fondo
   document.body.classList.add("no-scroll");
   document.body.classList.add("modal-abierto");
 }
 
-function cerrarProducto(){
-  modalProducto.classList.remove("activo");
+function cerrarProducto() {
+
+  document.getElementById("modal-producto").style.display = "none";
+
   document.body.classList.remove("no-scroll");
-  document.body.classList.remove("modal-abierto");
 }
 
-// Cerrar tocando fuera
-modalProducto.addEventListener("click", e => {
-  if (e.target === modalProducto) cerrarProducto();
+
+// 🔥 Cerrar tocando fuera
+modalProducto.addEventListener("click", function(e) {
+  if (e.target.id === "modal-producto") {
+    cerrarProducto();
+  }
 });
+
 </script>
+
 
     <script>
 function scrollArriba() {
@@ -551,33 +527,40 @@ function router() {
 =================================*/
 
 function mostrarProductosPorSubcategoria(subcategoria) {
+    console.log("Subcategoria recibida:", subcategoria);
+    console.log("Productos cargados:", productos);
 
+    
   const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
 
   const filtrados = productos.filter(
     p => p.subcategoria === subcategoria
   );
 
-  contenedor.innerHTML = filtrados.map(p => `
-    <div class="producto-card">
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
 
-      <button class="btn-fav">♡</button>
+  filtrados.forEach(p => {
 
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
+    const div = document.createElement("div");
+    div.className = "producto";
 
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}">
       <h3>${p.nombre}</h3>
       <p>$${p.precio}</p>
+    `;
 
-      <div class="colores">
-        ${p.colores.map(c =>
-          `<span class="color" style="background:${c}"></span>`
-        ).join("")}
-      </div>
+    // Click abre URL del producto
+    div.addEventListener("click", () => {
+      navegar("/producto/" + p.slug);
+    });
 
-    </div>
-  `).join("");
-
+    contenedor.appendChild(div);
+  });
 }
 
 
