@@ -279,7 +279,7 @@ img, svg {
 }
 
 /* Botón cerrar */
-.img-modal-close {
+ .img-modal-close {
   position: absolute;
   top: 12px;
   left: 0;
@@ -302,7 +302,6 @@ img, svg {
   z-index: 10001;
   box-shadow: 0 8px 20px rgba(0,0,0,0.80);
 }
-
 /* =========================
    MODAL PRODUCTO (AISLADO)
    ========================= */
