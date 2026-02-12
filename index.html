@@ -406,15 +406,21 @@ overlay.addEventListener("click", () => {
 // acordeón (solo uno abierto)
 document.addEventListener("click", function(e) {
 
-  const sub = e.target.closest(".subcategoria");
+  // ===============================
+  // ABRIR / CERRAR CATEGORIAS
+  // ===============================
+  const categoriaBtn = e.target.closest(".categoria");
 
-  if (!sub) return;
+  if (categoriaBtn) {
 
-  const nombre = sub.dataset.subcategoria;
+    const subcategorias = categoriaBtn.nextElementSibling;
 
-  if (!nombre) return;
+    if (subcategorias && subcategorias.classList.contains("subcategorias")) {
+      subcategorias.classList.toggle("activa");
+    }
 
-  navegar("/productos/" + encodeURIComponent(nombre));
+    return;
+  }
 
 });
 </script>
