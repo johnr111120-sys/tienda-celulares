@@ -542,17 +542,22 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
   filtrados.forEach(p => {
 
-    const modeloInicial = p.modelos[0];
+  const div = document.createElement("div");
+  div.className = "producto-card";
 
-    const div = document.createElement("div");
-    div.className = "producto-card";
+  // 🔥 Si tiene modelos
+  if (p.modelos && p.modelos.length > 0) {
+
+    const modeloInicial = p.modelos[0];
 
     div.innerHTML = `
       <img src="${p.imagen}" alt="${p.nombre}"
            onclick="navegar('/producto/${p.slug}')">
       <h3>${p.nombre}</h3>
       <p class="descripcion">Disponible en varios modelos</p>
+
       <button class="btn-modelo">Elegir modelo ▼</button>
+
       <div class="modelos-dropdown" style="display:none;">
         ${p.modelos.map(m => `
           <div class="modelo-opcion"
@@ -561,6 +566,7 @@ function mostrarProductosPorSubcategoria(subcategoria) {
           </div>
         `).join("")}
       </div>
+
       <p class="precio">$${modeloInicial.precio}</p>
     `;
 
@@ -568,13 +574,17 @@ function mostrarProductosPorSubcategoria(subcategoria) {
     const dropdown = div.querySelector(".modelos-dropdown");
     const precioElemento = div.querySelector(".precio");
 
-    btnModelo.addEventListener("click", () => {
+    // Abrir / cerrar dropdown
+    btnModelo.addEventListener("click", (e) => {
+      e.stopPropagation();
       dropdown.style.display =
         dropdown.style.display === "none" ? "block" : "none";
     });
 
+    // Cambiar precio
     dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
-      op.addEventListener("click", () => {
+      op.addEventListener("click", (e) => {
+        e.stopPropagation();
         const nuevoPrecio = op.dataset.precio;
         precioElemento.textContent = "$" + nuevoPrecio;
         btnModelo.textContent = op.textContent + " ▼";
@@ -582,10 +592,21 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       });
     });
 
-    contenedor.appendChild(div);
-  });
+  } else {
 
-}
+    // 🔥 Si NO tiene modelos
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}"
+           onclick="navegar('/producto/${p.slug}')">
+      <h3>${p.nombre}</h3>
+      <p class="descripcion">Producto disponible</p>
+      <p class="precio">$${p.precio}</p>
+    `;
+  }
+
+  contenedor.appendChild(div);
+});
+
 
 
 /* ===============================
