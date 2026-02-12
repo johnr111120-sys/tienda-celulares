@@ -427,7 +427,7 @@ document.querySelectorAll(".categoria").forEach(btn => {
   });
 });
 </script>
-
+    
 <script>
 /* ===============================
    VARIABLES GLOBALES
@@ -555,6 +555,28 @@ document.querySelectorAll(".subcategoria").forEach(sub => {
     document.getElementById("menu-overlay")
       .classList.remove("activo");
   });
+
+});
+</script>
+
+<script>
+// ===============================
+// ABRIR / CERRAR CATEGORIAS
+// ===============================
+document.addEventListener("click", function(e) {
+
+  const categoriaBtn = e.target.closest(".categoria");
+
+  if (categoriaBtn) {
+
+    const subcategorias = categoriaBtn.nextElementSibling;
+
+    if (subcategorias && subcategorias.classList.contains("subcategorias")) {
+      subcategorias.classList.toggle("activa");
+    }
+
+    return;
+  }
 
 });
 </script>
