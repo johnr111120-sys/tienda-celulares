@@ -52,6 +52,8 @@
     </button>
 </div>
 
+<section id="productos" class="productos-grid"></section>
+
 <h2 id="titulo-categoria">Productos</h2>
 <!-- OVERLAY -->
 <div id="menu-overlay"></div>
@@ -370,76 +372,167 @@ window.addEventListener("scroll", () => {
 });
 </script>
 
-<script>    
-const btnMenu = document.getElementById("icono-menu");
-const menu = document.getElementById("menu-categorias");
-const overlay = document.getElementById("menu-overlay");
-
-btnMenu.addEventListener("click", () => {
-  menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
-});
-
-overlay.addEventListener("click", () => {
-  menu.classList.remove("activo");
-  overlay.classList.remove("activo");
-  document.body.classList.remove("menu-abierto");
-});
-
-
-// acordeón (solo uno abierto)
-document.querySelectorAll(".categoria").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const sub = btn.nextElementSibling;
-    const icon = btn.querySelector("i");
-
-document.querySelectorAll(".subcategoria").forEach(sub => {
-  sub.addEventListener("click", () => {
-    navegar("/productos/" + sub.dataset.subcategoria);
-  });
-});
-
-    document.querySelectorAll(".categoria i").forEach(i => {
-      if (i !== icon) i.className = "fi fi-bs-angle-up";
-    });
-
-    if (sub.style.maxHeight) {
-      sub.style.maxHeight = null;
-      icon.className = "fi fi-bs-angle-up";
-    } else {
-      sub.style.maxHeight = sub.scrollHeight + "px";
-      icon.className = "fi fi-bs-angle-down";
-    }
-  });
-});
-</script>
-
-<script>
-let productos = [];
-
-/* 1️⃣ Cargar JSON */
-fetch("productos.json")
-  .then(res => res.json())
-  .then(data => {
-    productos = data;
-    console.log("JSON cargado OK", productos);
-  })
-  .catch(err => console.error("Error JSON", err));
-
-document.querySelectorAll(".subcategoria").forEach(sub => {
- sub.addEventListener("click", () => {
-  navegar("/productos/" + sub.dataset.subcategoria);
-  });
-}
-</script>
-
-// Ejecutar al cargar
-<script> document.addEventListener("DOMContentLoaded", manejarRuta);</script>
-
     <script>
 /* =========================
-   SPA ROUTER LIMPIO
+   VARIABLES GLOBALES
+========================= */
+
+let productos = [];
+
+/* =========================
+   DOM READY
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  iniciarMenu();
+  iniciarAcordeon();
+  cargarProductos();
+  router();
+  window.addEventListener("popstate", router);
+});
+
+/* =========================
+   MENU CATEGORIAS
+========================= */
+
+function iniciarMenu() {
+  const btnMenu = document.getElementById("icono-menu");
+  const menu = document.getElementById("menu-categorias");
+  const overlay = document.getElementById("menu-overlay");
+
+  btnMenu.addEventListener("click", () => {
+    menu.classList.toggle("activo");
+    overlay.classList.toggle("activo");
+    document.body.classList.toggle("menu-abierto");
+  });
+
+  overlay.addEventListener("click", () => {
+    menu.classList.remove("activo");
+    overlay.classList.remove("activo");
+    document.body.classList.remove("menu-abierto");
+  });
+}
+
+/* =========================
+   ACORDEON SUBCATEGORIAS
+========================= */
+
+function iniciarAcordeon() {
+  document.querySelectorAll(".categoria").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sub = btn.nextElementSibling;
+
+      document.querySelectorAll(".subcategorias").forEach(s => {
+        if (s !== sub) s.style.maxHeight = null;
+      });
+
+      if (sub.style.maxHeight) {
+        sub.style.maxHeight = null;
+      } else {
+        sub.style.maxHeight = sub.scrollHeight + "px";
+      }
+    });
+  });
+
+  document.querySelectorAll(".subcategoria").forEach(sub => {
+    sub.addEventListener("click", () => {
+      navegar("/productos/" + sub.dataset.subcategoria);
+    });
+  });
+}
+
+/* =========================
+   CARGAR PRODUCTOS JSON
+========================= */
+
+function cargarProductos() {
+  fetch("productos.json")
+    .then(res => res.json())
+    .then(data => {
+      productos = data.map(p => ({
+        ...p,
+        slug: crearSlug(p.nombre)
+      }));
+      router();
+    })
+    .catch(err => console.error("Error cargando JSON", err));
+}
+
+/* =========================
+   SLUG
+========================= */
+
+function crearSlug(texto) {
+  return texto
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+}
+
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
+
+function mostrarProductosPorSubcategoria(subcategoria) {
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
+
+  const filtrados = productos.filter(
+    p => p.subcategoria === subcategoria
+  );
+
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
+
+  filtrados.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto";
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <h3>${p.nombre}</h3>
+      <p>$${p.precio}</p>
+    `;
+
+    div.addEventListener("click", () => {
+      navegar("/producto/" + p.slug);
+    });
+
+    contenedor.appendChild(div);
+  });
+}
+
+/* =========================
+   MODAL PRODUCTO
+========================= */
+
+function abrirProducto(producto) {
+  const modal = document.getElementById("modal-producto");
+
+  document.getElementById("mp-img").src = producto.imagen;
+  document.getElementById("mp-titulo").textContent = producto.nombre;
+  document.getElementById("mp-desc").textContent =
+    "Producto " + producto.subcategoria;
+  document.getElementById("mp-precio").textContent =
+    "$" + producto.precio;
+
+  document.getElementById("mp-whatsapp").href =
+    "https://wa.me/18292017321?text=" +
+    encodeURIComponent(
+      "Hola, quiero información sobre " + producto.nombre
+    );
+
+  modal.classList.add("activo");
+}
+
+function cerrarProducto() {
+  document.getElementById("modal-producto")
+    .classList.remove("activo");
+}
+
+/* =========================
+   NAVEGACION SPA
 ========================= */
 
 function navegar(url) {
@@ -450,43 +543,23 @@ function navegar(url) {
 function router() {
   const path = window.location.pathname;
 
-  // 👉 /productos/Iphone
   if (path.startsWith("/productos/")) {
-    const subcategoria = decodeURIComponent(
-      path.split("/productos/")[1]
-    );
+    const subcategoria =
+      decodeURIComponent(path.split("/productos/")[1]);
     mostrarProductosPorSubcategoria(subcategoria);
   }
 
-  // 👉 /producto/iphone-13
   if (path.startsWith("/producto/")) {
     const slug = path.split("/producto/")[1];
-
-    const producto = productos.find(
-      p => p.nombre.toLowerCase().replace(/ /g,"-") === slug
-    );
-
-    if (producto) {
-      abrirProducto(
-        producto.imagen,
-        producto.nombre,
-        `Producto ${producto.subcategoria}`,
-        `$${producto.precio}`,
-        `Hola, quiero información sobre ${producto.nombre}`
-      );
-    }
+    const producto = productos.find(p => p.slug === slug);
+    if (producto) abrirProducto(producto);
   }
 }
-
-// cuando usás atrás/adelante del navegador
-window.addEventListener("popstate", router);
-
-// ejecutar al cargar
-document.addEventListener("DOMContentLoaded", router);
 </script>
-
+    
  </main>
    </div>
     
-  </body>
+<script src="script.js"></script>
+</body>
 </html>
