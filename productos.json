@@ -1,134 +1,125 @@
 [
-   {
+  {
     "id": 1,
     "nombre": "Iphone 11",
-      "slug": "iphone-11",
+    "slug": "iphone-11",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
     "imagen": "images/cell0.jpg",
     "modelos": [
-    { "nombre": "64GB", "precio": 12000 },
-    { "nombre": "128GB", "precio": 13500 },
-    { "nombre": "5256GB", "precio": 15000 }
-  ]
+      { "nombre": "64GB", "precio": 12000 },
+      { "nombre": "128GB", "precio": 13500 },
+      { "nombre": "256GB", "precio": 15000 }
+    ]
   },
-   {
+  {
     "id": 2,
     "nombre": "Iphone 14 Pro Max",
-      "slug": "iphone-14",
+    "slug": "iphone-14",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 19000,
     "imagen": "images/cell6.jpg",
-      "modelos": [
-    { "nombre": "128GB", "precio": 19000 },
-    { "nombre": "256GB", "precio": 22000 },
-    { "nombre": "512GB", "precio": 25500 }
-  ]
+    "modelos": [
+      { "nombre": "128GB", "precio": 19000 },
+      { "nombre": "256GB", "precio": 22000 },
+      { "nombre": "512GB", "precio": 25500 }
+    ]
   },
-   {
+  {
     "id": 3,
     "nombre": "Iphone 17 Pro Max",
-      "slug": "iphone-17",
+    "slug": "iphone-17",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 48000,
     "imagen": "images/cell1.jpg",
-      "modelos": [
-    { "nombre": "128GB", "precio": 48000 },
-    { "nombre": "256GB", "precio": 50500 },
-    { "nombre": "512GB", "precio": 56000 }
-  ]
+    "modelos": [
+      { "nombre": "128GB", "precio": 48000 },
+      { "nombre": "256GB", "precio": 50500 },
+      { "nombre": "512GB", "precio": 56000 }
+    ]
   },
-   {
+  {
     "id": 4,
     "nombre": "Galaxy A03s",
-      "slug": "galxy-a03s",
+    "slug": "galaxy-a03s",
     "categoria": "Celulares",
     "subcategoria": "Samsung",
     "precio": 8000,
     "imagen": "images/cell9.jpg"
-       "modelos": [
-    { "nombre": "128GB", "precio": 8000 },
-  ]
   },
-   {
+  {
     "id": 5,
     "nombre": "Zte Blade",
-      "slug": "zte-blade",
+    "slug": "zte-blade",
     "categoria": "Celulares",
     "subcategoria": "ZTE",
     "precio": 9000,
     "imagen": "images/cell8.jpg"
-        "modelos": [
-    { "nombre": "128GB", "precio": 9000 },
-  ]
   },
   {
     "id": 6,
     "nombre": "ZTE Blade L210",
-     "slug": "zte-l210",
+    "slug": "zte-l210",
     "categoria": "Celulares",
     "subcategoria": "ZTE",
     "precio": 9000,
     "imagen": "images/cell7.jpg"
-      "modelos": [
-    { "nombre": "128GB", "precio": 799 },
-  ]
   },
   {
     "id": 7,
     "nombre": "Cover 360 Magsafe",
-     "slug": "cover-360",
+    "slug": "cover-360",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios9.jpg",
-     "modelos": [
-    { "nombre": "11 Pro Max", "precio": 500 },
-    { "nombre": "12 Pro max", "precio": 500 },
-    { "nombre": "13 Pro Max", "precio": 500 },
-    { "nombre": "14 Pro Max", "precio": 500 },
-    { "nombre": "15 Pro Max", "precio": 500 },
-    { "nombre": "16 Pro Max", "precio": 500 }
-  ]
+    "modelos": [
+      { "nombre": "11 Pro Max", "precio": 500 },
+      { "nombre": "12 Pro Max", "precio": 500 },
+      { "nombre": "13 Pro Max", "precio": 500 },
+      { "nombre": "14 Pro Max", "precio": 500 },
+      { "nombre": "15 Pro Max", "precio": 500 },
+      { "nombre": "16 Pro Max", "precio": 500 }
+    ]
   },
-   {
+  {
     "id": 8,
     "nombre": "Cover Espejo",
-      "slug": "cover-espejo",
+    "slug": "cover-espejo",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios19.jpg",
-      "modelos": [
-    { "nombre": "11 Pro Max", "precio": 300 },
-    { "nombre": "12 Pro max", "precio": 300 },
-    { "nombre": "13 Pro Max", "precio": 300 },
-    { "nombre": "14 Pro Max", "precio": 300 },
-    { "nombre": "15 Pro Max", "precio": 300 },
-    { "nombre": "16 Pro Max", "precio": 300 }
-  ]
+    "modelos": [
+      { "nombre": "11 Pro Max", "precio": 300 },
+      { "nombre": "12 Pro Max", "precio": 300 },
+      { "nombre": "13 Pro Max", "precio": 300 },
+      { "nombre": "14 Pro Max", "precio": 300 },
+      { "nombre": "15 Pro Max", "precio": 300 },
+      { "nombre": "16 Pro Max", "precio": 300 }
+    ]
   },
-   {
+  {
     "id": 9,
     "nombre": "Cover Anime",
-      "slug": "cover-anime",
+    "slug": "cover-anime",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
     "imagen": "images/accesorios6.jpg",
-      "modelos": [
-    { "nombre": "11 Pro Max", "precio": 300 },
-    { "nombre": "12 Pro max", "precio": 300 },
-    { "nombre": "13 Pro Max", "precio": 300 },
-    { "nombre": "14 Pro Max", "precio": 300 },
-    { "nombre": "15 Pro Max", "precio": 300 },
-    { "nombre": "16 Pro Max", "precio": 300 }
-  ]
+    "modelos": [
+      { "nombre": "11 Pro Max", "precio": 300 },
+      { "nombre": "12 Pro Max", "precio": 300 },
+      { "nombre": "13 Pro Max", "precio": 300 },
+      { "nombre": "14 Pro Max", "precio": 300 },
+      { "nombre": "15 Pro Max", "precio": 300 },
+      { "nombre": "16 Pro Max", "precio": 300 }
+    ]
   },
- {
+  {
     "id": 10,
     "nombre": "Aerpods 2da Generacion",
     "slug": "aerpods-2da",
@@ -136,11 +127,8 @@
     "subcategoria": "Audifonos",
     "precio": 1500,
     "imagen": "images/accesorios13.jpg"
-      "modelos": [
-    { "nombre": "blanco", "precio": 1500 },
-  ]
   },
- {
+  {
     "id": 11,
     "nombre": "Apple Watch Serie 3",
     "slug": "apple-s3",
@@ -148,13 +136,8 @@
     "subcategoria": "Smartwatch",
     "precio": 3500,
     "imagen": "images/accesorios14.jpg"
-      "modelos": [
-    { "nombre": "blanco", "precio": 3500 },
-    { "nombre": "negro", "precio": 3500 },
-     { "nombre": "rosa", "precio": 3500 }
-  ]
   },
- {
+  {
     "id": 12,
     "nombre": "Pendrive Vidvie",
     "slug": "pendrive-vidvie",
@@ -163,13 +146,13 @@
     "precio": 500,
     "imagen": "images/accesorios1.jpg",
     "modelos": [
-    { "nombre": "64GB", "precio": 500 },   
-    { "nombre": "128GB", "precio": 800 },
-    { "nombre": "256GB", "precio": 1000 },
-    { "nombre": "512GB", "precio": 1500 }
-  ]
+      { "nombre": "64GB", "precio": 500 },
+      { "nombre": "128GB", "precio": 800 },
+      { "nombre": "256GB", "precio": 1000 },
+      { "nombre": "512GB", "precio": 1500 }
+    ]
   },
- {
+  {
     "id": 13,
     "nombre": "Ipad 4ta Generacion",
     "slug": "ipad-4ta",
@@ -178,12 +161,12 @@
     "precio": 8500,
     "imagen": "images/tablet2.jpg",
     "modelos": [
-    { "nombre": "128GB", "precio": 8500 },
-    { "nombre": "256GB", "precio": 10500 },
-    { "nombre": "512GB", "precio": 15000 }
-  ]
+      { "nombre": "128GB", "precio": 8500 },
+      { "nombre": "256GB", "precio": 10500 },
+      { "nombre": "512GB", "precio": 15000 }
+    ]
   },
- {
+  {
     "id": 14,
     "nombre": "SKY T8Plus",
     "slug": "sky-t8",
@@ -191,8 +174,5 @@
     "subcategoria": "Android",
     "precio": 3500,
     "imagen": "images/tablet1.jpg"
-      "modelos": [
-    { "nombre": "128GB", "precio": 3500 },
-  ]
   }
 ]
