@@ -267,13 +267,6 @@ imgModal.addEventListener("click", e=>{
     <p id="mp-desc"></p>
     <strong id="mp-precio"></strong>
 
-      <div class="modelo-selector">
-  <label>Elegir modelo</label>
-  <select id="modelo-producto"></select>
-</div>
-
-<div id="modal-colores" class="colores"></div>
-
     <a id="mp-whatsapp" class="mp-wsp" target="_blank">
       💬 Consultar por WhatsApp
     </a>
@@ -286,10 +279,26 @@ imgModal.addEventListener("click", e=>{
 const modalProducto = document.getElementById("modal-producto");
 
 function abrirProducto(img, titulo, desc, precio, mensaje){
- document.getElementById("mp-img").src = img;
-  document.getElementById("mp-titulo").textContent = titulo;
-  document.getElementById("mp-desc").textContent = desc;
-  document.getElementById("mp-precio").textContent = precio;
+ document.getElementById("modal-imagen").src = producto.imagen;
+  document.getElementById("modal-nombre").textContent = producto.nombre;
+  document.getElementById("modal-descripcion").textContent =
+    "Disponible en varios modelos";
+  document.getElementById("modal-precio").textContent =
+    "$" + producto.precio;
+
+  // 🔥 MODELOS dinámicos
+  const selector = document.getElementById("modelo-producto");
+  selector.innerHTML = producto.modelos
+    .map(m => `<option>${m}</option>`)
+    .join("");
+
+  // 🔥 COLORES dinámicos
+  document.getElementById("modal-colores").innerHTML =
+    producto.colores.map(c =>
+      `<span class="color" style="background:${c}"></span>`
+    ).join("");
+
+  document.getElementById("modal-producto").style.display = "flex";
 
   // Link WhatsApp correcto
   document.getElementById("mp-whatsapp").href =
