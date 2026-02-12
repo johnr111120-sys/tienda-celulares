@@ -526,10 +526,7 @@ function router() {
 =================================*/
 
 function mostrarProductosPorSubcategoria(subcategoria) {
-    console.log("Subcategoria recibida:", subcategoria);
-    console.log("Productos cargados:", productos);
 
-    
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
 
@@ -542,66 +539,51 @@ function mostrarProductosPorSubcategoria(subcategoria) {
     return;
   }
 
- filtrados.forEach(p => {
+  filtrados.forEach(p => {
 
-  const modeloInicial = p.modelos[0];
+    const modeloInicial = p.modelos[0];
 
-  const div = document.createElement("div");
-  div.className = "producto-card";
+    const div = document.createElement("div");
+    div.className = "producto-card";
 
-  div.innerHTML = `
-    <img src="${p.imagen}" alt="${p.nombre}"
-         onclick="navegar('/producto/${p.slug}')">
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}"
+           onclick="navegar('/producto/${p.slug}')">
+      <h3>${p.nombre}</h3>
+      <p class="descripcion">Disponible en varios modelos</p>
+      <button class="btn-modelo">Elegir modelo ▼</button>
+      <div class="modelos-dropdown" style="display:none;">
+        ${p.modelos.map(m => `
+          <div class="modelo-opcion"
+               data-precio="${m.precio}">
+            ${m.nombre}
+          </div>
+        `).join("")}
+      </div>
+      <p class="precio">$${modeloInicial.precio}</p>
+    `;
 
-    <h3>${p.nombre}</h3>
+    const btnModelo = div.querySelector(".btn-modelo");
+    const dropdown = div.querySelector(".modelos-dropdown");
+    const precioElemento = div.querySelector(".precio");
 
-    <p class="descripcion">Disponible en varios modelos</p>
-
-    <button class="btn-modelo">Elegir modelo ▼</button>
-
-    <div class="modelos-dropdown" style="display:none;">
-      ${p.modelos.map((m, index) => `
-        <div class="modelo-opcion"
-             data-precio="${m.precio}">
-          ${m.nombre}
-        </div>
-      `).join("")}
-    </div>
-
-    <p class="precio">$${modeloInicial.precio}</p>
-  `;
-
-  const btnModelo = div.querySelector(".btn-modelo");
-  const dropdown = div.querySelector(".modelos-dropdown");
-  const precioElemento = div.querySelector(".precio");
-
-  // Abrir / cerrar dropdown
-  btnModelo.addEventListener("click", () => {
-    dropdown.style.display =
-      dropdown.style.display === "none" ? "block" : "none";
-  });
-
-  // Cambiar precio según modelo
-  dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
-    op.addEventListener("click", () => {
-
-      const nuevoPrecio = op.dataset.precio;
-      precioElemento.textContent = "$" + nuevoPrecio;
-
-      btnModelo.textContent = op.textContent + " ▼";
-      dropdown.style.display = "none";
+    btnModelo.addEventListener("click", () => {
+      dropdown.style.display =
+        dropdown.style.display === "none" ? "block" : "none";
     });
-  });
 
-  contenedor.appendChild(div);
-});
-
-    // Click abre URL del producto
-    div.addEventListener("click", () => {
-      navegar("/producto/" + p.slug);
+    dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
+      op.addEventListener("click", () => {
+        const nuevoPrecio = op.dataset.precio;
+        precioElemento.textContent = "$" + nuevoPrecio;
+        btnModelo.textContent = op.textContent + " ▼";
+        dropdown.style.display = "none";
+      });
     });
 
     contenedor.appendChild(div);
+  });
+
 }
 
 
