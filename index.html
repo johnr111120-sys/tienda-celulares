@@ -133,7 +133,8 @@ al lado de Plaza La Canela.
         <li>🔓 Desbloqueos</li>
     </ul>
 </section>
-
+</div>
+    
 <section id="galeria">
   <h2>Galería</h2>
 
@@ -158,6 +159,7 @@ al lado de Plaza La Canela.
         </div>
       </div>
     </div>
+   </div>
 
 </section>
          
@@ -185,7 +187,6 @@ al lado de Plaza La Canela.
     ⭐ Ver más reseñas en Google
   </a>
 </section>
- </div>
 
  <!-- ========================= -->
   <!-- VISTA PRODUCTOS (NUEVA) -->
@@ -467,15 +468,28 @@ function router() {
 
   const hash = window.location.hash;
 
+  const vistaInicio = document.getElementById("vista-inicio");
+  const vistaProductos = document.getElementById("vista-productos");
+
   if (hash.startsWith("#/productos/")) {
+
     const subcategoria = decodeURIComponent(
       hash.split("#/productos/")[1]
     );
+
+    // 🔥 OCULTAMOS INICIO
+    if (vistaInicio) vistaInicio.style.display = "none";
+
+    // 🔥 MOSTRAMOS PRODUCTOS
+    if (vistaProductos) vistaProductos.style.display = "block";
+
     mostrarProductosPorSubcategoria(subcategoria);
     return;
   }
 
+  // producto individual
   if (hash.startsWith("#/producto/")) {
+
     const slug = hash.split("#/producto/")[1];
     const producto = productos.find(p => p.slug === slug);
 
@@ -492,9 +506,12 @@ function router() {
     return;
   }
 
+  // 🔥 VOLVER AL INICIO
+  if (vistaInicio) vistaInicio.style.display = "block";
+  if (vistaProductos) vistaProductos.style.display = "none";
+
   document.getElementById("productos").innerHTML = "";
 }
-
 
 /* ===============================
    MOSTRAR PRODUCTOS
