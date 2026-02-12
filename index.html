@@ -286,24 +286,10 @@ imgModal.addEventListener("click", e=>{
 const modalProducto = document.getElementById("modal-producto");
 
 function abrirProducto(img, titulo, desc, precio, mensaje){
-     document.getElementById("mp-img").src = img;
+ document.getElementById("mp-img").src = img;
   document.getElementById("mp-titulo").textContent = titulo;
-  document.getElementById("mp-desc").textContent =  "Disponible en varios modelos";
-  document.getElementById("mp-precio").textContent =  "$" + producto.precio;
-
-  // 🔥 MODELOS dinámicos
-  const selector = document.getElementById("modelo-producto");
-  selector.innerHTML = producto.modelos
-    .map(m => `<option>${m}</option>`)
-    .join("");
-
-  // 🔥 COLORES dinámicos
-  document.getElementById("modal-colores").innerHTML =
-    producto.colores.map(c =>
-      `<span class="color" style="background:${c}"></span>`
-    ).join("");
-
-  document.getElementById("modal-producto").style.display = "flex";
+  document.getElementById("mp-desc").textContent = desc;
+  document.getElementById("mp-precio").textContent = precio;
 
   // Link WhatsApp correcto
   document.getElementById("mp-whatsapp").href =
