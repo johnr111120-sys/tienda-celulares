@@ -49,6 +49,9 @@
     "subcategoria": "Samsung",
     "precio": 8000,
     "imagen": "images/cell9.jpg"
+     "modelos": [
+        { "nombre": "64GB", "precio": 8000 }
+    ]
   },
   {
     "id": 5,
@@ -58,6 +61,9 @@
     "subcategoria": "ZTE",
     "precio": 9000,
     "imagen": "images/cell8.jpg"
+     "modelos": [
+        { "nombre": "64GB", "precio": 9000 }
+   ]
   },
   {
     "id": 6,
@@ -67,6 +73,9 @@
     "subcategoria": "ZTE",
     "precio": 9000,
     "imagen": "images/cell7.jpg"
+     "modelos": [
+        { "nombre": "64GB", "precio": 9000 }
+   ]
   },
   {
     "id": 7,
@@ -127,6 +136,9 @@
     "subcategoria": "Audifonos",
     "precio": 1500,
     "imagen": "images/accesorios13.jpg"
+     "modelos": [
+        { "nombre": "blanco", "precio": 1500 }
+   ]
   },
   {
     "id": 11,
@@ -136,6 +148,9 @@
     "subcategoria": "Smartwatch",
     "precio": 3500,
     "imagen": "images/accesorios14.jpg"
+     "modelos": [
+        { "nombre": "Negro", "precio": 3500 }
+   ]
   },
   {
     "id": 12,
@@ -174,5 +189,8 @@
     "subcategoria": "Android",
     "precio": 3500,
     "imagen": "images/tablet1.jpg"
+     "modelos": [
+        { "nombre": "32GB", "precio": 3500 }
+   ]
   }
 ]
