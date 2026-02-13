@@ -596,6 +596,12 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
       <p class="precio">$${modeloInicial.precio}</p>
       <button class="btn-comprar">Comprar</button>
+      div.querySelector(".btn-comprar").addEventListener("click", function(e){
+  e.stopPropagation();
+  animarAgregar(this);
+
+  // aquí puedes agregar tu lógica del carrito
+});
     `;
 
     const btnModelo = div.querySelector(".btn-modelo");
@@ -630,6 +636,12 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p class="descripcion">Producto disponible</p>
       <p class="precio">$${p.precio}</p>
       <button class="btn-comprar">Comprar</button>
+      div.querySelector(".btn-comprar").addEventListener("click", function(e){
+  e.stopPropagation();
+  animarAgregar(this);
+
+  // aquí puedes agregar tu lógica del carrito
+});
     `;
   }
 
@@ -639,6 +651,48 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
 </script>
 
+    <script>
+function animarAgregar(btn) {
+
+  const card = btn.closest(".producto-card");
+  const img = card.querySelector("img");
+  const carrito = document.getElementById("icono-carrito");
+
+  if (!img || !carrito) return;
+
+  // efecto pop
+  card.classList.add("agregado");
+  setTimeout(() => card.classList.remove("agregado"), 350);
+
+  // clonar imagen
+  const clon = img.cloneNode(true);
+  const rectImg = img.getBoundingClientRect();
+  const rectCarrito = carrito.getBoundingClientRect();
+
+  clon.classList.add("img-voladora");
+
+  clon.style.top = rectImg.top + "px";
+  clon.style.left = rectImg.left + "px";
+  clon.style.width = rectImg.width + "px";
+
+  document.body.appendChild(clon);
+
+  // animación vuelo
+  requestAnimationFrame(() => {
+    clon.style.transform = `translate(${rectCarrito.left - rectImg.left}px,
+                                      ${rectCarrito.top - rectImg.top}px)
+                            scale(.2)`;
+    clon.style.opacity = "0.5";
+  });
+
+  setTimeout(() => {
+    clon.remove();
+    carrito.classList.add("carrito-bounce");
+    setTimeout(() => carrito.classList.remove("carrito-bounce"), 400);
+  }, 700);
+}
+
+    </script>
 
 <script>
 // ===============================
