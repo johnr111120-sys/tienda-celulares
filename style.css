@@ -526,13 +526,13 @@ body.no-scroll{
   display: block;
   margin-top: 6px;
   font-weight: bold;
-  color: #25d366;
+  color: #007bff;
   font-size: 15px;
 }
 
 /* Precio resalta */
 .producto-item:hover .producto-precio{
-  color: #128c7e;
+  color: #007bff;
 }
 .app{
   position: relative;
