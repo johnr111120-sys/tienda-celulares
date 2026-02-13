@@ -607,30 +607,6 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   contenedor.appendChild(div);
 });
 
-
-
-/* ===============================
-   CLICK EN SUBCATEGORÍAS
-=================================*/
-
-document.addEventListener("click", function(e) {
-
-  const sub = e.target.closest(".subcategoria");
-  if (!sub) return;
-
-  const nombre = sub.dataset.subcategoria;
-  if (!nombre) return;
-
-  navegar("/productos/" + encodeURIComponent(nombre));
-
-  // cerrar menú
-  document.getElementById("menu-categorias")
-    ?.classList.remove("activo");
-
-  document.getElementById("menu-overlay")
-    ?.classList.remove("activo");
-});
-
 </script>
 
 <script>
