@@ -72,8 +72,12 @@ html, body {
   font-size: 22px;
   cursor: pointer;
   color: white;
+  transition: transform .15s ease;
 }
 
+.nav-icon:active {
+  transform: scale(0.85);
+}
 /* CENTRO - BUSCADOR */
 .nav-center{
   display: flex;
@@ -1214,4 +1218,29 @@ body.menu-abierto {
   0% { transform: scale(1); }
   40% { transform: scale(1.25); }
   100% { transform: scale(1); }
+}
+
+.panel-lateral {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 320px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+  transition: right .3s ease;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.panel-lateral.activo {
+  right: 0;
+}
+
+.panel-contenido {
+  padding: 20px;
+}
+
+.panel-lateral h2 {
+  margin-top: 0;
 }
