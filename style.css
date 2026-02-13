@@ -311,8 +311,8 @@ img, svg {
   justify-content: center;
   align-items: flex-start;
   z-index: 9999;
-  padding: 20px;
-  padding-top: 80px;        /* 🔥 lo baja */
+  padding: 30px;
+  padding-top: 120px;        /* 🔥 lo baja */
 }
 
 /* ========================= */
