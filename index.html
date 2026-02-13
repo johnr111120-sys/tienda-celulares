@@ -36,7 +36,9 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-  <button id="btn-carrito" class="nav-icon" title="Carrito">🛒</button>
+ <button class="nav-icon" title="Carrito">
+  🛒 <span id="cart-count">0</span>
+</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -603,7 +605,15 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
   // aquí puedes agregar tu lógica del carrito
 });
-  
+
+<button class="btn-comprar">Comprar</button>
+
+const btnComprar = div.querySelector(".btn-comprar");
+
+btnComprar.addEventListener("click", () => {
+  const precioActual = precioElemento.textContent.replace("$","");
+  agregarAlCarrito(p.nombre, precioActual, p.imagen);
+});
 
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
@@ -639,6 +649,12 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <button class="btn-comprar">Comprar</button>
      `;
      }
+
+      <button class="btn-comprar"
+onclick="agregarAlCarrito('${p.nombre}', ${p.precio}, '${p.imagen}')">
+Comprar
+</button>
+
       div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
   animarAgregar(this);
@@ -691,6 +707,22 @@ function animarAgregar(btn) {
     carrito.classList.add("carrito-bounce");
     setTimeout(() => carrito.classList.remove("carrito-bounce"), 400);
   }, 700);
+}
+
+
+function actualizarCarritoIcono() {
+  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+  document.getElementById("cart-count").textContent = total;
+}
+
+
+function animarCarrito() {
+  const icono = document.querySelector('[title="Carrito"]');
+  icono.classList.add("shake");
+
+  setTimeout(() => {
+    icono.classList.remove("shake");
+  }, 400);
 }
 
     </script>
@@ -774,6 +806,31 @@ document.getElementById("btn-favoritos").onclick = () => {
 
    </div>
 
+<script>
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio, imagen) {
+
+  const productoExistente = carrito.find(p => p.nombre === nombre);
+
+  if (productoExistente) {
+    productoExistente.cantidad++;
+  } else {
+    carrito.push({
+      nombre,
+      precio,
+      imagen,
+      cantidad: 1
+    });
+  }
+
+  actualizarCarritoIcono();
+  animarCarrito();
+}
+    
+</script>
+
+    
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
