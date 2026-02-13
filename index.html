@@ -661,6 +661,19 @@ document.addEventListener("click", function(e) {
 
 });
 </script>
+
+<script>
+document.addEventListener("touchstart", function(e) {
+  const producto = e.target.closest(".producto");
+  if (!producto) return;
+
+  producto.classList.add("touch-activo");
+
+  setTimeout(() => {
+    producto.classList.remove("touch-activo");
+  }, 150);
+});
+</script>
     
    </div>
     
