@@ -918,7 +918,7 @@ section:first-of-type {
 
 /* Si tienes un ID específico para la primera sección, también puedes usarlo: */
 #sobre-nosotros {
-    margin-top: 60px !important;
+    margin-top: 50px !important;
 }
 
 footer {
@@ -1029,15 +1029,32 @@ body.menu-abierto {
 
 #lista-productos{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(2, 1fr); /* 🔥 dos columnas */
+  gap: 20px;
+  padding: 20px;
 }
 
 .producto{
   background: #fff;
-  padding: 12px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-4px);
+}
+
+.producto-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  #productos {
+    grid-template-columns: 2fr; /* 1 columna en móvil */
+  }
 }
 
 .btn-modelo {
