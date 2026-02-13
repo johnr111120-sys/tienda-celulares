@@ -471,34 +471,38 @@ window.addEventListener("hashchange", router);
 =================================*/
 
 function router() {
-    console.log("Router ejecutado", window.location.hash);
+
+  const hash = window.location.hash;
+  console.log("Router ejecutado", hash);
 
   const vistaInicio = document.getElementById("vista-inicio");
   const vistaProductos = document.getElementById("vista-productos");
 
+  // SUBCATEGORÍAS
   if (hash.startsWith("#/productos/")) {
 
     const subcategoria = decodeURIComponent(
       hash.split("#/productos/")[1]
     );
 
-    // 🔥 OCULTAMOS INICIO
     if (vistaInicio) vistaInicio.style.display = "none";
-
-    // 🔥 MOSTRAMOS PRODUCTOS
     if (vistaProductos) vistaProductos.style.display = "block";
 
     mostrarProductosPorSubcategoria(subcategoria);
-
-    scrollArriba(); // 🔥 AQUÍ
     return;
   }
 
-  // producto individual
+  // PRODUCTO INDIVIDUAL
   if (hash.startsWith("#/producto/")) {
-
     const slug = hash.split("#/producto/")[1];
-    const producto = productos.find(p => p.slug === slug);
+    console.log("Producto:", slug);
+    return;
+  }
+
+  // INICIO
+  if (vistaInicio) vistaInicio.style.display = "block";
+  if (vistaProductos) vistaProductos.style.display = "none";
+}
 
     if (producto) {
       abrirProducto(
