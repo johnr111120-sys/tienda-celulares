@@ -1147,3 +1147,40 @@ body.menu-abierto {
 .btn-comprar:active {
   transform: scale(.97);
 }
+
+/* Mejora respuesta táctil */
+.producto {
+  transition: transform .08s ease, box-shadow .08s ease;
+  touch-action: manipulation;
+}
+
+/* efecto inmediato al tocar */
+.producto:active {
+  transform: scale(0.98);
+}
+
+/* asegurar que hover funcione también en pantallas táctiles */
+@media (hover: none) {
+  .producto:active .producto-nombre {
+    color: #007bff;
+    text-decoration: underline;
+  }
+
+  .producto:active .btn-comprar {
+    background: red;
+  }
+}
+
+.touch-activo .producto-nombre {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.touch-activo .btn-comprar {
+  background: red;
+}
+
+.producto:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
