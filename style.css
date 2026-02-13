@@ -307,11 +307,12 @@ img, svg {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.65);
-  display: none;
+  display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 9999;
   padding: 20px;
+  padding-top: 80px;        /* 🔥 lo baja */
 }
 
 /* ========================= */
