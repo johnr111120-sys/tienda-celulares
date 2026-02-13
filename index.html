@@ -304,16 +304,6 @@ document.querySelector(".cerrar-producto")
 
 </script>
 
-
-    <script>
-function scrollArriba() {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth" // puedes cambiar a "auto" si no quieres animación
-  });
-}
-</script>
-
     <script>
 /* =========================
    SWIPE DOWN PARA CERRAR
@@ -499,6 +489,10 @@ function router() {
     if (vistaProductos) vistaProductos.style.display = "block";
 
     mostrarProductosPorSubcategoria(subcategoria);
+
+     // 🔥 SOLO aquí hacemos scroll
+    window.scrollTo({ top: 0, behavior: "smooth" });
+      
     return;
   }
 
@@ -520,6 +514,8 @@ function router() {
       );
     }
 
+   
+    // ❌ AQUÍ NO HACEMOS SCROLL
     return;
   }
 
@@ -530,6 +526,9 @@ function router() {
   if (vistaProductos) vistaProductos.style.display = "none";
 
   document.getElementById("productos").innerHTML = "";
+
+   // 🔥 SOLO aquí hacemos scroll
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 /* ===============================
