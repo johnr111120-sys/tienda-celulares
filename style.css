@@ -1081,3 +1081,69 @@ body.menu-abierto {
 .modelo-opcion:hover {
   background: #f5f5f5;
 }
+
+/* =========================
+   TARJETA DE PRODUCTO
+========================= */
+
+.producto-card {
+  border: 1.5px solid #000;
+  padding: 12px;
+  background: #fff;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+/* efecto suave */
+.producto-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   NOMBRE DEL PRODUCTO
+========================= */
+
+.producto-card h3 {
+  color: #000;
+  transition: color .2s ease;
+}
+
+.producto-card:hover h3 {
+  color: #007BFF;
+  text-decoration: underline;
+}
+
+/* =========================
+   PRECIO
+========================= */
+
+.producto-card .precio {
+  color: #007BFF;
+  font-weight: bold;
+}
+
+/* =========================
+   BOTÓN COMPRAR
+========================= */
+
+.btn-comprar {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  border: none;
+  background: #007BFF;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.producto-card:hover .btn-comprar {
+  background: red;
+}
+
+/* mejora tap móvil */
+.btn-comprar:active {
+  transform: scale(.97);
+}
