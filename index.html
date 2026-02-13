@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +37,9 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-  <button id="btn-carrito" class="nav-icon" title="Carrito">🛒</button>
+ <button class="nav-icon" title="Carrito">
+  🛒 <span id="cart-count">0</span>
+</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -600,10 +603,18 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
   animarAgregar(this);
+          
+const btnComprar = div.querySelector(".btn-comprar");
 
+btnComprar.addEventListener("click", function(e){
+  e.stopPropagation();
+  animarAgregar(this);
+
+  const precioActual = precioElemento.textContent.replace("$","");
+  agregarAlCarrito(p.nombre, precioActual, p.imagen);
+});
   // aquí puedes agregar tu lógica del carrito
 });
-  
 
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
@@ -630,21 +641,23 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   } else {
 
     // 🔥 Si NO tiene modelos
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
-      <h3>${p.nombre}</h3>
-      <p class="descripcion">Producto disponible</p>
-      <p class="precio">$${p.precio}</p>
-      <button class="btn-comprar">Comprar</button>
-     `;
-     }
-      div.querySelector(".btn-comprar").addEventListener("click", function(e){
-  e.stopPropagation();
-  animarAgregar(this);
+   div.innerHTML = `
+    <img src="${p.imagen}" alt="${p.nombre}"
+         onclick="navegar('/producto/${p.slug}')">
+    <h3>${p.nombre}</h3>
+    <p class="descripcion">Producto disponible</p>
+    <p class="precio">$${p.precio}</p>
+    <button class="btn-comprar">Comprar</button>
+  `;
 
-  // aquí puedes agregar tu lógica del carrito
-});
+  const btnComprar = div.querySelector(".btn-comprar");
+
+  btnComprar.addEventListener("click", function(e){
+    e.stopPropagation();
+    animarAgregar(this);
+    agregarAlCarrito(p.nombre, p.precio, p.imagen);
+  });
+}
   
   contenedor.appendChild(div);
 });
@@ -695,6 +708,26 @@ function animarAgregar(btn) {
 
     </script>
 
+
+<script>
+function animarCarrito() {
+  const icono = document.querySelector('[title="Carrito"]');
+  icono.classList.add("shake");
+
+  setTimeout(() => {
+    icono.classList.remove("shake");
+  }, 400);
+}
+    </script>
+
+<script>
+function actualizarCarritoIcono() {
+  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+  document.getElementById("cart-count").textContent = total;
+}
+ </script>
+    
+    
 <script>
 // ===============================
 // ABRIR / CERRAR CATEGORIAS
@@ -719,7 +752,7 @@ document.addEventListener("click", function(e) {
 
 <script>
 document.addEventListener("touchstart", function(e) {
-  const producto = e.target.closest(".producto");
+ const producto = e.target.closest(".producto-card");
   if (!producto) return;
 
   producto.classList.add("touch-activo");
@@ -774,6 +807,31 @@ document.getElementById("btn-favoritos").onclick = () => {
 
    </div>
 
+<script>
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio, imagen) {
+
+  const productoExistente = carrito.find(p => p.nombre === nombre);
+
+  if (productoExistente) {
+    productoExistente.cantidad++;
+  } else {
+    carrito.push({
+      nombre,
+      precio,
+      imagen,
+      cantidad: 1
+    });
+  }
+
+  actualizarCarritoIcono();
+  animarCarrito();
+}
+    
+</script>
+
+    
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
