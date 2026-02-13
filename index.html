@@ -451,9 +451,9 @@ fetch("productos.json")
 
 function navegar(ruta) {
 
-  if (window.location.hash === "#" + ruta) {
-    // Si es la misma ruta, forzamos ejecución manual
-    router();
+  if (ruta.startsWith("/producto/")) {
+    // 🔥 reemplaza en vez de agregar al historial
+    window.location.replace("#" + ruta);
   } else {
     window.location.hash = "#" + ruta;
   }
