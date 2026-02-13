@@ -602,17 +602,14 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
   animarAgregar(this);
-
-  // aquí puedes agregar tu lógica del carrito
-});
-
-<button class="btn-comprar">Comprar</button>
-
+          
 const btnComprar = div.querySelector(".btn-comprar");
 
 btnComprar.addEventListener("click", () => {
   const precioActual = precioElemento.textContent.replace("$","");
   agregarAlCarrito(p.nombre, precioActual, p.imagen);
+});
+  // aquí puedes agregar tu lógica del carrito
 });
 
     const btnModelo = div.querySelector(".btn-modelo");
@@ -650,15 +647,14 @@ btnComprar.addEventListener("click", () => {
      `;
      }
 
+      div.querySelector(".btn-comprar").addEventListener("click", function(e){
+  e.stopPropagation();
+  animarAgregar(this);
+          
       <button class="btn-comprar"
 onclick="agregarAlCarrito('${p.nombre}', ${p.precio}, '${p.imagen}')">
 Comprar
 </button>
-
-      div.querySelector(".btn-comprar").addEventListener("click", function(e){
-  e.stopPropagation();
-  animarAgregar(this);
-
   // aquí puedes agregar tu lógica del carrito
 });
   
@@ -709,13 +705,10 @@ function animarAgregar(btn) {
   }, 700);
 }
 
-
-function actualizarCarritoIcono() {
-  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
-  document.getElementById("cart-count").textContent = total;
-}
+    </script>
 
 
+<script>
 function animarCarrito() {
   const icono = document.querySelector('[title="Carrito"]');
   icono.classList.add("shake");
@@ -724,9 +717,16 @@ function animarCarrito() {
     icono.classList.remove("shake");
   }, 400);
 }
-
     </script>
 
+<script>
+function actualizarCarritoIcono() {
+  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+  document.getElementById("cart-count").textContent = total;
+}
+ </script>
+    
+    
 <script>
 // ===============================
 // ABRIR / CERRAR CATEGORIAS
