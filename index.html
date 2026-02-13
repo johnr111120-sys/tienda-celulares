@@ -290,6 +290,9 @@ function cerrarProducto() {
 
   document.getElementById("modal-producto").style.display = "none";
   document.body.classList.remove("no-scroll");
+
+     // 🔥 IMPORTANTE
+  window.location.hash = "";
 }
 
 
@@ -527,9 +530,31 @@ function router() {
 
   document.getElementById("productos").innerHTML = "";
 
-   // 🔥 SOLO aquí hacemos scroll
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+    window.addEventListener("hashchange", function () {
+
+  const hash = window.location.hash;
+
+  // Si el usuario intenta ir hacia atrás desde un producto
+  if (hash.startsWith("#/producto/")) {
+    return; // dejamos que abra producto
+  }
+
+  // Si no hay hash o es algo diferente → volver al inicio limpio
+  if (!hash || hash === "#") {
+
+    cerrarProducto(); // cerrar modal si estaba abierto
+
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
+
+    if (vistaInicio) vistaInicio.style.display = "block";
+    if (vistaProductos) vistaProductos.style.display = "none";
+
+    document.getElementById("productos").innerHTML = "";
+  }
+
+});
+
 
 /* ===============================
    MOSTRAR PRODUCTOS
