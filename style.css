@@ -281,7 +281,8 @@ img, svg {
 /* Botón cerrar */
  .img-modal-close {
   position: absolute;
-  top: 12px;
+  top: 15px;
+  right: 15px;
   left: 0;
   width: 40px !important;
   height: 40px !important;
@@ -296,7 +297,7 @@ img, svg {
   border: 4px solid #0000FF; /* círculo azul LINEAL */
   background: transparent;  /* sin relleno */
   color: red;               /* X roja */
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   cursor: pointer;
   z-index: 10001;
