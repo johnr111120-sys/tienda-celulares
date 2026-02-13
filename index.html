@@ -451,13 +451,30 @@ fetch("productos.json")
 
 function navegar(ruta) {
 
-  if (window.location.hash === "#" + ruta) {
-    // Si es la misma ruta, forzamos ejecución manual
+  const nuevaHash = "#" + ruta;
+
+  // 🔥 Si es producto
+  if (ruta.startsWith("/producto/")) {
+
+    // Si es el mismo producto → forzar ejecución manual
+    if (window.location.hash === nuevaHash) {
+      router();
+      return;
+    }
+
+    // 🔥 Reemplazar en vez de agregar al historial
+    window.location.replace(nuevaHash);
+    return;
+  }
+
+  // 🔥 Para categorías o inicio
+  if (window.location.hash === nuevaHash) {
     router();
   } else {
-    window.location.hash = "#" + ruta;
+    window.location.hash = nuevaHash;
   }
 }
+
 
 
 window.addEventListener("load", router);
