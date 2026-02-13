@@ -35,10 +35,10 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <button class="nav-icon" title="Mi cuenta">👤</button>
-    <button class="nav-icon" title="Carrito">🛒</button>
-    <button class="nav-icon" title="Favoritos">❤️</button>
-  </div>
+   <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
+  <button id="btn-carrito" class="nav-icon" title="Carrito">🛒</button>
+  <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
+</div>
 </nav>   
  </header>
 
@@ -596,13 +596,14 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
       <p class="precio">$${modeloInicial.precio}</p>
       <button class="btn-comprar">Comprar</button>
+    `;
       div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
   animarAgregar(this);
 
   // aquí puedes agregar tu lógica del carrito
 });
-    `;
+  
 
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
@@ -636,15 +637,15 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p class="descripcion">Producto disponible</p>
       <p class="precio">$${p.precio}</p>
       <button class="btn-comprar">Comprar</button>
+     `;
+     }
       div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
   animarAgregar(this);
 
   // aquí puedes agregar tu lógica del carrito
 });
-    `;
-  }
-
+  
   contenedor.appendChild(div);
 });
 }
@@ -728,8 +729,54 @@ document.addEventListener("touchstart", function(e) {
   }, 150);
 });
 </script>
-    
+
+<script>
+const panel = document.getElementById("panel-lateral");
+const contenidoPanel = document.getElementById("panel-contenido");
+
+function abrirPanel(html){
+  contenidoPanel.innerHTML = html;
+  panel.classList.add("activo");
+}
+
+function cerrarPanel(){
+  panel.classList.remove("activo");
+}
+
+// cerrar tocando fuera
+panel.addEventListener("click", e=>{
+  if(e.target === panel) cerrarPanel();
+});
+
+// BOTONES NAV
+document.getElementById("btn-cuenta").onclick = () => {
+  abrirPanel(`
+    <h2>Mi Cuenta</h2>
+    <p>Inicia sesión para ver tus pedidos.</p>
+    <button>Iniciar sesión</button>
+  `);
+};
+
+document.getElementById("btn-carrito").onclick = () => {
+  abrirPanel(`
+    <h2>🛒 Carrito</h2>
+    <p>Tu carrito está vacío.</p>
+  `);
+};
+
+document.getElementById("btn-favoritos").onclick = () => {
+  abrirPanel(`
+    <h2>❤️ Favoritos</h2>
+    <p>No tienes productos guardados.</p>
+  `);
+};
+</script>
+
    </div>
-    
+
+<div id="panel-lateral" class="panel-lateral">
+  <div class="panel-contenido" id="panel-contenido"></div>
+</div>
+
   </body>
 </html>
