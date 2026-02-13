@@ -282,7 +282,7 @@ img, svg {
  .img-modal-close {
   position: absolute;
   top: 15px;
-  right: 15px;
+  left: 15px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
