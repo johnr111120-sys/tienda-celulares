@@ -1184,3 +1184,34 @@ body.menu-abierto {
   transform: scale(0.97);
   box-shadow: 0 2px 6px rgba(0,0,0,.2);
 }
+
+/* efecto pop al producto */
+.producto-card.agregado {
+  animation: popProducto .35s ease;
+}
+
+@keyframes popProducto {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
+/* imagen volando al carrito */
+.img-voladora {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transition: transform .7s cubic-bezier(.25,.8,.25,1), 
+              opacity .7s ease;
+}
+
+/* rebote carrito */
+.carrito-bounce {
+  animation: bounceCart .4s ease;
+}
+
+@keyframes bounceCart {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
