@@ -462,15 +462,16 @@ function navegar(ruta) {
   window.location.hash = "#" + ruta;
 }
 
+window.addEventListener("load", router);
 window.addEventListener("hashchange", router);
+
 
 /* ===============================
    ROUTER PRINCIPAL
 =================================*/
 
 function router() {
-
-  const hash = window.location.hash;
+    console.log("Router ejecutado", window.location.hash);
 
   const vistaInicio = document.getElementById("vista-inicio");
   const vistaProductos = document.getElementById("vista-productos");
