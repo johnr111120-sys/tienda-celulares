@@ -290,9 +290,6 @@ function cerrarProducto() {
 
   document.getElementById("modal-producto").style.display = "none";
   document.body.classList.remove("no-scroll");
-    
-   // 🔥 limpiar hash para poder volver a abrir el mismo producto
-  window.location.hash = "";
 }
 
 
@@ -463,8 +460,15 @@ fetch("productos.json")
 =================================*/
 
 function navegar(ruta) {
-  window.location.hash = "#" + ruta;
+
+  if (window.location.hash === "#" + ruta) {
+    // Si es la misma ruta, forzamos ejecución manual
+    router();
+  } else {
+    window.location.hash = "#" + ruta;
+  }
 }
+
 
 window.addEventListener("load", router);
 window.addEventListener("hashchange", router);
