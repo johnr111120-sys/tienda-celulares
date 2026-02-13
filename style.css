@@ -686,20 +686,20 @@ font-size: 28px !important;
 
 .servicios {
   display: grid;
-  grid-template-columns: repeat(2, minmax(2, 1fr));
+  grid-template-columns: repeat(2, minmax(2, 2fr));
   gap: 15px;
 }
 
 /* Desktop */
 @media (max-width: 600px) {
   .galeria {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 2fr);
   }
 }
 
 @media (max-width: 600px) {
   .galeria {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 2fr);
   }
 }
 /* ===== FONDO CON IMAGEN BLUR ===== */
@@ -1029,7 +1029,7 @@ body.menu-abierto {
 
 #lista-productos{
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 🔥 dos columnas */
+  grid-template-columns: repeat(2, 2fr); /* 🔥 dos columnas */
   gap: 20px;
   padding: 20px;
 }
