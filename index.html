@@ -289,8 +289,10 @@ function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 function cerrarProducto() {
 
   document.getElementById("modal-producto").style.display = "none";
-
   document.body.classList.remove("no-scroll");
+    
+   // 🔥 limpiar hash para poder volver a abrir el mismo producto
+  window.location.hash = "";
 }
 
 
