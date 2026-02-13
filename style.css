@@ -1027,9 +1027,10 @@ body.menu-abierto {
   color: #0d6efd;
 }
 
-#lista-productos{
-  display: grid;
-  grid-template-columns: repeat(2, 2fr); /* 🔥 dos columnas */
+#productos {
+  width: 100%;
+  display: grid !important;;
+  grid-template-columns: repeat(2, 1fr) !important; /* 🔥 dos columnas */
   gap: 20px;
   padding: 20px;
 }
@@ -1051,7 +1052,7 @@ body.menu-abierto {
   border-radius: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   #productos {
     grid-template-columns: 2fr; /* 1 columna en móvil */
   }
