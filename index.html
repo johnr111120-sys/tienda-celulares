@@ -860,9 +860,83 @@ document.getElementById("btn-favoritos").onclick = () => {
     
 </script>
 
+ <script>   
+const modalCarrito = document.getElementById("modal-carrito");
+const carritoBtn = document.querySelector('[title="Carrito"]');
+
+carritoBtn.addEventListener("click", () => {
+  renderizarCarrito();
+  modalCarrito.style.display = "flex";
+});
+
+document.getElementById("cerrar-carrito").onclick = () => {
+  modalCarrito.style.display = "none";
+};
+
+function renderizarCarrito() {
+  const contenedor = document.getElementById("carrito-items");
+  const totalElemento = document.getElementById("carrito-total");
+
+  contenedor.innerHTML = "";
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  let total = 0;
+
+  carrito.forEach((item, index) => {
+    total += item.precio * item.cantidad;
+
+    contenedor.innerHTML += `
+      <div class="carrito-item">
+        <div>
+          ${item.nombre}
+          ${item.modelo ? "<br><small>"+item.modelo+"</small>" : ""}
+          <br><b>$${item.precio}</b> x ${item.cantidad}
+        </div>
+        <button onclick="eliminarDelCarrito(${index})">✕</button>
+      </div>
+    `;
+  });
+
+  totalElemento.textContent = total;
+}
+
+function eliminarDelCarrito(index) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito.splice(index, 1);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  renderizarCarrito();
+  actualizarContadorCarrito();
+}
+
+document.getElementById("vaciar-carrito").onclick = () => {
+  localStorage.removeItem("carrito");
+  renderizarCarrito();
+  actualizarContadorCarrito();
+};
+
+</script>
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
+</div>
+
+<!-- MODAL CARRITO -->
+<div id="modal-carrito" class="modal-carrito">
+  <div class="modal-carrito-contenido">
+    
+    <div class="modal-carrito-header">
+      <h2>🛒 Carrito</h2>
+      <button id="cerrar-carrito">✕</button>
+    </div>
+
+    <div id="carrito-items"></div>
+
+    <div class="carrito-footer">
+      <h3>Total: $<span id="carrito-total">0</span></h3>
+      <button id="vaciar-carrito">Vaciar carrito</button>
+    </div>
+
+  </div>
 </div>
 
   </body>
