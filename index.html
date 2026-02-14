@@ -547,6 +547,10 @@ function router() {
    // 🔥 SOLO aquí hacemos scroll
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+// ===============================
+// CARRITO GLOBAL
+// ===============================
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 /* ===============================
    MOSTRAR PRODUCTOS
@@ -820,50 +824,63 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
-  function agregarAlCarrito(producto, modeloSeleccionado = null) {
+function agregarAlCarrito(producto, modelo = null) {
 
-  // 🔥 determinar precio y modelo
-  const precioFinal = modeloSeleccionado
-    ? modeloSeleccionado.precio
-    : producto.precio;
+  const idUnico = modelo
+    ? producto.id + "-" + modelo.nombre
+    : producto.id;
 
-  const nombreModelo = modeloSeleccionado
-    ? modeloSeleccionado.nombre
-    : null;
+  const precioFinal = modelo ? modelo.precio : producto.precio;
 
-  // 🔥 clave única para evitar mezclas
-  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
-
-  // 🔥 buscar si ya existe
-  const existente = carrito.find(item => item.clave === clave);
+  const existente = carrito.find(item => item.id === idUnico);
 
   if (existente) {
-    existente.cantidad += 1;   // ✅ suma 1
+    existente.cantidad += 1;
   } else {
     carrito.push({
-      clave: clave,
-      id: producto.id,
+      id: idUnico,
       nombre: producto.nombre,
-      modelo: nombreModelo,
+      modelo: modelo ? modelo.nombre : null,
       precio: precioFinal,
       imagen: producto.imagen,
       cantidad: 1
     });
   }
 
- animarCarrito();
-
-  actualizarIconoCarrito();
-
-  console.log("Carrito:", carrito);
+  guardarCarrito();          // 🔥 guarda
+  actualizarContadorCarrito(); // 🔥 actualiza contador
 }
     
 </script>
 
+<script>
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function actualizarContadorCarrito() {
+  const contador = document.querySelector(".nav-icon[title='Carrito']");
+  if (!contador) return;
+
+  let total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+
+  contador.setAttribute("data-count", total);
+}
+
+</script>
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
 
+<script>
+// ===============================
+// CARGAR CONTADOR AL INICIAR WEB
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarContadorCarrito();
+});
+</script>
+    
   </body>
 </html>
