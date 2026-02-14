@@ -36,7 +36,9 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
+<button class="nav-icon" id="btn-carrito" title="Carrito">🛒
+  <span id="contador-carrito" class="contador">0</span>
+</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -555,7 +557,6 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 /* ===============================
    MOSTRAR PRODUCTOS
 =================================*/
-
 function mostrarProductosPorSubcategoria(subcategoria) {
 
   const contenedor = document.getElementById("productos");
@@ -583,7 +584,7 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
     div.innerHTML = `
       <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
+    agregarAlCarrito(p, modeloSeleccionado);
       <h3>${p.nombre}</h3>
       <p class="descripcion">Disponible en varios modelos</p>
 
@@ -647,7 +648,7 @@ btnComprar.addEventListener("click", () => {
     // 🔥 Si NO tiene modelos
    div.innerHTML = `
     <img src="${p.imagen}" alt="${p.nombre}"
-         onclick="navegar('/producto/${p.slug}')">
+     onclick='agregarAlCarrito(${JSON.stringify(p)})'
     <h3>${p.nombre}</h3>
     <p class="descripcion">Producto disponible</p>
     <p class="precio">$${p.precio}</p>
@@ -665,6 +666,19 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 
 </script>
 
+ <script>
+function actualizarContadorCarrito() {
+  const contador = document.getElementById("contador-carrito");
+  if (!contador) return;
+
+  const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+
+  contador.textContent = total;
+
+  contador.style.display = total > 0 ? "inline-block" : "none";
+}
+</script>
+    
     <script>
 function animarAgregar(btn) {
 
@@ -831,24 +845,27 @@ function agregarAlCarrito(producto, modelo = null) {
     : producto.id;
 
   const precioFinal = modelo ? modelo.precio : producto.precio;
+  const nombreFinal = modelo
+    ? producto.nombre + " (" + modelo.nombre + ")"
+    : producto.nombre;
 
-  const existente = carrito.find(item => item.id === idUnico);
+  const existente = carrito.find(p => p.id === idUnico);
 
   if (existente) {
     existente.cantidad += 1;
   } else {
     carrito.push({
       id: idUnico,
-      nombre: producto.nombre,
-      modelo: modelo ? modelo.nombre : null,
+      nombre: nombreFinal,
       precio: precioFinal,
       imagen: producto.imagen,
       cantidad: 1
     });
   }
 
-  guardarCarrito();          // 🔥 guarda
-  actualizarContadorCarrito(); // 🔥 actualiza contador
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  actualizarContadorCarrito();
 }
     
 </script>
@@ -856,15 +873,6 @@ function agregarAlCarrito(producto, modelo = null) {
 <script>
 function guardarCarrito() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-function actualizarContadorCarrito() {
-  const contador = document.querySelector(".nav-icon[title='Carrito']");
-  if (!contador) return;
-
-  let total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-
-  contador.setAttribute("data-count", total);
 }
 
 </script>
