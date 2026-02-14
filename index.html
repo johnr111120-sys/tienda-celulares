@@ -608,11 +608,10 @@ const btnComprar = div.querySelector(".btn-comprar");
 
 btnComprar.addEventListener("click", (e) => {
   e.stopPropagation();
+  animarAgregar(btnComprar);
 
   const precioActual = precioElemento.textContent.replace("$","");
-
   agregarAlCarrito(p.nombre, precioActual, p.imagen);
-  animarAgregar(btnComprar);
 });
   // aquí puedes agregar tu lógica del carrito
 });
@@ -651,13 +650,14 @@ btnComprar.addEventListener("click", (e) => {
     <button class="btn-comprar">Comprar</button>
   `;
 
-  const btnComprar = div.querySelector(".btn-comprar");
+<div class="producto-card"></div>
+
+const btnComprar = div.querySelector(".btn-comprar");
 
 btnComprar.addEventListener("click", (e) => {
   e.stopPropagation();
-
-  agregarAlCarrito(p.nombre, p.precio, p.imagen);
   animarAgregar(btnComprar);
+  agregarAlCarrito(p.nombre, p.precio, p.imagen);
 });
 }
   
