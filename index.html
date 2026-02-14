@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -192,18 +191,6 @@ al lado de Plaza La Canela.
   <!-- VISTA PRODUCTOS (NUEVA) -->
   <!-- ========================= -->
   <div id="vista-productos" style="display:none;">
-<!-- VISTA PRODUCTO SPA -->
-<section id="vista-producto" style="display:none;">
-  <div class="producto-detalle">
-    <img id="detalle-img" src="">
-    <h2 id="detalle-nombre"></h2>
-    <p id="detalle-desc"></p>
-    <p id="detalle-precio"></p>
-
-    <button id="btn-comprar-detalle">Agregar al carrito</button>
-    <button onclick="volverAProductos()">← Volver</button>
-  </div>
-</section>
 
     <h2 id="titulo-categoria"></h2>
 
@@ -281,32 +268,38 @@ imgModal.addEventListener("click", e=>{
 
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProductoSPA(producto) {
+function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 
-  // ocultar vistas
-  document.getElementById("vista-inicio").style.display = "none";
-  document.getElementById("vista-productos").style.display = "none";
+  document.getElementById("modal-imagen").src = imagen;
+  document.getElementById("modal-nombre").textContent = nombre;
+  document.getElementById("modal-descripcion").textContent = descripcion;
+  document.getElementById("modal-precio").textContent = precio;
 
-  // mostrar vista producto
-  document.getElementById("vista-producto").style.display = "block";
+  document.getElementById("modal-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
 
-  // llenar info
-  document.getElementById("detalle-img").src = producto.imagen;
-  document.getElementById("detalle-nombre").textContent = producto.nombre;
-  document.getElementById("detalle-desc").textContent =
-    "Producto " + producto.subcategoria;
-  document.getElementById("detalle-precio").textContent =
-    "$" + producto.precio;
+  document.getElementById("modal-producto").style.display = "flex";
 
-  // botón comprar
-  document.getElementById("btn-comprar-detalle").onclick = () => {
-    agregarAlCarrito(producto);
-  };
+  // 🔥 Bloquear fondo
+  document.body.classList.add("no-scroll");
+  document.body.classList.add("modal-abierto");
 }
 
-function volverAProductos() {
-  history.back();
+function cerrarProducto() {
+
+  document.getElementById("modal-producto").style.display = "none";
+  document.body.classList.remove("no-scroll");
 }
+
+
+// 🔥 Cerrar tocando fuera
+modalProducto.addEventListener("click", function(e) {
+  if (e.target.id === "modal-producto") {
+    cerrarProducto();
+  }
+});
+document.querySelector(".cerrar-producto")
+  .addEventListener("click", cerrarProducto);
 
 </script>
 
@@ -502,15 +495,22 @@ function router() {
   // ===============================
   // SUBCATEGORÍAS
   // ===============================
-if (hash.startsWith("#/producto/")) {
-  const slug = hash.split("#/producto/")[1];
-  const producto = productos.find(p => p.slug === slug);
+  if (hash.startsWith("#/productos/")) {
 
-  if (producto) {
-    abrirProductoSPA(producto);
+    const subcategoria = decodeURIComponent(
+      hash.split("#/productos/")[1]
+    );
+
+    if (vistaInicio) vistaInicio.style.display = "none";
+    if (vistaProductos) vistaProductos.style.display = "block";
+
+    mostrarProductosPorSubcategoria(subcategoria);
+
+     // 🔥 SOLO aquí hacemos scroll
+    window.scrollTo({ top: 0, behavior: "smooth" });
+      
+    return;
   }
-  return;
-}
 
   // ===============================
   // PRODUCTO INDIVIDUAL
