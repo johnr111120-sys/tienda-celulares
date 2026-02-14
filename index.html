@@ -210,10 +210,11 @@ al lado de Plaza La Canela.
 
     <button id="btn-comprar-detalle">Agregar al carrito</button>
     <button onclick="volverAProductos()">← Volver</button>
+    <button class="btn-volver">← Volver</button>
   </div>
 </section>
       
-<section>
+<section id="contacto" class="seccion-extra">
     <h2>Contacto</h2>
     <p>Visítanos en nuestro local o escríbenos por WhatsApp.</p>
    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470.19965643254886!2d-70.8152473101403!3d19.472923799663075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1c790f7f8f709%3A0x6c4137e1bd132ae4!2sMoises%20Celulares!5e0!3m2!1ses-419!2suy!4v1769823875907!5m2!1ses-419!2suy" 
@@ -309,6 +310,8 @@ function abrirProductoSPA(producto) {
   // ocultar vistas
   document.getElementById("vista-inicio").style.display = "none";
   document.getElementById("vista-productos").style.display = "none";
+  document.querySelectorAll(".seccion-extra")
+  .forEach(sec => sec.style.display = "none");
 
   // mostrar vista producto
   document.getElementById("vista-producto").style.display = "block";
@@ -328,7 +331,20 @@ function abrirProductoSPA(producto) {
 }
 
 function volverAProductos() {
-  history.back();
+  navegar("/productos/" + ultimaSubcategoria);
+}
+// ===============================
+// BOTÓN VOLVER DESDE PRODUCTO
+// ===============================
+document.addEventListener("click", function(e) {
+  const btn = e.target.closest(".btn-volver");
+  if (!btn) return;
+  volverAProductos();
+});
+
+function cerrarProductoSPA(producto) {
+document.querySelectorAll(".seccion-extra")
+  .forEach(sec => sec.style.display = "block");
 }
 
 </script>
@@ -571,6 +587,7 @@ if (hash.startsWith("#/producto/")) {
 =================================*/
 
 function mostrarProductosPorSubcategoria(subcategoria) {
+  ultimaSubcategoria = subcategoria; // 👈 agregar
 
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
