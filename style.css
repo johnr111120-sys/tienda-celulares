@@ -1231,3 +1231,39 @@ body.menu-abierto {
 .panel-lateral h2 {
   margin-top: 0;
 }
+
+/* Contenedor del botón fijo al fondo */
+.contenedor-accion-fija {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    z-index: 100001; /* Por encima de todo */
+}
+
+.btn-comprar-spa {
+    width: 100%;
+    max-width: 400px;
+    background: #25D366; /* Verde WhatsApp */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Espaciado final para que el scroll no tape el contenido con el botón */
+.mp-contenido {
+    padding-bottom: 100px !important; 
+}
