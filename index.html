@@ -36,9 +36,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
- <button class="nav-icon" title="Carrito">
-  🛒 <span id="cart-count">0</span>
-</button>
+<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -720,13 +718,23 @@ function animarCarrito() {
 
 <script>
 function actualizarIconoCarrito() {
-  const icono = document.querySelector('.nav-icon[title="Carrito"]');
+  const icono = document.getElementById("icono-carrito");
   if (!icono) return;
 
   const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
 
-  icono.setAttribute("data-count", total);
+  // eliminar contador anterior
+  let badge = icono.querySelector(".carrito-contador");
+  if (badge) badge.remove();
+
+  if (total > 0) {
+    badge = document.createElement("span");
+    badge.className = "carrito-contador";
+    badge.textContent = total;
+    icono.appendChild(badge);
+  }
 }
+
  </script>
     
     
