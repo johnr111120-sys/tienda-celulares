@@ -1299,8 +1299,8 @@ body.menu-abierto {
 
 .btn-volver{
   position:absolute;
-  top:15px;
-  right:15px;
+  top:5px;
+  left:15px;
   background:#007bff;
   color:white;
   border:none;
