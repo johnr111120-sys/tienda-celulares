@@ -600,21 +600,6 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <button class="btn-comprar">Comprar</button>
     `;
 
-div.querySelector(".btn-comprar").addEventListener("click", function(e){
-  e.stopPropagation();
-  animarAgregar(this);
-    
-const btnComprar = div.querySelector(".btn-comprar");
- btnComprar.addEventListener("click", (e) => {
-  e.stopPropagation();
-  animarAgregar(btnComprar);
-
-  const precioActual = precioElemento.textContent.replace("$","");
-  agregarAlCarrito(p.nombre, precioActual, p.imagen);
-});
-  // aquí puedes agregar tu lógica del carrito
-});
-
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
     const precioElemento = div.querySelector(".precio");
@@ -626,16 +611,34 @@ const btnComprar = div.querySelector(".btn-comprar");
         dropdown.style.display === "none" ? "block" : "none";
     });
 
+  const btnComprar = div.querySelector(".btn-comprar");
+
+btnComprar.addEventListener("click", () => {
+  const precioActual = precioElemento.textContent.replace("$","");
+  const modeloActual = btnModelo.textContent.replace(" ▼","");
+
+  agregarAlCarrito(p, {
+    nombre: modeloActual,
+    precio: parseInt(precioActual)
+  });
+});
     // Cambiar precio
-    dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
-      op.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const nuevoPrecio = op.dataset.precio;
-        precioElemento.textContent = "$" + nuevoPrecio;
-        btnModelo.textContent = op.textContent + " ▼";
-        dropdown.style.display = "none";
-      });
+  dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
+  op.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const nuevoPrecio = op.dataset.precio;
+    precioElemento.textContent = "$" + nuevoPrecio;
+    btnModelo.textContent = op.textContent + " ▼";
+    dropdown.style.display = "none";
+
+    // 🔥 agregar al carrito UNA sola vez
+    agregarAlCarrito(p, {
+      nombre: op.textContent,
+      precio: parseInt(nuevoPrecio)
     });
+  });
+});
 
   } else {
 
@@ -649,12 +652,8 @@ const btnComprar = div.querySelector(".btn-comprar");
     <button class="btn-comprar">Comprar</button>
   `;
 
-const btnComprar = div.querySelector(".btn-comprar");
-
-btnComprar.addEventListener("click", (e) => {
-  e.stopPropagation();
-  animarAgregar(btnComprar);
-  agregarAlCarrito(p.nombre, p.precio, p.imagen);
+div.querySelector(".btn-comprar").addEventListener("click", () => {
+  agregarAlCarrito(p);
 });
 }
   
@@ -720,9 +719,13 @@ function animarCarrito() {
     </script>
 
 <script>
-function actualizarCarritoIcono() {
-  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
-  document.getElementById("cart-count").textContent = total;
+function actualizarIconoCarrito() {
+  const icono = document.querySelector('.nav-icon[title="Carrito"]');
+  if (!icono) return;
+
+  const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+  icono.setAttribute("data-count", total);
 }
  </script>
     
@@ -809,23 +812,42 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
-    function agregarAlCarrito(nombre, precio, imagen) {
+  function agregarAlCarrito(producto, modeloSeleccionado = null) {
 
-  const productoExistente = carrito.find(p => p.nombre === nombre);
+  // 🔥 determinar precio y modelo
+  const precioFinal = modeloSeleccionado
+    ? modeloSeleccionado.precio
+    : producto.precio;
 
-  if (productoExistente) {
-    productoExistente.cantidad++;
+  const nombreModelo = modeloSeleccionado
+    ? modeloSeleccionado.nombre
+    : null;
+
+  // 🔥 clave única para evitar mezclas
+  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
+
+  // 🔥 buscar si ya existe
+  const existente = carrito.find(item => item.clave === clave);
+
+  if (existente) {
+    existente.cantidad += 1;   // ✅ suma 1
   } else {
     carrito.push({
-      nombre,
-      precio,
-      imagen,
+      clave: clave,
+      id: producto.id,
+      nombre: producto.nombre,
+      modelo: nombreModelo,
+      precio: precioFinal,
+      imagen: producto.imagen,
       cantidad: 1
     });
   }
 
-  actualizarCarritoIcono();
-  animarCarrito();
+ animarCarrito();
+
+  actualizarIconoCarrito();
+
+  console.log("Carrito:", carrito);
 }
     
 </script>
