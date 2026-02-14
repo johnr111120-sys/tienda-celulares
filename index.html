@@ -606,6 +606,7 @@ div.querySelector(".btn-comprar").addEventListener("click", function(e){
   animarAgregar(this);
     
 const btnComprar = div.querySelector(".btn-comprar");
+ btnComprar.addEventListener("click", (e) => {
   e.stopPropagation();
   animarAgregar(btnComprar);
 
