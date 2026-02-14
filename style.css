@@ -1266,11 +1266,11 @@ body.menu-abierto {
   margin-top: 0;
 }
 
-#icono-carrito{
+#btn-carrito{
   position: relative;
 }
 
-.carrito-contador{
+.contador{
   position: absolute;
   top: -6px;
   right: -8px;
@@ -1280,6 +1280,6 @@ body.menu-abierto {
   font-weight: bold;
   padding: 2px 6px;
   border-radius: 50%;
-  min-width: 18px;
-  text-align: center;
+  display: none;
 }
+
