@@ -600,10 +600,6 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p class="precio">$${modeloInicial.precio}</p>
       <button class="btn-comprar">Comprar</button>
     `;
-      div.querySelector(".btn-comprar").addEventListener("click", function(e){
-  e.stopPropagation();
-  animarAgregar(this);
-          
 const btnComprar = div.querySelector(".btn-comprar");
 
 btnComprar.addEventListener("click", (e) => {
