@@ -36,9 +36,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-<button class="nav-icon" id="btn-carrito" title="Carrito">🛒
-  <span id="contador-carrito" class="contador">0</span>
-</button>
+<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -549,14 +547,11 @@ function router() {
    // 🔥 SOLO aquí hacemos scroll
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-// ===============================
-// CARRITO GLOBAL
-// ===============================
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 /* ===============================
    MOSTRAR PRODUCTOS
 =================================*/
+
 function mostrarProductosPorSubcategoria(subcategoria) {
 
   const contenedor = document.getElementById("productos");
@@ -584,7 +579,7 @@ function mostrarProductosPorSubcategoria(subcategoria) {
 
     div.innerHTML = `
       <img src="${p.imagen}" alt="${p.nombre}"
-    agregarAlCarrito(p, modeloSeleccionado);
+           onclick="navegar('/producto/${p.slug}')">
       <h3>${p.nombre}</h3>
       <p class="descripcion">Disponible en varios modelos</p>
 
@@ -648,7 +643,7 @@ btnComprar.addEventListener("click", () => {
     // 🔥 Si NO tiene modelos
    div.innerHTML = `
     <img src="${p.imagen}" alt="${p.nombre}"
-     onclick='agregarAlCarrito(${JSON.stringify(p)})'
+         onclick="navegar('/producto/${p.slug}')">
     <h3>${p.nombre}</h3>
     <p class="descripcion">Producto disponible</p>
     <p class="precio">$${p.precio}</p>
@@ -666,19 +661,6 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 
 </script>
 
- <script>
-function actualizarContadorCarrito() {
-  const contador = document.getElementById("contador-carrito");
-  if (!contador) return;
-
-  const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-
-  contador.textContent = total;
-
-  contador.style.display = total > 0 ? "inline-block" : "none";
-}
-</script>
-    
     <script>
 function animarAgregar(btn) {
 
@@ -838,57 +820,50 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
-function agregarAlCarrito(producto, modelo = null) {
+  function agregarAlCarrito(producto, modeloSeleccionado = null) {
 
-  const idUnico = modelo
-    ? producto.id + "-" + modelo.nombre
-    : producto.id;
+  // 🔥 determinar precio y modelo
+  const precioFinal = modeloSeleccionado
+    ? modeloSeleccionado.precio
+    : producto.precio;
 
-  const precioFinal = modelo ? modelo.precio : producto.precio;
-  const nombreFinal = modelo
-    ? producto.nombre + " (" + modelo.nombre + ")"
-    : producto.nombre;
+  const nombreModelo = modeloSeleccionado
+    ? modeloSeleccionado.nombre
+    : null;
 
-  const existente = carrito.find(p => p.id === idUnico);
+  // 🔥 clave única para evitar mezclas
+  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
+
+  // 🔥 buscar si ya existe
+  const existente = carrito.find(item => item.clave === clave);
 
   if (existente) {
-    existente.cantidad += 1;
+    existente.cantidad += 1;   // ✅ suma 1
   } else {
     carrito.push({
-      id: idUnico,
-      nombre: nombreFinal,
+      clave: clave,
+      id: producto.id,
+      nombre: producto.nombre,
+      modelo: nombreModelo,
       precio: precioFinal,
       imagen: producto.imagen,
       cantidad: 1
     });
   }
 
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+ animarCarrito();
 
-  actualizarContadorCarrito();
+  actualizarIconoCarrito();
+
+  console.log("Carrito:", carrito);
 }
     
 </script>
 
-<script>
-function guardarCarrito() {
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-</script>
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
 
-<script>
-// ===============================
-// CARGAR CONTADOR AL INICIAR WEB
-// ===============================
-document.addEventListener("DOMContentLoaded", () => {
-  actualizarContadorCarrito();
-});
-</script>
-    
   </body>
 </html>
