@@ -1355,3 +1355,14 @@ body.menu-abierto {
   border-radius:6px;
   cursor:pointer;
 }
+
+.carrito-total{
+  margin-top:15px;
+  font-size:18px;
+  font-weight:bold;
+  text-align:right;
+}
+
+#carrito-total-precio{
+  color:#007bff;
+}
