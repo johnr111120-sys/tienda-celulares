@@ -600,21 +600,18 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <button class="btn-comprar">Comprar</button>
     `;
 
-btnComprar.onclick = function(e) {
+div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
+  animarAgregar(this);
+    
+const btnComprar = div.querySelector(".btn-comprar");
+ btnComprar.addEventListener("click", (e) => {
+  e.stopPropagation();
+  animarAgregar(btnComprar);
 
-  // evita doble ejecución accidental
-  if (this.dataset.clicked === "true") return;
-
-  this.dataset.clicked = "true";
-
-  agregarAlCarrito(producto);
-
-  // permitir siguiente click después de 300ms
-  setTimeout(() => {
-    this.dataset.clicked = "false";
-  }, 300);
-};
+  const precioActual = precioElemento.textContent.replace("$","");
+  agregarAlCarrito(p.nombre, precioActual, p.imagen);
+});
   // aquí puedes agregar tu lógica del carrito
 });
 
@@ -812,17 +809,23 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
-   function agregarAlCarrito(producto) {
-  const existente = carrito.find(p => p.id === producto.id);
+    function agregarAlCarrito(nombre, precio, imagen) {
 
-  if (existente) {
-    existente.cantidad += 1;
+  const productoExistente = carrito.find(p => p.nombre === nombre);
+
+  if (productoExistente) {
+    productoExistente.cantidad++;
   } else {
-    carrito.push({ ...producto, cantidad: 1 });
+    carrito.push({
+      nombre,
+      precio,
+      imagen,
+      cantidad: 1
+    });
   }
 
-  actualizarIconoCarrito();
-  animarAgregarCarrito();
+  actualizarCarritoIcono();
+  animarCarrito();
 }
     
 </script>
