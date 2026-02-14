@@ -600,18 +600,16 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <button class="btn-comprar">Comprar</button>
     `;
 
-div.querySelector(".btn-comprar").addEventListener("click", function(e){
-  e.stopPropagation();
-  animarAgregar(this);
+dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
+  op.addEventListener("click", () => {
 
-  const btnComprar = div.querySelector(".btn-comprar");
-  btnComprar.addEventListener("click", (e) => {
-    e.stopPropagation();
-    animarAgregar(btnComprar);
-    const precioActual = precioElemento.textContent.replace("$","");
-    agregarAlCarrito(p.nombre, precioActual, p.imagen);
+    const modelo = {
+      nombre: op.textContent,
+      precio: parseInt(op.dataset.precio)
+    };
+
+    agregarAlCarrito(p, modelo);
   });
-  // aquí puedes agregar tu lógica del carrito
 });
 
     const btnModelo = div.querySelector(".btn-modelo");
@@ -648,12 +646,8 @@ div.querySelector(".btn-comprar").addEventListener("click", function(e){
     <button class="btn-comprar">Comprar</button>
   `;
 
-const btnComprar = div.querySelector(".btn-comprar");
-
-btnComprar.addEventListener("click", (e) => {
-  e.stopPropagation();
-  animarAgregar(btnComprar);
-  agregarAlCarrito(p.nombre, p.precio, p.imagen);
+div.querySelector(".btn-comprar").addEventListener("click", () => {
+  agregarAlCarrito(p);
 });
 }
   
@@ -719,9 +713,13 @@ function animarCarrito() {
     </script>
 
 <script>
-function actualizarCarritoIcono() {
-  const total = carrito.reduce((acc, p) => acc + p.cantidad, 0);
-  document.getElementById("cart-count").textContent = total;
+function actualizarIconoCarrito() {
+  const icono = document.querySelector('.nav-icon[title="Carrito"]');
+  if (!icono) return;
+
+  const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+  icono.setAttribute("data-count", total);
 }
  </script>
     
@@ -808,17 +806,42 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
-   function agregarAlCarrito(producto) {
-  const existente = carrito.find(p => p.id === producto.id);
+  function agregarAlCarrito(producto, modeloSeleccionado = null) {
+
+  // 🔥 determinar precio y modelo
+  const precioFinal = modeloSeleccionado
+    ? modeloSeleccionado.precio
+    : producto.precio;
+
+  const nombreModelo = modeloSeleccionado
+    ? modeloSeleccionado.nombre
+    : null;
+
+  // 🔥 clave única para evitar mezclas
+  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
+
+  // 🔥 buscar si ya existe
+  const existente = carrito.find(item => item.clave === clave);
 
   if (existente) {
-    existente.cantidad += 1;
+    existente.cantidad += 1;   // ✅ suma 1
   } else {
-    carrito.push({ ...producto, cantidad: 1 });
+    carrito.push({
+      clave: clave,
+      id: producto.id,
+      nombre: producto.nombre,
+      modelo: nombreModelo,
+      precio: precioFinal,
+      imagen: producto.imagen,
+      cantidad: 1
+    });
   }
 
+  animacionAgregarCarrito();
+
   actualizarIconoCarrito();
-  animarAgregarCarrito();
+
+  console.log("Carrito:", carrito);
 }
     
 </script>
