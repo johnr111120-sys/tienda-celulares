@@ -199,6 +199,19 @@ al lado de Plaza La Canela.
   </div>
 
 </main>
+
+<!-- VISTA PRODUCTO SPA -->
+<section id="vista-producto" style="display:none;">
+  <div class="producto-detalle">
+    <img id="detalle-img" src="">
+    <h2 id="detalle-nombre"></h2>
+    <p id="detalle-desc"></p>
+    <p id="detalle-precio"></p>
+
+    <button id="btn-comprar-detalle">Agregar al carrito</button>
+    <button onclick="volverAProductos()">← Volver</button>
+  </div>
+</section>
       
 <section>
     <h2>Contacto</h2>
@@ -250,20 +263,6 @@ imgModal.addEventListener("click", e=>{
   if(e.target === imgModal) cerrarImgModal();
 });
 </script>
-
-    
-<!-- VISTA PRODUCTO SPA -->
-<section id="vista-producto" style="display:none;">
-  <div class="producto-detalle">
-    <img id="detalle-img" src="">
-    <h2 id="detalle-nombre"></h2>
-    <p id="detalle-desc"></p>
-    <p id="detalle-precio"></p>
-
-    <button id="btn-comprar-detalle">Agregar al carrito</button>
-    <button onclick="volverAProductos()">← Volver</button>
-  </div>
-</section>
 
 <script>
 
