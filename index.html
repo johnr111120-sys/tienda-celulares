@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -253,52 +254,36 @@ imgModal.addEventListener("click", e=>{
 
     
     <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="modal">
-    <div class="modal-contenido">
-        <button class="cerrar-producto" onclick="cerrarModal()">✕ Volver</button>
-        
-        <div class="header-imagen-spa">
-            <img id="modal-imagen" src="" alt="Cargando producto...">
-        </div>
-
-        <div class="mp-contenido">
-            <h2 id="modal-nombre"></h2>
-            <p id="modal-descripcion"></p>
-            <h3 id="modal-precio"></h3>
-        </div>
-
-        <div class="contenedor-accion-fija">
-            <a id="linkWsp" href="#" class="btn-comprar-spa" target="_blank">
-                Comprar ahora
-            </a>
-        </div>
-    </div>
+<div id="modal-producto" class="modal" style="display:none;">
+  <div class="modal-contenido">
+   <button class="cerrar-producto">×</button>
+    <img id="modal-imagen">
+    <h2 id="modal-nombre"></h2>
+    <p id="modal-descripcion"></p>
+    <h3 id="modal-precio"></h3>
+    <a id="modal-whatsapp" target="_blank">Consultar por WhatsApp</a>
+  </div>
 </div>
+
 <script>
 
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirModal(nombre, precio, descripcion, rutaImagen) {
-    const modal = document.getElementById('miModal');
-    
-    // Rellenar textos
-    document.getElementById('tituloModal').innerText = nombre;
-    document.getElementById('precioModal').innerText = precio;
-    document.getElementById('descModal').innerText = descripcion;
+function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
 
-    // Rellenar IMAGEN (La clave de tu problema)
-    const imagenModal = document.getElementById('imgModal');
-    if (imagenModal) {
-        imagenModal.src = rutaImagen; // Aquí carga: "images/cell0.jpg"
-    }
+  document.getElementById("modal-imagen").src = imagen;
+  document.getElementById("modal-nombre").textContent = nombre;
+  document.getElementById("modal-descripcion").textContent = descripcion;
+  document.getElementById("modal-precio").textContent = precio;
 
-    // Configurar el link de WhatsApp
-    const msg = `Hola Moisés Celulares, me interesa el ${nombre} por ${precio}`;
-    document.getElementById('linkWsp').href = `https://wa.me/18292017321?text=${encodeURIComponent(msg)}`;
+  document.getElementById("modal-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
 
-    // Mostrar modal SPA
-    modal.style.display = 'flex';
-    document.body.classList.add('no-scroll');
+  document.getElementById("modal-producto").style.display = "flex";
+
+  // 🔥 Bloquear fondo
+  document.body.classList.add("no-scroll");
+  document.body.classList.add("modal-abierto");
 }
 
 function cerrarProducto() {
