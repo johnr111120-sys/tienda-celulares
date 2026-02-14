@@ -851,6 +851,10 @@ document.getElementById("btn-favoritos").onclick = () => {
     });
   }
 
+guardarCarrito(carrito);
+actualizarContadorCarrito();
+renderizarCarrito();
+
  animarCarrito();
 
  localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -874,32 +878,34 @@ document.getElementById("cerrar-carrito").onclick = () => {
 };
 
 function renderizarCarrito() {
+
   const contenedor = document.getElementById("carrito-items");
-  const totalElemento = document.getElementById("carrito-total");
+  const totalElemento = document.getElementById("carrito-total-precio");
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
   contenedor.innerHTML = "";
 
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   let total = 0;
 
- carritoLS.forEach((item, index) => {
+  carrito.forEach((item, index) => {
+
     total += item.precio * item.cantidad;
 
-    contenedor.innerHTML += `
-      <div class="carrito-item">
-        <div>
-          ${item.nombre}
-          ${item.modelo ? "<br><small>"+item.modelo+"</small>" : ""}
-          <br><b>$${item.precio}</b> x ${item.cantidad}
-        </div>
-        <button onclick="eliminarDelCarrito(${index})">✕</button>
-      </div>
+    const div = document.createElement("div");
+    div.className = "carrito-item";
+
+    div.innerHTML = `
+      <span>${item.nombre}</span>
+      <span>${item.cantidad} x $${item.precio}</span>
     `;
+
+    contenedor.appendChild(div);
   });
 
-  totalElemento.textContent = total;
+  totalElemento.textContent = "$" + total;
 }
-
+     
 function eliminarDelCarrito(index) {
     
  const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
@@ -922,9 +928,9 @@ document.getElementById("vaciar-carrito").onclick = () => {
 const modalCarrito = document.getElementById("modal-carrito");
 
 // abrir modal
-function abrirCarrito() {
-  renderizarCarrito(); // muestra productos
-  modalCarrito.style.display = "flex";
+function abrirCarrito(){
+  document.getElementById("modal-carrito").style.display = "flex";
+  renderizarCarrito();
   document.body.classList.add("no-scroll");
 }
 
@@ -954,6 +960,10 @@ modalCarrito.addEventListener("click", e => {
     <button class="cerrar-carrito">&times;</button>
     <h2>Tu carrito</h2>
     <div id="carrito-contenido"></div>
+
+    <div class="carrito-total">
+  Total: <span id="carrito-total-precio">$0</span>
+</div>  
   </div>
 </div>
 
