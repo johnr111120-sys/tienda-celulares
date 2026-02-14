@@ -301,48 +301,41 @@ img, svg {
   justify-content: center;
   box-shadow: 0 8px 20px rgba(0,0,0,0.8);
 }
-/* =========================
-   MODAL PRODUCTO (AISLADO)
-   ========================= */
-/* ========================= */
-/* FONDO OSCURO */
-/* ========================= */
+/* El contenedor ahora es un lienzo de pantalla completa, no un cuadro flotante */
 .modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  z-index: 9999;
-  padding: 40px;
-  padding-top: 130px;        /* 🔥 lo baja */
+    position: fixed;
+    inset: 0;
+    background: #ffffff; /* Fondo blanco sólido como una página nueva */
+    display: none; /* Se activa con JS */
+    flex-direction: column;
+    z-index: 100000;
+    overflow-y: auto; /* Permite scroll si el producto es largo */
+    padding: 0; /* Sin márgenes exteriores */
 }
 
-/* ========================= */
-/* CONTENIDO DEL MODAL */
-/* ========================= */
+/* La tarjeta del producto ya no flota, ahora es el cuerpo de la página */
 .modal-contenido {
-  background: #ffffff;
-  width: 100%;
-  max-width: 500px;
-  border-radius: 16px;
-  padding: 25px;
-  text-align: center;
-  position: relative;
-  animation: aparecer 0.25s ease;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 500px; /* Se mantiene el ancho móvil */
+    margin: 0 auto;
+    padding: 0; /* Quitamos padding para que la imagen mande */
+    background: #fff;
+    box-shadow: none; /* Sin sombra para que no parezca flotante */
+    text-align: left; /* Texto alineado como en una tienda real */
 }
 
-/* ========================= */
-/* IMAGEN */
-/* ========================= */
+/* Imagen estilo Banner Superior */
 .modal-contenido img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  margin-bottom: 15px;
-  transition: transform 0.3s ease;
+    width: 100%;
+    height: 45vh; /* Ocupa casi la mitad de la pantalla */
+    object-fit: cover; /* Imagen de impacto */
+    margin-bottom: 20px;
+    border-radius: 0 0 25px 25px; /* Bordes redondeados solo abajo */
+}
+
+/* Contenedor de información con márgenes elegantes */
+.mp-contenido {
+    padding: 0 20px 40px 20px;
 }
 
 .modal-contenido img:hover {
@@ -393,25 +386,19 @@ img, svg {
   background: #1ebe5d;
 }
 
-.cerrar-producto{
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 4px solid #0000FF; /* círculo azul */
-  background: transparent;
-  color: red; /* X roja */
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+/* Botón de cerrar tipo "Atrás" */
+.cerrar-producto {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    border: 1px solid #ddd;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    z-index: 10;
 }
-
 
 /* ========================= */
 /* ANIMACIÓN */
