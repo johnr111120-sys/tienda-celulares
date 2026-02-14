@@ -301,44 +301,48 @@ img, svg {
   justify-content: center;
   box-shadow: 0 8px 20px rgba(0,0,0,0.8);
 }
-/* El contenedor ahora es un lienzo de pantalla completa, no un cuadro flotante */
+/* =========================
+   MODAL PRODUCTO (AISLADO)
+   ========================= */
+/* ========================= */
+/* FONDO OSCURO */
+/* ========================= */
 .modal {
-    position: fixed;
-    inset: 0;
-    background: #ffffff; /* Fondo blanco sólido como una página nueva */
-    display: none; /* Se activa con JS */
-    flex-direction: column;
-    z-index: 100000;
-    overflow-y: auto; /* Permite scroll si el producto es largo */
-    padding: 0; /* Sin márgenes exteriores */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 9999;
+  padding: 40px;
+  padding-top: 130px;        /* 🔥 lo baja */
 }
 
-/* La tarjeta del producto ya no flota, ahora es el cuerpo de la página */
+/* ========================= */
+/* CONTENIDO DEL MODAL */
+/* ========================= */
 .modal-contenido {
-    display: flex;
-    width: 100%;
-    max-width: 500px; /* Se mantiene el ancho móvil */
-    margin: 0 auto;
-    height: 100%;
-    padding: 0; /* Quitamos padding para que la imagen mande */
-    background: #fff;
-    box-shadow: none; /* Sin sombra para que no parezca flotante */
-    text-align: left; /* Texto alineado como en una tienda real */
-    flex-direction: column;
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  position: relative;
+  animation: aparecer 0.25s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
 }
 
-/* Imagen estilo Banner Superior */
-#imgModal {
-    width: 100% !important;
-    height: 350px !important; /* Altura fija para que impacte al abrir */
-    object-fit: contain !important; /* "contain" para que el celular se vea completo */
-    background: #f4f4f4; /* Un gris claro de fondo por si la imagen tiene transparencias */
-    display: block !important;
-}
-
-/* Contenedor de información con márgenes elegantes */
-.mp-contenido {
-    padding: 0 20px 40px 20px;
+/* ========================= */
+/* IMAGEN */
+/* ========================= */
+.modal-contenido img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
 }
 
 .modal-contenido img:hover {
@@ -389,19 +393,25 @@ img, svg {
   background: #1ebe5d;
 }
 
-/* Botón de cerrar tipo "Atrás" */
-.cerrar-producto {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-    border: 1px solid #ddd;
-    width: 35px;
-    height: 35px;
-    font-size: 18px;
-    z-index: 10;
+.cerrar-producto{
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid #0000FF; /* círculo azul */
+  background: transparent;
+  color: red; /* X roja */
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
 }
+
 
 /* ========================= */
 /* ANIMACIÓN */
@@ -1233,40 +1243,4 @@ body.menu-abierto {
 
 .panel-lateral h2 {
   margin-top: 0;
-}
-
-/* Contenedor del botón fijo al fondo */
-.contenedor-accion-fija {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: white;
-    padding: 15px 20px;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: center;
-    z-index: 100001; /* Por encima de todo */
-}
-
-.btn-comprar-spa {
-    width: 100%;
-    max-width: 400px;
-    background: #25D366; /* Verde WhatsApp */
-    color: white;
-    text-align: center;
-    padding: 15px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* Espaciado final para que el scroll no tape el contenido con el botón */
-.mp-contenido {
-    padding-bottom: 100px !important; 
 }
