@@ -315,22 +315,25 @@ img, svg {
 
 /* La tarjeta del producto ya no flota, ahora es el cuerpo de la página */
 .modal-contenido {
+    display: flex;
     width: 100%;
     max-width: 500px; /* Se mantiene el ancho móvil */
     margin: 0 auto;
+    height: 100%;
     padding: 0; /* Quitamos padding para que la imagen mande */
     background: #fff;
     box-shadow: none; /* Sin sombra para que no parezca flotante */
     text-align: left; /* Texto alineado como en una tienda real */
+    flex-direction: column;
 }
 
 /* Imagen estilo Banner Superior */
-.modal-contenido img {
-    width: 100%;
-    height: 45vh; /* Ocupa casi la mitad de la pantalla */
-    object-fit: cover; /* Imagen de impacto */
-    margin-bottom: 20px;
-    border-radius: 0 0 25px 25px; /* Bordes redondeados solo abajo */
+#imgModal {
+    width: 100% !important;
+    height: 350px !important; /* Altura fija para que impacte al abrir */
+    object-fit: contain !important; /* "contain" para que el celular se vea completo */
+    background: #f4f4f4; /* Un gris claro de fondo por si la imagen tiene transparencias */
+    display: block !important;
 }
 
 /* Contenedor de información con márgenes elegantes */
