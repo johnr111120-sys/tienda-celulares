@@ -36,7 +36,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-<button class="nav-icon" title="Carrito" onclick="abrirCarrito()">🛒</button>
+<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -873,79 +873,49 @@ document.getElementById("cerrar-carrito").onclick = () => {
   modalCarrito.style.display = "none";
 };
 
-function renderizarCarrito(){
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+function renderizarCarrito() {
+  const contenedor = document.getElementById("carrito-items");
+  const totalElemento = document.getElementById("carrito-total");
 
-  carritoItems.innerHTML = "";
+  contenedor.innerHTML = "";
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   let total = 0;
 
-  carrito.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "carrito-item";
-    div.innerHTML = `
-      <span>${item.nombre}</span>
-      <span>$${item.precio}</span>
+ carritoLS.forEach((item, index) => {
+    total += item.precio * item.cantidad;
+
+    contenedor.innerHTML += `
+      <div class="carrito-item">
+        <div>
+          ${item.nombre}
+          ${item.modelo ? "<br><small>"+item.modelo+"</small>" : ""}
+          <br><b>$${item.precio}</b> x ${item.cantidad}
+        </div>
+        <button onclick="eliminarDelCarrito(${index})">✕</button>
+      </div>
     `;
-    carritoItems.appendChild(div);
-    total += item.precio;
   });
 
-  carritoTotal.textContent = "Total: $" + total;
+  totalElemento.textContent = total;
 }
 
 function eliminarDelCarrito(index) {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    
+ const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
 
   carrito.splice(index, 1);
-
   localStorage.setItem("carrito", JSON.stringify(carrito));
-
   renderizarCarrito();
-}
-
-function actualizarContadorCarrito() {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  let total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-
-  const contador = document.getElementById("contador-carrito");
-  if (contador) contador.textContent = total;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
   actualizarContadorCarrito();
-});
-     
-</script>
+}
 
- <script>  
-const modalCarrito = document.getElementById("modal-carrito");
-const carritoItems = document.getElementById("carrito-items");
-const carritoTotal = document.getElementById("carrito-total");
-
-// abrir modal
-function abrirCarrito(){
+document.getElementById("vaciar-carrito").onclick = () => {
+  localStorage.removeItem("carrito");
   renderizarCarrito();
-  modalCarrito.style.display = "flex";
-  document.body.classList.add("no-scroll");
-}
+  actualizarContadorCarrito();
+};
 
-// cerrar modal
-function cerrarCarrito(){
-  modalCarrito.style.display = "none";
-  document.body.classList.remove("no-scroll");
-}
-
-// cerrar tocando fondo oscuro
-modalCarrito.addEventListener("click", e=>{
-  if(e.target === modalCarrito){
-    cerrarCarrito();
-  }
-});
-
-// botón cerrar
-document.querySelector(".cerrar-carrito")
-  .addEventListener("click", cerrarCarrito);
 </script>
     
 <div id="panel-lateral" class="panel-lateral">
@@ -955,10 +925,19 @@ document.querySelector(".cerrar-carrito")
 <!-- MODAL CARRITO -->
 <div id="modal-carrito" class="modal-carrito">
   <div class="modal-carrito-contenido">
-    <button class="cerrar-carrito">✕</button>
+    
+    <div class="modal-carrito-header">
       <h2>🛒 Carrito</h2>
-     <div id="carrito-items"></div>
-    <h3 id="carrito-total"></h3>
+      <button id="cerrar-carrito">✕</button>
+    </div>
+
+    <div id="carrito-items"></div>
+
+    <div class="carrito-footer">
+      <h3>Total: $<span id="carrito-total">0</span></h3>
+      <button id="vaciar-carrito">Vaciar carrito</button>
+    </div>
+
   </div>
 </div>
 
