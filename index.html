@@ -36,7 +36,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
+<button class="nav-icon" title="Carrito" onclick="abrirCarrito()">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -873,35 +873,24 @@ document.getElementById("cerrar-carrito").onclick = () => {
   modalCarrito.style.display = "none";
 };
 
-function renderizarCarrito() {
-  const contenedor = document.getElementById("carrito-contenido");
+function renderizarCarrito(){
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  // cargar carrito desde localStorage
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carritoItems.innerHTML = "";
+  let total = 0;
 
-  contenedor.innerHTML = "";
-
-  if (carrito.length === 0) {
-    contenedor.innerHTML = "<p>Tu carrito está vacío</p>";
-    actualizarContadorCarrito();
-    return;
-  }
-
-  carrito.forEach((item, index) => {
+  carrito.forEach(item => {
     const div = document.createElement("div");
-    div.classList.add("item-carrito");
-
+    div.className = "carrito-item";
     div.innerHTML = `
       <span>${item.nombre}</span>
       <span>$${item.precio}</span>
-      <span>Cant: ${item.cantidad}</span>
-      <button onclick="eliminarDelCarrito(${index})">❌</button>
     `;
-
-    contenedor.appendChild(div);
+    carritoItems.appendChild(div);
+    total += item.precio;
   });
 
-  actualizarContadorCarrito();
+  carritoTotal.textContent = "Total: $" + total;
 }
 
 function eliminarDelCarrito(index) {
@@ -928,6 +917,36 @@ document.addEventListener("DOMContentLoaded", () => {
 });
      
 </script>
+
+ <script>  
+const modalCarrito = document.getElementById("modal-carrito");
+const carritoItems = document.getElementById("carrito-items");
+const carritoTotal = document.getElementById("carrito-total");
+
+// abrir modal
+function abrirCarrito(){
+  renderizarCarrito();
+  modalCarrito.style.display = "flex";
+  document.body.classList.add("no-scroll");
+}
+
+// cerrar modal
+function cerrarCarrito(){
+  modalCarrito.style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+// cerrar tocando fondo oscuro
+modalCarrito.addEventListener("click", e=>{
+  if(e.target === modalCarrito){
+    cerrarCarrito();
+  }
+});
+
+// botón cerrar
+document.querySelector(".cerrar-carrito")
+  .addEventListener("click", cerrarCarrito);
+</script>
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
@@ -936,19 +955,10 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- MODAL CARRITO -->
 <div id="modal-carrito" class="modal-carrito">
   <div class="modal-carrito-contenido">
-    
-    <div class="modal-carrito-header">
+    <button class="cerrar-carrito">✕</button>
       <h2>🛒 Carrito</h2>
-      <button id="cerrar-carrito">✕</button>
-    </div>
-
-    <div id="carrito-items"></div>
-
-    <div class="carrito-footer">
-      <h3>Total: $<span id="carrito-total">0</span></h3>
-      <button id="vaciar-carrito">Vaciar carrito</button>
-    </div>
-
+     <div id="carrito-items"></div>
+    <h3 id="carrito-total"></h3>
   </div>
 </div>
 
