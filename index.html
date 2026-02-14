@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +35,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-  <button class="nav-icon" title="Carrito" onclick="abrirCarrito()">🛒</button>
+  <button id="btn-carrito" class="nav-icon" title="Carrito">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -597,6 +596,13 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p class="precio">$${modeloInicial.precio}</p>
       <button class="btn-comprar">Comprar</button>
     `;
+      div.querySelector(".btn-comprar").addEventListener("click", function(e){
+  e.stopPropagation();
+  animarAgregar(this);
+
+  // aquí puedes agregar tu lógica del carrito
+});
+  
 
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
@@ -609,51 +615,35 @@ function mostrarProductosPorSubcategoria(subcategoria) {
         dropdown.style.display === "none" ? "block" : "none";
     });
 
-  const btnComprar = div.querySelector(".btn-comprar");
-
-btnComprar.addEventListener("click", () => {
-  const precioActual = precioElemento.textContent.replace("$","");
-  const modeloActual = btnModelo.textContent.replace(" ▼","");
-
-  agregarAlCarrito(p, {
-    nombre: modeloActual,
-    precio: parseInt(precioActual)
-  });
-});
     // Cambiar precio
-  dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
-  op.addEventListener("click", (e) => {
-    e.stopPropagation();
-
-    const nuevoPrecio = op.dataset.precio;
-    precioElemento.textContent = "$" + nuevoPrecio;
-    btnModelo.textContent = op.textContent + " ▼";
-    dropdown.style.display = "none";
-
-    // 🔥 agregar al carrito UNA sola vez
-    agregarAlCarrito(p, {
-      nombre: op.textContent,
-      precio: parseInt(nuevoPrecio)
+    dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
+      op.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const nuevoPrecio = op.dataset.precio;
+        precioElemento.textContent = "$" + nuevoPrecio;
+        btnModelo.textContent = op.textContent + " ▼";
+        dropdown.style.display = "none";
+      });
     });
-  });
-});
 
   } else {
 
     // 🔥 Si NO tiene modelos
-   div.innerHTML = `
-    <img src="${p.imagen}" alt="${p.nombre}"
-         onclick="navegar('/producto/${p.slug}')">
-    <h3>${p.nombre}</h3>
-    <p class="descripcion">Producto disponible</p>
-    <p class="precio">$${p.precio}</p>
-    <button class="btn-comprar">Comprar</button>
-  `;
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}"
+           onclick="navegar('/producto/${p.slug}')">
+      <h3>${p.nombre}</h3>
+      <p class="descripcion">Producto disponible</p>
+      <p class="precio">$${p.precio}</p>
+      <button class="btn-comprar">Comprar</button>
+     `;
+     }
+      div.querySelector(".btn-comprar").addEventListener("click", function(e){
+  e.stopPropagation();
+  animarAgregar(this);
 
-div.querySelector(".btn-comprar").addEventListener("click", () => {
-  agregarAlCarrito(p);
+  // aquí puedes agregar tu lógica del carrito
 });
-}
   
   contenedor.appendChild(div);
 });
@@ -704,40 +694,6 @@ function animarAgregar(btn) {
 
     </script>
 
-
-<script>
-function animarCarrito() {
-  const icono = document.querySelector('[title="Carrito"]');
-  icono.classList.add("shake");
-
-  setTimeout(() => {
-    icono.classList.remove("shake");
-  }, 400);
-}
-    </script>
-
-<script>
-function actualizarIconoCarrito() {
-  const icono = document.getElementById("icono-carrito");
-  if (!icono) return;
-
-  const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-
-  // eliminar contador anterior
-  let badge = icono.querySelector(".carrito-contador");
-  if (badge) badge.remove();
-
-  if (total > 0) {
-    badge = document.createElement("span");
-    badge.className = "carrito-contador";
-    badge.textContent = total;
-    icono.appendChild(badge);
-  }
-}
-
- </script>
-    
-    
 <script>
 // ===============================
 // ABRIR / CERRAR CATEGORIAS
@@ -762,7 +718,7 @@ document.addEventListener("click", function(e) {
 
 <script>
 document.addEventListener("touchstart", function(e) {
- const producto = e.target.closest(".producto-card");
+  const producto = e.target.closest(".producto");
   if (!producto) return;
 
   producto.classList.add("touch-activo");
@@ -817,154 +773,8 @@ document.getElementById("btn-favoritos").onclick = () => {
 
    </div>
 
-<script>
-    let carrito = [];
-
-  function agregarAlCarrito(producto, modeloSeleccionado = null) {
-
-  // 🔥 determinar precio y modelo
-  const precioFinal = modeloSeleccionado
-    ? modeloSeleccionado.precio
-    : producto.precio;
-
-  const nombreModelo = modeloSeleccionado
-    ? modeloSeleccionado.nombre
-    : null;
-
-  // 🔥 clave única para evitar mezclas
-  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
-
-  // 🔥 buscar si ya existe
-  const existente = carrito.find(item => item.clave === clave);
-
-  if (existente) {
-    existente.cantidad += 1;   // ✅ suma 1
-  } else {
-    carrito.push({
-      clave: clave,
-      id: producto.id,
-      nombre: producto.nombre,
-      modelo: nombreModelo,
-      precio: precioFinal,
-      imagen: producto.imagen,
-      cantidad: 1
-    });
-  }
-
-guardarCarrito(carrito);
-actualizarContadorCarrito();
-renderizarCarrito();
-
- animarCarrito();
-
- localStorage.setItem("carrito", JSON.stringify(carrito));
-actualizarIconoCarrito();
-console.log("Carrito:", carrito);
-}
-    
-</script>
-
- <script>   
-const modalCarrito = document.getElementById("modal-carrito");
-const carritoBtn = document.querySelector('[title="Carrito"]');
-
-carritoBtn.addEventListener("click", () => {
-  renderizarCarrito();
-  modalCarrito.style.display = "flex";
-});
-
-document.getElementById("cerrar-carrito").onclick = () => {
-  modalCarrito.style.display = "none";
-};
-
-function renderizarCarrito() {
-
-  const contenedor = document.getElementById("carrito-items");
-  const totalElemento = document.getElementById("carrito-total-precio");
-
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  contenedor.innerHTML = "";
-
-  let total = 0;
-
-  carrito.forEach((item, index) => {
-
-    total += item.precio * item.cantidad;
-
-    const div = document.createElement("div");
-    div.className = "carrito-item";
-
-    div.innerHTML = `
-      <span>${item.nombre}</span>
-      <span>${item.cantidad} x $${item.precio}</span>
-    `;
-
-    contenedor.appendChild(div);
-  });
-
-  totalElemento.textContent = "$" + total;
-}
-     
-function eliminarDelCarrito(index) {
-    
- const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
-
-  carrito.splice(index, 1);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  renderizarCarrito();
-  actualizarContadorCarrito();
-}
-
-document.getElementById("vaciar-carrito").onclick = () => {
-  localStorage.removeItem("carrito");
-  renderizarCarrito();
-  actualizarContadorCarrito();
-};
-
-</script>
-
- <script> 
-const modalCarrito = document.getElementById("modal-carrito");
-
-// abrir modal
-function abrirCarrito(){
-  document.getElementById("modal-carrito").style.display = "flex";
-  renderizarCarrito();
-  document.body.classList.add("no-scroll");
-}
-
-// cerrar modal
-function cerrarCarrito() {
-  modalCarrito.style.display = "none";
-  document.body.classList.remove("no-scroll");
-}
-
-// botón cerrar
-document.querySelector(".cerrar-carrito")
-  .addEventListener("click", cerrarCarrito);
-
-// cerrar tocando fuera
-modalCarrito.addEventListener("click", e => {
-  if (e.target === modalCarrito) cerrarCarrito();
-});
-</script>
-    
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
-</div>
-
-<!-- MODAL CARRITO -->
-<div id="modal-carrito" class="modal-carrito">
-  <div class="modal-carrito-contenido">
-    <button class="cerrar-carrito">&times;</button>
-    <h2>Tu carrito</h2>
-    <div id="carrito-contenido"></div>
-
-    <div class="carrito-total">
-  Total: <span id="carrito-total-precio">$0</span>
-</div>  
-  </div>
 </div>
 
   </body>
