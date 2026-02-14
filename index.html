@@ -252,17 +252,18 @@ imgModal.addEventListener("click", e=>{
 </script>
 
     
-    <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="modal" style="display:none;">
-  <div class="modal-contenido">
-   <button class="cerrar-producto">×</button>
-    <img id="modal-imagen">
-    <h2 id="modal-nombre"></h2>
-    <p id="modal-descripcion"></p>
-    <h3 id="modal-precio"></h3>
-    <a id="modal-whatsapp" target="_blank">Consultar por WhatsApp</a>
+<!-- VISTA PRODUCTO SPA -->
+<section id="vista-producto" style="display:none;">
+  <div class="producto-detalle">
+    <img id="detalle-img" src="">
+    <h2 id="detalle-nombre"></h2>
+    <p id="detalle-desc"></p>
+    <p id="detalle-precio"></p>
+
+    <button id="btn-comprar-detalle">Agregar al carrito</button>
+    <button onclick="volverAProductos()">← Volver</button>
   </div>
-</div>
+</section>
 
 <script>
 
@@ -303,6 +304,35 @@ document.querySelector(".cerrar-producto")
 
 </script>
 
+    <script>
+function abrirProductoSPA(producto) {
+
+  // ocultar vistas
+  document.getElementById("vista-inicio").style.display = "none";
+  document.getElementById("vista-productos").style.display = "none";
+
+  // mostrar vista producto
+  document.getElementById("vista-producto").style.display = "block";
+
+  // llenar info
+  document.getElementById("detalle-img").src = producto.imagen;
+  document.getElementById("detalle-nombre").textContent = producto.nombre;
+  document.getElementById("detalle-desc").textContent =
+    "Producto " + producto.subcategoria;
+  document.getElementById("detalle-precio").textContent =
+    "$" + producto.precio;
+
+  // botón comprar
+  document.getElementById("btn-comprar-detalle").onclick = () => {
+    agregarAlCarrito(producto);
+  };
+}
+
+function volverAProductos() {
+  history.back();
+}
+
+</script>
     <script>
 /* =========================
    SWIPE DOWN PARA CERRAR
@@ -496,7 +526,7 @@ function router() {
   // SUBCATEGORÍAS
   // ===============================
   if (hash.startsWith("#/productos/")) {
-
+   
     const subcategoria = decodeURIComponent(
       hash.split("#/productos/")[1]
     );
@@ -515,25 +545,15 @@ function router() {
   // ===============================
   // PRODUCTO INDIVIDUAL
   // ===============================
-  if (hash.startsWith("#/producto/")) {
+if (hash.startsWith("#/producto/")) {
+  const slug = hash.split("#/producto/")[1];
+  const producto = productos.find(p => p.slug === slug);
 
-    const slug = hash.split("#/producto/")[1];
-    const producto = productos.find(p => p.slug === slug);
-
-    if (producto) {
-      abrirProducto(
-        producto.imagen,
-        producto.nombre,
-        `Producto ${producto.subcategoria}`,
-        `$${producto.precio}`,
-        `Hola, quiero información sobre ${producto.nombre}`
-      );
-    }
-
-   
-    // ❌ AQUÍ NO HACEMOS SCROLL
-    return;
+  if (producto) {
+    abrirProductoSPA(producto);
   }
+  return;
+}
 
   // ===============================
   // INICIO
