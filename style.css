@@ -66,13 +66,24 @@ html, body {
   gap: 15px;
 }
 
-.nav-icon{
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
+.nav-icon[title="Carrito"]::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
   color: white;
-  transition: transform .15s ease;
+  font-size: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon[title="Carrito"][data-count="0"]::after {
+  display: none;
 }
 
 .nav-icon:active {
@@ -1266,11 +1277,11 @@ body.menu-abierto {
   margin-top: 0;
 }
 
-#btn-carrito{
+#icono-carrito{
   position: relative;
 }
 
-.contador{
+.carrito-contador{
   position: absolute;
   top: -6px;
   right: -8px;
@@ -1280,6 +1291,6 @@ body.menu-abierto {
   font-weight: bold;
   padding: 2px 6px;
   border-radius: 50%;
-  display: none;
+  min-width: 18px;
+  text-align: center;
 }
-
