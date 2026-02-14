@@ -1244,3 +1244,49 @@ body.menu-abierto {
 .panel-lateral h2 {
   margin-top: 0;
 }
+
+#vista-producto {
+  padding: 20px;
+  animation: fadeIn .25s ease;
+}
+
+.producto-detalle {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
+
+.producto-detalle img {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 12px;
+}
+
+#detalle-nombre {
+  margin: 15px 0 5px;
+}
+
+#detalle-precio {
+  color: #007bff;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#btn-comprar-detalle {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#btn-comprar-detalle:hover {
+  background: red;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(10px);}
+  to {opacity:1; transform: translateY(0);}
+}
