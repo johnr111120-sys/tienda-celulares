@@ -36,7 +36,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
+  <button class="nav-icon" title="Carrito" onclick="abrirCarrito()">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -917,6 +917,32 @@ document.getElementById("vaciar-carrito").onclick = () => {
 };
 
 </script>
+
+ <script> 
+const modalCarrito = document.getElementById("modal-carrito");
+
+// abrir modal
+function abrirCarrito() {
+  renderizarCarrito(); // muestra productos
+  modalCarrito.style.display = "flex";
+  document.body.classList.add("no-scroll");
+}
+
+// cerrar modal
+function cerrarCarrito() {
+  modalCarrito.style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+// botón cerrar
+document.querySelector(".cerrar-carrito")
+  .addEventListener("click", cerrarCarrito);
+
+// cerrar tocando fuera
+modalCarrito.addEventListener("click", e => {
+  if (e.target === modalCarrito) cerrarCarrito();
+});
+</script>
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
@@ -925,19 +951,9 @@ document.getElementById("vaciar-carrito").onclick = () => {
 <!-- MODAL CARRITO -->
 <div id="modal-carrito" class="modal-carrito">
   <div class="modal-carrito-contenido">
-    
-    <div class="modal-carrito-header">
-      <h2>🛒 Carrito</h2>
-      <button id="cerrar-carrito">✕</button>
-    </div>
-
-    <div id="carrito-items"></div>
-
-    <div class="carrito-footer">
-      <h3>Total: $<span id="carrito-total">0</span></h3>
-      <button id="vaciar-carrito">Vaciar carrito</button>
-    </div>
-
+    <button class="cerrar-carrito">&times;</button>
+    <h2>Tu carrito</h2>
+    <div id="carrito-contenido"></div>
   </div>
 </div>
 
