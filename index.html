@@ -36,7 +36,7 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
    <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-<button class="nav-icon" title="Carrito">🛒</button>
+<button id="icono-carrito" class="nav-icon" title="Carrito">🛒</button>
   <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
 </div>
 </nav>   
@@ -853,9 +853,9 @@ document.getElementById("btn-favoritos").onclick = () => {
 
  animarCarrito();
 
-  actualizarIconoCarrito();
-
-  console.log("Carrito:", carrito);
+ localStorage.setItem("carrito", JSON.stringify(carrito));
+actualizarIconoCarrito();
+console.log("Carrito:", carrito);
 }
     
 </script>
@@ -882,7 +882,7 @@ function renderizarCarrito() {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   let total = 0;
 
-  carrito.forEach((item, index) => {
+ carritoLS.forEach((item, index) => {
     total += item.precio * item.cantidad;
 
     contenedor.innerHTML += `
@@ -901,7 +901,9 @@ function renderizarCarrito() {
 }
 
 function eliminarDelCarrito(index) {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    
+ const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
+
   carrito.splice(index, 1);
   localStorage.setItem("carrito", JSON.stringify(carrito));
   renderizarCarrito();
