@@ -600,21 +600,17 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <button class="btn-comprar">Comprar</button>
     `;
 
-btnComprar.onclick = function(e) {
+div.querySelector(".btn-comprar").addEventListener("click", function(e){
   e.stopPropagation();
+  animarAgregar(this);
 
-  // evita doble ejecución accidental
-  if (this.dataset.clicked === "true") return;
-
-  this.dataset.clicked = "true";
-
-  agregarAlCarrito(producto);
-
-  // permitir siguiente click después de 300ms
-  setTimeout(() => {
-    this.dataset.clicked = "false";
-  }, 300);
-};
+  const btnComprar = div.querySelector(".btn-comprar");
+  btnComprar.addEventListener("click", (e) => {
+    e.stopPropagation();
+    animarAgregar(btnComprar);
+    const precioActual = precioElemento.textContent.replace("$","");
+    agregarAlCarrito(p.nombre, precioActual, p.imagen);
+  });
   // aquí puedes agregar tu lógica del carrito
 });
 
