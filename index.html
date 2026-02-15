@@ -286,24 +286,26 @@ imgModal.addEventListener("click", e=>{
 
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirModal(titulo, precio, descripcion, imagenRuta) {
-    // 1. Asignar los textos
-    document.getElementById('tituloModal').innerText = titulo;
+function abrirModal(nombre, precio, descripcion, rutaImagen) {
+    const modal = document.getElementById('miModal');
+    
+    // Rellenar textos
+    document.getElementById('tituloModal').innerText = nombre;
     document.getElementById('precioModal').innerText = precio;
     document.getElementById('descModal').innerText = descripcion;
-    
-    // 2. ASIGNAR LA IMAGEN (Aquí estaba el fallo)
-    const imgElement = document.getElementById('imgModal');
-    imgElement.src = imagenRuta; 
-    
-    // 3. Crear el link de WhatsApp automático
-    const mensaje = `Hola Moises Celulares, me interesa el producto: ${titulo} (${precio})`;
-    document.getElementById('linkWsp').href = `https://wa.me/18292017321?text=${encodeURIComponent(mensaje)}`;
-    
-    // 4. Mostrar el modal y bloquear scroll del fondo
-    const modal = document.getElementById('miModal');
+
+    // Rellenar IMAGEN (La clave de tu problema)
+    const imagenModal = document.getElementById('imgModal');
+    if (imagenModal) {
+        imagenModal.src = rutaImagen; // Aquí carga: "images/cell0.jpg"
+    }
+
+    // Configurar el link de WhatsApp
+    const msg = `Hola Moisés Celulares, me interesa el ${nombre} por ${precio}`;
+    document.getElementById('linkWsp').href = `https://wa.me/18292017321?text=${encodeURIComponent(msg)}`;
+
+    // Mostrar modal SPA
     modal.style.display = 'flex';
-    modal.classList.add('activo');
     document.body.classList.add('no-scroll');
 }
 
