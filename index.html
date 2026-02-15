@@ -518,7 +518,12 @@ if (hash.startsWith("#/producto/")) {
   const producto = productos.find(p => p.slug === slug);
 
   if (producto) {
-    abrirProductoSPA(producto)
+    abrirProductoSPA(
+      producto.imagen,
+      producto.nombre,
+      producto.descripcion,
+      `$${producto.precio}`,
+      producto.mensaje
     );
   }
 
