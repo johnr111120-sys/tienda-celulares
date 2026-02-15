@@ -2,13 +2,7 @@
   {
     "id": 1,
     "nombre": "Iphone 11",
-    "descripcion": "• Memoria RAM: 4 GB.
-    • Pantalla LCD Liquid Retina HD de 6.1 pulgadas. (3)
-    • Clasificación IP68 de resistencia al agua y al polvo (hasta 30 minutos a una profundidad máxima de 2 metros). (1)
-    • Sistema de dos cámaras de 12 MP (ultra gran angular y gran angular) con modo Noche, modo Retrato y video 4K de hasta 60 cps.
-    • Cámara frontal TrueDepth de 12 MP con modo Retrato, video 4K y video en cámara lenta.
-    • Face ID para una autenticación segura y Apple Pay.
-    • Chip A13 Bionic con Neural Engine de tercera generación.",
+    "descripcion": "• Memoria RAM: 4 GB.\n• Pantalla LCD Liquid Retina HD de 6.1 pulgadas. (3)\n• Clasificación IP68 de resistencia al agua y al polvo (hasta 30 minutos a una profundidad máxima de 2 metros). (1)\n• Sistema de dos cámaras de 12 MP (ultra gran angular y gran angular) con modo Noche, modo Retrato y video 4K de hasta 60 cps.\n• Cámara frontal TrueDepth de 12 MP con modo Retrato, video 4K y video en cámara lenta.\n• Face ID para una autenticación segura y Apple Pay.\n• Chip A13 Bionic con Neural Engine de tercera generación.",
     "slug": "iphone-11",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
@@ -24,16 +18,7 @@
   {
     "id": 2,
     "nombre": "Iphone 14 Pro Max",
-    "descripcion": "• Memoria RAM: 6 GB.
-    • Pantalla Super Retina XDR de 6.7 pulgadas(2), siempre activa con tecnología ProMotion.
-    • Dynamic Island, una forma nueva y mágica de interactuar con tu iPhone.
-    • Cámara gran angular de 48MP para una resolución hasta 4 veces mayor.
-    • Modo Cine ahora en 4K Dolby Vision de hasta 30cps.
-    • Modo Acción para lograr videos estables, aún con cámara en mano.
-    • Detección de Choques(1), una funcionalidad de seguridad que pide ayuda cuando tú no puedes.
-    • Batería para todo el día y hasta 29 horas de reproducción de video.(3)
-    • A16 Bionic, el chip de smartphone en su máxima expresión. Red 5G ultrarrápida.(4)
-    • Ceramic Shield y resistencia al agua, características de durabilidad líderes en la industria.(5)",
+    "descripcion": "• Memoria RAM: 6 GB.\n• Pantalla Super Retina XDR de 6.7 pulgadas(2), siempre activa con tecnología ProMotion.\n• Dynamic Island, una forma nueva y mágica de interactuar con tu iPhone.\n• Cámara gran angular de 48MP para una resolución hasta 4 veces mayor.\n• Modo Cine ahora en 4K Dolby Vision de hasta 30cps.\n• Modo Acción para lograr videos estables, aún con cámara en mano.\n• Detección de Choques(1), una funcionalidad de seguridad que pide ayuda cuando tú no puedes.\n• Batería para todo el día y hasta 29 horas de reproducción de video.(3)\n• A16 Bionic, el chip de smartphone en su máxima expresión. Red 5G ultrarrápida.(4)\n• Ceramic Shield y resistencia al agua, características de durabilidad líderes en la industria.(5)",
     "slug": "iphone-14",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
@@ -49,17 +34,7 @@
   {
     "id": 3,
     "nombre": "Iphone 17 Pro Max",
-    "descripcion": "• Memoria RAM: 12 GB.
-    • ESIM integrada y SIM física: activa tu iPhone con mayor flexibilidad, ideal para viajar con seguridad y comodidad.
-    • Diseño unibody de aluminio forjado en caliente, pensado para ofrecer máximo rendimiento y resistencia.
-    • Ceramic Shield en la parte frontal y trasera, con hasta 4x más resistencia a golpes y 3x más a rayones.
-    • Sistema de cámaras Pro con sensores de 48 MP y zoom óptico de 8x, el mayor visto en un iPhone.
-    • Cámara frontal Center Stage de 18 MP con encuadre inteligente y grabación dual simultánea.
-    • Chip A19 Pro con enfriamiento por evaporación, hasta 40% más rendimiento sostenido.
-    • Batería de hasta 37 horas de reproducción de video y carga rápida al 50% en solo 20 minutos.
-    • IOS 26 con nuevo diseño Liquid Glass, pantalla bloqueada personalizable y funciones mejoradas.
-    • Funcionalidad de Detección de Choques integrada para emergencias automovilísticas.
-    • Compatible con Apple Intelligence: inteligencia artificial privada, personal y poderosa.",
+    "descripcion": "• Memoria RAM: 12 GB.\n• ESIM integrada y SIM física: activa tu iPhone con mayor flexibilidad, ideal para viajar con seguridad y comodidad.\n• Diseño unibody de aluminio forjado en caliente, pensado para ofrecer máximo rendimiento y resistencia.\n• Ceramic Shield en la parte frontal y trasera, con hasta 4x más resistencia a golpes y 3x más a rayones.\n• Sistema de cámaras Pro con sensores de 48 MP y zoom óptico de 8x, el mayor visto en un iPhone.\n• Cámara frontal Center Stage de 18 MP con encuadre inteligente y grabación dual simultánea.\n• Chip A19 Pro con enfriamiento por evaporación, hasta 40% más rendimiento sostenido.\n• Batería de hasta 37 horas de reproducción de video y carga rápida al 50% en solo 20 minutos.\n• IOS 26 con nuevo diseño Liquid Glass, pantalla bloqueada personalizable y funciones mejoradas.\n• Funcionalidad de Detección de Choques integrada para emergencias automovilísticas.\n• Compatible con Apple Intelligence: inteligencia artificial privada, personal y poderosa.",
     "slug": "iphone-17",
     "categoria": "Celulares",
     "subcategoria": "Iphone",
@@ -74,13 +49,7 @@
   {
     "id": 4,
     "nombre": "Galaxy A03s",
-    "descripcion": "• Pantalla PLS de 6.5".
-    • Tiene 3 cámaras traseras de 13Mpx/2Mpx/2Mpx.
-    • Cámaras delanteras de 5 MP.
-    • Procesador MediaTek Helio P35 Octa-Core de 2.35GHz con 4GB de RAM.
-    • Batería de 5 Ah.
-    • Memoria interna de 64GB.
-    • Con reconocimiento facial y sensor de huella dactilar.",
+    "descripcion": "• Pantalla PLS de 6.5 pulgadas.\n• Tiene 3 cámaras traseras de 13Mpx/2Mpx/2Mpx.\n• Cámaras delanteras de 5 MP.\n• Procesador MediaTek Helio P35 Octa-Core de 2.35GHz con 4GB de RAM.\n• Batería de 5 Ah.\n• Memoria interna de 64GB.\n• Con reconocimiento facial y sensor de huella dactilar.",
     "slug": "galaxy-a03s",
     "categoria": "Celulares",
     "subcategoria": "Samsung",
@@ -90,14 +59,7 @@
   {
     "id": 6,
     "nombre": "ZTE Blade L210",
-    "descripcion": "• Memoria RAM: 1 GB.
-    • Dispositivo liberado para que elijas la compañía telefónica que prefieras.
-    • Pantalla TFT de 6".
-    • Cámara delantera de 5Mpx.
-    • Procesador Unisoc SC7731E Quad-Core de 1.3GHz con 1GB de RAM.
-    • Batería de 2.6 Ah.
-    • Memoria interna de 32GB.
-    • Con sensor de huella dactilar.",
+    "descripcion": "• Memoria RAM: 1 GB.\n• Dispositivo liberado para que elijas la compañía telefónica que prefieras.\n• Pantalla TFT de 6".\n• Cámara delantera de 5Mpx.\n• Procesador Unisoc SC7731E Quad-Core de 1.3GHz con 1GB de RAM.\n• Batería de 2.6 Ah.\n• Memoria interna de 32GB.\n• Con sensor de huella dactilar.",
     "slug": "zte-l210",
     "categoria": "Celulares",
     "subcategoria": "ZTE",
@@ -107,8 +69,7 @@
   {
     "id": 7,
     "nombre": "Cover 360 Magsafe",
-    "descripcion": "• Forros 360 Neón✨
-    • La combinación perfecta entre protección extrema y un estilo que no pasa desapercibido.",
+    "descripcion": "• Forros 360 Neón✨.\n• La combinación perfecta entre protección extrema y un estilo que no pasa desapercibido.",
     "slug": "cover-360",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
@@ -127,8 +88,7 @@
   {
     "id": 8,
     "nombre": "Cover Espejo",
-    "descripcion": "• Funda plateada para iPhone del 6 al 12 Pro Max
-    • Funda protectora y elegante",
+    "descripcion": "• Funda plateada para iPhone del 6 al 12 Pro Max.\n• Funda protectora y elegante",
     "slug": "cover-espejo",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
@@ -147,8 +107,7 @@
   {
     "id": 9,
     "nombre": "Cover Anime",
-    "descripcion": "• Funda transparente para iPhone del 7 al 12 Pro Max
-    • Funda protectora divertida con distintos diseños de anime y muñequitos",
+    "descripcion": "• Funda transparente para iPhone del 7 al 12 Pro Max.\n• Funda protectora divertida con distintos diseños de anime y muñequitos",
     "slug": "cover-anime",
     "categoria": "Accesorios",
     "subcategoria": "Covers",
@@ -167,14 +126,7 @@
   {
     "id": 10,
     "nombre": "Airpods 2da Generacion",
-    "descripcion": "• Ajuste universal para usarlos con comodidad todo el día.
-    • Activación y conexión automática.
-    • Fácil configuración en todos tus dispositivos Apple (3).
-    • Acceso rápido a Siri con sólo decir "Oye Siri”(1).
-    • Comparte fácilmente lo que estás escuchando entre dos pares de AirPods conectados a tu iPhone, iPad, iPod touch o Apple TV.
-    • Cambio inmediato de un dispositivo a otro (3).
-    • Puedes cargarlos con el conector Lightning incluido o usando un cargador con certificación Qi.
-    • El estuche de carga inalámbrica ofrece más de 24 horas de batería (2).",
+    "descripcion": "• Ajuste universal para usarlos con comodidad todo el día.\n• Activación y conexión automática.\n• Fácil configuración en todos tus dispositivos Apple (3).\n• Acceso rápido a Siri con sólo decir "Oye Siri”(1).\n• Comparte fácilmente lo que estás escuchando entre dos pares de AirPods conectados a tu iPhone, iPad, iPod touch o Apple TV.\n• Cambio inmediato de un dispositivo a otro (3).\n• Puedes cargarlos con el conector Lightning incluido o usando un cargador con certificación Qi.\n• El estuche de carga inalámbrica ofrece más de 24 horas de batería (2).",
     "slug": "airpods-2da",
     "categoria": "Accesorios",
     "subcategoria": "Audifonos",
@@ -184,10 +136,7 @@
   {
     "id": 11,
     "nombre": "Apple Watch Serie 3",
-    "descripcion": "• El Apple Watch Series 3 es un reloj inteligente que combina un diseño elegante con funcionalidades avanzadas y conectividad. 
-    • Ofrece monitoreo de actividad física, notificaciones en tiempo real, control de música y navegación GPS. 
-    • Su resistencia al agua de hasta 50 metros lo hace adecuado para actividades acuáticas y bajo la lluvia. 
-    • La batería de larga duración permite hasta 18 horas de uso continuo, lo que lo convierte en un accesorio esencial para una vida diaria más eficiente y saludable.",
+    "descripcion": "• El Apple Watch Series 3 es un reloj inteligente que combina un diseño elegante con funcionalidades avanzadas y conectividad. \n• Ofrece monitoreo de actividad física, notificaciones en tiempo real, control de música y navegación GPS. \n• Su resistencia al agua de hasta 50 metros lo hace adecuado para actividades acuáticas y bajo la lluvia. \n• La batería de larga duración permite hasta 18 horas de uso continuo, lo que lo convierte en un accesorio esencial para una vida diaria más eficiente y saludable.",
     "slug": "apple-s3",
     "categoria": "Accesorios",
     "subcategoria": "Smartwatch",
@@ -198,14 +147,7 @@
   {
     "id": 12,
     "nombre": "Pendrive Vidvie",
-    "descripcion": "• La memoria que resuelve de una vez!
-    • Llegaron las Memorias Vidvie USB A / Tipo C — pa’ que muevas to’ sin lío del cel a la laptop y viceversa.
-    • 📦 Disponible en 25GB, 32GB, 64GB y 128GB
-    • 💥 Pa’ música, fotos, videos, tareas y lo que tú quieras
-    • 🎯 Conéctala donde sea: celular, compu, tablet... lo que aparezca
-    
-    • 🔥 Chiquita pero poderosa
-    • Llévate la tuya y suelta ese lío de espacio. ¡Con Vidvie no te friza na’!",
+    "descripcion": "• La memoria que resuelve de una vez!\n• Llegaron las Memorias Vidvie USB A / Tipo C — pa’ que muevas to’ sin lío del cel a la laptop y viceversa.\n• 📦 Disponible en 25GB, 32GB, 64GB y 128GB.\n• 💥 Pa’ música, fotos, videos, tareas y lo que tú quieras.\n• 🎯 Conéctala donde sea: celular, compu, tablet... lo que aparezca.\n• 🔥 Chiquita pero poderosa.\n• Llévate la tuya y suelta ese lío de espacio. ¡Con Vidvie no te friza na’!",
     "slug": "pendrive-vidvie",
     "categoria": "Accesorios",
     "subcategoria": "Usb",
@@ -221,14 +163,7 @@
   {
     "id": 13,
     "nombre": "Ipad 9na Generacion",
-    "descripcion": "• iPad de Apple (9.ª generación): con chip A13 Bionic, 
-    • pantalla Retina de 10,2 pulgadas, 
-    • 64 GB, 
-    • Wi-Fi, 
-    • cámara frontal de 12 MP/8 MP, 
-    • Touch ID, 
-    • duración de la batería durante todo el día, 
-    • gris espacial.",
+    "descripcion": "• iPad de Apple (9.ª generación): con chip A13 Bionic, \n• pantalla Retina de 10,2 pulgadas, \n• 64 GB, \n• Wi-Fi, \n• cámara frontal de 12 MP/8 MP, \n• Touch ID, \n• duración de la batería durante todo el día, \n• gris espacial.",
     "slug": "ipad-9na",
     "categoria": "Tablets",
     "subcategoria": "Ipad",
@@ -239,13 +174,7 @@
   {
     "id": 14,
     "nombre": "SKY Elite T8Plus",
-    "descripcion": "• Memoria RAM: 3 GB
-    • Tamaño de la pantalla: 8 "
-    • Capacidad: 32 GB
-    • Sistema operativo: Android.
-    • Con entrada para auriculares.
-    • Diseñada para llevar a todas partes.
-    • La duración de la batería depende del uso que se le dé al producto.",
+    "descripcion": "• Memoria RAM: 3 GB\n• Tamaño de la pantalla: 8 pulgadas.\n• Capacidad: 32 GB\n• Sistema operativo: Android.\n• Con entrada para auriculares.\n• Diseñada para llevar a todas partes.\n• La duración de la batería depende del uso que se le dé al producto.",
     "slug": "sky-t8",
     "categoria": "Tablets",
     "subcategoria": "Android",
