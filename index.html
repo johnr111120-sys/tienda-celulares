@@ -278,29 +278,40 @@ imgModal.addEventListener("click", e=>{
 
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
+function abrirProducto(id){
 
-  document.getElementById("modal-imagen").src = imagen;
-  document.getElementById("modal-nombre").textContent = nombre;
-  document.getElementById("modal-descripcion").textContent = descripcion;
-  document.getElementById("modal-precio").textContent = precio;
+  const producto = productos.find(p => p.id == id);
+  if(!producto) return;
 
-  document.getElementById("modal-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
+  const modal = document.getElementById("modalProducto");
+  const contenido = document.getElementById("modalContenido");
 
-  document.getElementById("modal-producto").style.display = "flex";
+  contenido.innerHTML = `
+    <div style="position:relative">
 
-  // 🔥 Bloquear fondo
-  document.body.classList.add("no-scroll");
-  document.body.classList.add("modal-abierto");
+      <span class="btn-cerrar" onclick="cerrarProducto()">✖</span>
+
+      <img src="${producto.imagen}" style="width:100%; border-radius:10px;">
+
+      <h2>${producto.nombre}</h2>
+
+      <p style="color:blue; font-size:18px; font-weight:bold">
+        $${producto.precio}
+      </p>
+
+      <button onclick="agregarAlCarrito(${producto.id})" class="btn-comprar">
+        Agregar al carrito
+      </button>
+
+    </div>
+  `;
+
+  modal.style.display = "flex";
 }
 
-function cerrarProducto() {
-
-  document.getElementById("modal-producto").style.display = "none";
-  document.body.classList.remove("no-scroll");
+function cerrarProducto(){
+  document.getElementById("modalProducto").style.display = "none";
 }
-
 
 // 🔥 Cerrar tocando fuera
 modalProducto.addEventListener("click", function(e) {
@@ -976,5 +987,19 @@ modalCarrito.addEventListener("click", e => {
   </div>
 </div>
 
+     <script>
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
+</script>
+    
+<!-- MODAL PRODUCTO -->
+<div id="modalProducto" class="modal-producto">
+  <div class="modal-contenido" id="modalContenido"></div>
+</div>
+
+    
   </body>
 </html>
