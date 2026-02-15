@@ -1448,7 +1448,7 @@ body.menu-abierto {
 
 .btn-cerrar{
   position:absolute;
-  top: 8px;
+  top: 12px;
   left: 12px;
   font-size: 26px;
   border-radius: 50%;
