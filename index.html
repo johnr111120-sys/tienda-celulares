@@ -261,25 +261,11 @@ imgModal.addEventListener("click", e=>{
 });
 </script>
 
-    
-    <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
-<div id="modal-producto" class="modal" style="display:none;">
-  <div class="modal-contenido">
-   <button class="cerrar-producto">×</button>
-    <img id="modal-imagen">
-    <h2 id="modal-nombre"></h2>
-    <p id="modal-descripcion"></p>
-    <h3 id="modal-precio"></h3>
-    <a id="modal-whatsapp" target="_blank">Consultar por WhatsApp</a>
-  </div>
-</div>
-
 <script>
 
 const modalProducto = document.getElementById("modal-producto");
 
 function abrirProducto(id){
-
   const producto = productos.find(p => p.id == id);
   if(!producto) return;
 
@@ -288,7 +274,6 @@ function abrirProducto(id){
 
   contenido.innerHTML = `
     <div style="position:relative">
-
       <span class="btn-cerrar" onclick="cerrarProducto()">✖</span>
 
       <img src="${producto.imagen}" style="width:100%; border-radius:10px;">
@@ -302,25 +287,24 @@ function abrirProducto(id){
       <button onclick="agregarAlCarrito(${producto.id})" class="btn-comprar">
         Agregar al carrito
       </button>
-
     </div>
   `;
 
   modal.style.display = "flex";
+  document.body.classList.add("no-scroll");
 }
 
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
+  document.body.classList.remove("no-scroll");
 }
 
 // 🔥 Cerrar tocando fuera
-modalProducto.addEventListener("click", function(e) {
-  if (e.target.id === "modal-producto") {
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
     cerrarProducto();
   }
 });
-document.querySelector(".cerrar-producto")
-  .addEventListener("click", cerrarProducto);
 
 </script>
 
@@ -542,13 +526,7 @@ function router() {
     const producto = productos.find(p => p.slug === slug);
 
     if (producto) {
-      abrirProducto(
-        producto.imagen,
-        producto.nombre,
-        `Producto ${producto.subcategoria}`,
-        `$${producto.precio}`,
-        `Hola, quiero información sobre ${producto.nombre}`
-      );
+     abrirProducto(producto.id);
     }
 
    
