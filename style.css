@@ -63,7 +63,7 @@ html, body {
 /* DERECHA */
 .nav-right{
  display: flex;
-    gap: 22px !important; /* Aumentamos el espacio entre Cuenta, Carrito y Favoritos */
+    gap: 26px !important; /* Aumentamos el espacio entre Cuenta, Carrito y Favoritos */
     padding-left: 10px;
 }
 
@@ -98,7 +98,7 @@ html, body {
 /* --- REDES SOCIALES EN EL NAV --- */
 .nav-socials {
     display: flex;
-    gap: 12px; /* Espacio entre redes sociales */
+    gap: 8px; /* Espacio entre redes sociales */
     justify-content: center;
     flex-grow: 1; /* Ocupa el espacio central */
 }
