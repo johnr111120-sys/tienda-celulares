@@ -202,16 +202,16 @@ al lado de Plaza La Canela.
 
 <!-- VISTA PRODUCTO SPA -->
 <section id="vista-producto" style="display:none;">
-  <div class="producto-detalle">
-    <img id="detalle-img" src="">
-    <h2 id="detalle-nombre"></h2>
-    <p id="detalle-desc"></p>
-    <p id="detalle-precio"></p>
+
+  <button class="btn-volver">Volver</button>
+
+  <img id="producto-imagen">
+  <h2 id="producto-nombre"></h2>
+  <p id="producto-descripcion"></p>
+  <div id="producto-precio"></div>
 
     <button id="btn-comprar-detalle">Agregar al carrito</button>
-    <button onclick="volverAProductos()">← Volver</button>
-    <button class="btn-volver">← Volver</button>
-  </div>
+
 </section>
       
 <section id="contacto" class="seccion-extra">
@@ -266,25 +266,21 @@ imgModal.addEventListener("click", e=>{
 </script>
 
     <script>
-function abrirProductoSPA(producto) {
+function abrirProductoSPA(imagen, nombre, descripcion, precio, mensaje) {
 
-  // ocultar vistas
-  document.getElementById("vista-inicio").style.display = "none";
-  document.getElementById("vista-productos").style.display = "none";
-  document.querySelectorAll(".seccion-extra")
-  .forEach(sec => sec.style.display = "none");
+const vistaProducto = document.getElementById("vista-producto");
+  const vistaProductos = document.getElementById("vista-productos");
 
-  // mostrar vista producto
-  document.getElementById("vista-producto").style.display = "block";
+  if (vistaProductos) vistaProductos.style.display = "none";
+  if (vistaProducto) vistaProducto.style.display = "block";
 
-  // llenar info
-  document.getElementById("detalle-img").src = producto.imagen;
-  document.getElementById("detalle-nombre").textContent = producto.nombre;
-  document.getElementById("detalle-desc").textContent =
-    "Producto " + producto.subcategoria;
-  document.getElementById("detalle-precio").textContent =
-    "$" + producto.precio;
+  document.getElementById("producto-imagen").src = imagen;
+  document.getElementById("producto-nombre").textContent = nombre;
+  document.getElementById("producto-descripcion").textContent = descripcion;
+  document.getElementById("producto-precio").textContent = precio;
 
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
   // botón comprar
   document.getElementById("btn-comprar-detalle").onclick = () => {
     agregarAlCarrito(producto);
@@ -518,11 +514,19 @@ function router() {
   // ===============================
 if (hash.startsWith("#/producto/")) {
   const slug = hash.split("#/producto/")[1];
+    
   const producto = productos.find(p => p.slug === slug);
 
   if (producto) {
-    abrirProductoSPA(producto);
+    abrirProductoSPA(
+      producto.imagen,
+      producto.nombre,
+      producto.descripcion,
+      `$${producto.precio}`,
+      producto.mensaje
+    );
   }
+
   return;
 }
 
