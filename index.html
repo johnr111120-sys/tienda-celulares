@@ -288,35 +288,40 @@ imgModal.addEventListener("click", e=>{
 
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirModal(nombre, precio, descripcion, rutaImagen) {
-    const modal = document.getElementById('miModal');
-    
-    // Rellenar textos
-    document.getElementById('tituloModal').innerText = nombre;
-    document.getElementById('precioModal').innerText = precio;
-    document.getElementById('descModal').innerText = descripcion;
+function abrirProducto(id){
 
-    // Rellenar IMAGEN (La clave de tu problema)
-    const imagenModal = document.getElementById('imgModal');
-    if (imagenModal) {
-        imagenModal.src = rutaImagen; // Aquí carga: "images/cell0.jpg"
-    }
+  const producto = productos.find(p => p.id == id);
+  if(!producto) return;
 
-    // Configurar el link de WhatsApp
-    const msg = `Hola Moisés Celulares, me interesa el ${nombre} por ${precio}`;
-    document.getElementById('linkWsp').href = `https://wa.me/18292017321?text=${encodeURIComponent(msg)}`;
+  const modal = document.getElementById("modalProducto");
+  const contenido = document.getElementById("modalContenido");
 
-    // Mostrar modal SPA
-    modal.style.display = 'flex';
-    document.body.classList.add('no-scroll');
+  contenido.innerHTML = `
+    <div style="position:relative">
+
+      <span class="btn-cerrar" onclick="cerrarProducto()">✖</span>
+
+      <img src="${producto.imagen}" style="width:100%; border-radius:10px;">
+
+      <h2>${producto.nombre}</h2>
+
+      <p style="color:blue; font-size:18px; font-weight:bold">
+        $${producto.precio}
+      </p>
+
+      <button onclick="agregarAlCarrito(${producto.id})" class="btn-comprar">
+        Agregar al carrito
+      </button>
+
+    </div>
+  `;
+
+  modal.style.display = "flex";
 }
 
-function cerrarProducto() {
-
-  document.getElementById("modal-producto").style.display = "none";
-  document.body.classList.remove("no-scroll");
+function cerrarProducto(){
+  document.getElementById("modalProducto").style.display = "none";
 }
-
 
 // 🔥 Cerrar tocando fuera
 modalProducto.addEventListener("click", function(e) {
@@ -799,9 +804,18 @@ document.getElementById("btn-favoritos").onclick = () => {
 
    </div>
 
-<div id="panel-lateral" class="panel-lateral">
-  <div class="panel-contenido" id="panel-contenido"></div>
+<!-- MODAL PRODUCTO -->
+<div id="modalProducto" class="modal-producto">
+  <div class="modal-contenido" id="modalContenido"></div>
 </div>
 
+<script>
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
+</script>
+    
   </body>
 </html>
