@@ -312,16 +312,14 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
      <script>
 const modalProducto = document.getElementById("modalProducto");
 
-modalProducto.addEventListener("click", function(e) {
-
-  // cerrar solo si se toca fuera del contenido
-  if (!document.getElementById("modalContenido").contains(e.target)) {
+modalProducto.addEventListener("click", (e) => {
+  if (e.target === modalProducto) {
     cerrarProducto();
   }
-
 });
 
-   </script>
+ </script>
+ 
     <script>
 /* =========================
    SWIPE DOWN PARA CERRAR
