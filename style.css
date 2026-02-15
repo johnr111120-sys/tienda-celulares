@@ -59,20 +59,17 @@ html, body {
 .nav-principal img {
   max-height: 50px;
 }
-/* --- ESPACIADO EXTRA EN ICONOS NAV --- */
-.nav-right {
-    display: flex !important;
-    /* Aumentamos la separación a 25px para que no estén pegados */
-    gap: 25px !important; 
-    padding-right: 5px;
+
+/* DERECHA */
+.nav-right{
+  display: flex;
+  gap: 15px;
 }
 
 .nav-icon{
   background: none;
   border: none;
-  font-size: 20px !important;
-    /* Agregamos un área de toque más grande (invisible) */
-  padding: 5px;
+  font-size: 22px;
   cursor: pointer;
   color: white;
   transition: transform .15s ease;
@@ -96,22 +93,6 @@ html, body {
   font-size: 16px;
   outline: none;
 }
-/* --- AJUSTE DE REDES SOCIALES (Instagram y Facebook) --- */
-.nav-socials {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-grow: 1; /* Ocupa el espacio central */
-}
-
-.nav-icon-social {
-    color: white;
-    font-size: 22px;
-    text-decoration: none;
-    transition: transform 0.2s;
-}
-
-.nav-icon-social:active { transform: scale(0.9); }
 
 /* IZQUIERDA - LOGO */
 .nav-left{
@@ -595,47 +576,13 @@ body.no-scroll{
     gap: 8px;
     font-weight: bold;
     font-size: 14px;
-    border-right: 1px solid white; /* Separación sutil */
-    border-radius: 0 !important; /* Esquinas rectas */
+    border-right: 2px solid white; /* Separación sutil */
 }
 
-/* --- BUSCADOR DENTRO DE LA BARRA NEGRA --- */
+/* El 60% Negro */
 .parte-negra {
     width: 70%;
     background: #000;
-    display: flex;
-    align-items: center;
-    padding: 0 8px;
-}
-
-.buscador-barra {
-    width: 100%;
-    height: 100%;
-    background: transparent; /* Para que use el blanco del contenedor */
-    border: none;
-    padding: 0 12px;
-    font-size: 14px;
-    /* CAMBIO CLAVE: Esquinas rectas, no circulares */
-    border-radius: 2px !important; 
-    outline: none;
-}
-
-/* --- BUSCADOR CON LUPA --- */
-.contenedor-busqueda {
-    display: flex;
-    align-items: center;
-    background: #fff; /* El fondo blanco del buscador */
-    width: 100%;
-    height: 35px;
-    padding-left: 10px;
-    /* ESQUINAS RECTAS */
-    border-radius: 0px !important; 
-}
-
-.icono-lupa {
-    color: #888;
-    font-size: 14px;
-    margin-right: 5px;
 }
 
 /* Estilo del icono y texto */
@@ -1273,6 +1220,27 @@ body.menu-abierto {
   100% { transform: scale(1); }
 }
 
+.shake {
+  animation: shakeCart 0.4s ease;
+}
+
+@keyframes shakeCart {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0); }
+}
+
+#cart-count{
+  background:red;
+  color:white;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+  margin-left:4px;
+}
+
 .panel-lateral {
   position: fixed;
   top: 0;
@@ -1298,112 +1266,103 @@ body.menu-abierto {
   margin-top: 0;
 }
 
-#vista-producto {
-  padding: 20px;
-  margin: auto;
-  animation: fadeIn .25s ease;
+#icono-carrito{
+  position: relative;
 }
 
-.producto-detalle {
-  max-width: 500px;
-  margin: auto;
+.carrito-contador{
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 18px;
   text-align: center;
 }
-
-#producto-detalle {
-  position: relative;
-  z-index: 5;
-  background: white;
-}
-
-.producto-detalle img {
+/* fondo oscuro */
+.modal-carrito {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 320px;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
   justify-content: center;
-  border-radius: 12px;
+  align-items: center;
+  z-index: 9999;
+}
+/* caja */
+.modal-carrito-contenido {
+  background: white;
+  padding: 20px;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 10px;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
-#detalle-nombre {
-  color: #007bff;
-  font-size: 26px;
-  margin: 15px 0 5px;
-}
-
-#detalle-precio {
-  color: red;
+/* botón cerrar */
+.cerrar-carrito {
+  position: absolute;
+  right: 12px;
+  top: 8px;
   font-size: 22px;
-  font-weight: bold;
-}
-
-#btn-comprar-detalle {
-  margin-top: 15px;
-  padding: 12px 20px;
-  background: black;
-  color: white;
   border: none;
-  border-radius: 8px;
+  background: none;
   cursor: pointer;
 }
 
-#btn-comprar-detalle:hover {
-  background: red;
+.modal-carrito-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #ddd;
+  padding-bottom:8px;
 }
 
-.btn-volver{
-  position:absolute;
-  top:-35px;
-  left:15px;
-  background:#007bff;
+.modal-carrito-header button{
+  font-size:22px;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+
+.carrito-item{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+  border-bottom:1px solid #eee;
+  padding-bottom:5px;
+}
+
+.carrito-footer{
+  margin-top:10px;
+  text-align:center;
+}
+
+.carrito-footer button{
+  background:#ff3b3b;
   color:white;
   border:none;
   padding:8px 14px;
-  border-radius:20px;
+  border-radius:6px;
   cursor:pointer;
+}
+
+.carrito-total{
+  margin-top:15px;
+  font-size:18px;
   font-weight:bold;
-  z-index:10;
+  text-align:right;
 }
 
-.producto-detalle{
-  position:relative;
-}
-
-.btn-volver:hover{
-  background:#0056b3;
-}
-
-.modal-producto{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.45);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-
-.modal-contenido{
-  background:#fff;
-  width:92%;
-  max-width:420px;
-  border-radius:14px;
-  padding:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  animation: aparecer .25s ease;
-}
-
-@keyframes aparecer{
-  from{transform:scale(.9);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-.btn-cerrar{
-  position:absolute;
-  top:10px;
-  right:14px;
-  font-size:22px;
-  color:red;
-  cursor:pointer;
+#carrito-total-precio{
+  color:#007bff;
 }
