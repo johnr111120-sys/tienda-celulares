@@ -349,7 +349,6 @@ img, svg {
   padding: 25px;
   text-align: center;
   position: relative;
-  animation: aparecer 0.25s ease;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
 }
 
@@ -362,10 +361,6 @@ img, svg {
   object-fit: contain;
   margin-bottom: 15px;
   transition: transform 0.3s ease;
-}
-
-.modal-contenido img:hover {
-  transform: scale(1.05);
 }
 /* ========================= */
 /* TEXTOS */
