@@ -297,9 +297,17 @@ function abrirProducto(id){
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
   document.body.classList.remove("no-scroll");
+
+  const modal = document.getElementById("modalProducto");
+
+  modal.classList.add("cerrando");
+
+  setTimeout(()=>{
+    modal.classList.remove("activo","cerrando");
+    document.body.classList.remove("modal-abierto");
+  },200);
 }
 
-// 🔥 Cerrar tocando fuera
 // 🔥 Cerrar tocando fuera
 document.getElementById("modalProducto").addEventListener("click", e=>{
   if(e.target.id === "modalProducto"){
@@ -328,32 +336,21 @@ modalProducto.addEventListener("click", (e) => {
 let startY = 0;
 let endY = 0;
 
-// Modal imagen
-const imgModalSwipe = document.getElementById("img-modal");
+const modalContenido = document.getElementById("modalContenido");
 
-// Modal producto
-const productoModalSwipe = document.getElementById("modal-producto");
+modalContenido.addEventListener("touchstart", e=>{
+  startY = e.touches[0].clientY;
+});
 
-// Función genérica
-function activarSwipe(modal, cerrarFn){
-  if(!modal) return;
+modalContenido.addEventListener("touchmove", e=>{
+  endY = e.touches[0].clientY;
+});
 
-  modal.addEventListener("touchstart", e => {
-    startY = e.touches[0].clientY;
-  }, { passive: true });
-
-  modal.addEventListener("touchmove", e => {
-    endY = e.touches[0].clientY;
-  }, { passive: true });
-
-  modal.addEventListener("touchend", () => {
-    if(endY - startY > 80){ // distancia swipe
-      cerrarFn();
-    }
-    startY = 0;
-    endY = 0;
-  });
-}
+modalContenido.addEventListener("touchend", ()=>{
+  if(endY - startY > 80){   // deslizó hacia abajo
+    cerrarProducto();
+  }
+});
 
 // Activar swipe
 activarSwipe(imgModalSwipe, cerrarImgModal);
@@ -988,6 +985,7 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
   <div class="modal-contenido" id="modalContenido"></div>
+  <div class="swipe-indicator"></div>
 </div>
 
   </body>
