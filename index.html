@@ -300,10 +300,15 @@ function cerrarProducto(){
 }
 
 // 🔥 Cerrar tocando fuera
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
+const modalProducto = document.getElementById("modalProducto");
+
+modalProducto.addEventListener("click", function(e) {
+
+  // si se hace click en el fondo oscuro
+  if (!document.getElementById("modalContenido").contains(e.target)) {
     cerrarProducto();
   }
+
 });
 
 </script>
