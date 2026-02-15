@@ -265,45 +265,6 @@ imgModal.addEventListener("click", e=>{
 });
 </script>
 
-<script>
-
-const modalProducto = document.getElementById("modal-producto");
-
-function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
-
-  document.getElementById("modal-imagen").src = imagen;
-  document.getElementById("modal-nombre").textContent = nombre;
-  document.getElementById("modal-descripcion").textContent = descripcion;
-  document.getElementById("modal-precio").textContent = precio;
-
-  document.getElementById("modal-whatsapp").href =
-    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
-
-  document.getElementById("modal-producto").style.display = "flex";
-
-  // 🔥 Bloquear fondo
-  document.body.classList.add("no-scroll");
-  document.body.classList.add("modal-abierto");
-}
-
-function cerrarProducto() {
-
-  document.getElementById("modal-producto").style.display = "none";
-  document.body.classList.remove("no-scroll");
-}
-
-
-// 🔥 Cerrar tocando fuera
-modalProducto.addEventListener("click", function(e) {
-  if (e.target.id === "modal-producto") {
-    cerrarProducto();
-  }
-});
-document.querySelector(".cerrar-producto")
-  .addEventListener("click", cerrarProducto);
-
-</script>
-
     <script>
 function abrirProductoSPA(producto) {
 
