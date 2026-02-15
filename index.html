@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Mi Negocio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body class="inicio">
@@ -27,41 +28,39 @@
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
   </div>
     
-  <div class="nav-center">
+  <div class="nav-socials">
   <!-- CENTRO -->
-   <div class="nav-socials">
-      <a href="https://instagram.com/moisescelulares" target="_blank" class="nav-icon-social">
+  <a href="https://instagram.com/moisescelulares" target="_blank" class="nav-icon-social">
       <i class="fab fa-instagram"></i>
  </a>
   <a href="https://facebook.com/moisesscelulares" target="_blank" class="nav-icon-social">
       <i class="fab fa-facebook"></i>
  </a>
-    </div>
+  </div>
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-   <button class="nav-icon"><i class="fas fa-user">👤</button>
- <button class="nav-icon"><i class="fas fa-shopping-cart">🛒</button>
- <button class="nav-icon"><i class="fas fa-heart">❤️</button>
+  <button class="nav-icon"><i class="fas fa-user"></i></button>
+    <button class="nav-icon"><i class="fas fa-shopping-cart"></i></button>
+    <button class="nav-icon"><i class="fas fa-heart"></i></button>
 </div>
 </nav>   
  </header>
 
 <div class="barra-herramientas-fija">
-   <button class="btn-categoria-rect" onclick="toggleMenuProductos()">
+    <button class="btn-categoria-rect" onclick="toggleMenuProductos()">
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
         </div>
-       <div class="parte-negra">
+        <div class="parte-negra">
         <div class="contenedor-busqueda">
-            <i class="fas fa-search icono-lupa"></i>
-            <input type="text" class="buscador-barra" placeholder="Buscar productos...">
-        </div>
+        <i class="fas fa-search icono-lupa"></i>
+    <input type="text" class="buscador-barra" placeholder="Buscar productos...">
+    </div>
     </button>
-  </div>
 </div>
-
+      
 <h2 id="titulo-categoria">Productos</h2>
 <!-- OVERLAY -->
 <div id="menu-overlay"></div>
