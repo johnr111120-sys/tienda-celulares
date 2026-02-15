@@ -59,23 +59,6 @@ html, body {
 .nav-principal img {
   max-height: 50px;
 }
-/* --- REDES SOCIALES EN EL NAV --- */
-.nav-socials {
-    display: flex;
-    gap: 20px; /* Espacio entre redes sociales */
-    justify-content: center;
-    flex-grow: 1; /* Ocupa el espacio central */
-}
-
-.nav-icon-social {
-    color: white;
-    font-size: 22px;
-    text-decoration: none;
-    transition: transform 0.2s;
-}
-
-.nav-icon-social:active { transform: scale(0.9); }
-
 /* --- ESPACIADO EXTRA EN ICONOS NAV --- */
 .nav-right {
     display: flex !important;
@@ -88,6 +71,7 @@ html, body {
   background: none;
   border: none;
   font-size: 20px !important;
+    /* Agregamos un área de toque más grande (invisible) */
   padding: 5px;
   cursor: pointer;
   color: white;
@@ -112,6 +96,22 @@ html, body {
   font-size: 16px;
   outline: none;
 }
+/* --- AJUSTE DE REDES SOCIALES (Instagram y Facebook) --- */
+.nav-socials {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-grow: 1; /* Ocupa el espacio central */
+}
+
+.nav-icon-social {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.nav-icon-social:active { transform: scale(0.9); }
 
 /* IZQUIERDA - LOGO */
 .nav-left{
