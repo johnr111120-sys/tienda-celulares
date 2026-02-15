@@ -337,21 +337,6 @@ img, svg {
   padding: 40px;
   padding-top: 130px;        /* 🔥 lo baja */
 }
-
-/* ========================= */
-/* CONTENIDO DEL MODAL */
-/* ========================= */
-.modal-contenido {
-  background: #ffffff;
-  width: 100%;
-  max-width: 500px;
-  border-radius: 16px;
-  padding: 25px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
 /* ========================= */
 /* IMAGEN */
 /* ========================= */
@@ -1415,15 +1400,17 @@ body.menu-abierto {
 
 .modal-producto{
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset: 0;
   background: rgba(0,0,0,0.45);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* cuando está activo */
+.modal-producto.activo{
+  display:flex;
 }
 
 .modal-contenido{
@@ -1433,6 +1420,7 @@ body.menu-abierto {
   border-radius:14px;
   padding:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  position: relative;
   animation: aparecer .25s ease;
 }
 
