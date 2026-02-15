@@ -763,17 +763,6 @@ document.getElementById("btn-favoritos").onclick = () => {
 };
 </script>
 
-<script>
-window.addEventListener("popstate", () => {
-
-  // si estamos viendo un producto → bloquear atrás
-  if (window.location.hash.startsWith("#/producto/")) {
-    history.go(1);
-    return;
-  }
-
-});
-</script>
     
    </div>
 
