@@ -202,7 +202,7 @@ al lado de Plaza La Canela.
 
     <h2 id="titulo-categoria"></h2>
 
-    <section id="productos" class="productos-grid"></section>
+   <section id="vista-producto"></section>
 
   </div>
 
@@ -274,31 +274,38 @@ imgModal.addEventListener("click", e=>{
 </script>
 
     <script>
-function abrirProductoSPA(imagen, nombre, descripcion, precio, mensaje) {
+function abrirProducto(imagen, nombre, descripcion, precio, mensaje) {
 
-const vistaProducto = document.getElementById("vista-producto");
   const vistaProductos = document.getElementById("vista-productos");
+  const vistaProducto = document.getElementById("vista-producto");
 
-  if (vistaProductos) vistaProductos.style.display = "none";
-  if (vistaProducto) vistaProducto.style.display = "block";
+  vistaProductos.style.display = "none";
+  vistaProducto.style.display = "block";
 
-  document.getElementById("producto-imagen").src = imagen;
-  document.getElementById("producto-nombre").textContent = nombre;
-  document.getElementById("producto-descripcion").textContent = descripcion;
-  document.getElementById("producto-precio").textContent = precio;
+  vistaProducto.innerHTML = `
+    <div class="producto-detalle">
+      <button class="btn-volver">Volver</button>
 
-  window.scrollTo({ top: 0, behavior: "instant" });
-}
-  // botón comprar
-  document.getElementById("btn-comprar-detalle").onclick = () => {
-    agregarAlCarrito(producto);
-  };
+      <img src="${imagen}">
+      <h2>${nombre}</h2>
+      <p>${descripcion}</p>
+      <strong>${precio}</strong>
+
+      <button onclick="agregarAlCarrito('${nombre}', ${precio})">
+        Agregar al carrito
+      </button>
+    </div>
+  `;
+
+ // 👇👇👇 AQUÍ EXACTAMENTE 👇👇👇
+contenedor.querySelector(".btn-volver").onclick = volverAProductos;
+
 }
 
 function volverAProductos() {
 
-  const vistaProducto = document.getElementById("vista-producto");
-  if (vistaProducto) vistaProducto.innerHTML = "";
+  document.getElementById("vista-producto").style.display = "none";
+  document.getElementById("vista-productos").style.display = "block";
 
   navegar("/productos/" + ultimaSubcategoria);
 }
@@ -521,18 +528,7 @@ function router() {
   // PRODUCTO INDIVIDUAL
   // ===============================
 if (hash.startsWith("#/producto/")) {
-  const slug = hash.split("#/producto/")[1];
-
-  const vistaInicio = document.getElementById("vista-inicio");
-  const vistaProductos = document.getElementById("vista-productos");
-  const vistaProducto = document.getElementById("vista-producto");
-
-  if (vistaInicio) vistaInicio.style.display = "none";
-  if (vistaProductos) vistaProductos.style.display = "none";
-  if (vistaProducto) vistaProducto.style.display = "block";
-
-  mostrarProducto(slug); // 👈 esta función ya la usas
-  return;
+  return; // abrirProducto maneja esto
 }
 
   // ===============================
