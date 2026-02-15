@@ -1448,9 +1448,12 @@ body.menu-abierto {
 
 .btn-cerrar{
   position:absolute;
-  top:10px;
-  right:14px;
-  font-size:22px;
-  color:red;
+  top: 8px;
+  left: 12px;
+  font-size: 26px;
+  border-radius: 50%;
+  border: 4px solid #0000FF; /* círculo azul */
+  background: transparent;
+  color: red; /* X roja */
   cursor:pointer;
 }
