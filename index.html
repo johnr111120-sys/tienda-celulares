@@ -194,7 +194,7 @@ al lado de Plaza La Canela.
   </a>
 </section>
 </div>
-    
+
  <!-- ========================= -->
   <!-- VISTA PRODUCTOS (NUEVA) -->
   <!-- ========================= -->
@@ -202,27 +202,13 @@ al lado de Plaza La Canela.
 
     <h2 id="titulo-categoria"></h2>
 
-   <section id="vista-producto"></section>
+    <section id="productos" class="productos-grid"></section>
 
   </div>
 
 </main>
-
-<!-- VISTA PRODUCTO SPA -->
-<section id="vista-producto" style="display:none;">
-
-  <button class="btn-volver">Volver</button>
-
-  <img id="producto-imagen">
-  <h2 id="producto-nombre"></h2>
-  <p id="producto-descripcion"></p>
-  <div id="producto-precio"></div>
-
-    <button id="btn-comprar-detalle">Agregar al carrito</button>
-
-</section>
       
-<section id="contacto" class="seccion-extra">
+<section>
     <h2>Contacto</h2>
     <p>Visítanos en nuestro local o escríbenos por WhatsApp.</p>
    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470.19965643254886!2d-70.8152473101403!3d19.472923799663075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1c790f7f8f709%3A0x6c4137e1bd132ae4!2sMoises%20Celulares!5e0!3m2!1ses-419!2suy!4v1769823875907!5m2!1ses-419!2suy" 
@@ -273,57 +259,60 @@ imgModal.addEventListener("click", e=>{
 });
 </script>
 
-    <script>
-function abrirProducto(imagen, nombre, descripcion, precio, mensaje) {
-
-  const vistaProductos = document.getElementById("vista-productos");
-  const vistaProducto = document.getElementById("vista-producto");
-
-  vistaProductos.style.display = "none";
-  vistaProducto.style.display = "block";
-
-  vistaProducto.innerHTML = `
-    <div class="producto-detalle">
-      <button class="btn-volver">Volver</button>
-
-      <img src="${imagen}">
-      <h2>${nombre}</h2>
-      <p>${descripcion}</p>
-      <strong>${precio}</strong>
-
-      <button onclick="agregarAlCarrito('${nombre}', ${precio})">
-        Agregar al carrito
-      </button>
+    
+    <!-- MODAL DE PRODUCTO (NUEVO, AISLADO) -->
+<div id="miModal" class="modal">
+    <div class="modal-contenido">
+        <button class="cerrar-producto" onclick="cerrarModal()">&larr;</button>
+        <img id="imgModal" src="" alt="Producto">
+        
+        <div class="mp-contenido">
+            <h2 id="tituloModal"></h2>
+            <p id="descModal"></p>
+            <h3 id="precioModal"></h3>
+            <a id="linkWsp" href="#" target="_blank">Comprar ahora</a>
+        </div>
     </div>
-  `;
+</div>
+<script>
 
- // 👇👇👇 AQUÍ EXACTAMENTE 👇👇👇
-contenedor.querySelector(".btn-volver").onclick = volverAProductos;
+const modalProducto = document.getElementById("modal-producto");
 
+function abrirProducto(imagen, nombre, descripcion, precio, mensajeWhatsApp) {
+
+  document.getElementById("modal-imagen").src = imagen;
+  document.getElementById("modal-nombre").textContent = nombre;
+  document.getElementById("modal-descripcion").textContent = descripcion;
+  document.getElementById("modal-precio").textContent = precio;
+
+  document.getElementById("modal-whatsapp").href =
+    "https://wa.me/18292017321?text=" + encodeURIComponent(mensajeWhatsApp);
+
+  document.getElementById("modal-producto").style.display = "flex";
+
+  // 🔥 Bloquear fondo
+  document.body.classList.add("no-scroll");
+  document.body.classList.add("modal-abierto");
 }
 
-function volverAProductos() {
+function cerrarProducto() {
 
-  document.getElementById("vista-producto").style.display = "none";
-  document.getElementById("vista-productos").style.display = "block";
-
-  navegar("/productos/" + ultimaSubcategoria);
+  document.getElementById("modal-producto").style.display = "none";
+  document.body.classList.remove("no-scroll");
 }
-// ===============================
-// BOTÓN VOLVER DESDE PRODUCTO
-// ===============================
-document.addEventListener("click", function(e) {
-  const btn = e.target.closest(".btn-volver");
-  if (!btn) return;
-  volverAProductos();
+
+
+// 🔥 Cerrar tocando fuera
+modalProducto.addEventListener("click", function(e) {
+  if (e.target.id === "modal-producto") {
+    cerrarProducto();
+  }
 });
-
-function cerrarProductoSPA(producto) {
-document.querySelectorAll(".seccion-extra")
-  .forEach(sec => sec.style.display = "block");
-}
+document.querySelector(".cerrar-producto")
+  .addEventListener("click", cerrarProducto);
 
 </script>
+
     <script>
 /* =========================
    SWIPE DOWN PARA CERRAR
@@ -470,22 +459,31 @@ fetch("productos.json")
 =================================*/
 
 function navegar(ruta) {
-  const nuevaRuta = "#" + ruta;
 
-  // 👉 Si es un producto, NO agregamos historial
+  const nuevaHash = "#" + ruta;
+
+  // 🔥 Si es producto
   if (ruta.startsWith("/producto/")) {
-    history.replaceState(null, null, nuevaRuta);
-    router();
+
+    // Si es el mismo producto → forzar ejecución manual
+    if (window.location.hash === nuevaHash) {
+      router();
+      return;
+    }
+
+    // 🔥 Reemplazar en vez de agregar al historial
+    window.location.replace(nuevaHash);
     return;
   }
 
-  // 👉 Si es la misma ruta, forzar ejecución
-  if (window.location.hash === nuevaRuta) {
+  // 🔥 Para categorías o inicio
+  if (window.location.hash === nuevaHash) {
     router();
   } else {
-    window.location.hash = nuevaRuta;
+    window.location.hash = nuevaHash;
   }
 }
+
 
 
 window.addEventListener("load", router);
@@ -508,7 +506,7 @@ function router() {
   // SUBCATEGORÍAS
   // ===============================
   if (hash.startsWith("#/productos/")) {
-   
+
     const subcategoria = decodeURIComponent(
       hash.split("#/productos/")[1]
     );
@@ -527,9 +525,25 @@ function router() {
   // ===============================
   // PRODUCTO INDIVIDUAL
   // ===============================
-if (hash.startsWith("#/producto/")) {
-  return; // abrirProducto maneja esto
-}
+  if (hash.startsWith("#/producto/")) {
+
+    const slug = hash.split("#/producto/")[1];
+    const producto = productos.find(p => p.slug === slug);
+
+    if (producto) {
+      abrirProducto(
+        producto.imagen,
+        producto.nombre,
+        `Producto ${producto.subcategoria}`,
+        `$${producto.precio}`,
+        `Hola, quiero información sobre ${producto.nombre}`
+      );
+    }
+
+   
+    // ❌ AQUÍ NO HACEMOS SCROLL
+    return;
+  }
 
   // ===============================
   // INICIO
@@ -548,7 +562,6 @@ if (hash.startsWith("#/producto/")) {
 =================================*/
 
 function mostrarProductosPorSubcategoria(subcategoria) {
-  ultimaSubcategoria = subcategoria; // 👈 agregar
 
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -768,7 +781,6 @@ document.getElementById("btn-favoritos").onclick = () => {
 };
 </script>
 
-    
    </div>
 
 <div id="panel-lateral" class="panel-lateral">
