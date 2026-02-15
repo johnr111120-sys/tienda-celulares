@@ -27,9 +27,14 @@
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
   </div>
     
-  <div class="nav-center">
+  <div class="nav-socials">
   <!-- CENTRO -->
-    <input type="text" placeholder="🔎 BUSCAR..." />
+  <a href="https://instagram.com/tu_perfil" target="_blank" class="nav-icon-social">
+      <i class="fab fa-instagram"></i>
+ </a>
+  <a href="https://facebook.com/tu_perfil" target="_blank" class="nav-icon-social">
+      <i class="fab fa-facebook"></i>
+ </a>
   </div>
     
   <div class="nav-left">
@@ -42,12 +47,14 @@
  </header>
 
 <div class="barra-herramientas-fija">
-    <button class="btn-categoria-rect fab-productos">
+    <button class="btn-categoria-rect" onclick="toggleMenuProductos()">
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
         </div>
-        <div class="parte-negra"></div>
+        <div class="parte-negra">
+    <input type="text" class="buscador-barra" placeholder="Buscar productos...">
+    </div>
     </button>
 </div>
 
