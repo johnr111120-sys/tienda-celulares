@@ -1440,3 +1440,33 @@ body.menu-abierto {
   color: red; /* X roja */
   cursor:pointer;
 }
+
+.opcion-expandible{
+  margin:12px 0;
+}
+
+.opcion-titulo{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.opcion-lista{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.opcion-btn{
+  border:1px solid #ccc;
+  background:#fff;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.opcion-btn.activo{
+  background:#007bff;
+  color:#fff;
+  border-color:#007bff;
+}
