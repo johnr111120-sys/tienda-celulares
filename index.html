@@ -300,19 +300,28 @@ function cerrarProducto(){
 }
 
 // 🔥 Cerrar tocando fuera
+// 🔥 Cerrar tocando fuera
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
+
+</script>
+
+     <script>
 const modalProducto = document.getElementById("modalProducto");
 
 modalProducto.addEventListener("click", function(e) {
 
-  // si se hace click en el fondo oscuro
+  // cerrar solo si se toca fuera del contenido
   if (!document.getElementById("modalContenido").contains(e.target)) {
     cerrarProducto();
   }
 
 });
 
-</script>
-
+   </script>
     <script>
 /* =========================
    SWIPE DOWN PARA CERRAR
