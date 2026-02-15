@@ -1247,6 +1247,7 @@ body.menu-abierto {
 
 #vista-producto {
   padding: 20px;
+  margin: auto;
   animation: fadeIn .25s ease;
 }
 
@@ -1269,6 +1270,8 @@ body.menu-abierto {
 }
 
 #detalle-nombre {
+  color: #007bff;
+  font-size: 26px;
   margin: 15px 0 5px;
 }
 
