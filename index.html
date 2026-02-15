@@ -29,26 +29,37 @@
     
   <div class="nav-center">
   <!-- CENTRO -->
-    <input type="text" placeholder="🔎 BUSCAR..." />
-  </div>
+   <div class="nav-socials">
+      <a href="https://instagram.com/moisescelulares" target="_blank" class="nav-icon-social">
+      <i class="fab fa-instagram"></i>
+ </a>
+  <a href="https://facebook.com/moisesscelulares" target="_blank" class="nav-icon-social">
+      <i class="fab fa-facebook"></i>
+ </a>
+    </div>
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-   <button id="btn-cuenta" class="nav-icon" title="Mi cuenta">👤</button>
-  <button class="nav-icon" title="Carrito" onclick="abrirCarrito()">🛒</button>
-  <button id="btn-favoritos" class="nav-icon" title="Favoritos">❤️</button>
+   <button class="nav-icon"><i class="fas fa-user">👤</button>
+ <button class="nav-icon"><i class="fas fa-shopping-cart">🛒</button>
+ <button class="nav-icon"><i class="fas fa-heart">❤️</button>
 </div>
 </nav>   
  </header>
 
 <div class="barra-herramientas-fija">
-    <button class="btn-categoria-rect fab-productos">
+   <button class="btn-categoria-rect" onclick="toggleMenuProductos()">
         <div class="parte-azul">
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
         </div>
-        <div class="parte-negra"></div>
+       <div class="parte-negra">
+        <div class="contenedor-busqueda">
+            <i class="fas fa-search icono-lupa"></i>
+            <input type="text" class="buscador-barra" placeholder="Buscar productos...">
+        </div>
     </button>
+  </div>
 </div>
 
 <h2 id="titulo-categoria">Productos</h2>
