@@ -98,7 +98,7 @@ html, body {
 /* --- REDES SOCIALES EN EL NAV --- */
 .nav-socials {
     display: flex;
-    gap: 4px; /* Espacio entre redes sociales */
+    gap: 10px !important; /* Espacio entre redes sociales */
     justify-content: center;
     flex-grow: 1; /* Ocupa el espacio central */
 }
