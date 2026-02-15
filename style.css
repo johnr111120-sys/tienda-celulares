@@ -63,7 +63,7 @@ html, body {
 /* DERECHA */
 .nav-right{
  display: flex;
-    gap: 20% !important; /* Aumentamos el espacio entre Cuenta, Carrito y Favoritos */
+    gap: 50% !important; /* Aumentamos el espacio entre Cuenta, Carrito y Favoritos */
     padding-left: 10px;
 }
 
