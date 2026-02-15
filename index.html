@@ -514,19 +514,16 @@ function router() {
   // ===============================
 if (hash.startsWith("#/producto/")) {
   const slug = hash.split("#/producto/")[1];
-    
-  const producto = productos.find(p => p.slug === slug);
 
-  if (producto) {
-    abrirProductoSPA(
-      producto.imagen,
-      producto.nombre,
-      producto.descripcion,
-      `$${producto.precio}`,
-      producto.mensaje
-    );
-  }
+  const vistaInicio = document.getElementById("vista-inicio");
+  const vistaProductos = document.getElementById("vista-productos");
+  const vistaProducto = document.getElementById("vista-producto");
 
+  if (vistaInicio) vistaInicio.style.display = "none";
+  if (vistaProductos) vistaProductos.style.display = "none";
+  if (vistaProducto) vistaProducto.style.display = "block";
+
+  mostrarProducto(slug); // 👈 esta función ya la usas
   return;
 }
 
