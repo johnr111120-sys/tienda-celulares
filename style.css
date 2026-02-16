@@ -1604,21 +1604,40 @@ body.menu-abierto {
 }
 
 .colores{
-  display:flex;
-  gap:10px;
-  margin:10px 0;
+  display: flex;
+  gap: 15px;
+  margin: 10px;
 }
 
 .color-opcion{
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  border:2px solid #ddd;
-  cursor:pointer;
-  transition:0.2s;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border:3px solid #eee;
+  cursor: pointer;
+  transition:0.3s;
 }
 
 .color-opcion.activo{
-  border:3px solid #007bff;
-  transform:scale(1.15);
+  border-color: #007bff;
+  transform: scale(1.1);
+}
+
+.modelos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.modelo-opcion {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modelo-opcion.activo {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
 }
