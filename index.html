@@ -275,9 +275,12 @@ function abrirProducto(producto){
 
     <h2 class="modal-nombre">${producto.nombre}</h2>
 
-    <p class="modal-descripcion">
-      ${producto.descripcion || ""}
-    </p>
+   <div class="modal-descripcion">
+  <p id="descTexto" class="desc-texto">
+    ${producto.descripcion || ""}
+  </p>
+  <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
+</div>
 
     ${renderOpciones(producto)}
 
@@ -652,50 +655,64 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   const div = document.createElement("div");
   div.className = "producto-card";
 
-  // 🔥 Si tiene modelos
-  if (p.modelos && p.modelos.length > 0) {
+ // 🔥 Si tiene modelos
+if (p.modelos && p.modelos.length > 0) {
 
-    const modeloInicial = p.modelos[0];
+  const modeloInicial = p.modelos[0];
 
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
-      <h3>${p.nombre}</h3>
-      <p class="descripcion">Disponible en varios modelos</p>
+  div.innerHTML = `
+    <img src="${p.imagen}" alt="${p.nombre}"
+         onclick="navegar('/producto/${p.slug}')">
 
-      <button class="btn-modelo">Elegir modelo ▼</button>
+    <h3>${p.nombre}</h3>
+    <p class="descripcion">Disponible en varios modelos</p>
 
-      <div class="modelos-dropdown" style="display:none;">
-        ${p.modelos.map(m => `
-          <div class="modelo-opcion"
-               data-precio="${m.precio}">
-            ${m.nombre}
-          </div>
-        `).join("")}
-      </div>
+    <button class="btn-modelo">Elegir modelo ▼</button>
 
-      <p class="precio">$${modeloInicial.precio}</p>
-      <button class="btn-comprar">Comprar</button>
-    `;
+    <div class="modelos-dropdown">
+      ${p.modelos.map(m => `
+        <div class="modelo-opcion"
+             data-precio="${m.precio}">
+             ${m.nombre}
+        </div>
+      `).join("")}
+    </div>
 
-    // Abrir / cerrar dropdown
-    btnModelo.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.style.display =
-        dropdown.style.display === "none" ? "block" : "none";
-    });
+    <p class="precio">$${modeloInicial.precio}</p>
+    <button class="btn-comprar">Comprar</button>
+  `;
 
-  const btnComprar = div.querySelector(".btn-comprar");
+  const btnModelo = div.querySelector(".btn-modelo");
+  const dropdown = div.querySelector(".modelos-dropdown");
+  const precioTexto = div.querySelector(".precio");
 
-btnComprar.addEventListener("click", () => {
-  const precioActual = precioElemento.textContent.replace("$","");
-  const modeloActual = btnModelo.textContent.replace(" ▼","");
+  dropdown.style.display = "none";
 
-  agregarAlCarrito(p, {
-    nombre: modeloActual,
-    precio: parseInt(precioActual)
+  // abrir dropdown
+  btnModelo.addEventListener("click", e => {
+    e.stopPropagation();
+    dropdown.style.display =
+      dropdown.style.display === "none" ? "block" : "none";
   });
-});
+
+  // seleccionar modelo
+  dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
+    op.addEventListener("click", e => {
+      e.stopPropagation();
+      const nuevoPrecio = op.dataset.precio;
+
+      precioTexto.textContent = "$" + nuevoPrecio;
+      btnModelo.textContent = op.textContent + " ▼";
+      dropdown.style.display = "none";
+    });
+  });
+
+  // comprar
+  div.querySelector(".btn-comprar").addEventListener("click", () => {
+    agregarAlCarrito(p.id);
+  });
+}
+
     // Cambiar precio
   dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
   op.addEventListener("click", (e) => {
