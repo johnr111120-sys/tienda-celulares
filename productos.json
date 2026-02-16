@@ -9,18 +9,9 @@
     "precio": 12000,
     "imagen": "images/cell0.jpg",
     "modelos": [
-      {
-        "nombre": "64GB",
-        "precio": 12000
-      },
-      {
-        "nombre": "128GB",
-        "precio": 13500
-      },
-      {
-        "nombre": "256GB",
-        "precio": 15000
-      }
+      { "nombre": "64GB", "precio": 12000 },
+      { "nombre": "128GB", "precio": 13500 },
+      { "nombre": "256GB", "precio": 15000 }
     ],
     "colores": [
       "Negro",
@@ -39,18 +30,9 @@
     "precio": 19000,
     "imagen": "images/cell6.jpg",
     "modelos": [
-      {
-        "nombre": "128GB",
-        "precio": 19000
-      },
-      {
-        "nombre": "256GB",
-        "precio": 22000
-      },
-      {
-        "nombre": "512GB",
-        "precio": 25500
-      }
+      { "nombre": "128GB", "precio": 19000 },
+      { "nombre": "256GB", "precio": 22000 },
+      { "nombre": "512GB", "precio": 25500 }
     ],
     "colores": [
       "Morado oscuro",
@@ -69,14 +51,8 @@
     "precio": 50000,
     "imagen": "images/cell1.jpg",
     "modelos": [
-      {
-        "nombre": "256GB",
-        "precio": 50000
-      },
-      {
-        "nombre": "512GB",
-        "precio": 56000
-      }
+      { "nombre": "256GB", "precio": 50000 },
+      { "nombre": "512GB", "precio": 56000 }
     ],
     "colores": [
       "Plata",
@@ -114,30 +90,12 @@
     "precio": 500,
     "imagen": "images/accesorios9.jpg",
     "modelos": [
-      {
-        "nombre": "11 Pro Max",
-        "precio": 500
-      },
-      {
-        "nombre": "12 Pro Max",
-        "precio": 500
-      },
-      {
-        "nombre": "13 Pro Max",
-        "precio": 500
-      },
-      {
-        "nombre": "14 Pro Max",
-        "precio": 500
-      },
-      {
-        "nombre": "15 Pro Max",
-        "precio": 500
-      },
-      {
-        "nombre": "16 Pro Max",
-        "precio": 500
-      }
+      { "nombre": "11 Pro Max", "precio": 500 },
+      { "nombre": "12 Pro Max", "precio": 500 },
+      { "nombre": "13 Pro Max", "precio": 500 },
+      { "nombre": "14 Pro Max", "precio": 500 },
+      { "nombre": "15 Pro Max", "precio": 500 },
+      { "nombre": "16 Pro Max", "precio": 500 }
     ],
     "colores": [
       "Rosa",
@@ -156,30 +114,12 @@
     "precio": 500,
     "imagen": "images/accesorios19.jpg",
     "modelos": [
-      {
-        "nombre": "6",
-        "precio": 300
-      },
-      {
-        "nombre": "7",
-        "precio": 300
-      },
-      {
-        "nombre": "8 Plus",
-        "precio": 300
-      },
-      {
-        "nombre": "11",
-        "precio": 300
-      },
-      {
-        "nombre": "11 Pro Max",
-        "precio": 300
-      },
-      {
-        "nombre": "12 Pro Max",
-        "precio": 300
-      }
+      { "nombre": "6", "precio": 300 },
+      { "nombre": "7", "precio": 300 },
+      { "nombre": "8 Plus", "precio": 300 },
+      { "nombre": "11", "precio": 300 },
+      { "nombre": "11 Pro Max", "precio": 300 },
+      { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
       "Gucci",
@@ -196,30 +136,12 @@
     "precio": 500,
     "imagen": "images/accesorios6.jpg",
     "modelos": [
-      {
-        "nombre": "7",
-        "precio": 300
-      },
-      {
-        "nombre": "11 Pro",
-        "precio": 300
-      },
-      {
-        "nombre": "11 Pro Max",
-        "precio": 300
-      },
-      {
-        "nombre": "12",
-        "precio": 300
-      },
-      {
-        "nombre": "12 Pro",
-        "precio": 300
-      },
-      {
-        "nombre": "12 Pro Max",
-        "precio": 300
-      }
+      { "nombre": "7", "precio": 300 },
+      { "nombre": "11 Pro", "precio": 300 },
+      { "nombre": "11 Pro Max", "precio": 300 },
+      { "nombre": "12", "precio": 300 },
+      { "nombre": "12 Pro", "precio": 300 },
+      { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
       "Rosa Stick",
@@ -263,22 +185,10 @@
     "precio": 500,
     "imagen": "images/accesorios1.jpg",
     "modelos": [
-      {
-        "nombre": "25GB",
-        "precio": 250
-      },
-      {
-        "nombre": "32GB",
-        "precio": 400
-      },
-      {
-        "nombre": "64GB",
-        "precio": 700
-      },
-      {
-        "nombre": "128GB",
-        "precio": 1300
-      }
+      { "nombre": "25GB", "precio": 250 },
+      { "nombre": "32GB", "precio": 400 },
+      { "nombre": "64GB", "precio": 700 },
+      { "nombre": "128GB", "precio": 1300 }
     ]
   },
   {
