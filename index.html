@@ -288,10 +288,10 @@ function abrirProducto(id){
 
   <div class="modal-precio">$${producto.precio}</div>
 
-  <button class="btn-comprar-modal"
-    onclick="agregarAlCarrito('${producto.id}', this)">
-    Agregar al carrito
-  </button>
+ <button class="btn-agregar-modal"
+onclick="agregarAlCarrito('${producto.id}')">
+Agregar al carrito
+</button>
 `;
 
   modal.style.display = "flex";
@@ -300,42 +300,47 @@ function abrirProducto(id){
 
 const precioElemento = document.querySelector(".modal-precio");
 
-const botonesModelo = document.querySelectorAll(".modelo-btn");
-const botonesColor = document.querySelectorAll(".color-btn");
+const modelos = document.querySelectorAll(".modelo-btn");
+const colores = document.querySelectorAll(".color-btn");
 
-// ===== MODELO POR DEFECTO =====
-if(botonesModelo.length){
-  botonesModelo[0].classList.add("activo");
-  modeloSeleccionado = botonesModelo[0].dataset.nombre;
-  precioActual = parseInt(botonesModelo[0].dataset.precio);
+precioActual = producto.precio;
+
+/* ===== MODELO POR DEFECTO ===== */
+if(modelos.length){
+  modelos[0].classList.add("activo");
+  modeloSeleccionado = modelos[0].dataset.nombre;
+  precioActual = parseInt(modelos[0].dataset.precio);
   precioElemento.textContent = "$" + precioActual;
 }
 
-// ===== SELECCIONAR MODELO =====
-botonesModelo.forEach(btn=>{
+/* ===== SELECCIONAR MODELO ===== */
+modelos.forEach(btn=>{
   btn.addEventListener("click", function(){
 
-    botonesModelo.forEach(b=>b.classList.remove("activo"));
+    modelos.forEach(b=>b.classList.remove("activo"));
     this.classList.add("activo");
 
     modeloSeleccionado = this.dataset.nombre;
     precioActual = parseInt(this.dataset.precio);
 
     // animación precio
-    precioElemento.classList.add("animar");
+    precioElemento.style.transform = "scale(1.2)";
+    precioElemento.style.opacity = "0.5";
 
     setTimeout(()=>{
       precioElemento.textContent = "$" + precioActual;
-      precioElemento.classList.remove("animar");
+      precioElemento.style.transform = "scale(1)";
+      precioElemento.style.opacity = "1";
     },150);
 
   });
 });
 
-// ===== SELECCIONAR COLOR =====
-botonesColor.forEach(btn=>{
+/* ===== SELECCIONAR COLOR ===== */
+colores.forEach(btn=>{
   btn.addEventListener("click", function(){
-    botonesColor.forEach(b=>b.classList.remove("activo"));
+
+    colores.forEach(b=>b.classList.remove("activo"));
     this.classList.add("activo");
 
     colorSeleccionado = this.dataset.color;
@@ -1015,45 +1020,35 @@ modalCarrito.addEventListener("click", e => {
 </script>
 
   <script> 
-function renderOpciones(producto){
-  let html = "";
+function renderModelos(producto){
+  if(!producto.modelos) return "";
 
-  // ===== MODELOS =====
-  if(producto.modelos && producto.modelos.length){
-    html += `
-      <div class="opcion-expandible">
-        <div class="opcion-titulo">Modelo</div>
-        <div class="opcion-lista">
-          ${producto.modelos.map(m=>`
-            <button class="opcion-btn modelo-btn"
-                    data-nombre="${m.nombre}"
-                    data-precio="${m.precio}">
-              ${m.nombre}
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
+  return `
+    <div class="grupo-opciones">
+      ${producto.modelos.map(m => `
+        <button class="opcion-btn modelo-btn"
+          data-nombre="${m.nombre}"
+          data-precio="${m.precio}">
+          ${m.nombre}
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
 
-  // ===== COLORES =====
-  if(producto.colores && producto.colores.length){
-    html += `
-      <div class="opcion-expandible">
-        <div class="opcion-titulo">Color</div>
-        <div class="opcion-lista">
-          ${producto.colores.map(c=>`
-            <button class="opcion-btn color-btn"
-                    data-color="${c}">
-              <span class="color-nombre">${c}</span>
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
+function renderColores(producto){
+  if(!producto.colores) return "";
 
-  return html;
+  return `
+    <div class="grupo-opciones">
+      ${producto.colores.map(c => `
+        <button class="opcion-btn color-btn"
+          data-color="${c}">
+          ${c}
+        </button>
+      `).join("")}
+    </div>
+  `;
 }
 
 function seleccionarOpcion(btn){
