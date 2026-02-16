@@ -1398,14 +1398,17 @@ body.menu-abierto {
   color:#007bff;
 }
 
-.modal-producto{
+#modalProducto{
   position: fixed;
-  inset: 0;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
   background: rgba(0,0,0,0.45);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
 
 .modal-descripcion {
@@ -1455,14 +1458,16 @@ body.menu-abierto {
   display:flex;
 }
 
-.modal-contenido{
+#modalContenido{
   background:#fff;
   width:92%;
   max-width:420px;
-  border-radius:14px;
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:16px;
   padding:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  position: relative;
+  position:relative;
   animation: aparecer .25s ease;
 }
 
@@ -1472,15 +1477,17 @@ body.menu-abierto {
 }
 
 .btn-cerrar{
-  position:absolute;
+  position: sticky;
   top: 12px;
   left: 10px;
+  float: right;
   font-size: 26px;
   border-radius: 50%;
   border: 4px solid #0000FF; /* círculo azul */
-  background: transparent;
+  background: white;
   color: red; /* X roja */
   cursor:pointer;
+  z-index: 10;
 }
 
 .opcion-expandible{
