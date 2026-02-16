@@ -279,7 +279,11 @@ function abrirProducto(id){
 
   <h2 class="modal-nombre">${producto.nombre}</h2>
 
-  <p class="modal-descripcion">${producto.descripcion || ""}</p>
+  <p class="modal-descripcion fade" id="descTexto">
+  ${producto.descripcion || ""}
+</p>
+
+<span class="ver-mas" onclick="expandirDescripcion()">... VER MÁS</span>
 
   ${renderOpciones(producto)}
 
@@ -307,6 +311,13 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
     cerrarProducto();
   }
 });
+
+function expandirDescripcion(){
+  const desc = document.getElementById("descTexto");
+  desc.style.webkitLineClamp = "unset";
+  desc.classList.remove("fade");
+  document.querySelector(".ver-mas").style.display = "none";
+}
 
 </script>
 
