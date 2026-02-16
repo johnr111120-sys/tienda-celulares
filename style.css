@@ -1455,16 +1455,28 @@ body.menu-abierto {
   display:flex;
 }
 
-.modal-contenido{
+#modalContenido{
   background:#fff;
   width:92%;
   max-width:420px;
-  border-radius:14px;
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:16px;
   padding:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  position: relative;
-  animation: aparecer .25s ease;
+  position:relative;
 }
+
+.cerrar-modal{
+  position: sticky;
+  top: 0;
+  float:right;
+  background:white;
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+  z-index:5;
+}
+
 
 @keyframes aparecer{
   from{transform:scale(.9);opacity:0}
