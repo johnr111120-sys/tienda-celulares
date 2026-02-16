@@ -265,44 +265,48 @@ imgModal.addEventListener("click", e=>{
 <script>
 const modal = document.getElementById("modalProducto");
 
-function abrirProducto(id){
+function abrirProducto(id) {
+    // Buscamos el producto en el array global
+    const producto = productos.find(p => p.id == id);
+    if (!producto) return;
 
- const producto = productos.find(p => p.id == id);
- if(!producto) return;
+    const modal = document.getElementById("modalProducto");
+    const modalContenido = document.getElementById("modalContenido");
 
- const modalContenido = document.getElementById("modalContenido");
+    // Seteamos valores iniciales
+    precioActual = producto.precio;
+    modeloSeleccionado = producto.modelos ? producto.modelos[0].nombre : null;
+    colorSeleccionado = null;
 
- precioActual = producto.precio;
- modeloSeleccionado = null;
- colorSeleccionado = null;
+    // Inyectamos el HTML
+    modalContenido.innerHTML = `
+        <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+        <div class="modal-spa-container">
+            <img src="${producto.imagen}" class="modal-img" id="imgPrincipal">
+            
+            <div class="mp-contenido">
+                <h2 class="modal-nombre">${producto.nombre}</h2>
+                <p class="modal-descripcion" id="descTexto">${producto.descripcion || ""}</p>
+                <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
 
- modalContenido.innerHTML = `
- <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+                ${renderOpciones(producto)}
 
- <img src="${producto.imagen}" class="modal-img">
+                <div class="modal-precio" id="precioDisplay">$${precioActual}</div>
+                
+                <div class="contenedor-accion-fija">
+                    <button class="btn-comprar-spa" onclick="irAWhatsApp('${producto.nombre}')">
+                        <i class="fab fa-whatsapp"></i> Comprar ahora
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
 
- <h2 class="modal-nombre">${producto.nombre}</h2>
+    modal.style.display = "flex";
+    document.body.classList.add("no-scroll");
 
- <p class="modal-descripcion" id="descTexto">
- ${producto.descripcion || ""}
- </p>
-
- <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
-
- ${renderOpciones(producto)}
-
- <div class="modal-precio">$${producto.precio}</div>
-
- <button class="btn-agregar-modal"
- onclick="agregarAlCarrito('${producto.id}')">
- Agregar al carrito
- </button>
- `;
-
- modal.style.display = "flex";
- document.body.classList.add("no-scroll");
-
- activarOpcionesProducto(); // 🔥 importante
+    // 🔥 ACTIVAMOS LOS CLICS EN COLORES Y MODELOS
+    activarOpcionesProducto();
 }
 
 document.querySelectorAll(".modelo-opcion").forEach(opcion => {
@@ -1031,55 +1035,59 @@ function renderOpciones(producto){
   `;
 }
 
-function activarOpcionesProducto(){
+function renderOpciones(producto) {
+    let modelosHTML = "";
+    if (producto.modelos) {
+        modelosHTML = producto.modelos.map((m, index) => `
+            <div class="modelo-opcion ${index === 0 ? 'activo' : ''}" 
+                 data-nombre="${m.nombre}" data-precio="${m.precio}">
+                 ${m.nombre}
+            </div>`).join("");
+    }
 
- document.querySelectorAll(".modelo-opcion").forEach(el=>{
-  el.onclick = ()=>{
-   document.querySelectorAll(".modelo-opcion")
-   .forEach(m=>m.classList.remove("activo"));
+    let coloresHTML = "";
+    if (producto.colores) {
+        coloresHTML = producto.colores.map(c => `
+            <div class="color-opcion" 
+                 data-imagen="${c.imagen}" 
+                 data-colorname="${c.codigo}"
+                 style="background:${c.codigo}; width:30px; height:30px; border-radius:50%; display:inline-block; margin:5px; cursor:pointer; border:2px solid #ddd;">
+            </div>`).join("");
+    }
 
-   el.classList.add("activo");
-
-   modeloSeleccionado = el.dataset.nombre;
-   precioActual = el.dataset.precio;
-
-   document.querySelector(".modal-precio").textContent =
-   "$" + precioActual;
-  }
- });
-
- document.querySelectorAll(".color-opcion").forEach(el=>{
-  el.onclick = ()=>{
-   document.querySelectorAll(".color-opcion")
-   .forEach(c=>c.classList.remove("activo"));
-
-   el.classList.add("activo");
-
-   colorSeleccionado = el.dataset.color;
-   document.querySelector(".modal-img").src =
-   el.dataset.imagen;
-  }
- });
+    return `
+        <div class="opciones-container">
+            ${modelosHTML ? `<p>Capacidad:</p><div class="modelos-grid">${modelosHTML}</div>` : ''}
+            ${coloresHTML ? `<p>Color:</p><div class="colores-grid">${coloresHTML}</div>` : ''}
+        </div>
+    `;
 }
- </script>
- 
-<div id="panel-lateral" class="panel-lateral">
-  <div class="panel-contenido" id="panel-contenido"></div>
-</div>
 
-<!-- MODAL CARRITO -->
-<div id="modal-carrito" class="modal-carrito">
-  <div class="modal-carrito-contenido">
-    <button class="cerrar-carrito">&times;</button>
-    <h2>Tu carrito</h2>
-    <div id="carrito-contenido"></div>
+function activarOpcionesProducto() {
+    // Lógica de Modelos
+    document.querySelectorAll(".modelo-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".modelo-opcion").forEach(m => m.classList.remove("activo"));
+            el.classList.add("activo");
+            modeloSeleccionado = el.dataset.nombre;
+            precioActual = el.dataset.precio;
+            document.getElementById("precioDisplay").textContent = "$" + precioActual;
+        };
+    });
 
-    <div class="carrito-total">
-  Total: <span id="carrito-total-precio">$0</span>
-</div>  
-  </div>
-</div>
-    
+    // Lógica de Colores (Cambia la imagen)
+    document.querySelectorAll(".color-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".color-opcion").forEach(c => c.classList.remove("activo"));
+            el.classList.add("activo");
+            el.style.borderColor = "#007bff"; // Resaltar color seleccionado
+            
+            colorSeleccionado = el.dataset.colorname;
+            // CAMBIO DE IMAGEN
+            document.getElementById("imgPrincipal").src = el.dataset.imagen;
+        };
+    });
+}
      <script>
 document.getElementById("modalProducto").addEventListener("click", e=>{
   if(e.target.id === "modalProducto"){
