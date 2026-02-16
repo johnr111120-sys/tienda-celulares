@@ -270,10 +270,9 @@ function abrirProducto(id){
   const producto = productos.find(p => p.id == id);
   if(!producto) return;
 
-  const modal = document.getElementById("modalProducto");
-  const contenido = document.getElementById("modalContenido");
+  const modalContenido = document.getElementById("modalContenido");
 
- modalContenido.innerHTML = `
+modalContenido.innerHTML = `
 <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
 
   <img src="${producto.imagen}" class="modal-img">
@@ -298,12 +297,13 @@ Agregar al carrito
 </button>
 `;
 
+precioActual = producto.precio;
+modeloSeleccionado = null;
+colorSeleccionado = null;
+
   modal.style.display = "flex";
   document.body.classList.add("no-scroll");
 }
-
-precioActual = producto.precio;
-modeloSeleccionado = null;
 
 document.querySelectorAll(".modelo-opcion").forEach(opcion => {
   opcion.addEventListener("click", function(){
@@ -995,36 +995,30 @@ modalCarrito.addEventListener("click", e => {
   <script> 
 function renderOpciones(producto){
 
- let html = "";
-
- // MODELOS
- if(producto.modelos && producto.modelos.length){
-   html += `
-   <div class="opcion-expandible">
-     <div class="opcion-titulo">Modelo</div>
-     <div class="opcion-lista">
-       ${producto.modelos.map(m=>`
-         <button class="opcion-btn"
-           onclick="seleccionarModelo('${m.nombre}', ${m.precio}, this)">
+  let modelosHTML = "";
+  if(producto.modelos){
+    modelosHTML = producto.modelos.map(m => `
+      <div class="modelo-opcion"
+           data-nombre="${m.nombre}"
+           data-precio="${m.precio}">
            ${m.nombre}
-         </button>
-       `).join("")}
-     </div>
-   </div>
-   `;
- }
+      </div>
+    `).join("");
+  }
 
- // COLORES (si existen)
-  const coloresHTML = producto.colores.map((c,i)=>`
-    <div class="color-opcion ${i===0?'activo':''}"
-         data-imagen="${c.imagen}"
-         style="background:${c.codigo}">
-    </div>
-  `).join("");
+  let coloresHTML = "";
+  if(producto.colores){
+    coloresHTML = producto.colores.map(c => `
+      <div class="color-opcion"
+           data-imagen="${c.imagen}"
+           style="background:${c.codigo}">
+      </div>
+    `).join("");
+  }
 
   return `
     <div class="opciones">
-      
+
       <div class="opcion-grupo">
         <p>Modelo</p>
         <div class="modelos">${modelosHTML}</div>
