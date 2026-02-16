@@ -287,6 +287,11 @@ modalContenido.innerHTML = `
   VER MÁS
 </span>
 
+
+precioActual = producto.precio;
+modeloSeleccionado = null;
+colorSeleccionado = null;
+
   ${renderOpciones(producto)}
 
   <div class="modal-precio">$${producto.precio}</div>
@@ -296,10 +301,6 @@ onclick="agregarAlCarrito('${producto.id}')">
 Agregar al carrito
 </button>
 `;
-
-precioActual = producto.precio;
-modeloSeleccionado = null;
-colorSeleccionado = null;
 
   modal.style.display = "flex";
   document.body.classList.add("no-scroll");
