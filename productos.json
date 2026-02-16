@@ -14,10 +14,10 @@
       { "nombre": "256GB", "precio": 15000 }
     ],
     "colores":[
-  {"codigo":"#FFE983","imagen":"img/iphone11amarillo.jpg"},
-  {"codigo":"#ffffff","imagen":"img/iphone11blanco.jpg"},
-  {"codigo":"#000000","imagen":"img/iphone11negro.jpg"},
-  {"codigo":"#FF0000","imagen":"img/iphone11rojo.jpg"}
+  {"codigo":"#FFE983","imagen":"images/iphone11amarillo.jpg"},
+  {"codigo":"#ffffff","imagen":"images/iphone11blanco.jpg"},
+  {"codigo":"#000000","imagen":"images/iphone11negro.jpg"},
+  {"codigo":"#FF0000","imagen":"images/iphone11rojo.jpg"}
     ]
   },
   {
@@ -35,10 +35,10 @@
       { "nombre": "512GB", "precio": 25500 }
     ],
     "colores":[
-      {"codigo":"#5E5566","imagen":"img/iphone14promaxmorado.jpg"},
-      {"codigo":"#4b4845","imagen":"img/iphone14promaxnegro.jpg"},
-      {"codigo":"#d4c9b1","imagen":"img/iphone14promaxoro.jpg"},
-      {"codigo":"#e2e4e1","imagen":"img/iphone14promaxplata.jpg"}
+      {"codigo":"#5E5566","imagen":"images/iphone14promaxmorado.jpg"},
+      {"codigo":"#4b4845","imagen":"images/iphone14promaxnegro.jpg"},
+      {"codigo":"#d4c9b1","imagen":"images/iphone14promaxoro.jpg"},
+      {"codigo":"#e2e4e1","imagen":"images/iphone14promaxplata.jpg"}
     ]
   },
   {
@@ -55,9 +55,9 @@
       { "nombre": "512GB", "precio": 56000 }
     ],
     "colores":[
-       {"codigo":"#E0E0E0","imagen":"img/iphone17promaxplata.jpg"},
-      {"codigo":"#FFA500","imagen":"img/iphone17promaxnaranja.jpg"},
-      {"codigo":"#0066CC","imagen":"img/iphone17promaxazul.jpg"}
+       {"codigo":"#E0E0E0","imagen":"images/iphone17promaxplata.jpg"},
+      {"codigo":"#FFA500","imagen":"images/iphone17promaxnaranja.jpg"},
+      {"codigo":"#0066CC","imagen":"images/iphone17promaxazul.jpg"}
     ]
   },
   {
