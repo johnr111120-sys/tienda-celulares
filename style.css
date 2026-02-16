@@ -1509,18 +1509,42 @@ body.menu-abierto {
   flex-wrap:wrap;
   gap:6px;
 }
-
+/* botones opciones */
 .opcion-btn{
-  border:1px solid #ccc;
+  padding:8px 12px;
+  border:1px solid #ddd;
+  border-radius:8px;
   background:#fff;
-  padding:6px 10px;
-  border-radius:6px;
   cursor:pointer;
-  font-size:14px;
+  transition:all .25s ease;
+}
+/* hover */
+.opcion-btn:hover{
+  border-color:#007aff;
+}
+/* ACTIVO */
+.opcion-btn.activo{
+  background:#007aff;
+  color:#fff;
+  border-color:#007aff;
+  transform:scale(1.05);
+}
+/* animación precio */
+.modal-precio{
+  font-size:22px;
+  font-weight:bold;
+  margin-top:10px;
+  transition:transform .25s ease, opacity .25s ease;
 }
 
-.opcion-btn.activo{
-  background:#007bff;
-  color:#fff;
-  border-color:#007bff;
+.modal-precio.animar{
+  transform:scale(1.15);
+  opacity:0.6;
 }
+
+.color-btn{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
