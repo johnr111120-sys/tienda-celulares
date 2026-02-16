@@ -12,8 +12,8 @@
       { "nombre": "64GB", "precio": 12000 },
       { "nombre": "128GB", "precio": 13500 },
       { "nombre": "256GB", "precio": 15000 },
+      ],
      "colores": ["Negro","blanco","Amarillo","rojo"]
-    ]
   },
   {
     "id": 2,
@@ -28,8 +28,8 @@
       { "nombre": "128GB", "precio": 19000 },
       { "nombre": "256GB", "precio": 22000 },
       { "nombre": "512GB", "precio": 25500 },
+      ],
      "colores": ["Morado oscuro","Negro espacial","Oro","Plata"]
-    ]
   },
   {
     "id": 3,
@@ -43,8 +43,8 @@
     "modelos": [
       { "nombre": "256GB", "precio": 50000 },
       { "nombre": "512GB", "precio": 56000 },
+      ],
      "colores": ["Plata","Naranja cosmico","Azul profundo"]
-    ]
   },
   {
     "id": 4,
@@ -82,8 +82,8 @@
       { "nombre": "14 Pro Max", "precio": 500 },
       { "nombre": "15 Pro Max", "precio": 500 },
       { "nombre": "16 Pro Max", "precio": 500 },
+      ],
      "colores": ["Rosa","Negro","Verde","Rojo"]
-    ]
   },
   {
     "id": 8,
@@ -101,8 +101,8 @@
       { "nombre": "11", "precio": 300 },
       { "nombre": "11 Pro Max", "precio": 300 },
       { "nombre": "12 Pro Max", "precio": 300 },
+      ],
      "colores": ["Gucci","Louis Vuitton"]
-    ]
   },
   {
     "id": 9,
@@ -120,13 +120,13 @@
       { "nombre": "12", "precio": 300 },
       { "nombre": "12 Pro", "precio": 300 },
       { "nombre": "12 Pro Max", "precio": 300 },
+      ],
      "colores": ["Rosa Stick","Blanco Luffi","Azul Vegeta","Negro Goku"]
-    ]
   },
   {
     "id": 10,
     "nombre": "Airpods 2da Generacion",
-    "descripcion": "• Ajuste universal para usarlos con comodidad todo el día.\n• Activación y conexión automática.\n• Fácil configuración en todos tus dispositivos Apple (3).\n• Acceso rápido a Siri con sólo decir "Oye Siri”(1).\n• Comparte fácilmente lo que estás escuchando entre dos pares de AirPods conectados a tu iPhone, iPad, iPod touch o Apple TV.\n• Cambio inmediato de un dispositivo a otro (3).\n• Puedes cargarlos con el conector Lightning incluido o usando un cargador con certificación Qi.\n• El estuche de carga inalámbrica ofrece más de 24 horas de batería (2).",
+    "descripcion": "• Ajuste universal para usarlos con comodidad todo el día.\n• Activación y conexión automática.\n• Fácil configuración en todos tus dispositivos Apple.\n• Acceso rápido a Siri con sólo decir /Oye Siri/.\n• Comparte fácilmente lo que estás escuchando entre dos pares de AirPods conectados a tu iPhone, iPad, iPod touch o Apple TV.\n• Cambio inmediato de un dispositivo a otro.\n• Puedes cargarlos con el conector Lightning incluido o usando un cargador con certificación Qi.\n• El estuche de carga inalámbrica ofrece más de 24 horas de batería (2).",
     "slug": "airpods-2da",
     "categoria": "Accesorios",
     "subcategoria": "Audifonos",
@@ -168,7 +168,7 @@
     "categoria": "Tablets",
     "subcategoria": "Ipad",
     "precio": 18000,
-    "imagen": "images/tablet2.jpg",
+    "imagen": "images/tablet2.jpg"
   },
   {
     "id": 14,
