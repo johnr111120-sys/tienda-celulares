@@ -1524,7 +1524,7 @@ body.menu-abierto {
 }
 /* ACTIVO */
 .opcion-btn.activo{
-  background:#eaf3ff;
+  background: red;
   color:#fff;
   border-color:#007aff;
   transform:scale(1.05);
