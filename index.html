@@ -263,40 +263,103 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-function abrirProducto(id) {
-    console.log("Intentando abrir producto con ID:", id); // Para depurar
-    const producto = productos.find(p => p.id == id);
-    if (!producto) {
-        console.error("No se encontró el producto con ID:", id);
-        return;
+/* =========================================
+   1. VARIABLES GLOBALES Y CARGA DE DATOS
+   ========================================= */
+let productos = [];
+let modeloSeleccionado = null;
+let colorSeleccionado = null;
+let precioActual = 0;
+
+fetch("productos.json")
+    .then(res => res.json())
+    .then(data => {
+        productos = data;
+        console.log("✅ Productos cargados correctamente");
+        router(); 
+    })
+    .catch(err => console.error("Error cargando JSON:", err));
+
+/* =========================================
+   2. FUNCIONES DE RENDERIZADO (EL CORAZÓN)
+   ========================================= */
+
+function renderOpciones(producto) {
+    let modelosHTML = "";
+    if (producto.modelos) {
+        modelosHTML = producto.modelos.map(m => `
+            <div class="modelo-opcion" data-nombre="${m.nombre}" data-precio="${m.precio}">
+                ${m.nombre}
+            </div>`).join("");
     }
+
+    let coloresHTML = "";
+    if (producto.colores) {
+        coloresHTML = producto.colores.map(c => `
+            <div class="color-opcion" data-imagen="${c.imagen}" data-color="${c.codigo}" 
+                 style="background:${c.codigo}; width:30px; height:30px; border-radius:50%; display:inline-block; margin:5px; cursor:pointer; border:2px solid #ddd;">
+            </div>`).join("");
+    }
+
+    return `
+        <div class="opciones-modal">
+            ${modelosHTML ? `<p><b>Capacidad:</b></p><div class="modelos-grid">${modelosHTML}</div>` : ''}
+            ${coloresHTML ? `<p><b>Color:</b></p><div class="colores-grid">${coloresHTML}</div>` : ''}
+        </div>`;
+}
+
+function activarOpcionesProducto() {
+    // Eventos para Modelos
+    document.querySelectorAll(".modelo-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".modelo-opcion").forEach(m => m.classList.remove("activo"));
+            el.classList.add("activo");
+            modeloSeleccionado = el.dataset.nombre;
+            precioActual = el.dataset.precio;
+            document.querySelector(".modal-precio").textContent = "RD$ " + precioActual;
+        };
+    });
+
+    // Eventos para Colores
+    document.querySelectorAll(".color-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".color-opcion").forEach(c => c.classList.remove("activo"));
+            el.classList.add("activo");
+            colorSeleccionado = el.dataset.color;
+            document.getElementById("imgPrincipal").src = el.dataset.imagen;
+        };
+    });
+}
+
+/* =========================================
+   3. LOGICA DEL MODAL Y RUTAS (SPA)
+   ========================================= */
+
+function abrirProducto(id) {
+    const producto = productos.find(p => p.id == id);
+    if (!producto) return;
 
     const modal = document.getElementById("modalProducto");
     const modalContenido = document.getElementById("modalContenido");
 
-    // Valores iniciales
     precioActual = producto.precio;
-    modeloSeleccionado = producto.modelos ? producto.modelos[0].nombre : "Estándar";
-    colorSeleccionado = "No seleccionado";
+    modeloSeleccionado = null;
+    colorSeleccionado = null;
 
     modalContenido.innerHTML = `
         <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
-        <div class="spa-layout">
-            <div class="spa-header-img">
-                <img src="${producto.imagen}" id="imgPrincipal" class="modal-img">
-            </div>
+        <div class="spa-container">
+            <img src="${producto.imagen}" id="imgPrincipal" class="modal-img">
             <div class="mp-contenido">
-                <h2 class="modal-nombre">${producto.nombre}</h2>
-                <p class="modal-descripcion" id="descTexto">${producto.descripcion}</p>
+                <h2>${producto.nombre}</h2>
+                <p id="descTexto" class="modal-descripcion">${producto.descripcion}</p>
                 <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
-                
                 ${renderOpciones(producto)}
-                
-                <div class="modal-precio" id="precioDisplay">RD$ ${precioActual}</div>
+                <div class="modal-precio">RD$ ${precioActual}</div>
             </div>
             <div class="contenedor-accion-fija">
                 <button class="btn-comprar-spa" onclick="irAWhatsApp('${producto.nombre}')">
-                    <i class="fab fa-whatsapp"></i> Comprar ahora
+                    Comprar ahora
                 </button>
             </div>
         </div>
@@ -304,780 +367,86 @@ function abrirProducto(id) {
 
     modal.style.display = "flex";
     document.body.classList.add("no-scroll");
-    
-    // IMPORTANTE: Llamar a los eventos después de crear el HTML
     activarOpcionesProducto();
 }
-
-document.querySelectorAll(".modelo-opcion").forEach(opcion => {
-  opcion.addEventListener("click", function(){
-
-    document.querySelectorAll(".modelo-opcion")
-      .forEach(o => o.classList.remove("activo"));
-
-    this.classList.add("activo");
-
-    modeloSeleccionado = this.dataset.nombre;
-    precioActual = this.dataset.precio;
-
-    document.getElementById("precioProducto").textContent =
-      "$" + precioActual;
-
-  });
-});
 
 function cerrarProducto() {
     document.getElementById("modalProducto").style.display = "none";
     document.body.classList.remove("no-scroll");
-    // Volvemos atrás en el historial para limpiar la URL del producto
-    window.history.back();
+    window.location.hash = window.location.hash.split('/producto/')[0]; // Limpia la URL
 }
 
-// 🔥 Cerrar tocando fuera
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
-
-function expandirDescripcion(){
-  const desc = document.getElementById("descTexto");
-  desc.style.webkitLineClamp = "unset";
-  desc.classList.remove("fade");
-  document.querySelector(".ver-mas").style.display = "none";
+function irAWhatsApp(nombre) {
+    const msg = `Hola Moises Celulares, quiero el ${nombre}. Capacidad: ${modeloSeleccionado || 'Base'}, Color: ${colorSeleccionado || 'Default'}`;
+    window.open(`https://wa.me/18292017321?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function toggleDescripcion() {
-  const desc = document.getElementById("descTexto");
-  const boton = document.querySelector(".ver-mas");
-
-  desc.classList.toggle("expandido");
-
-  if (desc.classList.contains("expandido")) {
-    boton.textContent = "VER MENOS";
-  } else {
-    boton.textContent = "VER MÁS";
-  }
-}
- 
-</script>
-
-     <script>
-modalProducto.addEventListener("click", (e) => {
-  if (e.target === modalProducto) {
-    cerrarProducto();
-  }
-});
-
- </script>
- 
-    <script>
-/* =========================
-   SWIPE DOWN PARA CERRAR
-   ========================= */
-
-let startY = 0;
-let endY = 0;
-
-// Modal imagen
-const imgModalSwipe = document.getElementById("img-modal");
-
-// Modal producto
-const productoModalSwipe = document.getElementById("modalProducto");
-
-// Función genérica
-function activarSwipe(modal, cerrarFn){
-  if(!modal) return;
-
-  modal.addEventListener("touchstart", e => {
-    startY = e.touches[0].clientY;
-  }, { passive: true });
-
-  modal.addEventListener("touchmove", e => {
-    endY = e.touches[0].clientY;
-  }, { passive: true });
-
-  modal.addEventListener("touchend", () => {
-    if(endY - startY > 80){ // distancia swipe
-      cerrarFn();
-    }
-    startY = 0;
-    endY = 0;
-  });
-}
-
-// Activar swipe
-activarSwipe(imgModalSwipe, cerrarImgModal);
-activarSwipe(productoModalSwipe, cerrarProducto);
-</script>
-
-    <script>
-  const header = document.querySelector('.header-principal');
-
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 10);
-  });
-</script>
-
-    
-<script>
-const reseñas = document.querySelectorAll(".reseña");
-let indice = 0;
-
-setInterval(() => {
-  const actual = reseñas[indice];
-  actual.classList.add("salida");
-  actual.classList.remove("activa");
-
-  indice = (indice + 1) % reseñas.length;
-  const siguiente = reseñas[indice];
-
-  siguiente.classList.remove("salida");
-  siguiente.classList.add("activa");
-}, 4000); // ⏱ cambia cada 4 segundos
-</script>
-
-<script>
-const nav = document.querySelector("nav");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 10) {
-    nav.classList.add("scrolled");
-  } else {
-    nav.classList.remove("scrolled");
-  }
-});
-</script>
-
-<script>    
-const btnMenu = document.getElementById("icono-menu");
-const menu = document.getElementById("menu-categorias");
-const overlay = document.getElementById("menu-overlay");
-
-btnMenu.addEventListener("click", () => {
-  menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
-});
-
-overlay.addEventListener("click", () => {
-  menu.classList.remove("activo");
-  overlay.classList.remove("activo");
-  document.body.classList.remove("menu-abierto");
-});
-
-
-// acordeón (solo uno abierto)
-document.querySelectorAll(".categoria").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const sub = btn.nextElementSibling;
-    const icon = btn.querySelector("i");
-
-    document.querySelectorAll(".subcategoria").forEach(s => {
-      if (s !== sub) s.style.maxHeight = null;
-    });
-
-    document.querySelectorAll(".categoria i").forEach(i => {
-      if (i !== icon) i.className = "fi fi-bs-angle-up";
-    });
-
-    if (sub.style.maxHeight) {
-      sub.style.maxHeight = null;
-      icon.className = "fi fi-bs-angle-up";
-    } else {
-      sub.style.maxHeight = sub.scrollHeight + "px";
-      icon.className = "fi fi-bs-angle-down";
-    }
-  });
-});
-</script>
-    
-<script>
-/* ===============================
-   VARIABLES GLOBALES
-=================================*/
-let productos = [];
-let modeloSeleccionado = null;
-let colorSeleccionado = null;
-let precioActual = 0;
-
-/* ===============================
-   CARGAR JSON
-=================================*/
-
-fetch("productos.json")
-  .then(res => res.json())
-  .then(data => {
-    productos = data;
-    console.log("✅ Productos cargados");
-    router(); // ejecutar router cuando ya cargó el JSON
-  })
-
-
-/* ===============================
-   NAVEGACIÓN SPA
-=================================*/
+/* =========================================
+   4. NAVEGACIÓN Y ROUTER
+   ========================================= */
 
 function navegar(ruta) {
-
-  const nuevaHash = "#" + ruta;
-
-  // 🔥 Si es producto
-  if (ruta.startsWith("/producto/")) {
-
-    // Si es el mismo producto → forzar ejecución manual
-    if (window.location.hash === nuevaHash) {
-      router();
-      return;
-    }
-
-    // 🔥 Reemplazar en vez de agregar al historial
-    window.location.replace(nuevaHash);
-    return;
-  }
-
-  // 🔥 Para categorías o inicio
-  if (window.location.hash === nuevaHash) {
-    router();
-  } else {
-    window.location.hash = nuevaHash;
-  }
+    window.location.hash = ruta;
 }
-
-
-
-window.addEventListener("load", router);
-window.addEventListener("hashchange", router);
-
-
-/* ===============================
-   ROUTER PRINCIPAL
-=================================*/
 
 function router() {
     const hash = window.location.hash;
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
 
-    // Si la URL es de un producto: #/producto/iphone-11
     if (hash.startsWith("#/producto/")) {
         const slug = hash.split("#/producto/")[1];
-        
-        // Esperamos a que el JSON cargue si aún no lo ha hecho
-        if (productos.length === 0) {
-            fetch("productos.json")
-                .then(res => res.json())
-                .then(data => {
-                    productos = data;
-                    const p = productos.find(prod => prod.slug === slug);
-                    if (p) abrirProducto(p.id);
-                });
-        } else {
-            const p = productos.find(prod => prod.slug === slug);
-            if (p) abrirProducto(p.id);
-        }
+        const p = productos.find(prod => prod.slug === slug);
+        if (p) abrirProducto(p.id);
         return;
     }
 
-    // Lógica para categorías
     if (hash.startsWith("#/productos/")) {
         const sub = decodeURIComponent(hash.split("#/productos/")[1]);
         vistaInicio.style.display = "none";
         vistaProductos.style.display = "block";
         mostrarProductosPorSubcategoria(sub);
-        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
     }
 
-    // Inicio
     vistaInicio.style.display = "block";
     vistaProductos.style.display = "none";
 }
-/* ===============================
-   MOSTRAR PRODUCTOS
-=================================*/
+
+window.addEventListener("hashchange", router);
+
+/* =========================================
+   5. OTRAS FUNCIONES (CATEGORIAS, ETC)
+   ========================================= */
 
 function mostrarProductosPorSubcategoria(subcategoria) {
-
-  const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = "";
-
-  const filtrados = productos.filter(
-  p => p.subcategoria.toLowerCase().trim() === 
-       subcategoria.toLowerCase().trim()
-);
-
-  if (filtrados.length === 0) {
-    contenedor.innerHTML = "<p>No hay productos</p>";
-    return;
-  }
-
-  filtrados.forEach(p => {
-
-  const div = document.createElement("div");
-  div.className = "producto-card";
-
-  // 🔥 Si tiene modelos
-  if (p.modelos && p.modelos.length > 0) {
-
-    const modeloInicial = p.modelos[0];
-
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
-      <h3>${p.nombre}</h3>
-      <p class="descripcion">Disponible en varios modelos</p>
-
-      <button class="btn-modelo">Elegir modelo ▼</button>
-
-      <div class="modelos-dropdown" style="display:none;">
-        ${p.modelos.map(m => `
-          <div class="modelo-opcion"
-               data-precio="${m.precio}">
-            ${m.nombre}
-          </div>
-        `).join("")}
-      </div>
-
-      <p class="precio">$${modeloInicial.precio}</p>
-      <button class="btn-comprar">Comprar</button>
-    `;
-
-    const btnModelo = div.querySelector(".btn-modelo");
-    const dropdown = div.querySelector(".modelos-dropdown");
-    const precioElemento = div.querySelector(".precio");
-
-    // Abrir / cerrar dropdown
-    btnModelo.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.style.display =
-        dropdown.style.display === "none" ? "block" : "none";
-    });
-
-  const btnComprar = div.querySelector(".btn-comprar");
-
-btnComprar.addEventListener("click", () => {
-  const precioActual = precioElemento.textContent.replace("$","");
-  const modeloActual = btnModelo.textContent.replace(" ▼","");
-
-  agregarAlCarrito(p, {
-    nombre: modeloActual,
-    precio: parseInt(precioActual)
-  });
-});
-    // Cambiar precio
-  dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
-  op.addEventListener("click", (e) => {
-    e.stopPropagation();
-
-    const nuevoPrecio = op.dataset.precio;
-    precioElemento.textContent = "$" + nuevoPrecio;
-    btnModelo.textContent = op.textContent + " ▼";
-    dropdown.style.display = "none";
-
-    // 🔥 agregar al carrito UNA sola vez
-    agregarAlCarrito(p, {
-      nombre: op.textContent,
-      precio: parseInt(nuevoPrecio)
-    });
-  });
-});
-
-  } else {
-
-    // 🔥 Si NO tiene modelos
-   div.innerHTML = `
-    <img src="${p.imagen}" alt="${p.nombre}"
-         onclick="navegar('/producto/${p.slug}')">
-    <h3>${p.nombre}</h3>
-    <p class="descripcion">Producto disponible</p>
-    <p class="precio">$${p.precio}</p>
-    <button class="btn-comprar">Comprar</button>
-  `;
-
-div.querySelector(".btn-comprar").addEventListener("click", () => {
-  agregarAlCarrito(p);
-});
-}
-  
-  contenedor.appendChild(div);
-});
-}
-
-</script>
-
-    <script>
-function animarAgregar(btn) {
-
-  const card = btn.closest(".producto-card");
-  const img = card.querySelector("img");
-  const carrito = document.getElementById("icono-carrito");
-
-  if (!img || !carrito) return;
-
-  // efecto pop
-  card.classList.add("agregado");
-  setTimeout(() => card.classList.remove("agregado"), 350);
-
-  // clonar imagen
-  const clon = img.cloneNode(true);
-  const rectImg = img.getBoundingClientRect();
-  const rectCarrito = carrito.getBoundingClientRect();
-
-  clon.classList.add("img-voladora");
-
-  clon.style.top = rectImg.top + "px";
-  clon.style.left = rectImg.left + "px";
-  clon.style.width = rectImg.width + "px";
-
-  document.body.appendChild(clon);
-
-  // animación vuelo
-  requestAnimationFrame(() => {
-    clon.style.transform = `translate(${rectCarrito.left - rectImg.left}px,
-                                      ${rectCarrito.top - rectImg.top}px)
-                            scale(.2)`;
-    clon.style.opacity = "0.5";
-  });
-
-  setTimeout(() => {
-    clon.remove();
-    carrito.classList.add("carrito-bounce");
-    setTimeout(() => carrito.classList.remove("carrito-bounce"), 400);
-  }, 700);
-}
-
-    </script>
-
-
-<script>
-function animarCarrito() {
-  const icono = document.querySelector('[title="Carrito"]');
-  icono.classList.add("shake");
-
-  setTimeout(() => {
-    icono.classList.remove("shake");
-  }, 400);
-}
-    </script>
-
-<script>
-function actualizarIconoCarrito() {
-  const icono = document.getElementById("icono-carrito");
-  if (!icono) return;
-
-  const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-
-  // eliminar contador anterior
-  let badge = icono.querySelector(".carrito-contador");
-  if (badge) badge.remove();
-
-  if (total > 0) {
-    badge = document.createElement("span");
-    badge.className = "carrito-contador";
-    badge.textContent = total;
-    icono.appendChild(badge);
-  }
-}
-
- </script>
-    
-    
-<script>
-// ===============================
-// ABRIR / CERRAR CATEGORIAS
-// ===============================
-document.addEventListener("click", function(e) {
-
-  const categoriaBtn = e.target.closest(".categoria");
-
-  if (categoriaBtn) {
-
-    const subcategorias = categoriaBtn.nextElementSibling;
-
-    if (subcategorias && subcategorias.classList.contains("subcategorias")) {
-      subcategorias.classList.toggle("activa");
-    }
-
-    return;
-  }
-
-});
-</script>
-
-<script>
-document.addEventListener("touchstart", function(e) {
- const producto = e.target.closest(".producto-card");
-  if (!producto) return;
-
-  producto.classList.add("touch-activo");
-
-  setTimeout(() => {
-    producto.classList.remove("touch-activo");
-  }, 150);
-});
-</script>
-
-<script>
-const panel = document.getElementById("panel-lateral");
-const contenidoPanel = document.getElementById("panel-contenido");
-
-function abrirPanel(html){
-  contenidoPanel.innerHTML = html;
-  panel.classList.add("activo");
-}
-
-function cerrarPanel(){
-  panel.classList.remove("activo");
-}
-
-// cerrar tocando fuera
-panel.addEventListener("click", e=>{
-  if(e.target === panel) cerrarPanel();
-});
-
-// BOTONES NAV
-document.getElementById("btn-cuenta").onclick = () => {
-  abrirPanel(`
-    <h2>Mi Cuenta</h2>
-    <p>Inicia sesión para ver tus pedidos.</p>
-    <button>Iniciar sesión</button>
-  `);
-};
-
-document.getElementById("btn-carrito").onclick = () => {
-  abrirPanel(`
-    <h2>🛒 Carrito</h2>
-    <p>Tu carrito está vacío.</p>
-  `);
-};
-
-document.getElementById("btn-favoritos").onclick = () => {
-  abrirPanel(`
-    <h2>❤️ Favoritos</h2>
-    <p>No tienes productos guardados.</p>
-  `);
-};
-</script>
-
-   </div>
-
-<script>
-    let carrito = [];
-
-  function agregarAlCarrito(id){
-
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  const clave = id + "-" + (modeloSeleccionado || "base");
-
-  const item = carrito.find(p => p.clave === clave);
-
-  if(item){
-    item.cantidad++;
-  } else {
-    carrito.push({
-      id: id,
-      modelo: modeloSeleccionado,
-      precio: precioActual,
-      color: colorSeleccionado,
-      cantidad: 1,
-      clave: clave
-    });
-  }
-
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContadorCarrito();
-}
-    
-</script>
-
- <script>   
-const modalCarrito = document.getElementById("modal-carrito");
-const carritoBtn = document.querySelector('[title="Carrito"]');
-
-carritoBtn.addEventListener("click", () => {
-  renderizarCarrito();
-  modalCarrito.style.display = "flex";
-});
-
-document.getElementById("cerrar-carrito").onclick = () => {
-  modalCarrito.style.display = "none";
-};
-
-function renderizarCarrito() {
-
-  const contenedor = document.getElementById("carrito-items");
-  const totalElemento = document.getElementById("carrito-total-precio");
-
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  contenedor.innerHTML = "";
-
-  let total = 0;
-
-  carrito.forEach((item, index) => {
-
-    total += item.precio * item.cantidad;
-
-    const div = document.createElement("div");
-    div.className = "carrito-item";
-
-    div.innerHTML = `
-      <span>${item.nombre}</span>
-      <span>${item.cantidad} x $${item.precio}</span>
-    `;
-
-    contenedor.appendChild(div);
-  });
-
-  totalElemento.textContent = "$" + total;
-}
-     
-function eliminarDelCarrito(index) {
-    
- const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
-
-  carrito.splice(index, 1);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  renderizarCarrito();
-  actualizarContadorCarrito();
-}
-
-document.getElementById("vaciar-carrito").onclick = () => {
-  localStorage.removeItem("carrito");
-  renderizarCarrito();
-  actualizarContadorCarrito();
-};
-
-</script>
-
- <script> 
-const modalCarrito = document.getElementById("modal-carrito");
-
-// abrir modal
-function abrirCarrito(){
-  document.getElementById("modal-carrito").style.display = "flex";
-  renderizarCarrito();
-  document.body.classList.add("no-scroll");
-}
-
-// cerrar modal
-function cerrarCarrito() {
-  modalCarrito.style.display = "none";
-  document.body.classList.remove("no-scroll");
-}
-
-// botón cerrar
-document.querySelector(".cerrar-carrito")
-  .addEventListener("click", cerrarCarrito);
-
-// cerrar tocando fuera
-modalCarrito.addEventListener("click", e => {
-  if (e.target === modalCarrito) cerrarCarrito();
-});
-</script>
-
-  <script> 
-function renderOpciones(producto){
-
-  let modelosHTML = "";
-  if(producto.modelos){
-    modelosHTML = producto.modelos.map(m => `
-      <div class="modelo-opcion"
-           data-nombre="${m.nombre}"
-           data-precio="${m.precio}">
-           ${m.nombre}
-      </div>
-    `).join("");
-  }
-
-  let coloresHTML = "";
-  if(producto.colores){
-    coloresHTML = producto.colores.map(c => `
-      <div class="color-opcion"
-           data-imagen="${c.imagen}"
-           style="background:${c.codigo}">
-      </div>
-    `).join("");
-  }
-
-  return `
-    <div class="opciones">
-
-      <div class="opcion-grupo">
-        <p>Modelo</p>
-        <div class="modelos">${modelosHTML}</div>
-      </div>
-
-      <div class="opcion-grupo">
-        <p>Color</p>
-        <div class="colores">${coloresHTML}</div>
-      </div>
-
-    </div>
-  `;
-}
-
-function renderOpciones(producto) {
-    let modelosHTML = "";
-    if (producto.modelos) {
-        modelosHTML = producto.modelos.map((m, index) => `
-            <div class="modelo-opcion ${index === 0 ? 'activo' : ''}" 
-                 data-nombre="${m.nombre}" data-precio="${m.precio}">
-                 ${m.nombre}
-            </div>`).join("");
-    }
-
-    let coloresHTML = "";
-    if (producto.colores) {
-        coloresHTML = producto.colores.map(c => `
-            <div class="color-opcion" 
-                 data-imagen="${c.imagen}" 
-                 data-colorname="${c.codigo}"
-                 style="background:${c.codigo}; width:30px; height:30px; border-radius:50%; display:inline-block; margin:5px; cursor:pointer; border:2px solid #ddd;">
-            </div>`).join("");
-    }
-
-    return `
-        <div class="opciones-container">
-            ${modelosHTML ? `<p>Capacidad:</p><div class="modelos-grid">${modelosHTML}</div>` : ''}
-            ${coloresHTML ? `<p>Color:</p><div class="colores-grid">${coloresHTML}</div>` : ''}
-        </div>
-    `;
-}
-
-function activarOpcionesProducto() {
-    // Lógica de Modelos
-    document.querySelectorAll(".modelo-opcion").forEach(el => {
-        el.onclick = () => {
-            document.querySelectorAll(".modelo-opcion").forEach(m => m.classList.remove("activo"));
-            el.classList.add("activo");
-            modeloSeleccionado = el.dataset.nombre;
-            precioActual = el.dataset.precio;
-            document.getElementById("precioDisplay").textContent = "$" + precioActual;
-        };
-    });
-
-    // Lógica de Colores (Cambia la imagen)
-    document.querySelectorAll(".color-opcion").forEach(el => {
-        el.onclick = () => {
-            document.querySelectorAll(".color-opcion").forEach(c => c.classList.remove("activo"));
-            el.classList.add("activo");
-            el.style.borderColor = "#007bff"; // Resaltar color seleccionado
-            
-            colorSeleccionado = el.dataset.colorname;
-            // CAMBIO DE IMAGEN
-            document.getElementById("imgPrincipal").src = el.dataset.imagen;
-        };
+    const contenedor = document.getElementById("productos");
+    contenedor.innerHTML = "";
+    const filtrados = productos.filter(p => p.subcategoria.toLowerCase() === subcategoria.toLowerCase());
+
+    filtrados.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "producto-card";
+        div.innerHTML = `
+            <img src="${p.imagen}" onclick="navegar('/producto/${p.slug}')">
+            <h3>${p.nombre}</h3>
+            <p class="precio">RD$ ${p.precio}</p>
+            <button onclick="navegar('/producto/${p.slug}')">Ver Detalles</button>
+        `;
+        contenedor.appendChild(div);
     });
 }
-     <script>
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
+
+function toggleMenuProductos() {
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    menu.classList.toggle("activo");
+    overlay.classList.toggle("activo");
+}
+
+function toggleDescripcion() {
+    document.getElementById("descTexto").classList.toggle("expandido");
+}
 </script>
     
 <!-- MODAL PRODUCTO -->
