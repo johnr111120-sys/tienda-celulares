@@ -1408,21 +1408,18 @@ body.menu-abierto {
   z-index: 99999;
 }
 
-.modal-descripcion{
+.modal-descripcion {
   position: relative;
   font-size: 14px;
   line-height: 1.5;
   color: #444;
-  margin: 10px 0 15px;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;   /* solo 3 líneas */
+  max-height: 4.5em; /* ≈ 3 líneas */
   transition: max-height 0.35s ease;
-  -webkit-box-orient: vertical;
 }
 
-/* desvanecido inferior */
-.modal-descripcion.fade::after{
+/* degradado inferior */
+.modal-descripcion::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -1433,16 +1430,6 @@ body.menu-abierto {
   transition: opacity 0.3s ease;
 }
 
-/* VER MAS */
-.ver-mas{
-  display: inline-block;
-  font-weight: 700;
-  font-size: 15px;
-  color: #000;
-  cursor: pointer;
-  margin-top: 6px;
-}
-
 /* cuando está expandido */
 .modal-descripcion.expandido {
   max-height: 500px;
@@ -1451,6 +1438,17 @@ body.menu-abierto {
 .modal-descripcion.expandido::after {
   opacity: 0;
 }
+
+/* botón ver más */
+.ver-mas {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  color: #000;
+}
+
 /* cuando está activo */
 .modal-producto.activo{
   display:flex;
