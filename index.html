@@ -273,7 +273,7 @@ function abrirProducto(id){
   const contenido = document.getElementById("modalContenido");
 
  modalContenido.innerHTML = `
-  <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+<button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
 
   <img src="${producto.imagen}" class="modal-img">
 
@@ -300,6 +300,26 @@ function abrirProducto(id){
   modal.style.display = "flex";
   document.body.classList.add("no-scroll");
 }
+
+precioActual = producto.precio;
+modeloSeleccionado = null;
+
+document.querySelectorAll(".modelo-opcion").forEach(opcion => {
+  opcion.addEventListener("click", function(){
+
+    document.querySelectorAll(".modelo-opcion")
+      .forEach(o => o.classList.remove("activo"));
+
+    this.classList.add("activo");
+
+    modeloSeleccionado = this.dataset.nombre;
+    precioActual = this.dataset.precio;
+
+    document.getElementById("precioProducto").textContent =
+      "$" + precioActual;
+
+  });
+});
 
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
@@ -857,46 +877,29 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
-  function agregarAlCarrito(producto, modeloSeleccionado = null) {
+  function agregarAlCarrito(id){
 
-  // 🔥 determinar precio y modelo
-  const precioFinal = modeloSeleccionado
-    ? modeloSeleccionado.precio
-    : producto.precio;
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  const nombreModelo = modeloSeleccionado
-    ? modeloSeleccionado.nombre
-    : null;
+  const clave = id + "-" + (modeloSeleccionado || "base");
 
-  // 🔥 clave única para evitar mezclas
-  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
+  const item = carrito.find(p => p.clave === clave);
 
-  // 🔥 buscar si ya existe
-  const existente = carrito.find(item => item.clave === clave);
-
-  if (existente) {
-    existente.cantidad += 1;   // ✅ suma 1
+  if(item){
+    item.cantidad++;
   } else {
     carrito.push({
-      clave: clave,
-      id: producto.id,
-      nombre: producto.nombre,
-      modelo: nombreModelo,
-      precio: precioFinal,
-      imagen: producto.imagen,
-      cantidad: 1
+      id: id,
+      modelo: modeloSeleccionado,
+      precio: precioActual,
+      color: colorSeleccionado,
+      cantidad: 1,
+      clave: clave
     });
   }
 
-guardarCarrito(carrito);
-actualizarContadorCarrito();
-renderizarCarrito();
-
- animarCarrito();
-
- localStorage.setItem("carrito", JSON.stringify(carrito));
-actualizarIconoCarrito();
-console.log("Carrito:", carrito);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarContadorCarrito();
 }
     
 </script>
@@ -993,31 +996,21 @@ function renderOpciones(producto){
   let html = "";
 
   // MODELOS
-if (p.modelos && p.modelos.length > 0) {
-
-    const modeloInicial = p.modelos[0];
-
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
-      <h3>${p.nombre}</h3>
-      <p class="descripcion">Disponible en varios modelos</p>
-
-      <button class="btn-modelo">Elegir modelo ▼</button>
-
-      <div class="modelos-dropdown" style="display:none;">
-        ${p.modelos.map(m => `
-          <div class="modelo-opcion"
-               data-precio="${m.precio}">
-            ${m.nombre}
-          </div>
-        `).join("")}
+  if(producto.modelos && producto.modelos.length){
+    html += `
+      <div class="opcion-expandible">
+        <div class="opcion-titulo">Modelo</div>
+        <div class="opcion-lista">
+          ${producto.modelos.map(m=>`
+            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
+              ${m}
+            </button>
+          `).join("")}
+        </div>
       </div>
-
-      <p class="precio">$${modeloInicial.precio}</p>
-      <button class="btn-comprar">Comprar</button>
     `;
-    
+  }
+
   // COLORES
   if(producto.colores && producto.colores.length){
     html += `
