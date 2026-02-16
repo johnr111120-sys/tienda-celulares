@@ -1015,23 +1015,28 @@ function renderOpciones(producto){
  }
 
  // COLORES (si existen)
- if(producto.colores && producto.colores.length){
-   html += `
-   <div class="opcion-expandible">
-     <div class="opcion-titulo">Color</div>
-     <div class="colores">
-       ${producto.colores.map(c=>`
-         <span class="color-opcion"
-           style="background:${c}"
-           onclick="seleccionarColor('${c}', this)">
-         </span>
-       `).join("")}
-     </div>
-   </div>
-   `;
- }
+  const coloresHTML = producto.colores.map((c,i)=>`
+    <div class="color-opcion ${i===0?'activo':''}"
+         data-imagen="${c.imagen}"
+         style="background:${c.codigo}">
+    </div>
+  `).join("");
 
- return html;
+  return `
+    <div class="opciones">
+      
+      <div class="opcion-grupo">
+        <p>Modelo</p>
+        <div class="modelos">${modelosHTML}</div>
+      </div>
+
+      <div class="opcion-grupo">
+        <p>Color</p>
+        <div class="colores">${coloresHTML}</div>
+      </div>
+
+    </div>
+  `;
 }
 
 function seleccionarOpcion(btn){
@@ -1051,28 +1056,31 @@ function seleccionarColor(color, imagen, el){
   document.querySelector(".modal-img").src = imagen;
 }
 
-function seleccionarModelo(nombre, precio, btn){
+// cambiar modelo y precio
+document.querySelectorAll(".modelo-opcion").forEach(el=>{
+  el.onclick = ()=>{
+    document.querySelectorAll(".modelo-opcion")
+      .forEach(m=>m.classList.remove("activo"));
 
- modeloSeleccionado = nombre;
- precioActual = precio;
+    el.classList.add("activo");
 
- document.querySelectorAll(".opcion-btn")
-  .forEach(b => b.classList.remove("activo"));
+    const precio = el.dataset.precio;
+    document.querySelector(".modal-precio").textContent = "$" + precio;
+  }
+});
 
- btn.classList.add("activo");
+// cambiar color e imagen
+document.querySelectorAll(".color-opcion").forEach(el=>{
+  el.onclick = ()=>{
+    document.querySelectorAll(".color-opcion")
+      .forEach(c=>c.classList.remove("activo"));
 
- document.querySelector(".modal-precio").textContent = "$" + precio;
-}
+    el.classList.add("activo");
 
-function seleccionarColor(color, el){
-
- colorSeleccionado = color;
-
- document.querySelectorAll(".color-opcion")
-  .forEach(c => c.classList.remove("activo"));
-
- el.classList.add("activo");
-}
+    const nuevaImagen = el.dataset.imagen;
+    document.querySelector(".modal-img").src = nuevaImagen;
+  }
+});
 
  </script>
  
