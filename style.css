@@ -1511,12 +1511,12 @@ body.menu-abierto {
 }
 /* botones opciones */
 .opcion-btn{
-  padding:8px 12px;
+  padding:8px 14px;
   border:1px solid #ddd;
   border-radius:8px;
   background:#fff;
   cursor:pointer;
-  transition:all .25s ease;
+  transition:all .2s ease;
 }
 /* hover */
 .opcion-btn:hover{
@@ -1546,5 +1546,24 @@ body.menu-abierto {
   display:flex;
   align-items:center;
   gap:6px;
+}
+
+.btn-agregar-modal{
+  display:block;
+  width:80%;
+  margin:20px auto;
+  padding:14px;
+  background:#007bff;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn-agregar-modal:hover{
+  background:#e60023; /* rojo inmediato */
 }
 
