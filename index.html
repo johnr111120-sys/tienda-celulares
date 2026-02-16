@@ -264,77 +264,100 @@ imgModal.addEventListener("click", e=>{
 
 <script>
 /* =========================================
-   1. VARIABLES GLOBALES Y CARGA DE DATOS
+   1. VARIABLES GLOBALES Y CARGA
    ========================================= */
 let productos = [];
 let modeloSeleccionado = null;
 let colorSeleccionado = null;
 let precioActual = 0;
 
+// Carga inicial
 fetch("productos.json")
     .then(res => res.json())
     .then(data => {
         productos = data;
-        console.log("✅ Productos cargados correctamente");
-        router(); 
-    })
-    .catch(err => console.error("Error cargando JSON:", err));
-
-/* =========================================
-   2. FUNCIONES DE RENDERIZADO (EL CORAZÓN)
-   ========================================= */
-
-function renderOpciones(producto) {
-    let modelosHTML = "";
-    if (producto.modelos) {
-        modelosHTML = producto.modelos.map(m => `
-            <div class="modelo-opcion" data-nombre="${m.nombre}" data-precio="${m.precio}">
-                ${m.nombre}
-            </div>`).join("");
-    }
-
-    let coloresHTML = "";
-    if (producto.colores) {
-        coloresHTML = producto.colores.map(c => `
-            <div class="color-opcion" data-imagen="${c.imagen}" data-color="${c.codigo}" 
-                 style="background:${c.codigo}; width:30px; height:30px; border-radius:50%; display:inline-block; margin:5px; cursor:pointer; border:2px solid #ddd;">
-            </div>`).join("");
-    }
-
-    return `
-        <div class="opciones-modal">
-            ${modelosHTML ? `<p><b>Capacidad:</b></p><div class="modelos-grid">${modelosHTML}</div>` : ''}
-            ${coloresHTML ? `<p><b>Color:</b></p><div class="colores-grid">${coloresHTML}</div>` : ''}
-        </div>`;
-}
-
-function activarOpcionesProducto() {
-    // Eventos para Modelos
-    document.querySelectorAll(".modelo-opcion").forEach(el => {
-        el.onclick = () => {
-            document.querySelectorAll(".modelo-opcion").forEach(m => m.classList.remove("activo"));
-            el.classList.add("activo");
-            modeloSeleccionado = el.dataset.nombre;
-            precioActual = el.dataset.precio;
-            document.querySelector(".modal-precio").textContent = "RD$ " + precioActual;
-        };
+        console.log("✅ JSON Cargado");
+        router(); // Ejecutar al cargar
     });
 
-    // Eventos para Colores
-    document.querySelectorAll(".color-opcion").forEach(el => {
-        el.onclick = () => {
-            document.querySelectorAll(".color-opcion").forEach(c => c.classList.remove("activo"));
-            el.classList.add("activo");
-            colorSeleccionado = el.dataset.color;
-            document.getElementById("imgPrincipal").src = el.dataset.imagen;
-        };
+/* =========================================
+   2. ROUTER (EL CEREBRO)
+   ========================================= */
+function router() {
+    const hash = window.location.hash || '#/';
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
+
+    // Cerrar menú lateral automáticamente al navegar
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    if(menu) menu.classList.remove("activo");
+    if(overlay) overlay.classList.remove("activo");
+
+    // RUTA: Producto individual
+    if (hash.startsWith("#/producto/")) {
+        const slug = hash.split("#/producto/")[1];
+        const p = productos.find(prod => prod.slug === slug);
+        if (p) {
+            abrirProducto(p.id);
+        }
+        return; 
+    }
+
+    // RUTA: Categorías
+    if (hash.startsWith("#/productos/")) {
+        const sub = decodeURIComponent(hash.split("#/productos/")[1]);
+        if (vistaInicio) vistaInicio.style.display = "none";
+        if (vistaProductos) vistaProductos.style.display = "block";
+        
+        document.getElementById("titulo-categoria").innerText = sub;
+        mostrarProductosPorSubcategoria(sub);
+        window.scrollTo(0,0);
+        return;
+    }
+
+    // RUTA: Inicio (Home)
+    if (vistaInicio) vistaInicio.style.display = "block";
+    if (vistaProductos) vistaProductos.style.display = "none";
+}
+
+// Escuchar cambios de URL
+window.addEventListener("hashchange", router);
+window.addEventListener("load", router);
+
+/* =========================================
+   3. MOSTRAR PRODUCTOS EN GRILLA
+   ========================================= */
+function mostrarProductosPorSubcategoria(subcategoria) {
+    const contenedor = document.getElementById("productos");
+    if(!contenedor) return;
+    contenedor.innerHTML = "";
+
+    const filtrados = productos.filter(p => 
+        p.subcategoria.toLowerCase().trim() === subcategoria.toLowerCase().trim()
+    );
+
+    if(filtrados.length === 0) {
+        contenedor.innerHTML = "<p>No hay productos en esta categoría.</p>";
+        return;
+    }
+
+    filtrados.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "producto-card";
+        card.innerHTML = `
+            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
+            <h3>${p.nombre}</h3>
+            <p class="precio">RD$ ${p.precio}</p>
+            <button onclick="location.hash='#/producto/${p.slug}'">Ver detalles</button>
+        `;
+        contenedor.appendChild(card);
     });
 }
 
 /* =========================================
-   3. LOGICA DEL MODAL Y RUTAS (SPA)
+   4. MODAL DE PRODUCTO (SPA)
    ========================================= */
-
 function abrirProducto(id) {
     const producto = productos.find(p => p.id == id);
     if (!producto) return;
@@ -343,19 +366,23 @@ function abrirProducto(id) {
     const modalContenido = document.getElementById("modalContenido");
 
     precioActual = producto.precio;
-    modeloSeleccionado = null;
+    modeloSeleccionado = producto.modelos ? producto.modelos[0].nombre : null;
     colorSeleccionado = null;
 
     modalContenido.innerHTML = `
         <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
-        <div class="spa-container">
+        <div class="spa-layout">
             <img src="${producto.imagen}" id="imgPrincipal" class="modal-img">
             <div class="mp-contenido">
                 <h2>${producto.nombre}</h2>
                 <p id="descTexto" class="modal-descripcion">${producto.descripcion}</p>
                 <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
-                ${renderOpciones(producto)}
-                <div class="modal-precio">RD$ ${precioActual}</div>
+                
+                <div class="opciones-seleccion">
+                    ${renderOpciones(producto)}
+                </div>
+
+                <div class="modal-precio">RD$ <span id="spanPrecio">${precioActual}</span></div>
             </div>
             <div class="contenedor-accion-fija">
                 <button class="btn-comprar-spa" onclick="irAWhatsApp('${producto.nombre}')">
@@ -366,75 +393,62 @@ function abrirProducto(id) {
     `;
 
     modal.style.display = "flex";
-    document.body.classList.add("no-scroll");
+    document.body.style.overflow = "hidden";
     activarOpcionesProducto();
+}
+
+function renderOpciones(producto) {
+    let html = "";
+    if (producto.modelos) {
+        html += `<p>Capacidad:</p><div class="modelos-flex">`;
+        producto.modelos.forEach((m, idx) => {
+            html += `<div class="modelo-opcion ${idx===0?'activo':''}" data-nombre="${m.nombre}" data-precio="${m.precio}">${m.nombre}</div>`;
+        });
+        html += `</div>`;
+    }
+    if (producto.colores) {
+        html += `<p>Color:</p><div class="colores-flex">`;
+        producto.colores.forEach(c => {
+            html += `<div class="color-opcion" data-imagen="${c.imagen}" data-cod="${c.codigo}" style="background:${c.codigo}"></div>`;
+        });
+        html += `</div>`;
+    }
+    return html;
+}
+
+function activarOpcionesProducto() {
+    document.querySelectorAll(".modelo-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".modelo-opcion").forEach(x => x.classList.remove("activo"));
+            el.classList.add("activo");
+            modeloSeleccionado = el.dataset.nombre;
+            document.getElementById("spanPrecio").innerText = el.dataset.precio;
+        };
+    });
+
+    document.querySelectorAll(".color-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".color-opcion").forEach(x => x.classList.remove("activo"));
+            el.classList.add("activo");
+            colorSeleccionado = el.dataset.cod;
+            document.getElementById("imgPrincipal").src = el.dataset.imagen;
+        };
+    });
 }
 
 function cerrarProducto() {
     document.getElementById("modalProducto").style.display = "none";
-    document.body.classList.remove("no-scroll");
-    window.location.hash = window.location.hash.split('/producto/')[0]; // Limpia la URL
+    document.body.style.overflow = "auto";
+    // Al cerrar, volvemos a la categoría que estaba en el hash
+    const hashActual = window.location.hash;
+    if (hashActual.includes("/producto/")) {
+        window.history.back(); 
+    }
 }
 
 function irAWhatsApp(nombre) {
-    const msg = `Hola Moises Celulares, quiero el ${nombre}. Capacidad: ${modeloSeleccionado || 'Base'}, Color: ${colorSeleccionado || 'Default'}`;
+    const msg = `Hola Moises Celulares, me interesa el ${nombre}. Capacidad: ${modeloSeleccionado}, Color: ${colorSeleccionado}`;
     window.open(`https://wa.me/18292017321?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-/* =========================================
-   4. NAVEGACIÓN Y ROUTER
-   ========================================= */
-
-function navegar(ruta) {
-    window.location.hash = ruta;
-}
-
-function router() {
-    const hash = window.location.hash;
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-
-    if (hash.startsWith("#/producto/")) {
-        const slug = hash.split("#/producto/")[1];
-        const p = productos.find(prod => prod.slug === slug);
-        if (p) abrirProducto(p.id);
-        return;
-    }
-
-    if (hash.startsWith("#/productos/")) {
-        const sub = decodeURIComponent(hash.split("#/productos/")[1]);
-        vistaInicio.style.display = "none";
-        vistaProductos.style.display = "block";
-        mostrarProductosPorSubcategoria(sub);
-        return;
-    }
-
-    vistaInicio.style.display = "block";
-    vistaProductos.style.display = "none";
-}
-
-window.addEventListener("hashchange", router);
-
-/* =========================================
-   5. OTRAS FUNCIONES (CATEGORIAS, ETC)
-   ========================================= */
-
-function mostrarProductosPorSubcategoria(subcategoria) {
-    const contenedor = document.getElementById("productos");
-    contenedor.innerHTML = "";
-    const filtrados = productos.filter(p => p.subcategoria.toLowerCase() === subcategoria.toLowerCase());
-
-    filtrados.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "producto-card";
-        div.innerHTML = `
-            <img src="${p.imagen}" onclick="navegar('/producto/${p.slug}')">
-            <h3>${p.nombre}</h3>
-            <p class="precio">RD$ ${p.precio}</p>
-            <button onclick="navegar('/producto/${p.slug}')">Ver Detalles</button>
-        `;
-        contenedor.appendChild(div);
-    });
 }
 
 function toggleMenuProductos() {
