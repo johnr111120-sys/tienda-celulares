@@ -1408,6 +1408,13 @@ body.menu-abierto {
   z-index: 99999;
 }
 
+.modal-descripcion{
+  font-size: 14px;
+  line-height: 1.5;
+  color: #444;
+  margin: 10px 0 15px;
+  white-space: pre-line; /* respeta los \n del JSON */
+}
 /* cuando está activo */
 .modal-producto.activo{
   display:flex;
