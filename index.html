@@ -988,19 +988,25 @@ modalCarrito.addEventListener("click", e => {
 </script>
 
   <script> 
-function renderModelos(producto){
-  if(!producto.modelos) return "";
+function renderOpciones(producto){
 
-  return `
-    <div class="opciones-modelos">
-      ${producto.modelos.map(modelo => `
-        <div class="modelo-opcion">
-          ${modelo.nombre}
+  let html = "";
+
+  // MODELOS
+  if(producto.modelos && producto.modelos.length){
+    html += `
+      <div class="opcion-expandible">
+        <div class="opcion-titulo">Modelo</div>
+        <div class="opcion-lista">
+          ${producto.modelos.map(m=>`
+            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
+              ${m}
+            </button>
+          `).join("")}
         </div>
-      `).join("")}
-    </div>
-  `;
-}
+      </div>
+    `;
+  }
 
   // COLORES
   if(producto.colores && producto.colores.length){
