@@ -399,7 +399,7 @@ let endY = 0;
 const imgModalSwipe = document.getElementById("img-modal");
 
 // Modal producto
-const productoModalSwipe = document.getElementById("modal-producto");
+const productoModalSwipe = document.getElementById("modalProducto");
 
 // Función genérica
 function activarSwipe(modal, cerrarFn){
@@ -608,7 +608,7 @@ function router() {
     const producto = productos.find(p => p.slug === slug);
 
     if (producto) {
-     abrirProducto(producto.id);
+    abrirProducto(producto);
     }
 
    
@@ -677,10 +677,6 @@ function mostrarProductosPorSubcategoria(subcategoria) {
       <p class="precio">$${modeloInicial.precio}</p>
       <button class="btn-comprar">Comprar</button>
     `;
-
-    const btnModelo = div.querySelector(".btn-modelo");
-    const dropdown = div.querySelector(".modelos-dropdown");
-    const precioElemento = div.querySelector(".precio");
 
     // Abrir / cerrar dropdown
     btnModelo.addEventListener("click", (e) => {
@@ -1035,30 +1031,32 @@ function renderOpciones(producto){
     `;
   }
 
-  // COLORES
-  if(producto.colores && producto.colores.length){
-    html += `
-      <div class="grupo-opciones">
-        <p class="opcion-titulo">Color</p>
-        <div class="opciones">
-          ${producto.colores.map((c,i)=>`
-            <div class="opcion color ${i===0?'activo':''}"
-                 style="background:${c.codigo}"
-                 onclick="seleccionarColor(this)">
-            </div>
-          `).join("")}
-        </div>
+ // COLORES
+if(producto.colores && producto.colores.length){
+  html += `
+    <div class="grupo-opciones">
+      <p class="opcion-titulo">Color</p>
+      <div class="opciones">
+        ${producto.colores.map((c,i)=>`
+          <div class="opcion color ${i===0?'activo':''}"
+               data-color="${c}"
+               onclick="seleccionarColor(this)">
+               ${c}
+          </div>
+        `).join("")}
       </div>
-    `;
-  }
+    </div>
+  `;
+}
 
   return html;
 }
 
 function seleccionarModelo(el, precio){
-
   document.querySelectorAll(".modelo").forEach(m=>m.classList.remove("activo"));
   el.classList.add("activo");
+
+  precioActual = precio;   // 🔥 IMPORTANTE
 
   const precioBox = document.querySelector(".modal-precio");
   precioBox.textContent = "$" + precio;
