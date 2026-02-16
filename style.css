@@ -1549,22 +1549,22 @@ body.menu-abierto {
 }
 
 .btn-agregar-modal{
-  display:block;
-  width:80%;
-  margin:20px auto;
+  width:100%;
+  margin-top:18px;
   padding:14px;
-  background:#007bff;
+  background:#007aff;
   color:#fff;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
   font-size:16px;
-  font-weight:600;
+  font-weight:bold;
   cursor:pointer;
-  transition:.2s;
+  transition:background .15s ease;
 }
 
+/* HOVER ROJO INMEDIATO */
 .btn-agregar-modal:hover{
-  background:#e60023; /* rojo inmediato */
+  background:#ff3b30;
 }
 
 .desc-texto{
