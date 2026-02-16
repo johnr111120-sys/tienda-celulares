@@ -1512,7 +1512,7 @@ body.menu-abierto {
 /* botones opciones */
 .opcion-btn{
   padding:8px 14px;
-  border:1px solid #ddd;
+  border:2px solid #ddd;
   border-radius:8px;
   background:#fff;
   cursor:pointer;
@@ -1524,7 +1524,7 @@ body.menu-abierto {
 }
 /* ACTIVO */
 .opcion-btn.activo{
-  background:#007aff;
+  background:#eaf3ff;
   color:#fff;
   border-color:#007aff;
   transform:scale(1.05);
