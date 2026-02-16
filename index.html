@@ -298,26 +298,44 @@ function abrirProducto(id){
   document.body.classList.add("no-scroll");
 }
 
-// seleccionar modelo
-document.querySelectorAll(".modelo-btn").forEach(btn=>{
+const precioElemento = document.querySelector(".modal-precio");
+
+const botonesModelo = document.querySelectorAll(".modelo-btn");
+const botonesColor = document.querySelectorAll(".color-btn");
+
+// ===== MODELO POR DEFECTO =====
+if(botonesModelo.length){
+  botonesModelo[0].classList.add("activo");
+  modeloSeleccionado = botonesModelo[0].dataset.nombre;
+  precioActual = parseInt(botonesModelo[0].dataset.precio);
+  precioElemento.textContent = "$" + precioActual;
+}
+
+// ===== SELECCIONAR MODELO =====
+botonesModelo.forEach(btn=>{
   btn.addEventListener("click", function(){
-    document.querySelectorAll(".modelo-btn")
-      .forEach(b=>b.classList.remove("activo"));
+
+    botonesModelo.forEach(b=>b.classList.remove("activo"));
     this.classList.add("activo");
 
     modeloSeleccionado = this.dataset.nombre;
     precioActual = parseInt(this.dataset.precio);
 
-    document.querySelector(".modal-precio").textContent =
-      "$" + precioActual;
+    // animación precio
+    precioElemento.classList.add("animar");
+
+    setTimeout(()=>{
+      precioElemento.textContent = "$" + precioActual;
+      precioElemento.classList.remove("animar");
+    },150);
+
   });
 });
 
-// seleccionar color
-document.querySelectorAll(".color-btn").forEach(btn=>{
+// ===== SELECCIONAR COLOR =====
+botonesColor.forEach(btn=>{
   btn.addEventListener("click", function(){
-    document.querySelectorAll(".color-btn")
-      .forEach(b=>b.classList.remove("activo"));
+    botonesColor.forEach(b=>b.classList.remove("activo"));
     this.classList.add("activo");
 
     colorSeleccionado = this.dataset.color;
@@ -1027,7 +1045,7 @@ function renderOpciones(producto){
           ${producto.colores.map(c=>`
             <button class="opcion-btn color-btn"
                     data-color="${c}">
-              ${c}
+              <span class="color-nombre">${c}</span>
             </button>
           `).join("")}
         </div>
