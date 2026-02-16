@@ -1014,45 +1014,64 @@ modalCarrito.addEventListener("click", e => {
 </script>
 
   <script> 
-function renderModelos(producto){
-  if(!producto.modelos) return "";
+function renderOpciones(producto){
 
-  return `
-    <div class="grupo-opciones">
-      ${producto.modelos.map(m => `
-        <button class="opcion-btn modelo-btn"
-          data-nombre="${m.nombre}"
-          data-precio="${m.precio}">
-          ${m.nombre}
-        </button>
-      `).join("")}
-    </div>
-  `;
+  let html = "";
+
+  // MODELOS
+  if(producto.modelos && producto.modelos.length){
+    html += `
+      <div class="grupo-opciones">
+        <p class="opcion-titulo">Modelo</p>
+        <div class="opciones">
+          ${producto.modelos.map((m,i)=>`
+            <div class="opcion modelo ${i===0?'activo':''}"
+                 onclick="seleccionarModelo(this, ${m.precio})">
+              ${m.nombre}
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  // COLORES
+  if(producto.colores && producto.colores.length){
+    html += `
+      <div class="grupo-opciones">
+        <p class="opcion-titulo">Color</p>
+        <div class="opciones">
+          ${producto.colores.map((c,i)=>`
+            <div class="opcion color ${i===0?'activo':''}"
+                 style="background:${c.codigo}"
+                 onclick="seleccionarColor(this)">
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  return html;
 }
 
-function renderColores(producto){
-  if(!producto.colores) return "";
+function seleccionarModelo(el, precio){
 
-  return `
-    <div class="grupo-opciones">
-      ${producto.colores.map(c => `
-        <button class="opcion-btn color-btn"
-          data-color="${c}">
-          ${c}
-        </button>
-      `).join("")}
-    </div>
-  `;
+  document.querySelectorAll(".modelo").forEach(m=>m.classList.remove("activo"));
+  el.classList.add("activo");
+
+  const precioBox = document.querySelector(".modal-precio");
+  precioBox.textContent = "$" + precio;
+
+  precioBox.classList.add("precio-animado");
+  setTimeout(()=>precioBox.classList.remove("precio-animado"),300);
 }
 
-function seleccionarOpcion(btn){
-  const grupo = btn.parentElement;
-  grupo.querySelectorAll(".opcion-btn")
-       .forEach(b => b.classList.remove("activo"));
-
-  btn.classList.add("activo");
+function seleccionarColor(el){
+  document.querySelectorAll(".color").forEach(c=>c.classList.remove("activo"));
+  el.classList.add("activo");
 }
- 
+
  </script>
  
 <div id="panel-lateral" class="panel-lateral">
