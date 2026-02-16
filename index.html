@@ -993,21 +993,31 @@ function renderOpciones(producto){
   let html = "";
 
   // MODELOS
-  if(producto.modelos && producto.modelos.length){
-    html += `
-      <div class="opcion-expandible">
-        <div class="opcion-titulo">Modelo</div>
-        <div class="opcion-lista">
-          ${producto.modelos.map(m=>`
-            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
-              ${m}
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
+if (p.modelos && p.modelos.length > 0) {
 
+    const modeloInicial = p.modelos[0];
+
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}"
+           onclick="navegar('/producto/${p.slug}')">
+      <h3>${p.nombre}</h3>
+      <p class="descripcion">Disponible en varios modelos</p>
+
+      <button class="btn-modelo">Elegir modelo ▼</button>
+
+      <div class="modelos-dropdown" style="display:none;">
+        ${p.modelos.map(m => `
+          <div class="modelo-opcion"
+               data-precio="${m.precio}">
+            ${m.nombre}
+          </div>
+        `).join("")}
+      </div>
+
+      <p class="precio">$${modeloInicial.precio}</p>
+      <button class="btn-comprar">Comprar</button>
+    `;
+    
   // COLORES
   if(producto.colores && producto.colores.length){
     html += `
