@@ -995,36 +995,43 @@ modalCarrito.addEventListener("click", e => {
   <script> 
 function renderOpciones(producto){
 
-  let html = "";
+ let html = "";
 
-  // MODELOS
-  if(producto.modelos && producto.modelos.length){
-    html += `
-      <div class="opcion-expandible">
-        <div class="opcion-titulo">Modelo</div>
-        <div class="opcion-lista">
-          ${producto.modelos.map(m=>`
-            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
-              ${m.nombre}
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
+ // MODELOS
+ if(producto.modelos && producto.modelos.length){
+   html += `
+   <div class="opcion-expandible">
+     <div class="opcion-titulo">Modelo</div>
+     <div class="opcion-lista">
+       ${producto.modelos.map(m=>`
+         <button class="opcion-btn"
+           onclick="seleccionarModelo('${m.nombre}', ${m.precio}, this)">
+           ${m.nombre}
+         </button>
+       `).join("")}
+     </div>
+   </div>
+   `;
+ }
 
-  // COLORES
- function renderColores(producto){
-  return `
-    <div class="colores">
-      ${producto.colores.map(c => `
-        <span class="color-opcion"
-              style="background:${c.codigo}"
-              onclick="seleccionarColor('${c.codigo}','${c.imagen}', this)">
-        </span>
-      `).join("")}
-    </div>
-  `;
+ // COLORES (si existen)
+ if(producto.colores && producto.colores.length){
+   html += `
+   <div class="opcion-expandible">
+     <div class="opcion-titulo">Color</div>
+     <div class="colores">
+       ${producto.colores.map(c=>`
+         <span class="color-opcion"
+           style="background:${c}"
+           onclick="seleccionarColor('${c}', this)">
+         </span>
+       `).join("")}
+     </div>
+   </div>
+   `;
+ }
+
+ return html;
 }
 
 function seleccionarOpcion(btn){
