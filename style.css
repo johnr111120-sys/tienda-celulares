@@ -1416,6 +1416,7 @@ body.menu-abierto {
   overflow: hidden;
   max-height: 4.5em; /* ≈ 3 líneas */
   transition: max-height 0.35s ease;
+  white-space: pre-line; /* respeta los \n del JSON */
 }
 
 /* degradado inferior */
