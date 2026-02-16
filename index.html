@@ -263,47 +263,46 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-
-const modalProducto = document.getElementById("modal-producto");
+const modal = document.getElementById("modalProducto");
 
 function abrirProducto(id){
-  const producto = productos.find(p => p.id == id);
-  if(!producto) return;
 
-  const modalContenido = document.getElementById("modalContenido");
+ const producto = productos.find(p => p.id == id);
+ if(!producto) return;
 
-modalContenido.innerHTML = `
-<button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+ const modalContenido = document.getElementById("modalContenido");
 
-  <img src="${producto.imagen}" class="modal-img">
+ precioActual = producto.precio;
+ modeloSeleccionado = null;
+ colorSeleccionado = null;
 
-  <h2 class="modal-nombre">${producto.nombre}</h2>
+ modalContenido.innerHTML = `
+ <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+
+ <img src="${producto.imagen}" class="modal-img">
+
+ <h2 class="modal-nombre">${producto.nombre}</h2>
 
  <p class="modal-descripcion" id="descTexto">
-  ${producto.descripcion || ""}
-</p>
+ ${producto.descripcion || ""}
+ </p>
 
-<span class="ver-mas" onclick="toggleDescripcion()">
-  VER MÁS
-</span>
+ <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
 
+ ${renderOpciones(producto)}
 
-precioActual = producto.precio;
-modeloSeleccionado = null;
-colorSeleccionado = null;
+ <div class="modal-precio">$${producto.precio}</div>
 
-  ${renderOpciones(producto)}
+ <button class="btn-agregar-modal"
+ onclick="agregarAlCarrito('${producto.id}')">
+ Agregar al carrito
+ </button>
+ `;
 
-  <div class="modal-precio">$${producto.precio}</div>
+ modal.style.display = "flex";
+ document.body.classList.add("no-scroll");
 
-  <button class="btn-agregar-modal"
-onclick="agregarAlCarrito('${producto.id}')">
-Agregar al carrito
-</button>
-`;
-
-  modal.style.display = "flex";
-  document.body.classList.add("no-scroll");
+ activarOpcionesProducto(); // 🔥 importante
 }
 
 document.querySelectorAll(".modelo-opcion").forEach(opcion => {
@@ -358,8 +357,6 @@ function toggleDescripcion() {
 </script>
 
      <script>
-const modalProducto = document.getElementById("modalProducto");
-
 modalProducto.addEventListener("click", (e) => {
   if (e.target === modalProducto) {
     cerrarProducto();
@@ -380,7 +377,7 @@ let endY = 0;
 const imgModalSwipe = document.getElementById("img-modal");
 
 // Modal producto
-const productoModalSwipe = document.getElementById("modalproducto");
+const productoModalSwipe = document.getElementById("modalProducto");
 
 // Función genérica
 function activarSwipe(modal, cerrarFn){
@@ -1034,49 +1031,36 @@ function renderOpciones(producto){
   `;
 }
 
-function seleccionarOpcion(btn){
-  const grupo = btn.parentElement;
-  grupo.querySelectorAll(".opcion-btn")
-       .forEach(b => b.classList.remove("activo"));
+function activarOpcionesProducto(){
 
-  btn.classList.add("activo");
-}
-
-function seleccionarColor(color, imagen, el){
-  document.querySelectorAll(".color-opcion")
-    .forEach(c => c.classList.remove("activo"));
-
-  el.classList.add("activo");
-
-  document.querySelector(".modal-img").src = imagen;
-}
-
-// cambiar modelo y precio
-document.querySelectorAll(".modelo-opcion").forEach(el=>{
+ document.querySelectorAll(".modelo-opcion").forEach(el=>{
   el.onclick = ()=>{
-    document.querySelectorAll(".modelo-opcion")
-      .forEach(m=>m.classList.remove("activo"));
+   document.querySelectorAll(".modelo-opcion")
+   .forEach(m=>m.classList.remove("activo"));
 
-    el.classList.add("activo");
+   el.classList.add("activo");
 
-    const precio = el.dataset.precio;
-    document.querySelector(".modal-precio").textContent = "$" + precio;
+   modeloSeleccionado = el.dataset.nombre;
+   precioActual = el.dataset.precio;
+
+   document.querySelector(".modal-precio").textContent =
+   "$" + precioActual;
   }
-});
+ });
 
-// cambiar color e imagen
-document.querySelectorAll(".color-opcion").forEach(el=>{
+ document.querySelectorAll(".color-opcion").forEach(el=>{
   el.onclick = ()=>{
-    document.querySelectorAll(".color-opcion")
-      .forEach(c=>c.classList.remove("activo"));
+   document.querySelectorAll(".color-opcion")
+   .forEach(c=>c.classList.remove("activo"));
 
-    el.classList.add("activo");
+   el.classList.add("activo");
 
-    const nuevaImagen = el.dataset.imagen;
-    document.querySelector(".modal-img").src = nuevaImagen;
+   colorSeleccionado = el.dataset.color;
+   document.querySelector(".modal-img").src =
+   el.dataset.imagen;
   }
-});
-
+ });
+}
  </script>
  
 <div id="panel-lateral" class="panel-lateral">
