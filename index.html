@@ -992,45 +992,44 @@ modalCarrito.addEventListener("click", e => {
 </script>
 
   <script> 
-function renderOpciones(producto){
+function renderOpciones(producto) {
+    let modelosHTML = "";
+    if (producto.modelos && producto.modelos.length > 0) {
+        modelosHTML = `
+            <p><b>Capacidad:</b></p>
+            <div class="modelos-grid">
+                ${producto.modelos.map((m, index) => `
+                    <div class="modelo-opcion ${index === 0 ? 'activo' : ''}" 
+                         data-nombre="${m.nombre}" 
+                         data-precio="${m.precio}">
+                        ${m.nombre}
+                    </div>`).join("")}
+            </div>`;
+    }
 
- let html = "";
+    let coloresHTML = "";
+    if (producto.colores && producto.colores.length > 0) {
+        coloresHTML = `
+            <p><b>Color:</b></p>
+            <div class="colores-grid">
+                ${producto.colores.map(c => {
+                    // Si el color es un objeto (tiene código hexadecimal)
+                    if (typeof c === 'object') {
+                        return `<div class="color-opcion" 
+                                     data-imagen="${c.imagen}" 
+                                     data-colorname="${c.codigo}"
+                                     style="background:${c.codigo}; width:30px; height:30px; border-radius:50%; display:inline-block; margin:5px; cursor:pointer; border:2px solid #ddd;">
+                                </div>`;
+                    } 
+                    // Si el color es solo un texto (como en los Covers)
+                    else {
+                        return `<div class="modelo-opcion" data-colorname="${c}">${c}</div>`;
+                    }
+                }).join("")}
+            </div>`;
+    }
 
- // MODELOS
- if(producto.modelos && producto.modelos.length){
-   html += `
-   <div class="opcion-expandible">
-     <div class="opcion-titulo">Modelo</div>
-     <div class="opcion-lista">
-       ${producto.modelos.map(m=>`
-         <button class="opcion-btn"
-           onclick="seleccionarModelo('${m.nombre}', ${m.precio}, this)">
-           ${m.nombre}
-         </button>
-       `).join("")}
-     </div>
-   </div>
-   `;
- }
-
- // COLORES (si existen)
- if(producto.colores && producto.colores.length){
-   html += `
-   <div class="opcion-expandible">
-     <div class="opcion-titulo">Color</div>
-     <div class="colores">
-       ${producto.colores.map(c=>`
-         <span class="color-opcion"
-           style="background:${c}"
-           onclick="seleccionarColor('${c}', this)">
-         </span>
-       `).join("")}
-     </div>
-   </div>
-   `;
- }
-
- return html;
+    return `<div class="opciones-modal">${modelosHTML}${coloresHTML}</div>`;
 }
 
 function seleccionarOpcion(btn){
@@ -1073,6 +1072,35 @@ function seleccionarColor(color, el){
  el.classList.add("activo");
 }
 
+function activarOpcionesProducto() {
+    // Lógica para Modelos (Precios)
+    document.querySelectorAll(".modelo-opcion").forEach(el => {
+        el.onclick = () => {
+            const grupo = el.parentElement;
+            grupo.querySelectorAll(".modelo-opcion").forEach(m => m.classList.remove("activo"));
+            el.classList.add("activo");
+            
+            if(el.dataset.precio) {
+                precioActual = el.dataset.precio;
+                modeloSeleccionado = el.dataset.nombre;
+                document.querySelector(".modal-precio").textContent = "RD$ " + parseInt(precioActual).toLocaleString();
+            }
+        };
+    });
+
+    // Lógica para Colores (Cambio de Imagen)
+    document.querySelectorAll(".color-opcion").forEach(el => {
+        el.onclick = () => {
+            document.querySelectorAll(".color-opcion").forEach(c => c.classList.remove("activo"));
+            el.classList.add("activo");
+            
+            if(el.dataset.imagen) {
+                document.querySelector(".modal-img").src = el.dataset.imagen;
+            }
+            colorSeleccionado = el.dataset.colorname;
+        };
+    });
+}
  </script>
  
 <div id="panel-lateral" class="panel-lateral">
