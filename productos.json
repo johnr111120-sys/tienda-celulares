@@ -7,17 +7,17 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
-    "imagen": "images/cell0.jpg",
+    "imagen": "images/iphone11.jpg",
     "modelos": [
       { "nombre": "64GB", "precio": 12000 },
       { "nombre": "128GB", "precio": 13500 },
       { "nombre": "256GB", "precio": 15000 }
     ],
-    "colores": [
-      "Negro",
-      "blanco",
-      "Amarillo",
-      "rojo"
+    "colores":[
+  {"codigo":"#FFE983","imagen":"img/iphone11amarillo.jpg"},
+  {"codigo":"#ffffff","imagen":"img/iphone11blanco.jpg"},
+  {"codigo":"#000000","imagen":"img/iphone11negro.jpg"},
+  {"codigo":"#FF0000","imagen":"img/iphone11rojo.jpg"}
     ]
   },
   {
@@ -28,17 +28,17 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 19000,
-    "imagen": "images/cell6.jpg",
+    "imagen": "images/iphone14promax.jpg",
     "modelos": [
       { "nombre": "128GB", "precio": 19000 },
       { "nombre": "256GB", "precio": 22000 },
       { "nombre": "512GB", "precio": 25500 }
     ],
-    "colores": [
-      "Morado oscuro",
-      "Negro espacial",
-      "Oro",
-      "Plata"
+    "colores":[
+      {"codigo":"#5E5566","imagen":"img/iphone14promaxmorado.jpg"},
+      {"codigo":"#4b4845","imagen":"img/iphone14promaxnegro.jpg"},
+      {"codigo":"#d4c9b1","imagen":"img/iphone14promaxoro.jpg"},
+      {"codigo":"#e2e4e1","imagen":"img/iphone14promaxplata.jpg"}
     ]
   },
   {
@@ -49,15 +49,15 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 50000,
-    "imagen": "images/cell1.jpg",
+    "imagen": "images/iphone17promax.jpg",
     "modelos": [
       { "nombre": "256GB", "precio": 50000 },
       { "nombre": "512GB", "precio": 56000 }
     ],
-    "colores": [
-      "Plata",
-      "Naranja cosmico",
-      "Azul profundo"
+    "colores":[
+       {"codigo":"#E0E0E0","imagen":"img/iphone17promaxplata.jpg"},
+      {"codigo":"#FFA500","imagen":"img/iphone17promaxnaranja.jpg"},
+      {"codigo":"#0066CC","imagen":"img/iphone17promaxazul.jpg"}
     ]
   },
   {
