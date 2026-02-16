@@ -263,49 +263,49 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-const modal = document.getElementById("modalProducto");
-
 function abrirProducto(id) {
-    // Buscamos el producto en el array global
+    console.log("Intentando abrir producto con ID:", id); // Para depurar
     const producto = productos.find(p => p.id == id);
-    if (!producto) return;
+    if (!producto) {
+        console.error("No se encontró el producto con ID:", id);
+        return;
+    }
 
     const modal = document.getElementById("modalProducto");
     const modalContenido = document.getElementById("modalContenido");
 
-    // Seteamos valores iniciales
+    // Valores iniciales
     precioActual = producto.precio;
-    modeloSeleccionado = producto.modelos ? producto.modelos[0].nombre : null;
-    colorSeleccionado = null;
+    modeloSeleccionado = producto.modelos ? producto.modelos[0].nombre : "Estándar";
+    colorSeleccionado = "No seleccionado";
 
-    // Inyectamos el HTML
     modalContenido.innerHTML = `
-        <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
-        <div class="modal-spa-container">
-            <img src="${producto.imagen}" class="modal-img" id="imgPrincipal">
-            
+        <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
+        <div class="spa-layout">
+            <div class="spa-header-img">
+                <img src="${producto.imagen}" id="imgPrincipal" class="modal-img">
+            </div>
             <div class="mp-contenido">
                 <h2 class="modal-nombre">${producto.nombre}</h2>
-                <p class="modal-descripcion" id="descTexto">${producto.descripcion || ""}</p>
+                <p class="modal-descripcion" id="descTexto">${producto.descripcion}</p>
                 <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
-
-                ${renderOpciones(producto)}
-
-                <div class="modal-precio" id="precioDisplay">$${precioActual}</div>
                 
-                <div class="contenedor-accion-fija">
-                    <button class="btn-comprar-spa" onclick="irAWhatsApp('${producto.nombre}')">
-                        <i class="fab fa-whatsapp"></i> Comprar ahora
-                    </button>
-                </div>
+                ${renderOpciones(producto)}
+                
+                <div class="modal-precio" id="precioDisplay">RD$ ${precioActual}</div>
+            </div>
+            <div class="contenedor-accion-fija">
+                <button class="btn-comprar-spa" onclick="irAWhatsApp('${producto.nombre}')">
+                    <i class="fab fa-whatsapp"></i> Comprar ahora
+                </button>
             </div>
         </div>
     `;
 
     modal.style.display = "flex";
     document.body.classList.add("no-scroll");
-
-    // 🔥 ACTIVAMOS LOS CLICS EN COLORES Y MODELOS
+    
+    // IMPORTANTE: Llamar a los eventos después de crear el HTML
     activarOpcionesProducto();
 }
 
@@ -326,9 +326,11 @@ document.querySelectorAll(".modelo-opcion").forEach(opcion => {
   });
 });
 
-function cerrarProducto(){
-  document.getElementById("modalProducto").style.display = "none";
-  document.body.classList.remove("no-scroll");
+function cerrarProducto() {
+    document.getElementById("modalProducto").style.display = "none";
+    document.body.classList.remove("no-scroll");
+    // Volvemos atrás en el historial para limpiar la URL del producto
+    window.history.back();
 }
 
 // 🔥 Cerrar tocando fuera
@@ -553,62 +555,44 @@ window.addEventListener("hashchange", router);
 =================================*/
 
 function router() {
+    const hash = window.location.hash;
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
 
-  const hash = window.location.hash;
-  console.log("Router ejecutado", hash);
-
-  const vistaInicio = document.getElementById("vista-inicio");
-  const vistaProductos = document.getElementById("vista-productos");
-
-  // ===============================
-  // SUBCATEGORÍAS
-  // ===============================
-  if (hash.startsWith("#/productos/")) {
-
-    const subcategoria = decodeURIComponent(
-      hash.split("#/productos/")[1]
-    );
-
-    if (vistaInicio) vistaInicio.style.display = "none";
-    if (vistaProductos) vistaProductos.style.display = "block";
-
-    mostrarProductosPorSubcategoria(subcategoria);
-
-     // 🔥 SOLO aquí hacemos scroll
-    window.scrollTo({ top: 0, behavior: "smooth" });
-      
-    return;
-  }
-
-  // ===============================
-  // PRODUCTO INDIVIDUAL
-  // ===============================
-  if (hash.startsWith("#/producto/")) {
-
-    const slug = hash.split("#/producto/")[1];
-    const producto = productos.find(p => p.slug === slug);
-
-    if (producto) {
-     abrirProducto(producto.id);
+    // Si la URL es de un producto: #/producto/iphone-11
+    if (hash.startsWith("#/producto/")) {
+        const slug = hash.split("#/producto/")[1];
+        
+        // Esperamos a que el JSON cargue si aún no lo ha hecho
+        if (productos.length === 0) {
+            fetch("productos.json")
+                .then(res => res.json())
+                .then(data => {
+                    productos = data;
+                    const p = productos.find(prod => prod.slug === slug);
+                    if (p) abrirProducto(p.id);
+                });
+        } else {
+            const p = productos.find(prod => prod.slug === slug);
+            if (p) abrirProducto(p.id);
+        }
+        return;
     }
 
-   
-    // ❌ AQUÍ NO HACEMOS SCROLL
-    return;
-  }
+    // Lógica para categorías
+    if (hash.startsWith("#/productos/")) {
+        const sub = decodeURIComponent(hash.split("#/productos/")[1]);
+        vistaInicio.style.display = "none";
+        vistaProductos.style.display = "block";
+        mostrarProductosPorSubcategoria(sub);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+    }
 
-  // ===============================
-  // INICIO
-  // ===============================
-  if (vistaInicio) vistaInicio.style.display = "block";
-  if (vistaProductos) vistaProductos.style.display = "none";
-
-  document.getElementById("productos").innerHTML = "";
-
-   // 🔥 SOLO aquí hacemos scroll
-  window.scrollTo({ top: 0, behavior: "smooth" });
+    // Inicio
+    vistaInicio.style.display = "block";
+    vistaProductos.style.display = "none";
 }
-
 /* ===============================
    MOSTRAR PRODUCTOS
 =================================*/
