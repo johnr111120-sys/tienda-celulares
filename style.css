@@ -1567,3 +1567,38 @@ body.menu-abierto {
   background:#e60023; /* rojo inmediato */
 }
 
+.desc-texto{
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  transition:all .3s ease;
+  position:relative;
+}
+
+.desc-texto::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:30px;
+  background:linear-gradient(transparent, #fff);
+}
+
+.desc-texto.expandido{
+  -webkit-line-clamp:unset;
+}
+
+.desc-texto.expandido::after{
+  display:none;
+}
+
+.ver-mas{
+  display:block;
+  margin-top:6px;
+  font-weight:bold;
+  font-size:14px;
+  color:#007bff;
+  cursor:pointer;
+}
