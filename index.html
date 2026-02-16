@@ -292,10 +292,10 @@ function abrirProducto(id){
 
   <div class="modal-precio">$${producto.precio}</div>
 
-  <button class="btn-comprar-modal"
-    onclick="agregarAlCarrito('${producto.id}', this)">
-    Agregar al carrito
-  </button>
+  <button class="btn-agregar-modal"
+onclick="agregarAlCarrito('${producto.id}')">
+Agregar al carrito
+</button>
 `;
 
   modal.style.display = "flex";
@@ -327,7 +327,6 @@ function cerrarProducto(){
   document.body.classList.remove("no-scroll");
 }
 
-// 🔥 Cerrar tocando fuera
 // 🔥 Cerrar tocando fuera
 document.getElementById("modalProducto").addEventListener("click", e=>{
   if(e.target.id === "modalProducto"){
@@ -494,7 +493,9 @@ document.querySelectorAll(".categoria").forEach(btn => {
    VARIABLES GLOBALES
 =================================*/
 let productos = [];
-
+let modeloSeleccionado = null;
+let colorSeleccionado = null;
+let precioActual = 0;
 
 /* ===============================
    CARGAR JSON
@@ -1004,7 +1005,7 @@ function renderOpciones(producto){
         <div class="opcion-lista">
           ${producto.modelos.map(m=>`
             <button class="opcion-btn" onclick="seleccionarOpcion(this)">
-              ${m}
+              ${m.nombre}
             </button>
           `).join("")}
         </div>
