@@ -295,21 +295,6 @@ function abrirProducto(producto){
   modal.style.display = "flex";
 }
 
-const precioElemento = document.querySelector(".modal-precio");
-
-const modelos = document.querySelectorAll(".modelo-btn");
-const colores = document.querySelectorAll(".color-btn");
-
-precioActual = producto.precio;
-
-/* ===== MODELO POR DEFECTO ===== */
-if(modelos.length){
-  modelos[0].classList.add("activo");
-  modeloSeleccionado = modelos[0].dataset.nombre;
-  precioActual = parseInt(modelos[0].dataset.precio);
-  precioElemento.textContent = "$" + precioActual;
-}
-
 /* ===== SELECCIONAR MODELO ===== */
 modelos.forEach(btn=>{
   btn.addEventListener("click", function(){
@@ -349,14 +334,6 @@ function cerrarProducto(){
   document.body.classList.remove("no-scroll");
 }
 
-// 🔥 Cerrar tocando fuera
-// 🔥 Cerrar tocando fuera
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
-
 function expandirDescripcion(){
   const desc = document.getElementById("descTexto");
   desc.style.webkitLineClamp = "unset";
@@ -378,17 +355,6 @@ function toggleDescripcion() {
 }
  
 </script>
-
-     <script>
-const modalProducto = document.getElementById("modalProducto");
-
-modalProducto.addEventListener("click", (e) => {
-  if (e.target === modalProducto) {
-    cerrarProducto();
-  }
-});
-
- </script>
  
     <script>
 /* =========================
@@ -682,18 +648,12 @@ if (p.modelos && p.modelos.length > 0) {
     <button class="btn-comprar">Comprar</button>
   `;
 
-  const btnModelo = div.querySelector(".btn-modelo");
-  const dropdown = div.querySelector(".modelos-dropdown");
-  const precioTexto = div.querySelector(".precio");
-
-  dropdown.style.display = "none";
-
-  // abrir dropdown
-  btnModelo.addEventListener("click", e => {
-    e.stopPropagation();
-    dropdown.style.display =
-      dropdown.style.display === "none" ? "block" : "none";
-  });
+// Abrir / cerrar dropdown
+btnModelo.addEventListener("click", (e) => {
+  e.stopPropagation();
+  dropdown.style.display =
+    dropdown.style.display === "none" ? "block" : "none";
+});
 
   // seleccionar modelo
   dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
