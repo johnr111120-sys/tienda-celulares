@@ -263,39 +263,33 @@ imgModal.addEventListener("click", e=>{
 
 <script>
 
-function abrirProducto(id){
-  const producto = productos.find(p => p.id == id);
-  if(!producto) return;
+function abrirProducto(producto){
+
   const modal = document.getElementById("modalProducto");
-  const contenido = document.getElementById("modalContenido");
+  const modalContenido = document.getElementById("modalContenido");
 
- modalContenido.innerHTML = `
-<button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+  modalContenido.innerHTML = `
+    <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
 
-  <img src="${producto.imagen}" class="modal-img">
+    <img src="${producto.imagen}" class="modal-img">
 
-  <h2 class="modal-nombre">${producto.nombre}</h2>
+    <h2 class="modal-nombre">${producto.nombre}</h2>
 
- <p class="modal-descripcion" id="descTexto">
-  ${producto.descripcion || ""}
-</p>
+    <p class="modal-descripcion">
+      ${producto.descripcion || ""}
+    </p>
 
-<span class="ver-mas" onclick="toggleDescripcion()">
-  VER MÁS
-</span>
+    ${renderOpciones(producto)}
 
-  ${renderOpciones(producto)}
+    <div class="modal-precio">$${producto.precio}</div>
 
-  <div class="modal-precio">$${producto.precio}</div>
-
- <button class="btn-agregar-modal"
-onclick="agregarAlCarrito('${producto.id}')">
-Agregar al carrito
-</button>
-`;
+    <button class="btn-agregar-modal"
+      onclick="agregarAlCarrito('${producto.id}')">
+      Agregar al carrito
+    </button>
+  `;
 
   modal.style.display = "flex";
-  document.body.classList.add("no-scroll");
 }
 
 const precioElemento = document.querySelector(".modal-precio");
@@ -1087,8 +1081,8 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
 </script>
     
 <!-- MODAL PRODUCTO -->
-<div id="modalProducto" class="modal-producto">
-  <div class="modal-contenido" id="modalContenido"></div>
+<div id="modalProducto" class="modal">
+  <div id="modalContenido"></div>
 </div>
 
   </body>
