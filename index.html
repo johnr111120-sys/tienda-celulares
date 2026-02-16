@@ -263,12 +263,9 @@ imgModal.addEventListener("click", e=>{
 
 <script>
 
-const modalProducto = document.getElementById("modal-producto");
-
 function abrirProducto(id){
   const producto = productos.find(p => p.id == id);
   if(!producto) return;
-
   const modal = document.getElementById("modalProducto");
   const contenido = document.getElementById("modalContenido");
 
@@ -301,23 +298,29 @@ function abrirProducto(id){
   document.body.classList.add("no-scroll");
 }
 
-precioActual = producto.precio;
-modeloSeleccionado = null;
-
-document.querySelectorAll(".modelo-opcion").forEach(opcion => {
-  opcion.addEventListener("click", function(){
-
-    document.querySelectorAll(".modelo-opcion")
-      .forEach(o => o.classList.remove("activo"));
-
+// seleccionar modelo
+document.querySelectorAll(".modelo-btn").forEach(btn=>{
+  btn.addEventListener("click", function(){
+    document.querySelectorAll(".modelo-btn")
+      .forEach(b=>b.classList.remove("activo"));
     this.classList.add("activo");
 
     modeloSeleccionado = this.dataset.nombre;
-    precioActual = this.dataset.precio;
+    precioActual = parseInt(this.dataset.precio);
 
-    document.getElementById("precioProducto").textContent =
+    document.querySelector(".modal-precio").textContent =
       "$" + precioActual;
+  });
+});
 
+// seleccionar color
+document.querySelectorAll(".color-btn").forEach(btn=>{
+  btn.addEventListener("click", function(){
+    document.querySelectorAll(".color-btn")
+      .forEach(b=>b.classList.remove("activo"));
+    this.classList.add("activo");
+
+    colorSeleccionado = this.dataset.color;
   });
 });
 
@@ -493,6 +496,9 @@ document.querySelectorAll(".categoria").forEach(btn => {
    VARIABLES GLOBALES
 =================================*/
 let productos = [];
+let modeloSeleccionado = null;
+let colorSeleccionado = null;
+let precioActual = 0;
 
 
 /* ===============================
@@ -992,18 +998,19 @@ modalCarrito.addEventListener("click", e => {
 
   <script> 
 function renderOpciones(producto){
-
   let html = "";
 
-  // MODELOS
+  // ===== MODELOS =====
   if(producto.modelos && producto.modelos.length){
     html += `
       <div class="opcion-expandible">
         <div class="opcion-titulo">Modelo</div>
         <div class="opcion-lista">
           ${producto.modelos.map(m=>`
-            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
-              ${m}
+            <button class="opcion-btn modelo-btn"
+                    data-nombre="${m.nombre}"
+                    data-precio="${m.precio}">
+              ${m.nombre}
             </button>
           `).join("")}
         </div>
@@ -1011,14 +1018,15 @@ function renderOpciones(producto){
     `;
   }
 
-  // COLORES
+  // ===== COLORES =====
   if(producto.colores && producto.colores.length){
     html += `
       <div class="opcion-expandible">
         <div class="opcion-titulo">Color</div>
         <div class="opcion-lista">
           ${producto.colores.map(c=>`
-            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
+            <button class="opcion-btn color-btn"
+                    data-color="${c}">
               ${c}
             </button>
           `).join("")}
