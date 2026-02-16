@@ -379,7 +379,7 @@ let endY = 0;
 const imgModalSwipe = document.getElementById("img-modal");
 
 // Modal producto
-const productoModalSwipe = document.getElementById("modal-producto");
+const productoModalSwipe = document.getElementById("modalproducto");
 
 // Función genérica
 function activarSwipe(modal, cerrarFn){
@@ -1050,6 +1050,30 @@ function seleccionarColor(color, imagen, el){
 
   document.querySelector(".modal-img").src = imagen;
 }
+
+function seleccionarModelo(nombre, precio, btn){
+
+ modeloSeleccionado = nombre;
+ precioActual = precio;
+
+ document.querySelectorAll(".opcion-btn")
+  .forEach(b => b.classList.remove("activo"));
+
+ btn.classList.add("activo");
+
+ document.querySelector(".modal-precio").textContent = "$" + precio;
+}
+
+function seleccionarColor(color, el){
+
+ colorSeleccionado = color;
+
+ document.querySelectorAll(".color-opcion")
+  .forEach(c => c.classList.remove("activo"));
+
+ el.classList.add("activo");
+}
+
  </script>
  
 <div id="panel-lateral" class="panel-lateral">
