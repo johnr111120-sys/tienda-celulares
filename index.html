@@ -1014,22 +1014,17 @@ function renderOpciones(producto){
   }
 
   // COLORES
-  if(producto.colores && producto.colores.length){
-    html += `
-      <div class="opcion-expandible">
-        <div class="opcion-titulo">Color</div>
-        <div class="opcion-lista">
-          ${producto.colores.map(c=>`
-            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
-              ${c}
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  return html;
+ function renderColores(producto){
+  return `
+    <div class="colores">
+      ${producto.colores.map(c => `
+        <span class="color-opcion"
+              style="background:${c.codigo}"
+              onclick="seleccionarColor('${c.codigo}','${c.imagen}', this)">
+        </span>
+      `).join("")}
+    </div>
+  `;
 }
 
 function seleccionarOpcion(btn){
@@ -1039,7 +1034,15 @@ function seleccionarOpcion(btn){
 
   btn.classList.add("activo");
 }
- 
+
+function seleccionarColor(color, imagen, el){
+  document.querySelectorAll(".color-opcion")
+    .forEach(c => c.classList.remove("activo"));
+
+  el.classList.add("activo");
+
+  document.querySelector(".modal-img").src = imagen;
+}
  </script>
  
 <div id="panel-lateral" class="panel-lateral">
