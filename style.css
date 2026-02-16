@@ -994,8 +994,11 @@ iframe {
 }
 
 #menu-overlay.activo {
-  opacity: 1;
-  pointer-events: all;
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998; /* Un nivel debajo del menú */
 }
 
 /* ===== MENU ===== */
@@ -1015,7 +1018,8 @@ iframe {
 }
 
 #menu-categorias.activo {
-  transform: translateX(0);
+    transform: translateX(0);
+    z-index: 999; /* Asegura que esté arriba */
 }
 
 /* ===== CATEGORÍAS ===== */
@@ -1039,11 +1043,12 @@ iframe {
   padding-left: 10px;
 }
 
+/* Evita que los clics en el menú no se registren */
 .subcategorias a {
-  display: block;
-  padding: 6px 0;
-  color: #ccc;
-  text-decoration: none;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
 }
 
 /* ===== BODY BLOQUEADO ===== */
