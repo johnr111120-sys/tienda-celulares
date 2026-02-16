@@ -289,9 +289,7 @@ function abrirProducto(id){
 
   ${renderOpciones(producto)}
 
- <div class="modal-precio" id="precioProducto">
-  $${producto.precio}
-</div>
+  <div class="modal-precio">$${producto.precio}</div>
 
   <button class="btn-comprar-modal"
     onclick="agregarAlCarrito('${producto.id}', this)">
@@ -335,21 +333,7 @@ function toggleDescripcion() {
     boton.textContent = "VER MÁS";
   }
 }
-
-let modeloSeleccionado = null;
-
-function seleccionarModelo(id, nombre, precio){
-  modeloSeleccionado = nombre;
-
-  document.getElementById("precioProducto").textContent = "$" + precio;
-
-  document.querySelectorAll(".modelo-opcion").forEach(el=>{
-    el.classList.remove("activo");
-  });
-
-  event.target.classList.add("activo");
-}
-
+ 
 </script>
 
      <script>
@@ -409,6 +393,24 @@ activarSwipe(productoModalSwipe, cerrarProducto);
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 10);
   });
+</script>
+
+    
+<script>
+const reseñas = document.querySelectorAll(".reseña");
+let indice = 0;
+
+setInterval(() => {
+  const actual = reseñas[indice];
+  actual.classList.add("salida");
+  actual.classList.remove("activa");
+
+  indice = (indice + 1) % reseñas.length;
+  const siguiente = reseñas[indice];
+
+  siguiente.classList.remove("salida");
+  siguiente.classList.add("activa");
+}, 4000); // ⏱ cambia cada 4 segundos
 </script>
 
 <script>
@@ -855,24 +857,34 @@ document.getElementById("btn-favoritos").onclick = () => {
 <script>
     let carrito = [];
 
- function agregarAlCarrito(id){
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  function agregarAlCarrito(producto, modeloSeleccionado = null) {
 
-  const clave = id + (modeloSeleccionado || "");
+  // 🔥 determinar precio y modelo
+  const precioFinal = modeloSeleccionado
+    ? modeloSeleccionado.precio
+    : producto.precio;
 
-  const existente = carrito.find(p => p.clave === clave);
+  const nombreModelo = modeloSeleccionado
+    ? modeloSeleccionado.nombre
+    : null;
 
-  if(existente){
-    existente.cantidad += 1;
-  }else{
+  // 🔥 clave única para evitar mezclas
+  const clave = producto.id + (nombreModelo ? "-" + nombreModelo : "");
+
+  // 🔥 buscar si ya existe
+  const existente = carrito.find(item => item.clave === clave);
+
+  if (existente) {
+    existente.cantidad += 1;   // ✅ suma 1
+  } else {
     carrito.push({
-      id: id,
+      clave: clave,
+      id: producto.id,
       nombre: producto.nombre,
-      modelo: modeloSeleccionado || null,
+      modelo: nombreModelo,
       precio: precioFinal,
       imagen: producto.imagen,
-      cantidad: 1,
-      clave: clave
+      cantidad: 1
     });
   }
 
@@ -881,11 +893,12 @@ actualizarContadorCarrito();
 renderizarCarrito();
 
  animarCarrito();
-    
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContadorCarrito();
-}
 
+ localStorage.setItem("carrito", JSON.stringify(carrito));
+actualizarIconoCarrito();
+console.log("Carrito:", carrito);
+}
+    
 </script>
 
  <script>   
@@ -975,20 +988,25 @@ modalCarrito.addEventListener("click", e => {
 </script>
 
   <script> 
-function renderModelos(producto){
-  if(!producto.modelos) return "";
+function renderOpciones(producto){
 
-  return `
-    <div class="opciones-modelos">
-      ${producto.modelos.map(modelo => `
-        <div class="modelo-opcion"
-             onclick="seleccionarModelo('${producto.id}', '${modelo.nombre}', ${modelo.precio})">
-          ${modelo.nombre}
+  let html = "";
+
+  // MODELOS
+  if(producto.modelos && producto.modelos.length){
+    html += `
+      <div class="opcion-expandible">
+        <div class="opcion-titulo">Modelo</div>
+        <div class="opcion-lista">
+          ${producto.modelos.map(m=>`
+            <button class="opcion-btn" onclick="seleccionarOpcion(this)">
+              ${m}
+            </button>
+          `).join("")}
         </div>
-      `).join("")}
-    </div>
-  `;
-}
+      </div>
+    `;
+  }
 
   // COLORES
   if(producto.colores && producto.colores.length){
