@@ -1574,7 +1574,7 @@ body.menu-abierto {
 
 .desc-texto{
   display:-webkit-box;
-  -webkit-line-clamp:3;
+  -webkit-line-clamp:4;
   -webkit-box-orient:vertical;
   overflow:hidden;
   transition:all .3s ease;
@@ -1614,35 +1614,47 @@ body.menu-abierto {
   margin: 10px;
 }
 
-.color-opcion{
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border:3px solid #eee;
-  cursor: pointer;
-  transition:0.3s;
+/* Estilo para los círculos de colores */
+.color-opcion {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    transition: 0.2s;
 }
 
-.color-opcion.activo{
-  border-color: #007bff;
-  transform: scale(1.1);
+.color-opcion.activo {
+    border: 3px solid #007bff;
+    transform: scale(1.1); /* Se hace un poquito más grande */
 }
-
-.modelos {
+/* Contenedores para alinear en horizontal */
+.modelos-grid, .colores-grid {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: wrap; /* Si hay muchos, saltan de línea */
+    gap: 10px;      /* Espacio entre botones */
+    margin-bottom: 15px;
+    justify-content: flex-start;
 }
 
+/* Estilo de los botones de modelo (GB) */
 .modelo-opcion {
     padding: 8px 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
+    background: white;
+    transition: 0.3s;
+    font-size: 14px;
+    text-align: center;
+    min-width: 60px;
 }
 
+/* Clase cuando el modelo está seleccionado */
 .modelo-opcion.activo {
-    background: #007bff;
+    background-color: #007bff; /* Azul profesional */
     color: white;
     border-color: #007bff;
+    font-weight: bold;
 }
+
