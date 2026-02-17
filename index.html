@@ -68,43 +68,48 @@
       
 <h2 id="titulo-categoria">Productos</h2>
 <!-- OVERLAY -->
-<div id="menu-overlay"></div>
+<div id="menu-overlay" onclick="toggleMenuProductos()"></div>
 
-<!-- MENU CATEGORÍAS -->
 <aside id="menu-categorias">
-  <h3>Categorías</h3>
+    <h3>Categorías</h3>
 
-<div id="lista-productos"></div>    
-  <button class="categoria">
-    Celulares
-    <i class="fi fi-bs-angle-up"></i>
-  </button>
-  <div class="subcategorias">
-  <a href="#/productos/Iphone">Iphone</a>
-<a href="#/productos/Samsung">Samsung</a> 
-<a href="#/productos/ZTE">ZTE</a>
-  </div>
+    <div class="acordeon-contenedor">
+        
+        <div class="acordeon-item">
+            <div class="acordeon-header" onclick="toggleAcordeon(this)">
+                Celulares <i class="fi fi-bs-angle-down"></i>
+            </div>
+            <div class="acordeon-contenido">
+                <a href="#/productos/Iphone" onclick="toggleMenuProductos()">Iphone</a>
+                <a href="#/productos/Samsung" onclick="toggleMenuProductos()">Samsung</a>
+                <a href="#/productos/ZTE" onclick="toggleMenuProductos()">ZTE</a>
+            </div>
+        </div>
 
-  <button class="categoria">
-    Accesorios
-    <i class="fi fi-bs-angle-up"></i>
-  </button>
-  <div class="subcategorias">
-   <a href="#/productos/Covers">Covers</a>
- <a href="#/productos/Audifonos">Audifonos</a>
-  <a href="#/productos/Smartwatch">Smartwatch</a>
- <a href="#/productos/Usb">Usb</a>
-  </div>
-    
-     <button class="categoria">
-       Tablets
-        <i class="fi fi-bs-angle-up"></i>
-      </button>
-      <div class="subcategorias">
-      <a href="#/productos/Ipad">Ipad</a>
-      <a href="#/productos/Android">Android</a>
+        <div class="acordeon-item">
+            <div class="acordeon-header" onclick="toggleAcordeon(this)">
+                Accesorios <i class="fi fi-bs-angle-down"></i>
+            </div>
+            <div class="acordeon-contenido">
+                <a href="#/productos/Covers" onclick="toggleMenuProductos()">Covers</a>
+                <a href="#/productos/Audifonos" onclick="toggleMenuProductos()">Audifonos</a>
+                <a href="#/productos/Smartwatch" onclick="toggleMenuProductos()">Smartwatch</a>
+                <a href="#/productos/Usb" onclick="toggleMenuProductos()">Usb</a>
+            </div>
+        </div>
+
+        <div class="acordeon-item">
+            <div class="acordeon-header" onclick="toggleAcordeon(this)">
+                Tablets <i class="fi fi-bs-angle-down"></i>
+            </div>
+            <div class="acordeon-contenido">
+                <a href="#/productos/Ipad" onclick="toggleMenuProductos()">Ipad</a>
+                <a href="#/productos/Android" onclick="toggleMenuProductos()">Android</a>
+            </div>
+        </div>
+
     </div>
-  </aside>
+</aside>
       
 <main id="contenido" class="contenido">      
 
@@ -418,6 +423,44 @@ function toggleDescripcion() {
  
 </script>
 
+   <script>  
+// Variable para rastrear el estado del menú
+let menuAbierto = false;
+
+function toggleMenuProductos() {
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    const btnTrigger = document.getElementById("btn-menu-trigger"); // Tu botón azul
+
+    menu.classList.toggle("activo");
+    overlay.classList.toggle("activo");
+
+    // Cambio de icono en el botón azul de la barra
+    if (menu.classList.contains("activo")) {
+        if(btnTrigger) btnTrigger.innerText = "✕";
+        document.body.style.overflow = "hidden"; // Bloquea scroll
+    } else {
+        if(btnTrigger) btnTrigger.innerText = "☰";
+        document.body.style.overflow = "auto"; // Libera scroll
+    }
+}
+
+function toggleAcordeon(elemento) {
+    const itemActual = elemento.parentElement;
+    const todosLosItems = document.querySelectorAll('.acordeon-item');
+
+    // Cierra cualquier otro que esté abierto
+    todosLosItems.forEach(item => {
+        if (item !== itemActual) {
+            item.classList.remove('activo');
+        }
+    });
+
+    // Abre o cierra el que tocaste
+    itemActual.classList.toggle('activo');
+}
+       </script>
+    
      <script>
 const modalProducto = document.getElementById("modalProducto");
 
