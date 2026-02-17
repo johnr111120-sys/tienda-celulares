@@ -1673,6 +1673,9 @@ body.menu-abierto {
 
 /* El Botón de WhatsApp estilo SPA */
 .btn-comprar-spa {
+    position: relative; /* Necesario para el brillo */
+    overflow: hidden;   /* Para que el brillo no se salga del botón */
+    background-color: #1591EA;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1697,8 +1700,20 @@ body.menu-abierto {
 
 .btn-comprar-spa i {
     font-size: 22px; /* Icono un poco más grande */
+    margin-right: 10px;
 }
-
+/* El elemento que hace el brillo */
+.btn-comprar-spa::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 45px;
+    background: rgba(255, 255, 255, 0.4);
+    transform: skewX(-45deg); /* Inclinación del brillo */
+    left: -150%;
+    animation: brilloEfecto 3s infinite; /* Se repite cada 3 segundos */
+}
 /* Ajuste para pantallas grandes (PC) */
 @media (min-width: 768px) {
     .contenedor-accion-fija {
@@ -1711,4 +1726,11 @@ body.menu-abierto {
         width: fit-content;
         padding: 15px 40px;
     }
+}
+
+/* Definición de la animación de brillo */
+@keyframes brilloEfecto {
+    0% { left: -150%; }
+    50% { left: 150%; }
+    100% { left: 150%; }
 }
