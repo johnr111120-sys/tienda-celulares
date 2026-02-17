@@ -1614,47 +1614,48 @@ body.menu-abierto {
   margin: 10px;
 }
 
-/* Estilo para los círculos de colores */
+/* Círculos de Colores */
 .color-opcion {
     width: 35px;
     height: 35px;
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid #ddd;
-    transition: 0.2s;
+    transition: transform 0.2s;
 }
 /* Esto resalta el círculo de color seleccionado */
 .color-opcion.activo {
-    outline: 3px solid #007bff;
-    outline-offset: 2px;
-    transform: scale(1.1);
+    border: 3px solid #007bff;
+    transform: scale(1.15);
 }
-/* Contenedores para alinear en horizontal */
+/* Evitar scroll cuando el modal está abierto */
+.no-scroll {
+    overflow: hidden;
+}
+/* Contenedores Flex para alineación horizontal */
 .modelos-grid, .colores-grid {
     display: flex;
-    flex-wrap: wrap; /* Si hay muchos, saltan de línea */
-    gap: 10px;      /* Espacio entre botones */
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 15px;
-    justify-content: flex-start;
 }
 
-/* Estilo de los botones de modelo (GB) */
+/* Botones de Modelo (GB) */
 .modelo-opcion {
-    padding: 8px 15px;
+    padding: 10px 15px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    background: white;
-    transition: 0.3s;
+    background: #f9f9f9;
+    transition: all 0.2s ease;
     font-size: 14px;
-    text-align: center;
-    min-width: 60px;
 }
 
-/* Esto hace que el botón se vea azul cuando tiene la clase activo */
+/* ESTADO ACTIVO: Esto es lo que faltaba */
 .modelo-opcion.activo {
     background-color: #007bff !important;
     color: white !important;
-    border-color: #007bff !important;
+    border-color: #000408 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
