@@ -1737,3 +1737,49 @@ body.menu-abierto {
     50% { left: 150%; }
     100% { left: 150%; }
 }
+
+/* Contenedor del acordeón dentro del menú negro */
+.acordeon-contenido {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background: rgba(255, 255, 255, 0.05); /* Fondo muy sutil */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cuando el item está activo, mostramos el contenido */
+.acordeon-item.activo .acordeon-contenido {
+    max-height: 500px; /* Altura suficiente para los links */
+}
+
+/* Estilo de los encabezados (Celulares, Accesorios...) */
+.acordeon-header {
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Rotación del icono al abrir */
+.acordeon-item.activo .acordeon-header i {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
+
+/* Estilo de los links de subcategoría */
+.acordeon-contenido a {
+    padding: 12px 25px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.acordeon-contenido a:active {
+    background: #007bff;
+    color: white;
+}
