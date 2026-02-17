@@ -1623,10 +1623,11 @@ body.menu-abierto {
     border: 2px solid #ddd;
     transition: 0.2s;
 }
-
+/* Esto resalta el círculo de color seleccionado */
 .color-opcion.activo {
-    border: 3px solid #007bff;
-    transform: scale(1.1); /* Se hace un poquito más grande */
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+    transform: scale(1.1);
 }
 /* Contenedores para alinear en horizontal */
 .modelos-grid, .colores-grid {
@@ -1650,11 +1651,10 @@ body.menu-abierto {
     min-width: 60px;
 }
 
-/* Clase cuando el modelo está seleccionado */
+/* Esto hace que el botón se vea azul cuando tiene la clase activo */
 .modelo-opcion.activo {
-    background-color: #007bff; /* Azul profesional */
-    color: white;
-    border-color: #007bff;
-    font-weight: bold;
+    background-color: #007bff !important;
+    color: white !important;
+    border-color: #007bff !important;
 }
 
