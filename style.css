@@ -1737,25 +1737,3 @@ body.menu-abierto {
     50% { left: 150%; }
     100% { left: 150%; }
 }
-
-.sin-resultados {
-    grid-column: 1 / -1; /* Ocupa todo el ancho en el grid */
-    text-align: center;
-    padding: 50px;
-    color: #888;
-    font-size: 1.2rem;
-}
-
-#inputBuscador {
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    outline: none;
-    transition: 0.3s;
-}
-
-#inputBuscador:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0,123,255,0.2);
-}
