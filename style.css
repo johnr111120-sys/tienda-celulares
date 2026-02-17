@@ -1734,3 +1734,61 @@ body.menu-abierto {
     50% { left: 150%; }
     100% { left: 150%; }
 }
+
+/* Estilos del Acordeón */
+.acordeon-header {
+    width: 100%;
+    padding: 15px;
+    background: #f8f9fa;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    transition: 0.3s;
+}
+
+.acordeon-header::after {
+    content: '+'; /* Indicador de cerrado */
+    font-size: 20px;
+}
+
+.acordeon-item.activo .acordeon-header::after {
+    content: '-'; /* Indicador de abierto */
+}
+
+.acordeon-contenido {
+    max-height: 0; /* Cerrado por defecto */
+    overflow: hidden;
+    transition: max-height 0.4s ease-out; /* Efecto suave */
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.acordeon-item.activo .acordeon-contenido {
+    max-height: 500px; /* Suficiente para mostrar los links */
+}
+
+.acordeon-contenido a {
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+/* El botón del menú principal ☰ -> X */
+#boton-cerrar-menu {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* Cuando el menú lateral tiene la clase .activo, el botón dentro cambia */
+.menu-lateral.activo #boton-cerrar-menu {
+    color: red; /* Opcional: para que resalte la X */
+}
