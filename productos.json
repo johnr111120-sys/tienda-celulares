@@ -114,10 +114,10 @@
     "precio": 500,
     "imagen": "images/accesorios19.jpg",
     "modelos": [
-      { "nombre": "6", "precio": 300 },
-      { "nombre": "7", "precio": 300 },
-      { "nombre": "8 Plus", "precio": 300 },
-      { "nombre": "11", "precio": 300 },
+      { "nombre": "Iphone 6", "precio": 300 },
+      { "nombre": "Iphone 7", "precio": 300 },
+      { "nombre": "Iphone 8 Plus", "precio": 300 },
+      { "nombre": "Iphone 11", "precio": 300 },
       { "nombre": "11 Pro Max", "precio": 300 },
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
@@ -136,11 +136,11 @@
     "precio": 500,
     "imagen": "images/accesorios6.jpg",
     "modelos": [
-      { "nombre": "7", "precio": 300 },
-      { "nombre": "11 Pro", "precio": 300 },
+      { "nombre": "Iphone 7", "precio": 300 },
+      { "nombre": "Iphone 11 Pro", "precio": 300 },
       { "nombre": "11 Pro Max", "precio": 300 },
-      { "nombre": "12", "precio": 300 },
-      { "nombre": "12 Pro", "precio": 300 },
+      { "nombre": "Iphone 12", "precio": 300 },
+      { "nombre": "Iphone 12 Pro", "precio": 300 },
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
