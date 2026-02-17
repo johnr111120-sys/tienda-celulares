@@ -341,8 +341,7 @@ function renderOpciones(p) {
     }
     // Render de Colores
     if (p.colores && p.colores.length > 0) {
-       // Ejemplo de cómo debe generarse el HTML en tu renderOpciones:
-          html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
+        html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
         p.colores.forEach(c => {
             if (typeof c === 'object') {
                 html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
@@ -375,21 +374,20 @@ function activarOpcionesProducto() {
             document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
         }
 
-       // Dentro de tu lógica de clic para los colores (.color-opcion):
-if (target.classList.contains('color-opcion')) {
-    // ... quitar clases activo de los demás ...
-    target.classList.add('activo');
+        // Si hacemos clic en un COLOR
+        if (target.classList.contains('color-opcion')) {
+            const hermanos = target.parentElement.querySelectorAll('.color-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
+            target.classList.add('activo');
 
-    // AQUÍ ESTÁ EL TRUCO: 
-    // Usamos el dataset 'name' que es donde guardas el nombre legible.
-    colorSeleccionado = target.dataset.name; 
-    
-    // Si quieres cambiar la imagen también:
-    if (target.dataset.img) {
-        document.getElementById("imgPrincipal").src = target.dataset.img;
-    }
+            // Actualizar imagen principal
+            if (target.dataset.img) {
+                document.getElementById("imgPrincipal").src = target.dataset.img;
+            }
+            colorSeleccionado = target.dataset.name;
+        }
+    };
 }
-        
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
   document.body.classList.remove("no-scroll");
@@ -1108,25 +1106,19 @@ modalCarrito.addEventListener("click", e => {
 
  <script> 
 function irAWhatsApp(nombreProducto) {
-    // 1. Obtenemos el texto de capacidad del botón que tiene la clase 'activo'
-    const btnCapacidad = document.querySelector('.modelo-opcion.activo');
-    const capacidad = btnCapacidad ? btnCapacidad.innerText : (modeloSeleccionado || "64GB");
-
-    // 2. IMPORTANTE: Obtenemos el nombre del color, no el código.
-    // Si no hay nada seleccionado, colorSeleccionado tendrá el valor por defecto.
+    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
+    const capacidad = modeloSeleccionado || "64GB"; 
     const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
 
-    const precioElement = document.getElementById("spanPrecio");
-    const precio = precioElement ? precioElement.innerText : "Consultar";
-
-    // Mensaje personalizado
+    // Mensaje personalizado para el vendedor
     const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
                     `• *Capacidad:* ${capacidad}\n` +
                     `• *Color:* ${color}\n` +
                     `• *Precio:* RD$ ${precio}\n\n` +
                     `¿Está disponible?`;
 
-    const telefono = "18292017321";
+    const telefono = "18292017321"; // Tu número
     const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
     
     window.open(url, '_blank');
