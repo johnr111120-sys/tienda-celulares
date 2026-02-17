@@ -1677,7 +1677,7 @@ body.menu-abierto {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 80%; /* Ancho completo en móvil */
+    width: 100%; /* Ancho completo en móvil */
     background-color: #007bff; /* Verde WhatsApp */
     color: white;
     border: none;
