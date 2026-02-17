@@ -1482,7 +1482,7 @@ body.menu-abierto {
   font-size:28px;
   cursor:pointer;
   z-index:5;
-  border: 3px solid #007bff;
+  border: 2px solid #635147;
 }
 
 
@@ -1497,7 +1497,7 @@ body.menu-abierto {
   left: 10px;
   font-size: 30px;
   border-radius: 50%;
-  border: 4px solid #0000FF; /* círculo azul */
+  border: 3px solid #635147; /* círculo azul */
   background: transparent;
   color: red; /* X roja */
   cursor:pointer;
@@ -1715,7 +1715,7 @@ body.menu-abierto {
     background: rgba(255, 255, 255, 0.4);
     transform: skewX(-45deg); /* Inclinación del brillo */
     left: -150%;
-    animation: brilloEfecto 3s infinite; /* Se repite cada 3 segundos */
+    animation: brilloEfecto 2s infinite; /* Se repite cada 3 segundos */
 }
 /* Ajuste para pantallas grandes (PC) */
 @media (min-width: 768px) {
@@ -1736,63 +1736,4 @@ body.menu-abierto {
     0% { left: -150%; }
     50% { left: 150%; }
     100% { left: 150%; }
-}
-
-/* Estilo del Header del acordeón (La Categoría) */
-.acordeon-header {
-    cursor: pointer;
-    padding: 15px;
-    font-weight: bold;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Opcional: una flechita que indica si está abierto */
-.acordeon-header::after {
-    content: '▼';
-    font-size: 10px;
-    transition: transform 0.3s;
-}
-
-.acordeon-item.activo .acordeon-header::after {
-    transform: rotate(180deg);
-}
-
-/* Estilos para el efecto acordeón */
-.acordeon-contenido {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out; /* Animación de apertura */
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(0,0,0,0.03); /* Un toque sutil de fondo */
-}
-
-.acordeon-item.activo .acordeon-contenido {
-    max-height: 300px; /* Ajusta según la cantidad de subcategorías */
-}
-
-.acordeon-contenido a {
-    padding: 12px 25px;
-    text-decoration: none;
-    color: #333;
-    border-bottom: 1px solid #eee;
-}
-
-/* El botón del menú principal ☰ -> X */
-#boton-cerrar-menu {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-/* Asegurar que el botón de trigger se vea bien */
-#btn-menu-trigger {
-    transition: all 0.2s;
-    min-width: 40px;
-    font-size: 24px;
 }
