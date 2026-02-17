@@ -1073,40 +1073,46 @@ function seleccionarColor(color, el){
 }
 
 function activarOpcionesProducto() {
-    // 1. SELECCIÓN DE MODELOS (GB)
-    const botonesModelos = document.querySelectorAll(".modelo-opcion");
-    botonesModelos.forEach(btn => {
-        btn.addEventListener("click", function() {
-            // Buscamos solo en el grupo actual (por si hay colores que usan la misma clase)
-            const contenedor = this.parentElement;
-            contenedor.querySelectorAll(".modelo-opcion").forEach(el => el.classList.remove("activo"));
+    const modalContenido = document.getElementById("modalContenido");
+
+    modalContenido.onclick = function(e) {
+        // --- CLIC EN MODELOS (GB) ---
+        if (e.target.classList.contains('modelo-opcion')) {
+            const btn = e.target;
+            const contenedor = btn.parentElement;
             
-            this.classList.add("activo");
+            // Quitar activo a los demás hermanos
+            contenedor.querySelectorAll('.modelo-opcion').forEach(el => el.classList.remove('activo'));
+            // Poner activo al actual
+            btn.classList.add('activo');
 
-            // Si tiene precio, actualizamos el precio del modal
-            if (this.dataset.precio) {
-                const precioSpan = document.getElementById("spanPrecio") || document.querySelector(".modal-precio");
-                precioSpan.innerText = "RD$ " + parseInt(this.dataset.precio).toLocaleString();
-                modeloSeleccionado = this.dataset.nombre;
+            // Actualizar precio si existe el dato
+            if (btn.dataset.precio) {
+                precioActual = btn.dataset.precio;
+                modeloSeleccionado = btn.dataset.nombre;
+                const precioDisplay = document.querySelector(".modal-precio");
+                if (precioDisplay) {
+                    precioDisplay.innerHTML = "RD$ " + parseInt(precioActual).toLocaleString();
+                }
             }
-        });
-    });
+        }
 
-    // 2. SELECCIÓN DE COLORES (Círculos)
-    const circulosColores = document.querySelectorAll(".color-opcion");
-    circulosColores.forEach(circulo => {
-        circulo.addEventListener("click", function() {
-            document.querySelectorAll(".color-opcion").forEach(el => el.classList.remove("activo"));
-            
-            this.classList.add("activo");
+        // --- CLIC EN COLORES (Círculos) ---
+        if (e.target.classList.contains('color-opcion')) {
+            const circulo = e.target;
+            const contenedor = circulo.parentElement;
 
-            // Cambiar la imagen principal del modal
-            if (this.dataset.imagen) {
-                document.querySelector(".modal-img").src = this.dataset.imagen;
+            contenedor.querySelectorAll('.color-opcion').forEach(el => el.classList.remove('activo'));
+            circulo.classList.add('activo');
+
+            // Cambiar imagen
+            if (circulo.dataset.imagen) {
+                const imgPrincipal = document.querySelector(".modal-img");
+                if (imgPrincipal) imgPrincipal.src = circulo.dataset.imagen;
             }
-            colorSeleccionado = this.dataset.colorname;
-        });
-    });
+            colorSeleccionado = circulo.dataset.colorname;
+        }
+    };
 }
  </script>
  
