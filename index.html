@@ -66,40 +66,42 @@
 <div id="menu-overlay"></div>
 
 <!-- MENU CATEGORÍAS -->
-<aside id="menu-categorias">
+<div id="menu-categorias" class="menu-lateral">
+    <div class="header-menu">
   <h3>Categorías</h3>
-
-<div id="lista-productos"></div>    
-  <button class="categoria">
-    Celulares
-    <i class="fi fi-bs-angle-up"></i>
-  </button>
-  <div class="subcategorias">
+<button id="boton-cerrar-menu" onclick="toggleMenuProductos()">☰</button>
+</div>
+    
+<div class="acordeon-contenedor">
+        <div class="acordeon-item">
+            <button class="acordeon-header" onclick="toggleAcordeon(this)">Celulares</button>
+            <div class="acordeon-contenido">
   <a href="#/productos/Iphone">Iphone</a>
 <a href="#/productos/Samsung">Samsung</a> 
 <a href="#/productos/ZTE">ZTE</a>
   </div>
+</div>
 
-  <button class="categoria">
-    Accesorios
-    <i class="fi fi-bs-angle-up"></i>
-  </button>
-  <div class="subcategorias">
+ <div class="acordeon-item">
+            <button class="acordeon-header" onclick="toggleAcordeon(this)">Accesorios</button>
+            <div class="acordeon-contenido">
    <a href="#/productos/Covers">Covers</a>
  <a href="#/productos/Audifonos">Audifonos</a>
   <a href="#/productos/Smartwatch">Smartwatch</a>
  <a href="#/productos/Usb">Usb</a>
   </div>
+</div>
     
-     <button class="categoria">
-       Tablets
-        <i class="fi fi-bs-angle-up"></i>
-      </button>
-      <div class="subcategorias">
+     <div class="acordeon-item">
+            <button class="acordeon-header" onclick="toggleAcordeon(this)">Tablets</button>
+            <div class="acordeon-contenido">
       <a href="#/productos/Ipad">Ipad</a>
       <a href="#/productos/Android">Android</a>
+     </div>
     </div>
-  </aside>
+  </div> 
+</div>
+</aside>
       
 <main id="contenido" class="contenido">      
 
@@ -1068,6 +1070,46 @@ function irAWhatsApp(nombreProducto) {
     window.open(url, '_blank');
 }
 </script>
+
+ <script>
+ function toggleMenuProductos() {
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    const btnIcono = document.getElementById("boton-cerrar-menu");
+
+    menu.classList.toggle("activo");
+    overlay.classList.toggle("activo");
+
+    // CAMBIO DE ICONO: Si está activo pone X, si no pone ☰
+    if (menu.classList.contains("activo")) {
+        btnIcono.innerText = "✕";
+    } else {
+        btnIcono.innerText = "☰";
+    }
+}
+
+function toggleAcordeon(elemento) {
+    const itemActual = elemento.parentElement;
+    const todosLosItems = document.querySelectorAll('.acordeon-item');
+
+    // Cerrar todos los demás (Lógica de uno a la vez)
+    todosLosItems.forEach(item => {
+        if (item !== itemActual) {
+            item.classList.remove('activo');
+        }
+    });
+
+    // Abrir o cerrar el actual
+    itemActual.classList.toggle('activo');
+}
+
+// Asegurarnos de cerrar el menú al hacer clic en un link
+document.querySelectorAll('.acordeon-contenido a').forEach(link => {
+    link.addEventListener('click', () => {
+        toggleMenuProductos(); // Cierra el menú completo
+    });
+});   
+</script>  
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
