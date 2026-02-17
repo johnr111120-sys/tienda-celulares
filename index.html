@@ -279,7 +279,14 @@ function abrirProducto(id) {
     modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
     colorSeleccionado = "No seleccionado";
 
-    contenedor.innerHTML = `
+   // ... dentro de abrirProducto ...
+contenedor.innerHTML = `
+    <div class="contenedor-accion-fija">
+        <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
+            <i class="fab fa-whatsapp"></i> Comprar ahora
+        </button>
+    </div>
+`;
         <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
         <div class="spa-layout">
             <div class="spa-header">
@@ -1039,7 +1046,28 @@ modalCarrito.addEventListener("click", e => {
   if (e.target === modalCarrito) cerrarCarrito();
 });
 </script>
- 
+
+ <script> 
+function irAWhatsApp(nombreProducto) {
+    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
+    const capacidad = modeloSeleccionado || "64GB"; 
+    const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
+
+    // Mensaje personalizado para el vendedor
+    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
+                    `• *Capacidad:* ${capacidad}\n` +
+                    `• *Color:* ${color}\n` +
+                    `• *Precio:* RD$ ${precio}\n\n` +
+                    `¿Está disponible?`;
+
+    const telefono = "18292017321"; // Tu número
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+    
+    window.open(url, '_blank');
+}
+</script>
+    
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
