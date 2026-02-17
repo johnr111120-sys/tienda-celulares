@@ -265,62 +265,111 @@ imgModal.addEventListener("click", e=>{
 
 const modalProducto = document.getElementById("modal-producto");
 
-function abrirProducto(id){
-  const producto = productos.find(p => p.id == id);
-  if(!producto) return;
+/* --- FUNCIONES DEL MODAL (SPA) --- */
 
-  const modal = document.getElementById("modalProducto");
-  const contenido = document.getElementById("modalContenido");
+function abrirProducto(id) {
+    const p = productos.find(prod => prod.id == id);
+    if (!p) return;
 
- modalContenido.innerHTML = `
-<button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+    const modal = document.getElementById("modalProducto");
+    const contenedor = document.getElementById("modalContenido");
 
-  <img src="${producto.imagen}" class="modal-img">
+    // Valores iniciales por defecto
+    precioActual = p.precio;
+    modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
+    colorSeleccionado = "No seleccionado";
 
-  <h2 class="modal-nombre">${producto.nombre}</h2>
+    contenedor.innerHTML = `
+        <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
+        <div class="spa-layout">
+            <div class="spa-header">
+                <img src="${p.imagen}" id="imgPrincipal" class="modal-img">
+            </div>
+            <div class="mp-contenido">
+                <h2 class="modal-nombre">${p.nombre}</h2>
+                <p id="descTexto" class="modal-descripcion">${p.descripcion.replace(/\n/g, '<br>')}</p>
+                <span class="ver-mas" onclick="toggleDescripcion()">VER MÁS</span>
+                
+                <div id="opciones-interactivas">
+                    ${renderOpciones(p)}
+                </div>
 
- <p class="modal-descripcion" id="descTexto">
-  ${producto.descripcion || ""}
-</p>
+                <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
+            </div>
+            <div class="contenedor-accion-fija">
+                <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
+                    Comprar ahora
+                </button>
+            </div>
+        </div>
+    `;
 
-<span class="ver-mas" onclick="toggleDescripcion()">
-  VER MÁS
-</span>
-
-  ${renderOpciones(producto)}
-
-  <div class="modal-precio">$${producto.precio}</div>
-
-  <button class="btn-agregar-modal"
-onclick="agregarAlCarrito('${producto.id}')">
-Agregar al carrito
-</button>
-`;
-
-  modal.style.display = "flex";
-  document.body.classList.add("no-scroll");
+    modal.style.display = "flex";
+    document.body.classList.add("no-scroll");
+    
+    // IMPORTANTE: Llamamos a la activación
+    activarOpcionesProducto();
 }
 
-precioActual = producto.precio;
-modeloSeleccionado = null;
+function renderOpciones(p) {
+    let html = "";
+    // Render de Modelos/Capacidad
+    if (p.modelos && p.modelos.length > 0) {
+        html += `<p class="label-opcion">Capacidad:</p><div class="modelos-grid">`;
+        p.modelos.forEach((m, i) => {
+            html += `<div class="modelo-opcion ${i===0?'activo':''}" data-nombre="${m.nombre}" data-precio="${m.precio}">${m.nombre}</div>`;
+        });
+        html += `</div>`;
+    }
+    // Render de Colores
+    if (p.colores && p.colores.length > 0) {
+        html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
+        p.colores.forEach(c => {
+            if (typeof c === 'object') {
+                html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
+            } else {
+                html += `<div class="modelo-opcion" data-name="${c}">${c}</div>`;
+            }
+        });
+        html += `</div>`;
+    }
+    return html;
+}
 
-document.querySelectorAll(".modelo-opcion").forEach(opcion => {
-  opcion.addEventListener("click", function(){
+function activarOpcionesProducto() {
+    const areaOpciones = document.getElementById("opciones-interactivas");
+    if (!areaOpciones) return;
 
-    document.querySelectorAll(".modelo-opcion")
-      .forEach(o => o.classList.remove("activo"));
+    // DELEGACIÓN DE EVENTOS: Escuchamos clics en todo el contenedor
+    areaOpciones.onclick = function(e) {
+        const target = e.target;
 
-    this.classList.add("activo");
+        // Si hacemos clic en un MODELO (Capacidad)
+        if (target.classList.contains('modelo-opcion') && target.dataset.precio) {
+            const hermanos = target.parentElement.querySelectorAll('.modelo-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
+            target.classList.add('activo');
 
-    modeloSeleccionado = this.dataset.nombre;
-    precioActual = this.dataset.precio;
+            // Actualizar precio
+            precioActual = target.dataset.precio;
+            modeloSeleccionado = target.dataset.nombre;
+            document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
+        }
 
-    document.getElementById("precioProducto").textContent =
-      "$" + precioActual;
+        // Si hacemos clic en un COLOR
+        if (target.classList.contains('color-opcion')) {
+            const hermanos = target.parentElement.querySelectorAll('.color-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
+            target.classList.add('activo');
 
-  });
-});
-
+            // Actualizar imagen principal
+            if (target.dataset.img) {
+                document.getElementById("imgPrincipal").src = target.dataset.img;
+            }
+            colorSeleccionado = target.dataset.name;
+        }
+    };
+}
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
   document.body.classList.remove("no-scroll");
@@ -990,131 +1039,6 @@ modalCarrito.addEventListener("click", e => {
   if (e.target === modalCarrito) cerrarCarrito();
 });
 </script>
-
-  <script> 
-function renderOpciones(producto) {
-    let modelosHTML = "";
-    if (producto.modelos && producto.modelos.length > 0) {
-        modelosHTML = `
-            <p><b>Capacidad:</b></p>
-            <div class="modelos-grid">
-                ${producto.modelos.map((m, index) => `
-                    <div class="modelo-opcion ${index === 0 ? 'activo' : ''}" 
-                         data-nombre="${m.nombre}" 
-                         data-precio="${m.precio}">
-                        ${m.nombre}
-                    </div>`).join("")}
-            </div>`;
-    }
-
-    let coloresHTML = "";
-    if (producto.colores && producto.colores.length > 0) {
-        coloresHTML = `
-            <p><b>Color:</b></p>
-            <div class="colores-grid">
-                ${producto.colores.map(c => {
-                    // Si el color es un objeto (tiene código hexadecimal)
-                    if (typeof c === 'object') {
-                        return `<div class="color-opcion" 
-                                     data-imagen="${c.imagen}" 
-                                     data-colorname="${c.codigo}"
-                                     style="background:${c.codigo}; width:30px; height:30px; border-radius:50%; display:inline-block; margin:5px; cursor:pointer; border:2px solid #ddd;">
-                                </div>`;
-                    } 
-                    // Si el color es solo un texto (como en los Covers)
-                    else {
-                        return `<div class="modelo-opcion" data-colorname="${c}">${c}</div>`;
-                    }
-                }).join("")}
-            </div>`;
-    }
-
-    return `<div class="opciones-modal">${modelosHTML}${coloresHTML}</div>`;
-}
-
-function seleccionarOpcion(btn){
-  const grupo = btn.parentElement;
-  grupo.querySelectorAll(".opcion-btn")
-       .forEach(b => b.classList.remove("activo"));
-
-  btn.classList.add("activo");
-}
-
-function seleccionarColor(color, imagen, el){
-  document.querySelectorAll(".color-opcion")
-    .forEach(c => c.classList.remove("activo"));
-
-  el.classList.add("activo");
-
-  document.querySelector(".modal-img").src = imagen;
-}
-
-function seleccionarModelo(nombre, precio, btn){
-
- modeloSeleccionado = nombre;
- precioActual = precio;
-
- document.querySelectorAll(".opcion-btn")
-  .forEach(b => b.classList.remove("activo"));
-
- btn.classList.add("activo");
-
- document.querySelector(".modal-precio").textContent = "$" + precio;
-}
-
-function seleccionarColor(color, el){
-
- colorSeleccionado = color;
-
- document.querySelectorAll(".color-opcion")
-  .forEach(c => c.classList.remove("activo"));
-
- el.classList.add("activo");
-}
-
-function activarOpcionesProducto() {
-    const modalContenido = document.getElementById("modalContenido");
-
-    modalContenido.onclick = function(e) {
-        // --- CLIC EN MODELOS (GB) ---
-        if (e.target.classList.contains('modelo-opcion')) {
-            const btn = e.target;
-            const contenedor = btn.parentElement;
-            
-            // Quitar activo a los demás hermanos
-            contenedor.querySelectorAll('.modelo-opcion').forEach(el => el.classList.remove('activo'));
-            // Poner activo al actual
-            btn.classList.add('activo');
-
-            // Actualizar precio si existe el dato
-            if (btn.dataset.precio) {
-                precioActual = btn.dataset.precio;
-                modeloSeleccionado = btn.dataset.nombre;
-                const precioDisplay = document.querySelector(".modal-precio");
-                if (precioDisplay) {
-                    precioDisplay.innerHTML = "RD$ " + parseInt(precioActual).toLocaleString();
-                }
-            }
-        }
-
-        // --- CLIC EN COLORES (Círculos) ---
-        if (e.target.classList.contains('color-opcion')) {
-            const circulo = e.target;
-            const contenedor = circulo.parentElement;
-
-            contenedor.querySelectorAll('.color-opcion').forEach(el => el.classList.remove('activo'));
-            circulo.classList.add('activo');
-
-            // Cambiar imagen
-            if (circulo.dataset.imagen) {
-                const imgPrincipal = document.querySelector(".modal-img");
-                if (imgPrincipal) imgPrincipal.src = circulo.dataset.imagen;
-            }
-            colorSeleccionado = circulo.dataset.colorname;
-        }
-    };
-}
- </script>
  
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
