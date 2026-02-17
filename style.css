@@ -1783,3 +1783,21 @@ body.menu-abierto {
     background: #007bff;
     color: white;
 }
+
+#btn-menu-trigger {
+    display: inline-block;
+    width: 25px; /* Ancho fijo para que no se mueva el texto al lado */
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.parte-azul {
+    cursor: pointer; /* Indica que solo esta parte es clickeable */
+    user-select: none;
+}
+
+.parte-negra {
+    cursor: default; /* El buscador no debe tener cursor de puntero */
+}
