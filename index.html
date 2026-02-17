@@ -48,22 +48,21 @@
  </header>
 
 <div class="barra-herramientas-fija">
-    <button class="btn-categoria-rect" onclick="toggleMenuProductos()">
-        <div class="parte-azul">
-            <span id="icono-menu">☰</span>
-            <span>CATEGORÍA</span>
+    <div class="parte-azul" onclick="toggleMenuProductos()">
+        <span id="btn-menu-trigger">☰</span>
+        <span class="texto-cat">CATEGORIAS</span>
+    </div>
+
+    <div class="parte-negra">
+        <div class="contenedor-busqueda">
+            <i class="fas fa-search icono-lupa"></i>
+            <input type="text" 
+                   id="inputBuscador" 
+                   class="buscador-barra" 
+                   placeholder="Buscar producto..." 
+                   oninput="buscarEnTiempoReal()">
         </div>
-       <div class="parte-negra">
-    <div class="contenedor-busqueda">
-        <i class="fas fa-search icono-lupa"></i>
-        <input type="text" 
-               id="inputBuscador" 
-               class="buscador-barra" 
-               placeholder="Buscar marca o modelo..." 
-               oninput="buscarEnTiempoReal()">
-        </div>
-      </div>
-    </button>
+    </div>
 </div>
       
 <h2 id="titulo-categoria">Productos</h2>
@@ -430,18 +429,19 @@ let menuAbierto = false;
 function toggleMenuProductos() {
     const menu = document.getElementById("menu-categorias");
     const overlay = document.getElementById("menu-overlay");
-    const btnTrigger = document.getElementById("btn-menu-trigger"); // Tu botón azul
+    const icono = document.getElementById("btn-menu-trigger");
 
-    menu.classList.toggle("activo");
+    // Alternamos las clases
+    const estaActivo = menu.classList.toggle("activo");
     overlay.classList.toggle("activo");
 
-    // Cambio de icono en el botón azul de la barra
-    if (menu.classList.contains("activo")) {
-        if(btnTrigger) btnTrigger.innerText = "✕";
-        document.body.style.overflow = "hidden"; // Bloquea scroll
+    // Cambiamos el icono según el estado
+    if (estaActivo) {
+        icono.innerText = "✕"; // Transformar a X
+        document.body.classList.add("no-scroll"); // Bloquear scroll fondo
     } else {
-        if(btnTrigger) btnTrigger.innerText = "☰";
-        document.body.style.overflow = "auto"; // Libera scroll
+        icono.innerText = "☰"; // Volver a hamburguesa
+        document.body.classList.remove("no-scroll");
     }
 }
 
