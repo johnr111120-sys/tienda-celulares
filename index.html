@@ -53,15 +53,16 @@
             <span id="icono-menu">☰</span>
             <span>CATEGORÍA</span>
         </div>
-        <div class="parte-negra">
-        <div class="contenedor-busqueda">
+       <div class="parte-negra">
+    <div class="contenedor-busqueda">
         <i class="fas fa-search icono-lupa"></i>
-    <input type="text" class="buscador-barra" placeholder="Buscar productos...">
-    <div class="buscador-contenedor">
-    <input type="text" id="inputBuscador" placeholder="Buscar producto..." oninput="buscarProductos()">
-    <i class="fas fa-search"></i>
-</div>
-    </div>
+        <input type="text" 
+               id="inputBuscador" 
+               class="buscador-barra" 
+               placeholder="Buscar marca o modelo..." 
+               oninput="buscarEnTiempoReal()">
+        </div>
+      </div>
     </button>
 </div>
       
@@ -272,6 +273,14 @@ const modalProducto = document.getElementById("modal-producto");
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
 function abrirProducto(id) {
+    // Limpia la barra al entrar al detalle
+    const buscador = document.getElementById("inputBuscador");
+    if (buscador) {
+        buscador.value = "";
+        buscador.blur(); // Cierra el teclado en móviles
+    }
+
+    // ... (aquí sigue el resto de tu código para abrir el modal)
     const p = productos.find(prod => prod.id == id);
     if (!p) return;
 
@@ -1073,56 +1082,55 @@ function irAWhatsApp(nombreProducto) {
 }
 </script>
 
- <script>
-function buscarProductos() {
+     <script>
+function buscarEnTiempoReal() {
     const texto = document.getElementById("inputBuscador").value.toLowerCase().trim();
-    const contenedor = document.getElementById("productos");
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
-    const tituloCategoria = document.getElementById("titulo-categoria");
+    const contenedor = document.getElementById("productos"); // El grid de 2 columnas
 
-    // Si el usuario empieza a escribir, ocultamos el inicio y mostramos la vista de productos
+    // Si el usuario escribe algo
     if (texto.length > 0) {
-        vistaInicio.style.display = "none";
-        vistaProductos.style.display = "block";
-        if(tituloCategoria) tituloCategoria.innerText = "Resultados de búsqueda";
-        
-        // Filtramos en el JSON por nombre o subcategoría
-        const filtrados = productos.filter(p => 
+        // Switch de vistas SPA
+        if (vistaInicio) vistaInicio.style.display = "none";
+        if (vistaProductos) vistaProductos.style.display = "block";
+
+        // Filtrar en el JSON
+        const resultados = productos.filter(p => 
             p.nombre.toLowerCase().includes(texto) || 
             p.subcategoria.toLowerCase().includes(texto)
         );
 
-        renderizarResultados(filtrados);
+        // Renderizar los que coincidan
+        renderizarListaFiltrada(resultados);
     } else {
-        // Si borra todo, ejecutamos el router para que vuelva a la posición original
-        router();
+        // Si borra el texto, regresamos al estado inicial (Router)
+        router(); 
     }
 }
 
-// Función auxiliar para pintar los resultados (reutilizando tu diseño de cards)
-function renderizarResultados(lista) {
+function renderizarListaFiltrada(lista) {
     const contenedor = document.getElementById("productos");
-    contenedor.innerHTML = "";
+    contenedor.innerHTML = ""; // Limpiar grid
 
     if (lista.length === 0) {
-        contenedor.innerHTML = `<p class="sin-resultados">No se encontraron productos que coincidan.</p>`;
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: white;">No se encontraron resultados.</p>`;
         return;
     }
 
     lista.forEach(p => {
         const div = document.createElement("div");
-        div.className = "producto-card";
+        div.className = "producto-card"; // Usando tu clase del CSS
         div.innerHTML = `
             <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
             <h3>${p.nombre}</h3>
             <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-            <button onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
+            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
         `;
         contenedor.appendChild(div);
     });
 }
-   </script>
+    </script>
     
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
