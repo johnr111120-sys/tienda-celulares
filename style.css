@@ -1735,41 +1735,40 @@ body.menu-abierto {
     100% { left: 150%; }
 }
 
-/* Estilos del Acordeón */
+/* Estilo del Header del acordeón (La Categoría) */
 .acordeon-header {
-    width: 100%;
-    padding: 15px;
-    background: #f8f9fa;
-    border: none;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    font-weight: bold;
     cursor: pointer;
+    padding: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
-    transition: 0.3s;
+    align-items: center;
 }
 
+/* Opcional: una flechita que indica si está abierto */
 .acordeon-header::after {
-    content: '+'; /* Indicador de cerrado */
-    font-size: 20px;
+    content: '▼';
+    font-size: 10px;
+    transition: transform 0.3s;
 }
 
 .acordeon-item.activo .acordeon-header::after {
-    content: '-'; /* Indicador de abierto */
+    transform: rotate(180deg);
 }
 
+/* Estilos para el efecto acordeón */
 .acordeon-contenido {
-    max-height: 0; /* Cerrado por defecto */
+    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-out; /* Efecto suave */
-    background: white;
+    transition: max-height 0.3s ease-out; /* Animación de apertura */
     display: flex;
     flex-direction: column;
+    background-color: rgba(0,0,0,0.03); /* Un toque sutil de fondo */
 }
 
 .acordeon-item.activo .acordeon-contenido {
-    max-height: 500px; /* Suficiente para mostrar los links */
+    max-height: 300px; /* Ajusta según la cantidad de subcategorías */
 }
 
 .acordeon-contenido a {
@@ -1788,7 +1787,9 @@ body.menu-abierto {
     transition: transform 0.3s;
 }
 
-/* Cuando el menú lateral tiene la clase .activo, el botón dentro cambia */
-.menu-lateral.activo #boton-cerrar-menu {
-    color: red; /* Opcional: para que resalte la X */
+/* Asegurar que el botón de trigger se vea bien */
+#btn-menu-trigger {
+    transition: all 0.2s;
+    min-width: 40px;
+    font-size: 24px;
 }
