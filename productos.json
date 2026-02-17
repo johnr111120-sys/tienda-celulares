@@ -122,8 +122,8 @@
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
-     {"codigo":"#E0E0E0","imagen":"images/coverespejolv.png"},
-     {"codigo":"#E0E0E0","imagen":"images/coverespejogucci.png"}
+     {"codigo":"#4A4A4A","imagen":"images/coverespejolv.png"},
+     {"codigo":"#4A4A4A","imagen":"images/coverespejogucci.png"}
     ]
   },
   {
