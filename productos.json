@@ -97,11 +97,11 @@
       { "nombre": "15 Pro Max", "precio": 500 },
       { "nombre": "16 Pro Max", "precio": 500 }
     ],
-    "colores": [
-      "Rosa",
-      "Azul",
-      "Verde",
-      "Amarillo"
+    "colores":[
+       {"codigo":"#FF0080","imagen":"images/accesorios9.jpg"},
+      {"codigo":"#4D82BC!","imagen":"images/accesorios9.jpg"},
+       {"codigo":"#88E788","imagen":"images/accesorios9.jpg"},
+      {"codigo":"#FFDE21","imagen":"images/accesorios9.jpg"}
     ]
   },
   {
@@ -122,8 +122,8 @@
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
-      "Gucci",
-      "Louis Vuitton"
+     {"codigo":"#E0E0E0","imagen":"images/coverespejolv.jpg"},
+     {"codigo":"#E0E0E0","imagen":"images/coverespejogucci.jpg"}
     ]
   },
   {
@@ -144,10 +144,10 @@
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
-      "Rosa Stick",
-      "Blanco Luffi",
-      "Azul Vegeta",
-      "Negro Goku"
+      {"codigo":"##C11C84","imagen":"images/accesorios6.jpg"},
+      {"codigo":"#ffffff!","imagen":"images/accesorios6.jpg"},
+       {"codigo":"##0000FF","imagen":"images/accesorios6.jpg"},
+      {"codigo":"##000000","imagen":"images/accesorios6.jpg"}
     ]
   },
   {
@@ -170,9 +170,9 @@
     "precio": 3500,
     "imagen": "images/accesorios14.jpg",
     "colores": [
-      "Negro",
-      "Rosa",
-      "Plateado"
+      {"codigo":"#E0E0E0","imagen":"images/appleserie3plateado.jpg"},
+      {"codigo":"#4b4845","imagen":"images/appleserie3negro.jpg"},
+      {"codigo":"##FFADFF","imagen":"images/appleserie3rosa.jpg"}
     ]
   },
   {
