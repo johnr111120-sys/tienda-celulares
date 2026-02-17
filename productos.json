@@ -99,7 +99,7 @@
     ],
     "colores":[
        {"codigo":"#FF0080","imagen":"images/accesorios9.jpg"},
-      {"codigo":"#4D82BC!","imagen":"images/accesorios9.jpg"},
+      {"codigo":"#0000FF","imagen":"images/accesorios9.jpg"},
        {"codigo":"#88E788","imagen":"images/accesorios9.jpg"},
       {"codigo":"#FFDE21","imagen":"images/accesorios9.jpg"}
     ]
