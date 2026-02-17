@@ -280,13 +280,7 @@ function abrirProducto(id) {
     colorSeleccionado = "No seleccionado";
 
    // ... dentro de abrirProducto ...
-contenedor.innerHTML = `
-    <div class="contenedor-accion-fija">
-        <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
-            <i class="fab fa-whatsapp"></i> Comprar ahora
-        </button>
-    </div>
-`;
+    contenedor.innerHTML = `
         <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
         <div class="spa-layout">
             <div class="spa-header">
@@ -309,7 +303,12 @@ contenedor.innerHTML = `
                 </button>
             </div>
         </div>
-    `;
+        <div class="contenedor-accion-fija">
+          <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
+              <i class="fab fa-whatsapp"></i> Comprar ahora
+         </button>
+       </div>
+   `;
 
     modal.style.display = "flex";
     document.body.classList.add("no-scroll");
