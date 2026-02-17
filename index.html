@@ -342,11 +342,7 @@ function renderOpciones(p) {
     // Render de Colores
     if (p.colores && p.colores.length > 0) {
        // Ejemplo de cómo debe generarse el HTML en tu renderOpciones:
-         html += `<div class="color-opcion" 
-              data-img="${c.imagen}" 
-              data-name="${c.nombreColor}"  <-- AQUÍ pones "Azul", "Rojo", etc.
-              style="background:${c.codigo}">
-         </div>`;
+          html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
         p.colores.forEach(c => {
             if (typeof c === 'object') {
                 html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
