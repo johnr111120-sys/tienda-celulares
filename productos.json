@@ -15,7 +15,7 @@
     ],
     "colores":[
   {"codigo":"#FFE983","imagen":"images/iphone11amarillo.jpg"},
-  {"codigo":"#ffffff","imagen":"images/iphone11blanco.jpg"},
+  {"codigo":"#ffffff","imagen":"images/iphone11blanco.png"},
   {"codigo":"#000000","imagen":"images/iphone11negro.jpg"},
   {"codigo":"#FF0000","imagen":"images/iphone11rojo.jpg"}
     ]
