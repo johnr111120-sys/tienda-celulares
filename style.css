@@ -1174,8 +1174,8 @@ body.menu-abierto {
   margin-top: 8px;
   padding: 8px;
   border: none;
-  background: #4A4A4A;
-  color: #007bff;
+  background: #007BFF;
+  color: #fff;
   font-weight: bold;
   cursor: pointer;
   transition: background .2s ease;
