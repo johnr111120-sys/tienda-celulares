@@ -601,12 +601,19 @@ window.addEventListener("hashchange", router);
 
 function router() {
 
-  const hash = window.location.hash;
+  const hash = window.location.hash || '#/';
   console.log("Router ejecutado", hash);
 
   const vistaInicio = document.getElementById("vista-inicio");
   const vistaProductos = document.getElementById("vista-productos");
 
+  // --- ESTO CIERRA EL MENÚ AL NAVEGAR ---
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    if (menu) menu.classList.remove("activo");
+    if (overlay) overlay.classList.remove("activo");
+    // --------------------------------------
+    
   // ===============================
   // SUBCATEGORÍAS
   // ===============================
