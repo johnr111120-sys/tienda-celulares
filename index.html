@@ -69,12 +69,13 @@
 <div id="menu-categorias" class="menu-lateral">
     <div class="header-menu">
   <h3>Categorías</h3>
-<button id="boton-cerrar-menu" onclick="toggleMenuProductos()">☰</button>
+<button id="btn-menu-trigger" class="btn-categorias" onclick="toggleMenuProductos()">☰</button>
 </div>
     
-<div class="acordeon-contenedor">
+<div id="menu-categorias" class="menu-lateral">
+    <div class="acordeon-contenedor">
         <div class="acordeon-item">
-            <button class="acordeon-header" onclick="toggleAcordeon(this)">Celulares</button>
+            <div class="acordeon-header" onclick="toggleAcordeon(this)">Celulares</div>
             <div class="acordeon-contenido">
   <a href="#/productos/Iphone">Iphone</a>
 <a href="#/productos/Samsung">Samsung</a> 
@@ -83,7 +84,7 @@
 </div>
 
  <div class="acordeon-item">
-            <button class="acordeon-header" onclick="toggleAcordeon(this)">Accesorios</button>
+            <div class="acordeon-header" onclick="toggleAcordeon(this)">Accesorios</div>
             <div class="acordeon-contenido">
    <a href="#/productos/Covers">Covers</a>
  <a href="#/productos/Audifonos">Audifonos</a>
@@ -92,8 +93,8 @@
   </div>
 </div>
     
-     <div class="acordeon-item">
-            <button class="acordeon-header" onclick="toggleAcordeon(this)">Tablets</button>
+    <div class="acordeon-item">
+            <div class="acordeon-header" onclick="toggleAcordeon(this)">Accesorios</div>
             <div class="acordeon-contenido">
       <a href="#/productos/Ipad">Ipad</a>
       <a href="#/productos/Android">Android</a>
@@ -101,6 +102,7 @@
     </div>
   </div> 
 </div>
+<div id="menu-overlay" onclick="toggleMenuProductos()"></div>
 </aside>
       
 <main id="contenido" class="contenido">      
@@ -1075,16 +1077,17 @@ function irAWhatsApp(nombreProducto) {
  function toggleMenuProductos() {
     const menu = document.getElementById("menu-categorias");
     const overlay = document.getElementById("menu-overlay");
-    const btnIcono = document.getElementById("boton-cerrar-menu");
+    const btnTrigger = document.getElementById("btn-menu-trigger");
 
+    // Alternar clases de visibilidad
     menu.classList.toggle("activo");
     overlay.classList.toggle("activo");
 
-    // CAMBIO DE ICONO: Si está activo pone X, si no pone ☰
+    // CAMBIO DE ICONO EN EL BOTÓN ORIGINAL
     if (menu.classList.contains("activo")) {
-        btnIcono.innerText = "✕";
+        btnTrigger.innerText = "✕"; // Se transforma en X al abrir
     } else {
-        btnIcono.innerText = "☰";
+        btnTrigger.innerText = "☰"; // Vuelve a ☰ al cerrar
     }
 }
 
@@ -1092,23 +1095,16 @@ function toggleAcordeon(elemento) {
     const itemActual = elemento.parentElement;
     const todosLosItems = document.querySelectorAll('.acordeon-item');
 
-    // Cerrar todos los demás (Lógica de uno a la vez)
+    // Cerrar los demás para que solo uno esté abierto (Efecto acordeón)
     todosLosItems.forEach(item => {
         if (item !== itemActual) {
             item.classList.remove('activo');
         }
     });
 
-    // Abrir o cerrar el actual
+    // Abrir o cerrar el que se tocó
     itemActual.classList.toggle('activo');
 }
-
-// Asegurarnos de cerrar el menú al hacer clic en un link
-document.querySelectorAll('.acordeon-contenido a').forEach(link => {
-    link.addEventListener('click', () => {
-        toggleMenuProductos(); // Cierra el menú completo
-    });
-});   
 </script>  
     
 <div id="panel-lateral" class="panel-lateral">
