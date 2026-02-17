@@ -144,10 +144,10 @@
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
-      {"codigo":"##C11C84","imagen":"images/accesorios6.jpg"},
+      {"codigo":"#C11C84","imagen":"images/accesorios6.jpg"},
       {"codigo":"#ffffff!","imagen":"images/accesorios6.jpg"},
-       {"codigo":"##0000FF","imagen":"images/accesorios6.jpg"},
-      {"codigo":"##000000","imagen":"images/accesorios6.jpg"}
+       {"codigo":"#0000FF","imagen":"images/accesorios6.jpg"},
+      {"codigo":"#000000","imagen":"images/accesorios6.jpg"}
     ]
   },
   {
