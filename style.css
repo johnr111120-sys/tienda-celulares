@@ -1989,3 +1989,83 @@ body.menu-abierto {
     padding: 15px;
     border-bottom: 1px solid #222;
 }
+
+/* Footer fijo en el panel lateral */
+.carrito-footer-fijo {
+    padding: 20px;
+    background: #111;
+    border-top: 1px solid #333;
+}
+
+.subtotal-box {
+    background: #333; /* Rectángulo gris */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.btn-ver-carrito {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Estilo para la Tabla SPA (Inspirado en Surfing Clouds) */
+.carrito-tabla-detallada {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.carrito-tabla-detallada th {
+    border-bottom: 2px solid #eee;
+    padding: 10px;
+    text-align: left;
+    color: #666;
+}
+
+.carrito-tabla-detallada td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.totales-tabla-box {
+    max-width: 400px;
+    margin-left: auto;
+    border: 1px solid #eee;
+    padding: 20px;
+}
+
+.fila-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.total-final {
+    font-size: 1.2rem;
+    color: #007bff; /* Color naranja como el checkout */
+}
+
+.btn-checkout {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 15px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transform: scale(0.96); /* Efecto de pulsación al tocar */
+    background-color: #ED2100;
+}
