@@ -349,7 +349,11 @@ function renderOpciones(p) {
         html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
         p.colores.forEach(c => {
             if (typeof c === 'object') {
-                html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
+                html += `<div class="color-opcion" 
+                  data-img="${c.imagen}" 
+                  data-name="${c.nombre}" 
+                  style="background:${c.codigo}">
+             </div>`;
             } else {
                 html += `<div class="modelo-opcion" data-name="${c}">${c}</div>`;
             }
