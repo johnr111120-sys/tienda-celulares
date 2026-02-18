@@ -1998,14 +1998,38 @@ body.menu-abierto {
 }
 
 .subtotal-box {
-    background: #333; /* Rectángulo gris */
+    background: #2a2a2a; /* Rectángulo gris */
     color: white;
     display: flex;
     justify-content: space-between;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 4px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+/* Botones con estilo Surfing Clouds (Borde blanco) */
+.btn-carrito-estilo {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-carrito-estilo:hover {
+    background: white;
+    color: black; /* Invierte colores al pasar el mouse */
+}
+/* Ajuste para que los items no choquen con los botones */
+.carrito-items-scroll {
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .btn-ver-carrito {
