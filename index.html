@@ -242,10 +242,15 @@ referrerpolicy="no-referrer-when-downgrade">
 </section>
   </div>
     
-    <footer>
+<footer>
+    <div class="mapa-contacto-footer">
+        </div>
   <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
   <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
   <p>📞 WhatsApp: +1 829 201 7321</p>
+    <div class="footer-negro-final">
+        <p>© 2026 Moises Celulares - Todos los derechos reservados</p>
+    </div>
 </footer>
     
     <!-- MODAL DE IMAGEN (AISLADO) -->
@@ -514,34 +519,107 @@ function actualizarContadorCarrito() {
     contador.style.display = cantidad > 0 ? "flex" : "none";
 }
 
+// Función para calcular el subtotal de productos
+function calcularSubtotal() {
+    return carrito.reduce((acc, p) => acc + parseInt(p.precio), 0);
+}
+
+// Función para renderizar el Carrito Lateral con el Subtotal y Botones
 function renderizarCarrito() {
     const contenedor = document.getElementById("carrito-contenido-izq");
     if (!contenedor) return;
 
     if (carrito.length === 0) {
-        // Texto visible sobre fondo negro
         contenedor.innerHTML = `<p class="carrito-vacio">No hay productos en el carrito.</p>`;
     } else {
-        contenedor.innerHTML = carrito.map((p, index) => `
+        // Render de productos
+        let htmlProductos = carrito.map((p, index) => `
             <div class="item-carrito">
-                <img src="${p.imagen}" style="width:60px; height:60px; object-fit:cover; border-radius:5px;">
+                <img src="${p.imagen}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
                 <div style="flex:1;">
-                    <p style="margin:0; font-weight:bold; color:white;">${p.nombre}</p>
-                    <p style="margin:5px 0 0; color:#3498db;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+                    <p style="margin:0; font-weight:bold; color:white; font-size:13px;">${p.nombre}</p>
+                    <p style="margin:2px 0 0; color:#3498db; font-size:12px;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
                 </div>
-                <i class="fas fa-trash" onclick="eliminarDelCarrito(${index})" style="color:#ff4757; cursor:pointer;"></i>
+                <i class="fas fa-trash" onclick="eliminarDelCarrito(${index})" style="color:#ff4757; cursor:pointer; font-size:12px;"></i>
             </div>
         `).join("");
-        
-        // Agregar botón de finalizar compra si hay items
-        contenedor.innerHTML += `
-            <div style="padding:20px;">
-                <button class="btn-comprar" style="width:100%;" onclick="irAWhatsAppCarrito()">Finalizar Pedido</button>
+
+        contenedor.innerHTML = `
+            <div class="carrito-items-scroll">${htmlProductos}</div>
+            <div class="carrito-footer-fijo">
+                <div class="subtotal-box">
+                    <span>Subtotal:</span>
+                    <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
+                </div>
+                <button class="btn-ver-carrito" onclick="navegarAVerCarrito()">Ver Carrito</button>
+                <button class="btn-comprar" style="width:100%; margin-top:10px;" onclick="irAWhatsAppCarrito()">Finalizar Pedido</button>
             </div>
         `;
     }
 }
 
+// Función SPA para la vista "Ver Carrito" detallada
+function navegarAVerCarrito() {
+    toggleCarritoIzquierdo(); // Cerramos el panel lateral
+    
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
+    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
+
+    // Ocultar vistas principales
+    if(vistaInicio) vistaInicio.style.display = "none";
+    if(vistaProductos) vistaProductos.style.display = "none";
+    
+    // Configuración del Footer (Ocultar Mapa y Contacto)
+    const mapaContacto = document.querySelector(".mapa-contacto-footer"); // Asegúrate de que tu HTML tenga esta clase en esa sección
+    if(mapaContacto) mapaContacto.style.display = "none";
+
+    contenedorSPA.style.display = "block";
+    renderizarTablaCarrito(contenedorSPA);
+    
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderizarTablaCarrito(contenedor) {
+    contenedor.innerHTML = `
+        <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; min-height:60vh;">
+            <h1 style="text-align:center; margin-bottom:30px;">Carrito</h1>
+            <table class="carrito-tabla-detallada">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${carrito.map(p => `
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <img src="${p.imagen}" width="50">
+                                    <span>${p.nombre}</span>
+                                </div>
+                            </td>
+                            <td>RD$ ${parseInt(p.precio).toLocaleString()}</td>
+                            <td>1</td>
+                            <td>RD$ ${parseInt(p.precio).toLocaleString()}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+            
+            <div class="totales-tabla-box">
+                <div class="fila-total"><span>Subtotal:</span> <b>RD$ ${calcularSubtotal().toLocaleString()}</b></div>
+                <div class="fila-total"><span>Envío:</span> <span>Calculado en Checkout</span></div>
+                <div class="fila-total total-final"><span>Total:</span> <b>RD$ ${calcularSubtotal().toLocaleString()}</b></div>
+                <button class="btn-checkout" onclick="irAWhatsAppCarrito()">CHECKOUT</button>
+            </div>
+        </div>
+    `;
+}
+      
 function eliminarDelCarrito(index) {
     carrito.splice(index, 1);
     localStorage.setItem("carrito_compras", JSON.stringify(carrito));
