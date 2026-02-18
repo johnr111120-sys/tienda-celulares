@@ -259,20 +259,12 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
-/* ===============================
-   ESTADO GLOBAL Y DATOS
-=================================*/
-let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
-let usuarioLogueado = false;
-// Intentar cargar datos guardados o usar los de prueba si no hay nada
-let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
-    nombre: "Juan Pérez",
-    correo: "cliente@ejemplo.com",
-    direccion: "Av. Independencia #123, Santo Domingo",
-    historial: [
-        { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
-    ]
-};
+// FORZADO DE VARIABLES GLOBALES (Para evitar bloqueos)
+var favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
+var carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
+var usuarioLogueado = JSON.parse(localStorage.getItem("usuario_sesion")) || null;
+
+console.log("Sistema de emergencia: Variables cargadas.");
 
 /* ===============================
    LÓGICA DE LOGIN
