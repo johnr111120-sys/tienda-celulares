@@ -1930,3 +1930,26 @@ body.menu-abierto {
     justify-content: center;
     cursor: pointer;
 }
+
+.badge-favoritos {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #ff4757; /* Rojo vibrante */
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000; /* Para que resalte sobre el fondo */
+    transition: transform 0.3s ease;
+}
+
+/* Animación cuando cambia el número */
+.badge-animacion {
+    transform: scale(1.4);
+}
