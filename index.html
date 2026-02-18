@@ -435,6 +435,46 @@ function cerrarProducto() {
     // Esto permite que si haces clic de nuevo en el mismo producto, el router se active.
     history.pushState("", document.title, window.location.pathname + window.location.search);
 }
+/* ===============================
+   NAVEGACIÓN SPA
+=================================*/
+
+function navegar(ruta) {
+
+  const nuevaHash = "#" + ruta;
+
+  // 🔥 Si es producto
+  if (ruta.startsWith("/producto/")) {
+
+    // Si es el mismo producto → forzar ejecución manual
+    if (window.location.hash === nuevaHash) {
+      router();
+      return;
+    }
+
+    // 🔥 Reemplazar en vez de agregar al historial
+    window.location.replace(nuevaHash);
+    return;
+  }
+
+  // 🔥 Para categorías o inicio
+  if (window.location.hash === nuevaHash) {
+    router();
+  } else {
+    window.location.hash = nuevaHash;
+  }
+}
+
+
+
+window.addEventListener("load", router);
+window.addEventListener("hashchange", router);
+
+
+/* ===============================
+   ROUTER PRINCIPAL
+=================================*/
+
 
 /* ===============================
    WHATSAPP (CORREGIDO)
