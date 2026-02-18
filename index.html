@@ -264,13 +264,13 @@ referrerpolicy="no-referrer-when-downgrade">
 =================================*/
 let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
 let usuarioLogueado = false;
-let datosUsuario = {
+// Intentar cargar datos guardados o usar los de prueba si no hay nada
+let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
     nombre: "Juan Pérez",
     correo: "cliente@ejemplo.com",
     direccion: "Av. Independencia #123, Santo Domingo",
     historial: [
-        { id: "1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" },
-        { id: "1055", fecha: "15/02/2024", total: "1,200", estado: "En camino" }
+        { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
     ]
 };
 
@@ -374,12 +374,16 @@ function renderizarPerfil(contenedor) {
                 </div>
                 <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
                     <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
-                    ${datosUsuario.historial.map(p => `
-                        <div style="border-bottom:1px solid #333; padding:12px 0; font-size:14px;">
-                            <b>Pedido #${p.id}</b> - RD$ ${p.total} <br>
-                            <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">• ${p.estado}</span>
+                    // Dentro de renderizarPerfil(contenedor) busca el mapeo del historial:
+                     ${datosUsuario.historial.map(p => `
+                          <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
+                            <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
+                              <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
+                             <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
+                           <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
+                         </span>
                         </div>
-                    `).join('')}
+                   `).join('')}
                 </div>
             </div>
         </div>`;
@@ -725,21 +729,36 @@ function navegarAFinalizarCompra() {
 }
 
 function enviarPedidoWhatsApp(tracking) {
-    // 1. Capturamos los datos del formulario de Checkout
     const nombre = document.getElementById("ch-nombre").value.trim();
     const apellido = document.getElementById("ch-apellido").value.trim();
     const telefono = document.getElementById("ch-telefono").value.trim();
     const ciudad = document.getElementById("ch-ciudad").value.trim();
     const direccion = document.getElementById("ch-direccion").value.trim();
 
-    // 2. Validación estricta: Si falta algo, no se envía ni se borra nada
     if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
         alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
         return;
     }
 
-    // 3. Construimos la lista de productos para el mensaje
-    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
+    // --- NUEVO: GUARDAR EN EL HISTORIAL DEL PERFIL ---
+    if (usuarioLogueado) {
+        const nuevoPedido = {
+            id: tracking, // Usamos el número de rastreo como ID de pedido
+            fecha: new Date().toLocaleDateString(), // Fecha de hoy
+            total: calcularSubtotal().toLocaleString(),
+            estado: "Pendiente" // Estado inicial
+        };
+        
+        // Lo agregamos al principio de la lista
+        datosUsuario.historial.unshift(nuevoPedido);
+        
+        // Opcional: Guardar en localStorage para que no se borre al recargar
+        localStorage.setItem("datos_usuario_moises", JSON.stringify(datosUsuario));
+    }
+    // ------------------------------------------------
+
+    // Preparar y enviar a WhatsApp (tu código anterior)
+   let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
     
     // 4. Creamos el mensaje profesional para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
@@ -760,19 +779,16 @@ function enviarPedidoWhatsApp(tracking) {
     const numWhatsApp = "59891547599"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
-
-    // 6. 🔥 AHORA SÍ: Limpieza total tras el éxito
-    carrito = []; // Vaciar array
-    localStorage.removeItem("carrito_compras"); // Borrar memoria persistente
     
-    // 7. Actualizar interfaz
+    // Limpieza
+    carrito = [];
+    localStorage.removeItem("carrito_compras");
     actualizarContadorCarrito();
     renderizarCarrito();
-
-    // 8. Confirmación y regreso al inicio
-    alert("✅ ¡Pedido enviado con éxito! Redirigiendo al inicio...");
+    
+    alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
     window.location.hash = "#/";
-    location.reload(); // Esto restaura el Nav y el Footer completo
+    location.reload();
 }
       
 // --- MODAL LOGIN (ESTILO IMAGEN) ---
