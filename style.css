@@ -1858,7 +1858,7 @@ body.menu-abierto {
     text-align: center;
 }
 
-.login-logo { width: 150px; margin-bottom: 20px; }
+.login-logo { width: 100%; margin-bottom: 20px; }
 
 .login-card input {
     width: 100%;
