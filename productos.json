@@ -14,10 +14,10 @@
       { "nombre": "256GB", "precio": 15000 }
     ],
     "colores":[
-  {"codigo":"#FFE983","imagen":"images/iphone11amarillo.jpg"},
-  {"codigo":"#ffffff","imagen":"images/iphone11blanco.png"},
-  {"codigo":"#000000","imagen":"images/iphone11negro.jpg"},
-  {"codigo":"#FF0000","imagen":"images/iphone11rojo.jpg"}
+ { "nombre": "Amarillo", "codigo":"#FFE983","imagen":"images/iphone11amarillo.jpg"},
+ { "nombre": "Blanco", "codigo":"#ffffff","imagen":"images/iphone11blanco.png"},
+ { "nombre": "Negro", "codigo":"#000000","imagen":"images/iphone11negro.jpg"},
+  { "nombre": "Rojo", "codigo":"#FF0000","imagen":"images/iphone11rojo.jpg"}
     ]
   },
   {
@@ -35,10 +35,10 @@
       { "nombre": "512GB", "precio": 25500 }
     ],
     "colores":[
-      {"codigo":"#5E5566","imagen":"images/iphone14promaxmorado.jpg"},
-      {"codigo":"#4b4845","imagen":"images/iphone14promaxnegro.jpg"},
-      {"codigo":"#d4c9b1","imagen":"images/iphone14promaxoro.jpg"},
-      {"codigo":"#e2e4e1","imagen":"images/iphone14promaxplata.jpg"}
+    { "nombre": "Morado", "codigo":"#5E5566","imagen":"images/iphone14promaxmorado.jpg"},
+     { "nombre": "Negro", "codigo":"#4b4845","imagen":"images/iphone14promaxnegro.jpg"},
+      { "nombre": "Oro", "codigo":"#d4c9b1","imagen":"images/iphone14promaxoro.jpg"},
+     { "nombre": "Plateado", "codigo":"#e2e4e1","imagen":"images/iphone14promaxplata.jpg"}
     ]
   },
   {
@@ -55,9 +55,9 @@
       { "nombre": "512GB", "precio": 56000 }
     ],
     "colores":[
-       {"codigo":"#E0E0E0","imagen":"images/iphone17promaxplata.jpg"},
-      {"codigo":"#FFA500","imagen":"images/iphone17promaxnaranja.jpg"},
-      {"codigo":"#0066CC","imagen":"images/iphone17promaxazul.jpg"}
+      { "nombre": "Plateado", "codigo":"#E0E0E0","imagen":"images/iphone17promaxplata.jpg"},
+     { "nombre": "Naranja", "codigo":"#FFA500","imagen":"images/iphone17promaxnaranja.jpg"},
+     { "nombre": "Azul", "codigo":"#0066CC","imagen":"images/iphone17promaxazul.jpg"}
     ]
   },
   {
@@ -98,10 +98,10 @@
       { "nombre": "16 Pro Max", "precio": 500 }
     ],
     "colores":[
-       {"codigo":"#FF0080","imagen":"images/accesorios9.jpg"},
-      {"codigo":"#0000FF","imagen":"images/accesorios9.jpg"},
-       {"codigo":"#88E788","imagen":"images/accesorios9.jpg"},
-      {"codigo":"#FFDE21","imagen":"images/accesorios9.jpg"}
+      { "nombre": "Rosado", "codigo":"#FF0080","imagen":"images/accesorios9.jpg"},
+      { "nombre": "Azul", "codigo":"#0000FF","imagen":"images/accesorios9.jpg"},
+      { "nombre": "Verde", "codigo":"#88E788","imagen":"images/accesorios9.jpg"},
+     { "nombre": "Amarillo", "codigo":"#FFDE21","imagen":"images/accesorios9.jpg"}
     ]
   },
   {
@@ -122,8 +122,8 @@
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
-     {"codigo":"#4A4A4A","imagen":"images/coverespejolv.png"},
-     {"codigo":"#4A4A4A","imagen":"images/coverespejogucci.png"}
+    { "nombre": "LV", "codigo":"#4A4A4A","imagen":"images/coverespejolv.png"},
+   { "nombre": "Gucci", "codigo":"#4A4A4A","imagen":"images/coverespejogucci.png"}
     ]
   },
   {
@@ -144,10 +144,10 @@
       { "nombre": "12 Pro Max", "precio": 300 }
     ],
     "colores": [
-      {"codigo":"#C11C84","imagen":"images/accesorios6.jpg"},
-      {"codigo":"#ffffff!","imagen":"images/accesorios6.jpg"},
-       {"codigo":"#0000FF","imagen":"images/accesorios6.jpg"},
-      {"codigo":"#000000","imagen":"images/accesorios6.jpg"}
+     { "nombre": "Rosado", "codigo":"#C11C84","imagen":"images/accesorios6.jpg"},
+     { "nombre": "Blanco", "codigo":"#ffffff!","imagen":"images/accesorios6.jpg"},
+      { "nombre": "Azul", "codigo":"#0000FF","imagen":"images/accesorios6.jpg"},
+     { "nombre": "Negro", "codigo":"#000000","imagen":"images/accesorios6.jpg"}
     ]
   },
   {
@@ -170,9 +170,9 @@
     "precio": 3500,
     "imagen": "images/accesorios14.jpg",
     "colores": [
-      {"codigo":"#E0E0E0","imagen":"images/appleserie3plateado.jpg"},
-      {"codigo":"#4b4845","imagen":"images/appleserie3negro.jpg"},
-      {"codigo":"##FFADFF","imagen":"images/appleserie3rosa.jpg"}
+    { "nombre": "Plateado", "codigo":"#E0E0E0","imagen":"images/appleserie3plateado.jpg"},
+     { "nombre": "Negro", "codigo":"#4b4845","imagen":"images/appleserie3negro.jpg"},
+    { "nombre": "Rosado", "codigo":"##FFADFF","imagen":"images/appleserie3rosa.jpg"}
     ]
   },
   {
