@@ -42,8 +42,12 @@
   <!-- IZQUIERDA -->
     <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
     <button id="btn-carrito-nav" class="nav-icon" onclick="navegarSPA('carrito')"><i class="fas fa-shopping-cart"></i></button>
-    <button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')"><i class="fas fa-heart"></i></button>
-</div>
+<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
+    <div style="position: relative; display: inline-block;">
+        <i class="fas fa-heart"></i>
+        <span id="contador-favoritos" class="badge-favoritos">0</span>
+    </div>
+</button>
 </nav>   
  </header>
 
@@ -393,8 +397,34 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
-    }
+    
+    function toggleFavorito(idProducto, evento) {
+    // ... (todo tu código anterior de agregar/quitar favoritos) ...
+
+    // Al final, añade esto:
+    actualizarContadorFavoritos();
+   }
+  }
 }
+
+function actualizarContadorFavoritos() {
+    const contador = document.getElementById("contador-favoritos");
+    if (!contador) return;
+
+    const cantidad = favoritos.length;
+    contador.innerText = cantidad;
+
+    // Si no hay favoritos, ocultamos el círculo rojo
+    contador.style.display = cantidad > 0 ? "flex" : "none";
+
+    // Pequeña animación de "brinco" al actualizar
+    contador.classList.add("badge-animacion");
+    setTimeout(() => contador.classList.remove("badge-animacion"), 300);
+}
+
+// --- IMPORTANTE ---
+// Llama a esta función al cargar la página para que el número aparezca de una vez
+window.addEventListener("load", actualizarContadorFavoritos);
       
 function renderizarFavoritos(contenedor) {
     if (favoritos.length === 0) {
