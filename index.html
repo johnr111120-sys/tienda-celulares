@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -64,7 +65,7 @@
         </div>
     </div>
 </div>
-      
+
 <!-- OVERLAY -->
 <div id="menu-overlay" onclick="toggleMenuProductos()"></div>
 
@@ -270,88 +271,32 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-/* ===============================
-   VARIABLES GLOBALES
-=================================*/
-let productos = [];
-let modeloSeleccionado = "";
-let colorSeleccionado = "";
-let precioActual = "";
-let imagenSeleccionada = "";
 
-/* ===============================
-   INICIALIZACIÓN (CARGAR JSON)
-=================================*/
-fetch("productos.json")
-    .then(res => res.json())
-    .then(data => {
-        productos = data;
-        console.log("✅ Productos cargados");
-        router(); 
-    });
+const modalProducto = document.getElementById("modal-producto");
 
-window.addEventListener("load", router);
-window.addEventListener("hashchange", router);
+/* --- FUNCIONES DEL MODAL (SPA) --- */
 
-/* ===============================
-   ROUTER SPA
-=================================*/
-function router() {
-    const hash = window.location.hash || '#/';
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-    const menu = document.getElementById("menu-categorias");
-    const overlay = document.getElementById("menu-overlay");
-
-    // Cerrar menú al navegar
-    if (menu) menu.classList.remove("activo");
-    if (overlay) overlay.classList.remove("activo");
-    document.body.classList.remove("no-scroll");
-
-    // 1. Vista de Subcategoría
-    if (hash.startsWith("#/productos/")) {
-        const sub = decodeURIComponent(hash.split("#/productos/")[1]);
-        if (vistaInicio) vistaInicio.style.display = "none";
-        if (vistaProductos) vistaProductos.style.display = "block";
-        mostrarProductosPorSubcategoria(sub);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-    }
-
-    // 2. Vista de Producto (Modal)
-    if (hash.startsWith("#/producto/")) {
-        const slug = hash.split("#/producto/")[1];
-        const p = productos.find(item => item.slug === slug);
-        if (p) abrirProducto(p.id);
-        return;
-    }
-
-    // 3. Vista de Inicio
-    if (vistaInicio) vistaInicio.style.display = "block";
-    if (vistaProductos) vistaProductos.style.display = "none";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-/* ===============================
-   LÓGICA DEL PRODUCTO (MODAL)
-=================================*/
 function abrirProducto(id) {
+    // Limpia la barra al entrar al detalle
+    const buscador = document.getElementById("inputBuscador");
+    if (buscador) {
+        buscador.value = "";
+        buscador.blur(); // Cierra el teclado en móviles
+    }
+
+    // ... (aquí sigue el resto de tu código para abrir el modal)
     const p = productos.find(prod => prod.id == id);
     if (!p) return;
-
-    // Reset de buscador
-    const buscador = document.getElementById("inputBuscador");
-    if (buscador) { buscador.value = ""; buscador.blur(); }
-
-    // Valores iniciales
-    precioActual = p.precio;
-    modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
-    colorSeleccionado = "No seleccionado";
-    imagenSeleccionada = window.location.origin + "/" + p.imagen;
 
     const modal = document.getElementById("modalProducto");
     const contenedor = document.getElementById("modalContenido");
 
+    // Valores iniciales por defecto
+    precioActual = p.precio;
+    modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
+    colorSeleccionado = "No seleccionado";
+
+   // ... dentro de abrirProducto ...
     contenedor.innerHTML = `
         <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
         <div class="spa-layout">
@@ -375,15 +320,18 @@ function abrirProducto(id) {
                 </button>
             </div>
         </div>
-    `;
+   `;
 
     modal.style.display = "flex";
     document.body.classList.add("no-scroll");
+    
+    // IMPORTANTE: Llamamos a la activación
     activarOpcionesProducto();
 }
 
 function renderOpciones(p) {
     let html = "";
+    // Render de Modelos/Capacidad
     if (p.modelos && p.modelos.length > 0) {
         html += `<p class="label-opcion">Capacidad:</p><div class="modelos-grid">`;
         p.modelos.forEach((m, i) => {
@@ -391,11 +339,14 @@ function renderOpciones(p) {
         });
         html += `</div>`;
     }
+    // Render de Colores
     if (p.colores && p.colores.length > 0) {
         html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
         p.colores.forEach(c => {
             if (typeof c === 'object') {
-                html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.nombre}" style="background:${c.codigo}"></div>`;
+                html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
+            } else {
+                html += `<div class="modelo-opcion" data-name="${c}">${c}</div>`;
             }
         });
         html += `</div>`;
@@ -404,120 +355,823 @@ function renderOpciones(p) {
 }
 
 function activarOpcionesProducto() {
-    const area = document.getElementById("opciones-interactivas");
-    if (!area) return;
+    const areaOpciones = document.getElementById("opciones-interactivas");
+    if (!areaOpciones) return;
 
-    area.onclick = function(e) {
+    // DELEGACIÓN DE EVENTOS: Escuchamos clics en todo el contenedor
+    areaOpciones.onclick = function(e) {
         const target = e.target;
-        // Click en Modelo
+
+        // Si hacemos clic en un MODELO (Capacidad)
         if (target.classList.contains('modelo-opcion') && target.dataset.precio) {
-            target.parentElement.querySelectorAll('.modelo-opcion').forEach(h => h.classList.remove('activo'));
+            const hermanos = target.parentElement.querySelectorAll('.modelo-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
             target.classList.add('activo');
+
+            // Actualizar precio
             precioActual = target.dataset.precio;
             modeloSeleccionado = target.dataset.nombre;
             document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
         }
-        // Click en Color
+
+        // Si hacemos clic en un COLOR
         if (target.classList.contains('color-opcion')) {
-            target.parentElement.querySelectorAll('.color-opcion').forEach(h => h.classList.remove('activo'));
+            const hermanos = target.parentElement.querySelectorAll('.color-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
             target.classList.add('activo');
-            colorSeleccionado = target.dataset.name;
+
+            // Actualizar imagen principal
             if (target.dataset.img) {
-                const imgPath = target.dataset.img;
-                document.getElementById("imgPrincipal").src = imgPath;
-                imagenSeleccionada = window.location.origin + "/" + imgPath;
+                document.getElementById("imgPrincipal").src = target.dataset.img;
             }
+            colorSeleccionado = target.dataset.name;
         }
     };
 }
+function cerrarProducto(){
+  document.getElementById("modalProducto").style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
 
-function cerrarProducto() {
-    document.getElementById("modalProducto").style.display = "none";
-    document.body.classList.remove("no-scroll");
-    window.location.hash = "#/"; // Limpia la URL
+// 🔥 Cerrar tocando fuera
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
+
+function expandirDescripcion(){
+  const desc = document.getElementById("descTexto");
+  desc.style.webkitLineClamp = "unset";
+  desc.classList.remove("fade");
+  document.querySelector(".ver-mas").style.display = "none";
+}
+
+function toggleDescripcion() {
+  const desc = document.getElementById("descTexto");
+  const boton = document.querySelector(".ver-mas");
+
+  desc.classList.toggle("expandido");
+
+  if (desc.classList.contains("expandido")) {
+    boton.textContent = "VER MENOS";
+  } else {
+    boton.textContent = "VER MÁS";
+  }
+}
+ 
+</script>
+
+   <script>  
+// Variable para rastrear el estado del menú
+let menuAbierto = false;
+
+function toggleMenuProductos() {
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    const icono = document.getElementById("btn-menu-trigger");
+
+    // Alternamos las clases
+    const estaActivo = menu.classList.toggle("activo");
+    overlay.classList.toggle("activo");
+
+    // Cambiamos el icono según el estado
+    if (estaActivo) {
+        icono.innerText = "✕"; // Transformar a X
+        document.body.classList.add("no-scroll"); // Bloquear scroll fondo
+    } else {
+        icono.innerText = "☰"; // Volver a hamburguesa
+        document.body.classList.remove("no-scroll");
+    }
+}
+
+function toggleAcordeon(elemento) {
+    const itemActual = elemento.parentElement;
+    const todosLosItems = document.querySelectorAll('.acordeon-item');
+
+    // Cierra cualquier otro que esté abierto
+    todosLosItems.forEach(item => {
+        if (item !== itemActual) {
+            item.classList.remove('activo');
+        }
+    });
+
+    // Abre o cierra el que tocaste
+    itemActual.classList.toggle('activo');
+}
+       </script>
+    
+     <script>
+const modalProducto = document.getElementById("modalProducto");
+
+modalProducto.addEventListener("click", (e) => {
+  if (e.target === modalProducto) {
+    cerrarProducto();
+  }
+});
+
+ </script>
+ 
+    <script>
+/* =========================
+   SWIPE DOWN PARA CERRAR
+   ========================= */
+
+let startY = 0;
+let endY = 0;
+
+// Modal imagen
+const imgModalSwipe = document.getElementById("img-modal");
+
+// Modal producto
+const productoModalSwipe = document.getElementById("modalproducto");
+
+// Función genérica
+function activarSwipe(modal, cerrarFn){
+  if(!modal) return;
+
+  modal.addEventListener("touchstart", e => {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener("touchmove", e => {
+    endY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener("touchend", () => {
+    if(endY - startY > 80){ // distancia swipe
+      cerrarFn();
+    }
+    startY = 0;
+    endY = 0;
+  });
+}
+
+// Activar swipe
+activarSwipe(imgModalSwipe, cerrarImgModal);
+activarSwipe(productoModalSwipe, cerrarProducto);
+</script>
+
+    <script>
+  const header = document.querySelector('.header-principal');
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+
+    
+<script>
+const reseñas = document.querySelectorAll(".reseña");
+let indice = 0;
+
+setInterval(() => {
+  const actual = reseñas[indice];
+  actual.classList.add("salida");
+  actual.classList.remove("activa");
+
+  indice = (indice + 1) % reseñas.length;
+  const siguiente = reseñas[indice];
+
+  siguiente.classList.remove("salida");
+  siguiente.classList.add("activa");
+}, 4000); // ⏱ cambia cada 4 segundos
+</script>
+
+<script>
+const nav = document.querySelector("nav");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 10) {
+    nav.classList.add("scrolled");
+  } else {
+    nav.classList.remove("scrolled");
+  }
+});
+</script>
+
+<script>    
+const btnMenu = document.getElementById("icono-menu");
+const menu = document.getElementById("menu-categorias");
+const overlay = document.getElementById("menu-overlay");
+
+btnMenu.addEventListener("click", () => {
+  menu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+  document.body.classList.toggle("menu-abierto");
+});
+
+overlay.addEventListener("click", () => {
+  menu.classList.remove("activo");
+  overlay.classList.remove("activo");
+  document.body.classList.remove("menu-abierto");
+});
+
+
+// acordeón (solo uno abierto)
+document.querySelectorAll(".categoria").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const sub = btn.nextElementSibling;
+    const icon = btn.querySelector("i");
+
+    document.querySelectorAll(".subcategoria").forEach(s => {
+      if (s !== sub) s.style.maxHeight = null;
+    });
+
+    document.querySelectorAll(".categoria i").forEach(i => {
+      if (i !== icon) i.className = "fi fi-bs-angle-up";
+    });
+
+    if (sub.style.maxHeight) {
+      sub.style.maxHeight = null;
+      icon.className = "fi fi-bs-angle-up";
+    } else {
+      sub.style.maxHeight = sub.scrollHeight + "px";
+      icon.className = "fi fi-bs-angle-down";
+    }
+  });
+});
+</script>
+    
+<script>
+/* ===============================
+   VARIABLES GLOBALES
+=================================*/
+let productos = [];
+let modeloSeleccionado = null;
+let colorSeleccionado = null;
+let precioActual = 0;
+
+/* ===============================
+   CARGAR JSON
+=================================*/
+
+fetch("productos.json")
+  .then(res => res.json())
+  .then(data => {
+    productos = data;
+    console.log("✅ Productos cargados");
+    router(); // ejecutar router cuando ya cargó el JSON
+  })
+
+
+/* ===============================
+   NAVEGACIÓN SPA
+=================================*/
+
+function navegar(ruta) {
+
+  const nuevaHash = "#" + ruta;
+
+  // 🔥 Si es producto
+  if (ruta.startsWith("/producto/")) {
+
+    // Si es el mismo producto → forzar ejecución manual
+    if (window.location.hash === nuevaHash) {
+      router();
+      return;
+    }
+
+    // 🔥 Reemplazar en vez de agregar al historial
+    window.location.replace(nuevaHash);
+    return;
+  }
+
+  // 🔥 Para categorías o inicio
+  if (window.location.hash === nuevaHash) {
+    router();
+  } else {
+    window.location.hash = nuevaHash;
+  }
+}
+
+
+
+window.addEventListener("load", router);
+window.addEventListener("hashchange", router);
+
+
+/* ===============================
+   ROUTER PRINCIPAL
+=================================*/
+
+function router() {
+
+  const hash = window.location.hash || '#/';
+  console.log("Router ejecutado", hash);
+
+  const vistaInicio = document.getElementById("vista-inicio");
+  const vistaProductos = document.getElementById("vista-productos");
+
+  // --- ESTO CIERRA EL MENÚ AL NAVEGAR ---
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    if (menu) menu.classList.remove("activo");
+    if (overlay) overlay.classList.remove("activo");
+    // --------------------------------------
+    
+  // ===============================
+  // SUBCATEGORÍAS
+  // ===============================
+  if (hash.startsWith("#/productos/")) {
+
+    const subcategoria = decodeURIComponent(
+      hash.split("#/productos/")[1]
+    );
+
+    if (vistaInicio) vistaInicio.style.display = "none";
+    if (vistaProductos) vistaProductos.style.display = "block";
+
+    mostrarProductosPorSubcategoria(subcategoria);
+
+     // 🔥 SOLO aquí hacemos scroll
+    window.scrollTo({ top: 0, behavior: "smooth" });
+      
+    return;
+  }
+
+  // ===============================
+  // PRODUCTO INDIVIDUAL
+  // ===============================
+  if (hash.startsWith("#/producto/")) {
+
+    const slug = hash.split("#/producto/")[1];
+    const producto = productos.find(p => p.slug === slug);
+
+    if (producto) {
+     abrirProducto(producto.id);
+    }
+
+   
+    // ❌ AQUÍ NO HACEMOS SCROLL
+    return;
+  }
+
+  // ===============================
+  // INICIO
+  // ===============================
+  if (vistaInicio) vistaInicio.style.display = "block";
+  if (vistaProductos) vistaProductos.style.display = "none";
+
+  document.getElementById("productos").innerHTML = "";
+
+   // 🔥 SOLO aquí hacemos scroll
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 /* ===============================
-   BUSCADOR EN TIEMPO REAL
+   MOSTRAR PRODUCTOS
 =================================*/
+
+function mostrarProductosPorSubcategoria(subcategoria) {
+
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
+
+  const filtrados = productos.filter(
+  p => p.subcategoria.toLowerCase().trim() === 
+       subcategoria.toLowerCase().trim()
+);
+
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos</p>";
+    return;
+  }
+
+  filtrados.forEach(p => {
+
+  const div = document.createElement("div");
+  div.className = "producto-card";
+
+  // 🔥 Si tiene modelos
+  if (p.modelos && p.modelos.length > 0) {
+
+    const modeloInicial = p.modelos[0];
+
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}"
+           onclick="navegar('/producto/${p.slug}')">
+      <h3>${p.nombre}</h3>
+      <p class="descripcion">Disponible en varios modelos</p>
+
+      <button class="btn-modelo">Elegir modelo ▼</button>
+
+      <div class="modelos-dropdown" style="display:none;">
+        ${p.modelos.map(m => `
+          <div class="modelo-opcion"
+               data-precio="${m.precio}">
+            ${m.nombre}
+          </div>
+        `).join("")}
+      </div>
+
+      <p class="precio">$${modeloInicial.precio}</p>
+      <button class="btn-comprar">Comprar</button>
+    `;
+
+    const btnModelo = div.querySelector(".btn-modelo");
+    const dropdown = div.querySelector(".modelos-dropdown");
+    const precioElemento = div.querySelector(".precio");
+
+    // Abrir / cerrar dropdown
+    btnModelo.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.style.display =
+        dropdown.style.display === "none" ? "block" : "none";
+    });
+
+  const btnComprar = div.querySelector(".btn-comprar");
+
+btnComprar.addEventListener("click", () => {
+  const precioActual = precioElemento.textContent.replace("$","");
+  const modeloActual = btnModelo.textContent.replace(" ▼","");
+
+  agregarAlCarrito(p, {
+    nombre: modeloActual,
+    precio: parseInt(precioActual)
+  });
+});
+    // Cambiar precio
+  dropdown.querySelectorAll(".modelo-opcion").forEach(op => {
+  op.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const nuevoPrecio = op.dataset.precio;
+    precioElemento.textContent = "$" + nuevoPrecio;
+    btnModelo.textContent = op.textContent + " ▼";
+    dropdown.style.display = "none";
+
+    // 🔥 agregar al carrito UNA sola vez
+    agregarAlCarrito(p, {
+      nombre: op.textContent,
+      precio: parseInt(nuevoPrecio)
+    });
+  });
+});
+
+  } else {
+
+    // 🔥 Si NO tiene modelos
+   div.innerHTML = `
+    <img src="${p.imagen}" alt="${p.nombre}"
+         onclick="navegar('/producto/${p.slug}')">
+    <h3>${p.nombre}</h3>
+    <p class="descripcion">Producto disponible</p>
+    <p class="precio">$${p.precio}</p>
+    <button class="btn-comprar">Comprar</button>
+  `;
+
+div.querySelector(".btn-comprar").addEventListener("click", () => {
+  agregarAlCarrito(p);
+});
+}
+  
+  contenedor.appendChild(div);
+});
+}
+
+</script>
+
+    <script>
+function animarAgregar(btn) {
+
+  const card = btn.closest(".producto-card");
+  const img = card.querySelector("img");
+  const carrito = document.getElementById("icono-carrito");
+
+  if (!img || !carrito) return;
+
+  // efecto pop
+  card.classList.add("agregado");
+  setTimeout(() => card.classList.remove("agregado"), 350);
+
+  // clonar imagen
+  const clon = img.cloneNode(true);
+  const rectImg = img.getBoundingClientRect();
+  const rectCarrito = carrito.getBoundingClientRect();
+
+  clon.classList.add("img-voladora");
+
+  clon.style.top = rectImg.top + "px";
+  clon.style.left = rectImg.left + "px";
+  clon.style.width = rectImg.width + "px";
+
+  document.body.appendChild(clon);
+
+  // animación vuelo
+  requestAnimationFrame(() => {
+    clon.style.transform = `translate(${rectCarrito.left - rectImg.left}px,
+                                      ${rectCarrito.top - rectImg.top}px)
+                            scale(.2)`;
+    clon.style.opacity = "0.5";
+  });
+
+  setTimeout(() => {
+    clon.remove();
+    carrito.classList.add("carrito-bounce");
+    setTimeout(() => carrito.classList.remove("carrito-bounce"), 400);
+  }, 700);
+}
+
+    </script>
+
+
+<script>
+function animarCarrito() {
+  const icono = document.querySelector('[title="Carrito"]');
+  icono.classList.add("shake");
+
+  setTimeout(() => {
+    icono.classList.remove("shake");
+  }, 400);
+}
+    </script>
+
+<script>
+function actualizarIconoCarrito() {
+  const icono = document.getElementById("icono-carrito");
+  if (!icono) return;
+
+  const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+  // eliminar contador anterior
+  let badge = icono.querySelector(".carrito-contador");
+  if (badge) badge.remove();
+
+  if (total > 0) {
+    badge = document.createElement("span");
+    badge.className = "carrito-contador";
+    badge.textContent = total;
+    icono.appendChild(badge);
+  }
+}
+
+ </script>
+    
+    
+<script>
+// ===============================
+// ABRIR / CERRAR CATEGORIAS
+// ===============================
+document.addEventListener("click", function(e) {
+
+  const categoriaBtn = e.target.closest(".categoria");
+
+  if (categoriaBtn) {
+
+    const subcategorias = categoriaBtn.nextElementSibling;
+
+    if (subcategorias && subcategorias.classList.contains("subcategorias")) {
+      subcategorias.classList.toggle("activa");
+    }
+
+    return;
+  }
+
+});
+</script>
+
+<script>
+document.addEventListener("touchstart", function(e) {
+ const producto = e.target.closest(".producto-card");
+  if (!producto) return;
+
+  producto.classList.add("touch-activo");
+
+  setTimeout(() => {
+    producto.classList.remove("touch-activo");
+  }, 150);
+});
+</script>
+
+<script>
+const panel = document.getElementById("panel-lateral");
+const contenidoPanel = document.getElementById("panel-contenido");
+
+function abrirPanel(html){
+  contenidoPanel.innerHTML = html;
+  panel.classList.add("activo");
+}
+
+function cerrarPanel(){
+  panel.classList.remove("activo");
+}
+
+// cerrar tocando fuera
+panel.addEventListener("click", e=>{
+  if(e.target === panel) cerrarPanel();
+});
+
+// BOTONES NAV
+document.getElementById("btn-cuenta").onclick = () => {
+  abrirPanel(`
+    <h2>Mi Cuenta</h2>
+    <p>Inicia sesión para ver tus pedidos.</p>
+    <button>Iniciar sesión</button>
+  `);
+};
+
+document.getElementById("btn-carrito").onclick = () => {
+  abrirPanel(`
+    <h2>🛒 Carrito</h2>
+    <p>Tu carrito está vacío.</p>
+  `);
+};
+
+document.getElementById("btn-favoritos").onclick = () => {
+  abrirPanel(`
+    <h2>❤️ Favoritos</h2>
+    <p>No tienes productos guardados.</p>
+  `);
+};
+</script>
+
+   </div>
+
+<script>
+    let carrito = [];
+
+  function agregarAlCarrito(id){
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  const clave = id + "-" + (modeloSeleccionado || "base");
+
+  const item = carrito.find(p => p.clave === clave);
+
+  if(item){
+    item.cantidad++;
+  } else {
+    carrito.push({
+      id: id,
+      modelo: modeloSeleccionado,
+      precio: precioActual,
+      color: colorSeleccionado,
+      cantidad: 1,
+      clave: clave
+    });
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarContadorCarrito();
+}
+    
+</script>
+
+ <script>   
+const modalCarrito = document.getElementById("modal-carrito");
+const carritoBtn = document.querySelector('[title="Carrito"]');
+
+carritoBtn.addEventListener("click", () => {
+  renderizarCarrito();
+  modalCarrito.style.display = "flex";
+});
+
+document.getElementById("cerrar-carrito").onclick = () => {
+  modalCarrito.style.display = "none";
+};
+
+function renderizarCarrito() {
+
+  const contenedor = document.getElementById("carrito-items");
+  const totalElemento = document.getElementById("carrito-total-precio");
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  contenedor.innerHTML = "";
+
+  let total = 0;
+
+  carrito.forEach((item, index) => {
+
+    total += item.precio * item.cantidad;
+
+    const div = document.createElement("div");
+    div.className = "carrito-item";
+
+    div.innerHTML = `
+      <span>${item.nombre}</span>
+      <span>${item.cantidad} x $${item.precio}</span>
+    `;
+
+    contenedor.appendChild(div);
+  });
+
+  totalElemento.textContent = "$" + total;
+}
+     
+function eliminarDelCarrito(index) {
+    
+ const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
+
+  carrito.splice(index, 1);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  renderizarCarrito();
+  actualizarContadorCarrito();
+}
+
+document.getElementById("vaciar-carrito").onclick = () => {
+  localStorage.removeItem("carrito");
+  renderizarCarrito();
+  actualizarContadorCarrito();
+};
+
+</script>
+
+ <script> 
+const modalCarrito = document.getElementById("modal-carrito");
+
+// abrir modal
+function abrirCarrito(){
+  document.getElementById("modal-carrito").style.display = "flex";
+  renderizarCarrito();
+  document.body.classList.add("no-scroll");
+}
+
+// cerrar modal
+function cerrarCarrito() {
+  modalCarrito.style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+// botón cerrar
+document.querySelector(".cerrar-carrito")
+  .addEventListener("click", cerrarCarrito);
+
+// cerrar tocando fuera
+modalCarrito.addEventListener("click", e => {
+  if (e.target === modalCarrito) cerrarCarrito();
+});
+</script>
+
+ <script> 
+function irAWhatsApp(nombreProducto) {
+    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
+    const capacidad = modeloSeleccionado || "64GB"; 
+    const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
+
+    // Mensaje personalizado para el vendedor
+    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
+                    `• *Capacidad:* ${capacidad}\n` +
+                    `• *Color:* ${color}\n` +
+                    `• *Precio:* RD$ ${precio}\n\n` +
+                    `¿Está disponible?`;
+
+    const telefono = "18292017321"; // Tu número
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+    
+    window.open(url, '_blank');
+}
+</script>
+
+     <script>
 function buscarEnTiempoReal() {
     const texto = document.getElementById("inputBuscador").value.toLowerCase().trim();
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
+    const contenedor = document.getElementById("productos"); // El grid de 2 columnas
 
+    // Si el usuario escribe algo
     if (texto.length > 0) {
+        // Switch de vistas SPA
         if (vistaInicio) vistaInicio.style.display = "none";
         if (vistaProductos) vistaProductos.style.display = "block";
-        const filtrados = productos.filter(p => 
-            p.nombre.toLowerCase().includes(texto) || p.subcategoria.toLowerCase().includes(texto)
+
+        // Filtrar en el JSON
+        const resultados = productos.filter(p => 
+            p.nombre.toLowerCase().includes(texto) || 
+            p.subcategoria.toLowerCase().includes(texto)
         );
-        renderizarListaFiltrada(filtrados);
+
+        // Renderizar los que coincidan
+        renderizarListaFiltrada(resultados);
     } else {
-        router();
+        // Si borra el texto, regresamos al estado inicial (Router)
+        router(); 
     }
 }
 
 function renderizarListaFiltrada(lista) {
     const contenedor = document.getElementById("productos");
-    contenedor.innerHTML = lista.map(p => `
-        <div class="producto-card">
+    contenedor.innerHTML = ""; // Limpiar grid
+
+    if (lista.length === 0) {
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: white;">No se encontraron resultados.</p>`;
+        return;
+    }
+
+    lista.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "producto-card"; // Usando tu clase del CSS
+        div.innerHTML = `
             <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
             <h3>${p.nombre}</h3>
             <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
             <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
-        </div>
-    `).join("") || `<p style="grid-column:1/-1; color:white; text-align:center;">No hay resultados.</p>`;
-}
-
-/* ===============================
-   WHATSAPP
-=================================*/
-function irAWhatsApp(nombreProducto) {
-    const capacidad = modeloSeleccionado || "Base";
-    const color = colorSeleccionado || "Elegido en tienda";
-    const precio = document.getElementById("spanPrecio").innerText;
-    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
-                    `• *Capacidad:* ${capacidad}\n` +
-                    `• *Color:* ${color}\n` +
-                    `• *Precio:* RD$ ${precio}\n\n` +
-                    `📷 *Foto:* ${imagenSeleccionada}\n\n` +
-                    `¿Está disponible?`;
-    window.open(`https://wa.me/18292017321?text=${encodeURIComponent(mensaje)}`, '_blank');
-}
-
-/* ===============================
-   MENÚ Y ACORDEÓN
-=================================*/
-function toggleMenuProductos() {
-    const menu = document.getElementById("menu-categorias");
-    const overlay = document.getElementById("menu-overlay");
-    const icono = document.getElementById("btn-menu-trigger");
-    const activo = menu.classList.toggle("activo");
-    overlay.classList.toggle("activo");
-    if(icono) icono.innerText = activo ? "✕" : "☰";
-}
-
-function toggleAcordeon(elemento) {
-    const itemActual = elemento.parentElement;
-    document.querySelectorAll('.acordeon-item').forEach(item => {
-        if (item !== itemActual) item.classList.remove('activo');
+        `;
+        contenedor.appendChild(div);
     });
-    itemActual.classList.toggle('activo');
-}
-
-/* ===============================
-   UTILIDADES (SCROLL, DESCRIPTION)
-=================================*/
-function toggleDescripcion() {
-    const desc = document.getElementById("descTexto");
-    const boton = document.querySelector(".ver-mas");
-    const expandido = desc.classList.toggle("expandido");
-    boton.textContent = expandido ? "VER MENOS" : "VER MÁS";
-}
-
-// Cerrar modal al tocar fuera
-window.onclick = function(e) {
-    if (e.target.id === "modalProducto") cerrarProducto();
 }
     </script>
     
