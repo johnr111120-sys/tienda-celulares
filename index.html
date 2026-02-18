@@ -40,9 +40,9 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <button class="btn-ingresar" onclick="procesarLogin()">INGRESAR</button>
-    <button id="btn-carrito-nav" class="nav-icon"><i class="fas fa-shopping-cart"></i></button>
-    <button id="btn-favoritos-nav" class="nav-icon"><i class="fas fa-heart"></i></button>
+   <button class="btn-ingresar" onclick="procesarLogin()">INGRESAR</button>
+    <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
+<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')"><i class="fas fa-heart"></i></button>
 </div>
 </nav>   
  </header>
@@ -245,27 +245,9 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
-// Función para simular el Inicio de Sesión
-function procesarLogin() {
-    const correo = document.querySelector('.login-card input[type="text"]').value;
-    const pass = document.querySelector('.login-card input[type="password"]').value;
-
-    if (correo.length > 3 && pass.length > 3) {
-        usuarioLogueado = true;
-        cerrarLogin();
-        
-        // Si estaba intentando entrar a Perfil o Favoritos, lo mandamos allá
-        navegarSPA('perfil'); 
-        
-        // Opcional: Cambiar el icono del nav para indicar que hay sesión
-        document.getElementById("btn-perfil").style.color = "#00ff00"; 
-        alert("¡Bienvenido de nuevo!");
-    } else {
-        alert("Por favor, ingresa un correo y contraseña válidos.");
-    }
-}
-      
-// Variable global para el estado del usuario
+/* ===============================
+   ESTADO GLOBAL Y DATOS
+=================================*/
 let usuarioLogueado = false;
 let datosUsuario = {
     nombre: "Juan Pérez",
@@ -276,59 +258,90 @@ let datosUsuario = {
         { id: "1055", fecha: "15/02/2024", total: "1,200", estado: "En camino" }
     ]
 };
-      
-// 1. Esta función SOLO abre la vista o el modal
-function navegarSPA(seccion) {
-    const inicio = document.getElementById("vista-inicio");
-    const productos = document.getElementById("vista-productos");
-    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
 
-    // Si NO está logueado y quiere ver Perfil o Favoritos, abrimos el modal primero
-    if (!usuarioLogueado && (seccion === 'perfil' || seccion === 'favoritos')) {
-        mostrarModalLogin(); // <-- Primero mostramos para que pueda escribir
+/* ===============================
+   LÓGICA DE LOGIN
+=================================*/
+function mostrarModalLogin() {
+    const modal = document.getElementById("modal-login-contenedor");
+    if(modal) modal.style.display = "flex";
+}
+
+function cerrarLogin() {
+    const modal = document.getElementById("modal-login-contenedor");
+    if(modal) modal.style.display = "none";
+}
+
+function procesarLogin() {
+    // Seleccionamos los inputs correctamente dentro de la card
+    const inputs = document.querySelectorAll('.login-card input');
+    const correo = inputs[0].value.trim();
+    const pass = inputs[1].value.trim();
+
+    if (correo.length > 3 && pass.length > 3) {
+        usuarioLogueado = true;
+        cerrarLogin();
         
-        // Mientras tanto, en el fondo, preparamos el mensaje de bloqueo
-        inicio.style.display = "none";
-        productos.style.display = "none";
+        // Al loguearse, vamos directo al perfil
+        navegarSPA('perfil'); 
+        
+        // Feedback visual en el nav
+        const btnPerfil = document.getElementById("btn-perfil");
+        if(btnPerfil) btnPerfil.style.color = "#00ff00"; 
+        
+        console.log("Sesión iniciada con éxito");
+    } else {
+        alert("Por favor, ingresa un correo y contraseña válidos.");
+    }
+}
+
+function cerrarSesion() {
+    usuarioLogueado = false;
+    const btnPerfil = document.getElementById("btn-perfil");
+    if(btnPerfil) btnPerfil.style.color = "";
+    location.hash = "#/";
+    location.reload(); 
+}
+
+/* ===============================
+   NAVEGACIÓN SPA (PERFIL / FAVORITOS)
+=================================*/
+function navegarSPA(seccion) {
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
+    // Buscamos o creamos el contenedor para la sección del cliente
+    let contenedorSPA = document.getElementById("vista-spa-cliente");
+    
+    if (!contenedorSPA) {
+        contenedorSPA = crearContenedorSPA();
+    }
+
+    // Si NO está logueado, forzamos el modal de login
+    if (!usuarioLogueado) {
+        mostrarModalLogin();
+        // Ocultamos lo demás para que el fondo se vea limpio
+        if(vistaInicio) vistaInicio.style.display = "none";
+        if(vistaProductos) vistaProductos.style.display = "none";
         contenedorSPA.style.display = "block";
         contenedorSPA.innerHTML = `
             <div style="text-align:center; padding:100px 20px; color:white;">
                 <i class="fas fa-user-lock" style="font-size:50px; margin-bottom:20px; color:#3498db;"></i>
                 <h2>Inicia Sesión</h2>
-                <p>Por favor, ingresa a tu cuenta para ver esta sección.</p>
+                <p>Ingresa a tu cuenta para ver tus datos y favoritos.</p>
+                <button class="btn-comprar" onclick="mostrarModalLogin()" style="margin-top:20px; width:200px;">Abrir Login</button>
             </div>`;
-        return; 
+        return;
     }
 
-    // Si ya está logueado, mostramos el contenido directamente
-    inicio.style.display = "none";
-    productos.style.display = "none";
+    // Si ya está logueado, mostramos la sección correspondiente
+    if(vistaInicio) vistaInicio.style.display = "none";
+    if(vistaProductos) vistaProductos.style.display = "none";
     contenedorSPA.style.display = "block";
 
     if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
     if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
-}
-
-// 2. Esta función se ejecuta SOLO cuando el usuario hace clic en el botón "INGRESAR" del modal
-function procesarLogin() {
-    // Obtenemos los inputs dentro del modal
-    const inputs = document.querySelectorAll('.login-card input');
-    const correo = inputs[0].value.trim();
-    const pass = inputs[1].value.trim();
-
-    if (correo !== "" && pass !== "") {
-        usuarioLogueado = true;
-        cerrarLogin();
-        
-        // Ahora que ya hay datos, cargamos el perfil
-        navegarSPA('perfil');
-        
-        // Cambiamos el color del icono en el Nav para avisar que entró
-        document.getElementById("btn-perfil").style.color = "#00ff00";
-    } else {
-        // Solo aquí mostramos el banner de error si los campos están vacíos
-        alert("Por favor, ingresa un correo y contraseña válidos.");
-    }
+    
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function renderizarPerfil(contenedor) {
@@ -336,23 +349,20 @@ function renderizarPerfil(contenedor) {
         <div class="perfil-container" style="padding:40px 20px; max-width:800px; margin:auto; color:white;">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444; padding-bottom:15px;">
                 <h1>Hola, ${datosUsuario.nombre}</h1>
-                <button onclick="cerrarSesion()" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Cerrar Sesión</button>
+                <button onclick="cerrarSesion()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Cerrar Sesión</button>
             </div>
-            
-            <div style="margin-top:30px; display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px;">
-                <div style="background:#222; padding:20px; border-radius:10px;">
-                    <h3><i class="fas fa-info-circle"></i> Mis Datos</h3>
-                    <p><b>Correo:</b> ${datosUsuario.correo}</p>
-                    <p><b>Dirección:</b> ${datosUsuario.direccion}</p>
-                    <button style="color:#3498db; background:none; border:none; padding:0; cursor:pointer;">Editar datos</button>
+            <div style="margin-top:30px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
+                    <h3 style="color:#3498db;"><i class="fas fa-id-card"></i> Mis Datos</h3>
+                    <p style="margin:10px 0;"><b>Correo:</b> ${datosUsuario.correo}</p>
+                    <p style="margin:10px 0;"><b>Dirección:</b> ${datosUsuario.direccion}</p>
                 </div>
-                
-                <div style="background:#222; padding:20px; border-radius:10px;">
-                    <h3><i class="fas fa-shopping-bag"></i> Pedidos Recientes</h3>
+                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
+                    <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
                     ${datosUsuario.historial.map(p => `
-                        <div style="border-bottom:1px solid #333; padding:10px 0; font-size:13px;">
-                            <b>#${p.id}</b> - RD$ ${p.total} <br>
-                            <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">${p.estado}</span>
+                        <div style="border-bottom:1px solid #333; padding:12px 0; font-size:14px;">
+                            <b>Pedido #${p.id}</b> - RD$ ${p.total} <br>
+                            <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">• ${p.estado}</span>
                         </div>
                     `).join('')}
                 </div>
@@ -360,23 +370,28 @@ function renderizarPerfil(contenedor) {
         </div>`;
 }
 
-function cerrarSesion() {
-    usuarioLogueado = false;
-    document.getElementById("btn-perfil").style.color = "";
-    location.hash = "#/";
-    location.reload(); // Recargamos para limpiar todo rastro
-}
-
 function renderizarFavoritos(contenedor) {
-    // Aquí puedes luego conectar con un array de favoritos
     contenedor.innerHTML = `
-        <div style="padding:40px 20px; max-width:800px; margin:auto; color:white; text-align:center;">
-            <h1><i class="fas fa-heart" style="color:red;"></i> Mis Favoritos</h1>
-            <p style="margin-top:20px;">Aún no tienes productos guardados en tu lista de deseos.</p>
-            <button class="btn-comprar-spa" onclick="location.hash='#/'" style="margin-top:20px; width:auto; padding:10px 20px;">
-                Ir a comprar
+        <div style="padding:60px 20px; max-width:800px; margin:auto; color:white; text-align:center;">
+            <i class="fas fa-heart" style="font-size:60px; color:red; margin-bottom:20px;"></i>
+            <h1>Mis Favoritos</h1>
+            <p style="margin-top:20px; color:#aaa;">Tu lista de deseos está vacía actualmente.</p>
+            <button class="btn-comprar" onclick="location.hash='#/'; location.reload();" style="margin-top:30px; width:auto; padding:12px 30px;">
+                Explorar productos
             </button>
         </div>`;
+}
+
+function crearContenedorSPA() {
+    const div = document.createElement("div");
+    div.id = "vista-spa-cliente";
+    div.style.minHeight = "70vh";
+    div.style.backgroundColor = "#000";
+    // Lo insertamos antes del footer
+    const footer = document.querySelector("footer");
+    if(footer) footer.before(div);
+    else document.body.appendChild(div);
+    return div;
 }
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
