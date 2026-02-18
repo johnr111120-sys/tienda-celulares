@@ -248,6 +248,7 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
+let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
 let usuarioLogueado = false;
 let datosUsuario = {
     nombre: "Juan Pérez",
@@ -370,16 +371,63 @@ function renderizarPerfil(contenedor) {
         </div>`;
 }
 
+function toggleFavorito(idProducto, evento) {
+    if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
+
+    const index = favoritos.findIndex(p => p.id === idProducto);
+    const producto = productos.find(p => p.id === idProducto);
+
+    if (index === -1) {
+        // No está, lo agregamos
+        favoritos.push(producto);
+        alert("❤️ Añadido a favoritos");
+    } else {
+        // Ya está, lo quitamos
+        favoritos.splice(index, 1);
+        alert("🖤 Eliminado de favoritos");
+    }
+
+    // Guardamos en la memoria del navegador
+    localStorage.setItem("mis_favoritos", JSON.stringify(favoritos));
+    
+    // Si estamos en la vista de favoritos, refrescarla de inmediato
+    if (document.getElementById("vista-spa-cliente").style.display === "block") {
+        renderizarFavoritos(document.getElementById("vista-spa-cliente"));
+    }
+}
+      
 function renderizarFavoritos(contenedor) {
+    if (favoritos.length === 0) {
+        contenedor.innerHTML = `
+            <div style="padding:60px 20px; color:white; text-align:center;">
+                <i class="fas fa-heart" style="font-size:60px; color:#333; margin-bottom:20px;"></i>
+                <h1>Tus Favoritos</h1>
+                <p>No has guardado ningún producto todavía.</p>
+                <button class="btn-comprar" onclick="location.hash='#/'" style="margin-top:20px; width:auto; padding:10px 20px;">Volver a la tienda</button>
+            </div>`;
+        return;
+    }
+
     contenedor.innerHTML = `
-        <div style="padding:60px 20px; max-width:800px; margin:auto; color:white; text-align:center;">
-            <i class="fas fa-heart" style="font-size:60px; color:red; margin-bottom:20px;"></i>
-            <h1>Mis Favoritos</h1>
-            <p style="margin-top:20px; color:#aaa;">Tu lista de deseos está vacía actualmente.</p>
-            <button class="btn-comprar" onclick="location.hash='#/'; location.reload();" style="margin-top:30px; width:auto; padding:12px 30px;">
-                Explorar productos
-            </button>
+        <div style="padding:40px 20px; max-width:1200px; margin:auto;">
+            <h1 style="color:white; margin-bottom:30px; text-align:center;">❤️ Mis Favoritos</h1>
+            <div id="grid-favoritos" class="productos-grid"></div>
         </div>`;
+
+    const grid = contenedor.querySelector("#grid-favoritos");
+    
+    favoritos.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "producto-card";
+        div.innerHTML = `
+            <i class="fas fa-trash btn-eliminar-fav" onclick="toggleFavorito(${p.id}, event)"></i>
+            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
+            <h3>${p.nombre}</h3>
+            <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
+        `;
+        grid.appendChild(div);
+    });
 }
 
 function crearContenedorSPA() {
@@ -947,29 +995,31 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   // 🔥 Si tiene modelos
   if (p.modelos && p.modelos.length > 0) {
 
-    const modeloInicial = p.modelos[0];
+    // ... dentro del if (p.modelos && p.modelos.length > 0)
+const modeloInicial = p.modelos[0];
 
-    div.innerHTML = `
-      <img src="${p.imagen}" alt="${p.nombre}"
-           onclick="navegar('/producto/${p.slug}')">
-      <h3>${p.nombre}</h3>
-      <p class="descripcion">Disponible en varios modelos</p>
+div.innerHTML = `
+    <div class="card-container">
+        <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
+           onclick="toggleFavorito(${p.id}, event)"></i>
+        <img src="${p.imagen}" alt="${p.nombre}" onclick="navegar('/producto/${p.slug}')">
+        <h3>${p.nombre}</h3>
+        <p class="descripcion">Disponible en varios modelos</p>
 
-      <button class="btn-modelo">Elegir modelo ▼</button>
+        <button class="btn-modelo">Elegir modelo ▼</button>
 
-      <div class="modelos-dropdown" style="display:none;">
-        ${p.modelos.map(m => `
-          <div class="modelo-opcion"
-               data-precio="${m.precio}">
-            ${m.nombre}
-          </div>
-        `).join("")}
-      </div>
+        <div class="modelos-dropdown" style="display:none;">
+            ${p.modelos.map(m => `
+                <div class="modelo-opcion" data-precio="${m.precio}">
+                    ${m.nombre}
+                </div>
+            `).join("")}
+        </div>
 
-      <p class="precio">$${modeloInicial.precio}</p>
-      <button class="btn-comprar">Comprar</button>
-    `;
-
+        <p class="precio">$${modeloInicial.precio}</p>
+        <button class="btn-comprar">Comprar</button>
+    </div>
+`;
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
     const precioElemento = div.querySelector(".precio");
@@ -1012,15 +1062,18 @@ btnComprar.addEventListener("click", () => {
 
   } else {
 
-    // 🔥 Si NO tiene modelos
-   div.innerHTML = `
-    <img src="${p.imagen}" alt="${p.nombre}"
-         onclick="navegar('/producto/${p.slug}')">
-    <h3>${p.nombre}</h3>
-    <p class="descripcion">Producto disponible</p>
-    <p class="precio">$${p.precio}</p>
-    <button class="btn-comprar">Comprar</button>
-  `;
+   // ... dentro del else (Si NO tiene modelos)
+div.innerHTML = `
+    <div class="card-container">
+        <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
+           onclick="toggleFavorito(${p.id}, event)"></i>
+        <img src="${p.imagen}" alt="${p.nombre}" onclick="navegar('/producto/${p.slug}')">
+        <h3>${p.nombre}</h3>
+        <p class="descripcion">Producto disponible</p>
+        <p class="precio">$${p.precio}</p>
+        <button class="btn-comprar">Comprar</button>
+    </div>
+`;
 
 div.querySelector(".btn-comprar").addEventListener("click", () => {
   agregarAlCarrito(p);
@@ -1091,17 +1144,21 @@ function renderizarListaFiltrada(lista) {
         return;
     }
 
-    lista.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "producto-card"; // Usando tu clase del CSS
-        div.innerHTML = `
+   lista.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto-card";
+    div.innerHTML = `
+        <div class="card-container">
+            <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
+               onclick="toggleFavorito(${p.id}, event)"></i>
             <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
             <h3>${p.nombre}</h3>
             <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
             <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
-        `;
-        contenedor.appendChild(div);
-    });
+        </div>
+    `;
+    contenedor.appendChild(div);
+});
 }
     </script>
     
