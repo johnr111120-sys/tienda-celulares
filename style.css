@@ -1927,7 +1927,7 @@ body.menu-abierto {
 /* Carrito lateral desde la DERECHA */
 .carrito-lateral {
     position: fixed;
-    top: 25px;
+    top: 15px;
     right: -100%; /* Escondido a la derecha */
     width: 250px;
     height: 100%;
@@ -1948,8 +1948,8 @@ body.menu-abierto {
 /* La X Roja Circular con sombra (Esquina superior IZQUIERDA del panel) */
 .cerrar-carrito-x {
     position: absolute;
-    top: 80px;
-    left: -5px; /* Sobresale un poco hacia afuera del panel */
+    top: 95px;
+    left: -1px; /* Sobresale un poco hacia afuera del panel */
     background: white; 
     color: #ff4757; /* Rojo */
     width: 40px;
