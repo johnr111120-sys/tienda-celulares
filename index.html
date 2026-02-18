@@ -287,6 +287,12 @@ function abrirProducto(id) {
     const p = productos.find(prod => prod.id == id);
     if (!p) return;
 
+    // Valores por defecto al abrir
+    precioActual = p.precio;
+    modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
+    colorSeleccionado = "No seleccionado";
+    imagenSeleccionada = window.location.origin + "/" + p.imagen; // Captura la URL completa de la imagen
+    
     const modal = document.getElementById("modalProducto");
     const contenedor = document.getElementById("modalContenido");
 
@@ -373,19 +379,24 @@ function activarOpcionesProducto() {
             document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
         }
 
-        // Si hacemos clic en un COLOR
-        if (target.classList.contains('color-opcion')) {
-            const hermanos = target.parentElement.querySelectorAll('.color-opcion');
-            hermanos.forEach(h => h.classList.remove('activo'));
-            target.classList.add('activo');
+       // Dentro del evento onclick de las opciones:
+if (target.classList.contains('color-opcion')) {
+    const hermanos = target.parentElement.querySelectorAll('.color-opcion');
+    hermanos.forEach(h => h.classList.remove('activo'));
+    target.classList.add('activo');
 
-            // Actualizar imagen principal
-            if (target.dataset.img) {
-                document.getElementById("imgPrincipal").src = target.dataset.img;
-            }
-            colorSeleccionado = target.dataset.name;
-        }
-    };
+    // Actualizamos el nombre legible del color
+    colorSeleccionado = target.dataset.name; 
+
+    // Si el color tiene una imagen específica, actualizamos la vista y el enlace de WhatsApp
+    if (target.dataset.img) {
+        const nuevaImg = target.dataset.img;
+        document.getElementById("imgPrincipal").src = nuevaImg;
+        
+        // Actualizamos la variable para que WhatsApp mande la foto del color elegido
+        imagenSeleccionada = window.location.origin + "/" + nuevaImg;
+    }
+}
 }
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
@@ -596,10 +607,11 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    VARIABLES GLOBALES
 =================================*/
-let productos = [];
-let modeloSeleccionado = null;
-let colorSeleccionado = null;
-let precioActual = 0;
+let productos = "";
+let modeloSeleccionado = "";
+let colorSeleccionado = "";
+let precioActual = "";
+let imagenSeleccionada = ""; // Nueva variable para la foto
 
 /* ===============================
    CARGAR JSON
@@ -1110,11 +1122,12 @@ function irAWhatsApp(nombreProducto) {
     const color = colorSeleccionado || "el de la imagen";
     const precio = document.getElementById("spanPrecio").innerText;
 
-    // Mensaje personalizado para el vendedor
+    // Mensaje con el enlace de la imagen al final
     const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
                     `• *Capacidad:* ${capacidad}\n` +
                     `• *Color:* ${color}\n` +
                     `• *Precio:* RD$ ${precio}\n\n` +
+                    `📷 *Foto del producto:* ${imagenSeleccionada}\n\n` +
                     `¿Está disponible?`;
 
     const telefono = "18292017321"; // Tu número
