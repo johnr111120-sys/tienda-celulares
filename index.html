@@ -262,29 +262,23 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
+// VARIABLES GLOBALES ÚNICAS
+let productos = []; 
 let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
-let usuarioLogueado = false;
-// Intentar cargar datos guardados o usar los de prueba si no hay nada
-let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
-    nombre: "Juan Pérez",
-    correo: "cliente@ejemplo.com",
-    direccion: "Av. Independencia #123, Santo Domingo",
-    historial: [
-        { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
-    ]
-};
+let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
+let usuarioLogueado = JSON.parse(localStorage.getItem("usuario_sesion")) || null;
       
 /* ===============================
    LÓGICA DE LOGIN
 =================================*/
 function mostrarModalLogin() {
     const modal = document.getElementById("modal-login-contenedor");
-    if(modal) modal.style.display = "flex";
+    if (modal) modal.style.display = "flex";
 }
 
 function cerrarLogin() {
     const modal = document.getElementById("modal-login-contenedor");
-    if(modal) modal.style.display = "none";
+    if (modal) modal.style.display = "none";
 }
 
 function procesarLogin() {
@@ -390,40 +384,28 @@ function renderizarPerfil(contenedor) {
 }
 
 function toggleFavorito(idProducto, evento) {
-    if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
+    if (evento) evento.stopPropagation();
 
     const index = favoritos.findIndex(p => p.id === idProducto);
     const producto = productos.find(p => p.id === idProducto);
 
     if (index === -1) {
-        // No está, lo agregamos
-        favoritos.push(producto);
-        alert("❤️ Añadido a favoritos");
+        if (producto) {
+            favoritos.push(producto);
+            mostrarNotificacion("Añadido a favoritos ❤️");
+        }
     } else {
-        // Ya está, lo quitamos
         favoritos.splice(index, 1);
-        alert("🖤 Eliminado de favoritos");
+        mostrarNotificacion("Eliminado de favoritos 🖤");
     }
 
-    // Guardamos en la memoria del navegador
     localStorage.setItem("mis_favoritos", JSON.stringify(favoritos));
-    
-    // Si estamos en la vista de favoritos, refrescarla de inmediato
-    if (document.getElementById("vista-spa-cliente").style.display === "block") {
-        renderizarFavoritos(document.getElementById("vista-spa-cliente"));
-
-    // Esto refresca la vista actual para que el corazón cambie de color
-    const currentHash = window.location.hash;
-    router();
-  }
-    
-    function toggleFavorito(idProducto, evento) {
-    // ... (todo tu código anterior de agregar/quitar favoritos) ...
-
-    // Al final, añade esto:
     actualizarContadorFavoritos();
-   }
-  }
+    
+    // Si estamos en la vista de favoritos, refrescarla
+    if (window.location.hash === "#/favoritos") {
+        router();
+    }
 }
 
 function actualizarContadorFavoritos() {
@@ -660,10 +642,12 @@ window.addEventListener("load", () => {
 
 // Modifica tu función toggleCarritoIzquierdo para que refresque la lista
 function toggleCarritoIzquierdo() {
-    const panel = document.getElementById("carrito-izquierdo");
-    panel.classList.toggle("activo");
-    if (panel.classList.contains("activo")) {
-        renderizarCarrito();
+    const carritoSide = document.getElementById("carrito-izquierdo");
+    if (carritoSide) {
+        carritoSide.classList.toggle("activo");
+        if (carritoSide.classList.contains("activo")) {
+            renderizarCarrito();
+        }
     }
 }
 
@@ -1213,7 +1197,6 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    VARIABLES GLOBALES
 =================================*/
-let productos = "";
 let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
@@ -1345,10 +1328,14 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
 
-  const filtrados = productos.filter(
-  p => p.subcategoria.toLowerCase().trim() === 
-       subcategoria.toLowerCase().trim()
-);
+ // Si productos está vacío (porque el fetch no ha terminado), esperamos un poco
+    if (productos.length === 0) {
+        setTimeout(() => mostrarProductosPorSubcategoria(sub), 500);
+        return;
+    }
+    const filtrados = productos.filter(p => p.subcategoria === sub);
+    renderizarListaProductos(filtrados, sub);
+}
 
   if (filtrados.length === 0) {
     contenedor.innerHTML = "<p>No hay productos</p>";
@@ -1505,30 +1492,37 @@ function buscarEnTiempoReal() {
     }
 }
 
-function renderizarListaFiltrada(lista) {
-    const contenedor = document.getElementById("productos");
-    contenedor.innerHTML = ""; // Limpiar grid
+function renderizarListaProductos(lista, titulo) {
+    const contenedor = document.getElementById("contenedor-productos");
+    const tituloSeccion = document.getElementById("titulo-seccion");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+    tituloSeccion.innerText = titulo;
 
     if (lista.length === 0) {
-        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: white;">No se encontraron resultados.</p>`;
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: white;">No hay productos disponibles.</p>`;
         return;
     }
 
-   lista.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "producto-card";
-    div.innerHTML = `
-        <div class="card-container">
-            <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
-               onclick="toggleFavorito(${p.id}, event)"></i>
-            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
-            <h3>${p.nombre}</h3>
-            <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
-        </div>
-    `;
-    contenedor.appendChild(div);
-});
+    lista.forEach(p => {
+        // Verificar si el producto ya es favorito
+        const esFav = favoritos.some(f => f.id === p.id);
+        
+        const div = document.createElement("div");
+        div.className = "producto-card";
+        div.innerHTML = `
+            <div class="card-container">
+                <i class="fas fa-heart btn-favorito-corazon ${esFav ? 'activo' : ''}" 
+                   onclick="toggleFavorito(${p.id}, event)"></i>
+                <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
+                <h3>${p.nombre}</h3>
+                <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+                <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
+            </div>
+        `;
+        contenedor.appendChild(div);
+    });
 }
     </script>
     
