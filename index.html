@@ -348,8 +348,15 @@ function renderOpciones(p) {
     if (p.colores && p.colores.length > 0) {
         html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
         p.colores.forEach(c => {
-            if (typeof c === 'object') {
-                html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
+            // Busca esto dentro de tu function renderOpciones(p)
+if (typeof c === 'object') {
+    // CAMBIO: usamos c.nombre en data-name en lugar de c.codigo
+    html += `<div class="color-opcion" 
+                  data-img="${c.imagen}" 
+                  data-name="${c.nombre}" 
+                  style="background:${c.codigo}">
+             </div>`;
+}
             } else {
                 html += `<div class="modelo-opcion" data-name="${c}">${c}</div>`;
             }
@@ -363,40 +370,39 @@ function activarOpcionesProducto() {
     const areaOpciones = document.getElementById("opciones-interactivas");
     if (!areaOpciones) return;
 
-    // DELEGACIÓN DE EVENTOS: Escuchamos clics en todo el contenedor
     areaOpciones.onclick = function(e) {
         const target = e.target;
 
-        // Si hacemos clic en un MODELO (Capacidad)
+        // --- Lógica de MODELO (Capacidad) ---
         if (target.classList.contains('modelo-opcion') && target.dataset.precio) {
             const hermanos = target.parentElement.querySelectorAll('.modelo-opcion');
             hermanos.forEach(h => h.classList.remove('activo'));
             target.classList.add('activo');
 
-            // Actualizar precio
             precioActual = target.dataset.precio;
             modeloSeleccionado = target.dataset.nombre;
             document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
         }
 
-       // Dentro del evento onclick de las opciones:
-if (target.classList.contains('color-opcion')) {
-    const hermanos = target.parentElement.querySelectorAll('.color-opcion');
-    hermanos.forEach(h => h.classList.remove('activo'));
-    target.classList.add('activo');
+        // --- Lógica de COLOR ---
+        if (target.classList.contains('color-opcion')) {
+            const hermanos = target.parentElement.querySelectorAll('.color-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
+            target.classList.add('activo');
 
-    // Actualizamos el nombre legible del color
-    colorSeleccionado = target.dataset.name; 
+            // Guardamos el nombre (ej: "Azul") que viene del dataset
+            colorSeleccionado = target.dataset.name; 
 
-    // Si el color tiene una imagen específica, actualizamos la vista y el enlace de WhatsApp
-    if (target.dataset.img) {
-        const nuevaImg = target.dataset.img;
-        document.getElementById("imgPrincipal").src = nuevaImg;
-        
-        // Actualizamos la variable para que WhatsApp mande la foto del color elegido
-        imagenSeleccionada = window.location.origin + "/" + nuevaImg;
-    }
-}
+            if (target.dataset.img) {
+                const nuevaImg = target.dataset.img;
+                document.getElementById("imgPrincipal").src = nuevaImg;
+                // Actualizamos la imagen para WhatsApp (URL completa)
+                imagenSeleccionada = window.location.origin + "/" + nuevaImg;
+            }
+        }
+    }; // Cerramos el onclick correctamente
+} // Cerramos la función activarOpcionesProducto correctamente
+    
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
   document.body.classList.remove("no-scroll");
