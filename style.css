@@ -1801,3 +1801,24 @@ body.menu-abierto {
 .parte-negra {
     cursor: default; /* El buscador no debe tener cursor de puntero */
 }
+
+.contenedor-busqueda {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#btn-borrar-busqueda {
+    position: absolute;
+    right: 10px;
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    display: none; /* Se muestra solo cuando hay texto */
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+#btn-borrar-busqueda:hover {
+    color: white;
+}
