@@ -53,20 +53,16 @@
         <span class="texto-cat">CATEGORIAS</span>
     </div>
 
-   <div class="parte-negra">
-    <div class="contenedor-busqueda">
-        <i class="fas fa-search icono-lupa"></i>
-        <input type="text" 
-               id="inputBuscador" 
-               class="buscador-barra" 
-               placeholder="Buscar producto..." 
-               oninput="buscarEnTiempoReal()">
-        
-        <span id="btn-borrar-busqueda" onclick="borrarBusqueda()">×</span>
+    <div class="parte-negra">
+        <div class="contenedor-busqueda">
+            <i class="fas fa-search icono-lupa"></i>
+            <input type="text" 
+                   id="inputBuscador" 
+                   class="buscador-barra" 
+                   placeholder="Buscar producto..." 
+                   oninput="buscarEnTiempoReal()">
+        </div>
     </div>
-</div>
-<div id="estado-busqueda" style="display:none; text-align:center; color:white; padding:10px; font-size:14px;">
-    Buscando...
 </div>
       
 <!-- OVERLAY -->
@@ -1144,52 +1140,52 @@ function irAWhatsApp(nombreProducto) {
 </script>
 
      <script>
-let temporizadorBusqueda;
-
 function buscarEnTiempoReal() {
-    const input = document.getElementById("inputBuscador");
-    const texto = input.value.toLowerCase().trim();
-    const btnBorrar = document.getElementById("btn-borrar-busqueda");
-    const estado = document.getElementById("estado-busqueda");
+    const texto = document.getElementById("inputBuscador").value.toLowerCase().trim();
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
+    const contenedor = document.getElementById("productos"); // El grid de 2 columnas
 
-    // Mostrar/Ocultar botón X
-    btnBorrar.style.display = texto.length > 0 ? "block" : "none";
-
+    // Si el usuario escribe algo
     if (texto.length > 0) {
-        // Mostrar mensaje "Buscando..."
-        estado.style.display = "block";
-        estado.innerText = "Buscando...";
+        // Switch de vistas SPA
+        if (vistaInicio) vistaInicio.style.display = "none";
+        if (vistaProductos) vistaProductos.style.display = "block";
 
-        // Limpiar temporizador previo para no saturar
-        clearTimeout(temporizadorBusqueda);
+        // Filtrar en el JSON
+        const resultados = productos.filter(p => 
+            p.nombre.toLowerCase().includes(texto) || 
+            p.subcategoria.toLowerCase().includes(texto)
+        );
 
-        temporizadorBusqueda = setTimeout(() => {
-            if (vistaInicio) vistaInicio.style.display = "none";
-            if (vistaProductos) vistaProductos.style.display = "block";
-
-            const filtrados = productos.filter(p => 
-                p.nombre.toLowerCase().includes(texto) || 
-                p.subcategoria.toLowerCase().includes(texto)
-            );
-
-            renderizarListaFiltrada(filtrados);
-            
-            // Ocultar mensaje al terminar
-            estado.style.display = "none";
-        }, 300); // 300ms de espera mientras escribe
+        // Renderizar los que coincidan
+        renderizarListaFiltrada(resultados);
     } else {
-        estado.style.display = "none";
-        router(); // Si está vacío, vuelve al inicio
+        // Si borra el texto, regresamos al estado inicial (Router)
+        router(); 
     }
 }
 
-function borrarBusqueda() {
-    const input = document.getElementById("inputBuscador");
-    input.value = "";
-    input.focus(); // Mantiene el foco en el buscador
-    buscarEnTiempoReal(); // Ejecuta la lógica para resetear la vista
+function renderizarListaFiltrada(lista) {
+    const contenedor = document.getElementById("productos");
+    contenedor.innerHTML = ""; // Limpiar grid
+
+    if (lista.length === 0) {
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: white;">No se encontraron resultados.</p>`;
+        return;
+    }
+
+    lista.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "producto-card"; // Usando tu clase del CSS
+        div.innerHTML = `
+            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
+            <h3>${p.nombre}</h3>
+            <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
+        `;
+        contenedor.appendChild(div);
+    });
 }
     </script>
     
