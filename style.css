@@ -1878,3 +1878,21 @@ body.menu-abierto {
     font-weight: bold;
     margin-top: 10px;
 }
+
+/* Estilo para el contenedor SPA */
+#vista-spa-cliente {
+    min-height: 60vh;
+    background-color: #111; /* Color de fondo oscuro para que resalte el texto blanco */
+    margin-top: 10px;
+}
+
+.perfil-container h3 {
+    color: #3498db;
+    margin-bottom: 15px;
+}
+
+/* Animación para que el modal aparezca suave */
+.modal-login {
+    backdrop-filter: blur(5px);
+    transition: all 0.3s;
+}
