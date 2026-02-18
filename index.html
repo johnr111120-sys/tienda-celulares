@@ -41,7 +41,13 @@
   <div class="nav-left">
   <!-- IZQUIERDA -->
     <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
-    <button id="btn-carrito-nav" class="nav-icon" onclick="navegarSPA('carrito')"><i class="fas fa-shopping-cart"></i></button>
+    <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
+    <div style="position: relative; display: inline-block;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="contador-carrito" class="badge-carrito">0</span>
+    </div>
+</button>
+      
 <button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-heart"></i>
@@ -474,19 +480,59 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function toggleCarritoIzquierdo() {
-    const carrito = document.getElementById("carrito-izquierdo");
-    carrito.classList.toggle("activo");
+// Variable global (asegúrate de que agregarAlCarrito la use)
+let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
+
+function actualizarContadorCarrito() {
+    const contador = document.getElementById("contador-carrito");
+    if (!contador) return;
+    
+    const cantidad = carrito.length;
+    contador.innerText = cantidad;
+    contador.style.display = cantidad > 0 ? "flex" : "none";
 }
 
 function renderizarCarrito() {
-    const lista = JSON.parse(localStorage.getItem("carrito")) || [];
-    const cont = document.getElementById("carrito-contenido-izq");
-    
-    if (lista.length === 0) {
-        cont.innerHTML = "<p style='text-align:center; margin-top:50px;'>No hay productos en el carrito.</p>";
+    const contenedor = document.getElementById("carrito-contenido-izq");
+    if (!contenedor) return;
+
+    if (carrito.length === 0) {
+        contenedor.innerHTML = `<p class="carrito-vacio">No hay productos en el carrito.</p>`;
     } else {
-        // ... lógica de mapeo de productos que ya tenías ...
+        contenedor.innerHTML = carrito.map((p, index) => `
+            <div style="display:flex; align-items:center; gap:10px; padding:10px; border-bottom:1px solid #333;">
+                <img src="${p.imagen}" style="width:50px; border-radius:5px;">
+                <div style="flex:1;">
+                    <p style="margin:0; font-size:14px;">${p.nombre}</p>
+                    <p style="margin:0; font-size:12px; color:#3498db;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+                </div>
+                <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer;">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `).join("");
+    }
+}
+
+function eliminarDelCarrito(index) {
+    carrito.splice(index, 1);
+    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
+    renderizarCarrito();
+    actualizarContadorCarrito();
+}
+
+// Llama a estas funciones al iniciar la página
+window.addEventListener("load", () => {
+    actualizarContadorCarrito();
+    renderizarCarrito();
+});
+
+// Modifica tu función toggleCarritoIzquierdo para que refresque la lista
+function toggleCarritoIzquierdo() {
+    const panel = document.getElementById("carrito-izquierdo");
+    panel.classList.toggle("activo");
+    if (panel.classList.contains("activo")) {
+        renderizarCarrito();
     }
 }
 
@@ -1224,8 +1270,10 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
 
 <div id="carrito-izquierdo" class="carrito-lateral">
     <button class="cerrar-carrito-x" onclick="toggleCarritoIzquierdo()">✕</button>
-    <h2>🛒 Carrito</h2>
-    <div id="carrito-contenido-izq"></div>
+    
+    <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
+    
+    <div id="carrito-contenido-der" class="carrito-cuerpo"></div>
 </div>
 
 <div id="modal-login-contenedor" class="modal-login">
