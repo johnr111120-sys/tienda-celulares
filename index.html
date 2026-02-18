@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -297,15 +296,6 @@ window.addEventListener("hashchange", router);
 
 function router() {
     const hash = window.location.hash || '#/';
-    
-    // Si volvemos al inicio o categorías, cerramos el modal forzosamente
-    if (!hash.includes("/producto/")) {
-        const modal = document.getElementById("modalProducto");
-        if (modal) {
-            modal.style.display = "none";
-            document.body.classList.remove("no-scroll");
-        }
-    }
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
 
@@ -434,38 +424,18 @@ function activarOpcionesProducto() {
     };
 }
 
-window.addEventListener('popstate', function(event) {
-    const hash = window.location.hash;
-
-    // Si estábamos en un producto y le damos atrás
-    if (hash === "" || hash === "#/") {
-        cerrarProducto();
-    }
-});
-
 function cerrarProducto() {
-    document.getElementById("modalProducto").style.display = "none";
-    document.body.classList.remove("no-scroll");
-
-    // Si estamos cerrando un producto, decidimos a dónde ir:
-    // Si veníamos de una categoría, nos quedamos ahí, si no, al inicio.
-    if (!window.location.hash.includes("/productos/")) {
-        history.replaceState(null, "", "#/");
+    const modal = document.getElementById("modalProducto");
+    if (modal) {
+        modal.style.display = "none";
+        document.body.classList.remove("no-scroll");
     }
-    // No usamos router() aquí para evitar bucles, el popstate ya lo maneja
-}
+    
     // 🔥 EL TRUCO: Limpiamos el hash sin recargar la página
     // Esto permite que si haces clic de nuevo en el mismo producto, el router se active.
     history.pushState("", document.title, window.location.pathname + window.location.search);
 }
 
-function navegar(ruta) {
-    const nuevaHash = "#" + ruta;
-    // Usamos replaceState para que NO se cree una lista infinita de "atrás"
-    history.replaceState(null, "", nuevaHash);
-    router();
-}
-    
 /* ===============================
    WHATSAPP (CORREGIDO)
 =================================*/
@@ -504,7 +474,7 @@ function renderizarListaFiltrada(lista) {
             <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
             <h3>${p.nombre}</h3>
             <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-            <button class="btn-comprar" onclick="navegar('/producto/${p.slug}')">Ver Detalles</button>
+            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
         </div>
     `).join("");
 }
@@ -539,7 +509,7 @@ function mostrarProductosPorSubcategoria(sub) {
         div.className = "producto-card";
         div.innerHTML = `<img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
                          <h3>${p.nombre}</h3><p class="precio">RD$ ${p.precio}</p>
-                         <button class="btn-comprar" onclick="navegar('/producto/${p.slug}')">Ver Detalles</button>`;
+                         <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>`;
         contenedor.appendChild(div);
     });
 }
