@@ -277,37 +277,57 @@ function procesarLogin() {
     }
 }
 
-// Función Maestra de Navegación SPA
+// 1. Esta función SOLO abre la vista o el modal
 function navegarSPA(seccion) {
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
+    const inicio = document.getElementById("vista-inicio");
+    const productos = document.getElementById("vista-productos");
     const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
 
-    // Limpiar hash para evitar conflictos con el router de productos
-    window.location.hash = "#/" + seccion;
-
-    // Ocultar otras vistas
-    if (vistaInicio) vistaInicio.style.display = "none";
-    if (vistaProductos) vistaProductos.style.display = "none";
-    contenedorSPA.style.display = "block";
-
-    if (seccion === 'perfil') {
-        if (!usuarioLogueado) {
-            contenedorSPA.innerHTML = `
-                <div style="text-align:center; padding:100px 20px; color:white;">
-                    <i class="fas fa-lock" style="font-size:50px; margin-bottom:20px;"></i>
-                    <h2>Área Privada</h2>
-                    <p>Debes iniciar sesión para ver tus datos y pedidos.</p>
-                    <button class="btn-comprar-spa" onclick="mostrarModalLogin()" style="width:200px; margin-top:20px;">Iniciar Sesión</button>
-                </div>`;
-            mostrarModalLogin();
-        } else {
-            renderizarPerfil(contenedorSPA);
-        }
+    // Si NO está logueado y quiere ver Perfil o Favoritos, abrimos el modal primero
+    if (!usuarioLogueado && (seccion === 'perfil' || seccion === 'favoritos')) {
+        mostrarModalLogin(); // <-- Primero mostramos para que pueda escribir
+        
+        // Mientras tanto, en el fondo, preparamos el mensaje de bloqueo
+        inicio.style.display = "none";
+        productos.style.display = "none";
+        contenedorSPA.style.display = "block";
+        contenedorSPA.innerHTML = `
+            <div style="text-align:center; padding:100px 20px; color:white;">
+                <i class="fas fa-user-lock" style="font-size:50px; margin-bottom:20px; color:#3498db;"></i>
+                <h2>Inicia Sesión</h2>
+                <p>Por favor, ingresa a tu cuenta para ver esta sección.</p>
+            </div>`;
+        return; 
     }
 
-    if (seccion === 'favoritos') {
-        renderizarFavoritos(contenedorSPA);
+    // Si ya está logueado, mostramos el contenido directamente
+    inicio.style.display = "none";
+    productos.style.display = "none";
+    contenedorSPA.style.display = "block";
+
+    if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
+    if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
+}
+
+// 2. Esta función se ejecuta SOLO cuando el usuario hace clic en el botón "INGRESAR" del modal
+function procesarLogin() {
+    // Obtenemos los inputs dentro del modal
+    const inputs = document.querySelectorAll('.login-card input');
+    const correo = inputs[0].value.trim();
+    const pass = inputs[1].value.trim();
+
+    if (correo !== "" && pass !== "") {
+        usuarioLogueado = true;
+        cerrarLogin();
+        
+        // Ahora que ya hay datos, cargamos el perfil
+        navegarSPA('perfil');
+        
+        // Cambiamos el color del icono en el Nav para avisar que entró
+        document.getElementById("btn-perfil").style.color = "#00ff00";
+    } else {
+        // Solo aquí mostramos el banner de error si los campos están vacíos
+        alert("Por favor, ingresa un correo y contraseña válidos.");
     }
 }
 
@@ -347,6 +367,17 @@ function cerrarSesion() {
     location.reload(); // Recargamos para limpiar todo rastro
 }
 
+function renderizarFavoritos(contenedor) {
+    // Aquí puedes luego conectar con un array de favoritos
+    contenedor.innerHTML = `
+        <div style="padding:40px 20px; max-width:800px; margin:auto; color:white; text-align:center;">
+            <h1><i class="fas fa-heart" style="color:red;"></i> Mis Favoritos</h1>
+            <p style="margin-top:20px;">Aún no tienes productos guardados en tu lista de deseos.</p>
+            <button class="btn-comprar-spa" onclick="location.hash='#/'" style="margin-top:20px; width:auto; padding:10px 20px;">
+                Ir a comprar
+            </button>
+        </div>`;
+}
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
