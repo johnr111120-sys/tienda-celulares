@@ -40,9 +40,9 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
- <button class="nav-icon"><i class="fas fa-user"></i></button>
-    <button class="nav-icon"><i class="fas fa-shopping-cart"></i></button>
-    <button class="nav-icon"><i class="fas fa-heart"></i></button>
+    <button id="btn-perfil" class="nav-icon"><i class="fas fa-user"></i></button>
+    <button id="btn-carrito-nav" class="nav-icon"><i class="fas fa-shopping-cart"></i></button>
+    <button id="btn-favoritos-nav" class="nav-icon"><i class="fas fa-heart"></i></button>
 </div>
 </nav>   
  </header>
@@ -244,6 +244,85 @@ referrerpolicy="no-referrer-when-downgrade">
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
 
+  <script>
+// Variable para simular login
+let usuarioLogueado = false; 
+
+// --- NAVEGACIÓN SPA PARA PERFIL Y FAVORITOS ---
+document.getElementById("btn-perfil").onclick = () => navegarSPA('perfil');
+document.getElementById("btn-favoritos-nav").onclick = () => navegarSPA('favoritos');
+
+function navegarSPA(seccion) {
+    const inicio = document.getElementById("vista-inicio");
+    const productos = document.getElementById("vista-productos");
+    // Asumimos que tienes un div <div id="vista-spa-cliente"></div> en tu HTML
+    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
+
+    // Ocultar todo menos Nav, Barras y Footer
+    inicio.style.display = "none";
+    productos.style.display = "none";
+    contenedorSPA.style.display = "block";
+
+    if (seccion === 'perfil') {
+        if (!usuarioLogueado) {
+            mostrarModalLogin();
+            // Opcional: mostrar un mensaje de "Inicia sesión para ver tu perfil"
+            contenedorSPA.innerHTML = "<h2 style='text-align:center; padding:50px;'>Inicia sesión para ver tu perfil</h2>";
+        } else {
+            contenedorSPA.innerHTML = `
+                <div style="padding:20px; color:white;">
+                    <h2>Mi Perfil</h2>
+                    <p>Correo: cliente@ejemplo.com</p>
+                    <h3>Historial de compras</h3>
+                    <ul><li>Pedido #1024 - Entregado</li></ul>
+                </div>`;
+        }
+    }
+
+    if (seccion === 'favoritos') {
+        if (!usuarioLogueado) mostrarModalLogin();
+        contenedorSPA.innerHTML = "<h2 style='text-align:center; padding:50px; color:white;'>No tienes productos en favoritos</h2>";
+    }
+}
+
+// --- CARRITO LADO IZQUIERDO ---
+document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
+
+function toggleCarritoIzquierdo() {
+    const carrito = document.getElementById("carrito-izquierdo");
+    carrito.classList.toggle("activo");
+}
+
+function renderizarCarrito() {
+    const lista = JSON.parse(localStorage.getItem("carrito")) || [];
+    const cont = document.getElementById("carrito-contenido-izq");
+    
+    if (lista.length === 0) {
+        cont.innerHTML = "<p style='text-align:center; margin-top:50px;'>No hay productos en el carrito.</p>";
+    } else {
+        // ... lógica de mapeo de productos que ya tenías ...
+    }
+}
+
+// --- MODAL LOGIN (ESTILO IMAGEN) ---
+function mostrarModalLogin() {
+    const modal = document.getElementById("modal-login-contenedor");
+    modal.style.display = "flex";
+}
+
+function cerrarLogin() {
+    document.getElementById("modal-login-contenedor").style.display = "none";
+}
+
+function crearContenedorSPA() {
+    const div = document.createElement("div");
+    div.id = "vista-spa-cliente";
+    // Insertar antes del footer
+    document.querySelector("footer").before(div);
+    return div;
+}
+</script> 
+    
   <script>
 const imgModal = document.getElementById("img-modal");
 const imgModalSrc = document.getElementById("img-modal-src");
@@ -948,5 +1027,29 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
   <div class="modal-contenido" id="modalContenido"></div>
 </div>
 
+<div id="carrito-izquierdo" class="carrito-lateral">
+    <button class="cerrar-carrito-x" onclick="toggleCarritoIzquierdo()">✕</button>
+    <h2>🛒 Carrito</h2>
+    <div id="carrito-contenido-izq"></div>
+</div>
+
+<div id="modal-login-contenedor" class="modal-login">
+    <div class="login-card">
+        <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
+        <img src="TU_LOGO_AQUI.png" class="login-logo" alt="Logo">
+        <p><b>MI CUENTA</b></p>
+        <input type="text" placeholder="Correo electrónico">
+        <input type="password" placeholder="Contraseña">
+        <div style="text-align:left; font-size:12px;">
+            <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
+        </div>
+        <button class="btn-ingresar">INGRESAR</button>
+        <p style="font-size:12px; margin-top:15px;">
+            <a href="#">Olvidé mi contraseña</a><br>
+            No soy usuario registrado y quiero <a href="#">crear una cuenta</a>
+        </p>
+    </div>
+</div>
+    
   </body>
 </html>
