@@ -2093,3 +2093,105 @@ body.menu-abierto {
     transform: scale(0.96); /* Efecto de pulsación al tocar */
     background-color: #ED2100;
 }
+
+.checkout-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.checkout-titulo {
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+}
+
+.checkout-card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.checkout-card h3 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-grid input, .form-grid textarea {
+    grid-column: span 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-grid textarea, #ch-cedula, #ch-email, #ch-ciudad {
+    grid-column: span 2;
+}
+
+/* Tracking Box */
+.tracking-box {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-left: 4px solid #007bff;
+}
+
+.resumen-fila {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.resumen-fila.total {
+    font-weight: bold;
+    font-size: 18px;
+    border-bottom: none;
+    color: #000;
+}
+
+.btn-realizar-compra {
+    width: 100%;
+    background: #007bff; /* El color naranja de tu marca */
+    color: white;
+    border: none;
+    padding: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn-realizar-compra:hover {
+    background: #d35400;
+}
+
+@media (max-width: 768px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid input, .form-grid textarea { grid-column: span 1; }
+}
