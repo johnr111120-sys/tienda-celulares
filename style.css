@@ -1901,8 +1901,8 @@ body.menu-abierto {
 
 .btn-favorito-corazon {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 5px;
+    right: 10px;
     font-size: 22px;
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
@@ -1918,9 +1918,9 @@ body.menu-abierto {
 
 .btn-eliminar-fav {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    color: white;
+    top: 5px;
+    right: 10px;
+    color: blue;
     background: rgba(255, 0, 0, 0.7);
     width: 30px;
     height: 30px;
