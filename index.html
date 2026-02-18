@@ -296,6 +296,14 @@ window.addEventListener("hashchange", router);
 
 function router() {
     const hash = window.location.hash || '#/';
+    // Si volvemos al inicio o categorías, cerramos el modal forzosamente
+    if (!hash.includes("/producto/")) {
+        const modal = document.getElementById("modalProducto");
+        if (modal) {
+            modal.style.display = "none";
+            document.body.classList.remove("no-scroll");
+        }
+    }
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
 
@@ -424,17 +432,17 @@ function activarOpcionesProducto() {
     };
 }
 
-function cerrarProducto() {
-    const modal = document.getElementById("modalProducto");
-    if (modal) {
-        modal.style.display = "none";
-        document.body.classList.remove("no-scroll");
-    }
-    
-    // 🔥 EL TRUCO: Limpiamos el hash sin recargar la página
-    // Esto permite que si haces clic de nuevo en el mismo producto, el router se active.
-    history.pushState("", document.title, window.location.pathname + window.location.search);
+function cerrarProducto(){
+  document.getElementById("modalProducto").style.display = "none";
+  document.body.classList.remove("no-scroll");
 }
+
+// 🔥 Cerrar tocando fuera
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
 /* ===============================
    NAVEGACIÓN SPA
 =================================*/
