@@ -274,8 +274,12 @@ imgModal.addEventListener("click", e=>{
 
 const modalProducto = document.getElementById("modal-producto");
 
-/* --- FUNCIONES DEL MODAL (SPA) --- */
-
+// Variables globales para rastrear la selección
+let modeloSeleccionado = "";
+let colorSeleccionado = "";
+let precioActual = "";
+let imagenSeleccionada = ""; // Nueva variable para la foto
+    
 function abrirProducto(id) {
     // Limpia la barra al entrar al detalle
     const buscador = document.getElementById("inputBuscador");
