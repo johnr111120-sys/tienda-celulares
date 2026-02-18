@@ -245,18 +245,6 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
-// Variable global para el estado del usuario
-let usuarioLogueado = false;
-let datosUsuario = {
-    nombre: "Juan Pérez",
-    correo: "cliente@ejemplo.com",
-    direccion: "Av. Independencia #123, Santo Domingo",
-    historial: [
-        { id: "1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" },
-        { id: "1055", fecha: "15/02/2024", total: "1,200", estado: "En camino" }
-    ]
-};
-
 // Función para simular el Inicio de Sesión
 function procesarLogin() {
     const correo = document.querySelector('.login-card input[type="text"]').value;
@@ -276,7 +264,19 @@ function procesarLogin() {
         alert("Por favor, ingresa un correo y contraseña válidos.");
     }
 }
-
+      
+// Variable global para el estado del usuario
+let usuarioLogueado = false;
+let datosUsuario = {
+    nombre: "Juan Pérez",
+    correo: "cliente@ejemplo.com",
+    direccion: "Av. Independencia #123, Santo Domingo",
+    historial: [
+        { id: "1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" },
+        { id: "1055", fecha: "15/02/2024", total: "1,200", estado: "En camino" }
+    ]
+};
+      
 // 1. Esta función SOLO abre la vista o el modal
 function navegarSPA(seccion) {
     const inicio = document.getElementById("vista-inicio");
