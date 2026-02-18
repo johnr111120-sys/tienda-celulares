@@ -426,8 +426,15 @@ function activarOpcionesProducto() {
 }
 
 function cerrarProducto() {
-    document.getElementById("modalProducto").style.display = "none";
-    document.body.classList.remove("no-scroll");
+    const modal = document.getElementById("modalProducto");
+    if (modal) {
+        modal.style.display = "none";
+        document.body.classList.remove("no-scroll");
+    }
+    
+    // 🔥 EL TRUCO: Limpiamos el hash sin recargar la página
+    // Esto permite que si haces clic de nuevo en el mismo producto, el router se active.
+    history.pushState("", document.title, window.location.pathname + window.location.search);
 }
 
 /* ===============================
