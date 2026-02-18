@@ -99,7 +99,7 @@ html, body {
 /* --- AJUSTE DE REDES SOCIALES (Instagram y Facebook) --- */
 .nav-socials {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
     flex-grow: 1; /* Ocupa el espacio central */
 }
