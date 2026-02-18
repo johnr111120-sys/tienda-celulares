@@ -171,8 +171,8 @@
     "imagen": "images/accesorios14.jpg",
     "colores": [
     { "nombre": "Plateado", "codigo":"#E0E0E0","imagen":"images/appleserie3plateado.jpg"},
-     { "nombre": "Negro", "codigo":"#4b4845","imagen":"images/appleserie3negro.jpg"},
-    { "nombre": "Rosado", "codigo":"##FFADFF","imagen":"images/appleserie3rosa.jpg"}
+     { "nombre": "Negro", "codigo":"#000000","imagen":"images/appleserie3negro.jpg"},
+    { "nombre": "Rosado", "codigo":"#FFADFF","imagen":"images/appleserie3rosa.jpg"}
     ]
   },
   {
