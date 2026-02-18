@@ -240,7 +240,6 @@ loading="lazy"
 referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </section>
-  </div>
     
 <footer>
     <div class="mapa-contacto-footer">
@@ -555,7 +554,7 @@ function renderizarCarrito() {
                 </div>
                 
                 <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
-                <button class="btn-carrito-estilo" onclick="irAWhatsAppCarrito()" style="margin-top: 10px;">FINALIZAR COMPRA</button>
+                <button class="btn-carrito-estilo" onclick="navegarAFinalizarCompra()">FINALIZAR COMPRA</button>
             </div>
         `;
     }
@@ -645,6 +644,137 @@ function toggleCarritoIzquierdo() {
     }
 }
 
+// Función para generar un número de rastreo único (Ej: MC-2026-X892)
+function generarNumeroRastreo() {
+    const random = Math.floor(1000 + Math.random() * 9000);
+    return `MC-2026-${random}`;
+}
+
+function navegarAFinalizarCompra() {
+    toggleCarritoIzquierdo(); // Cerrar panel lateral
+    
+    // 1. Manejo de Vistas SPA
+    document.getElementById("vista-inicio").style.display = "none";
+    document.getElementById("vista-productos").style.display = "none";
+    
+    // 2. Ocultar Barra de Categorías y Footer (Mapa/Contacto)
+    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
+    if(barraCategorias) barraCategorias.style.display = "none";
+    
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
+    if(mapaContacto) mapaContacto.style.display = "none";
+
+    // 3. Renderizar el Checkout en el contenedor SPA
+    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
+    contenedorSPA.style.display = "block";
+    contenedorSPA.style.backgroundColor = "#f4f4f4"; // Fondo gris claro para el formulario (estilo imagen)
+
+    const trackingNum = generarNumeroRastreo();
+    const subtotal = calcularSubtotal();
+
+    contenedorSPA.innerHTML = `
+        <div class="checkout-container">
+            <h1 class="checkout-titulo">Finalizar Pedido</h1>
+            
+            <div class="checkout-grid">
+                <div class="checkout-col">
+                    <div class="checkout-card">
+                        <h3>Detalles de Facturación</h3>
+                        <div class="form-grid">
+                            <input type="text" id="ch-nombre" placeholder="Nombre *">
+                            <input type="text" id="ch-apellido" placeholder="Apellido *">
+                            <input type="text" id="ch-cedula" placeholder="Documento Identidad">
+                            <input type="text" id="ch-telefono" placeholder="Teléfono *">
+                            <input type="email" id="ch-email" placeholder="Email *">
+                            <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
+                            <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
+                            <textarea id="ch-notas" placeholder="Notas del pedido (opcional)" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-col">
+                    <div class="checkout-card">
+                        <h3>Tu Pedido</h3>
+                        <div class="tracking-box">
+                            <span>Número de Rastreo:</span>
+                            <strong id="num-tracking-final">${trackingNum}</strong>
+                        </div>
+                        
+                        <div class="resumen-pedido">
+                            <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                            <div class="resumen-fila"><span>Envío</span> <span>A calcular</span></div>
+                            <div class="resumen-fila total"><span>Total</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                        </div>
+
+                        <div class="metodo-pago">
+                            <h4>Método de Pago</h4>
+                            <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
+                            <label><input type="radio" name="pago"> Transferencia Bancaria</label>
+                        </div>
+
+                        <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
+                            REALIZAR EL COMPRA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function enviarPedidoWhatsApp(tracking) {
+    // 1. Capturamos los datos del formulario de Checkout
+    const nombre = document.getElementById("ch-nombre").value.trim();
+    const apellido = document.getElementById("ch-apellido").value.trim();
+    const telefono = document.getElementById("ch-telefono").value.trim();
+    const ciudad = document.getElementById("ch-ciudad").value.trim();
+    const direccion = document.getElementById("ch-direccion").value.trim();
+
+    // 2. Validación estricta: Si falta algo, no se envía ni se borra nada
+    if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
+        alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
+        return;
+    }
+
+    // 3. Construimos la lista de productos para el mensaje
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
+    
+    // 4. Creamos el mensaje profesional para WhatsApp
+    const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
+                    `*Rastreo:* ${tracking}\n` +
+                    `--------------------------\n` +
+                    `*CLIENTE:* ${nombre} ${apellido}\n` +
+                    `*TELÉFONO:* ${telefono}\n` +
+                    `*CIUDAD:* ${ciudad}\n` +
+                    `*DIRECCIÓN:* ${direccion}\n` +
+                    `--------------------------\n` +
+                    `*PRODUCTOS:*\n${listaProductos}\n` +
+                    `--------------------------\n` +
+                    `*TOTAL A PAGAR:* RD$ ${calcularSubtotal().toLocaleString()}\n` +
+                    `--------------------------\n` +
+                    `_Enviado desde el Checkout de la web._`;
+
+    // 5. Abrimos WhatsApp en una nueva pestaña
+    const numWhatsApp = "59891547599"; 
+    const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+
+    // 6. 🔥 AHORA SÍ: Limpieza total tras el éxito
+    carrito = []; // Vaciar array
+    localStorage.removeItem("carrito_compras"); // Borrar memoria persistente
+    
+    // 7. Actualizar interfaz
+    actualizarContadorCarrito();
+    renderizarCarrito();
+
+    // 8. Confirmación y regreso al inicio
+    alert("✅ ¡Pedido enviado con éxito! Redirigiendo al inicio...");
+    window.location.hash = "#/";
+    location.reload(); // Esto restaura el Nav y el Footer completo
+}
+      
 // --- MODAL LOGIN (ESTILO IMAGEN) ---
 function mostrarModalLogin() {
     const modal = document.getElementById("modal-login-contenedor");
