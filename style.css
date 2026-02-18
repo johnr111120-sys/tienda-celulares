@@ -548,7 +548,7 @@ body.no-scroll{
     top: 60px; /* Ajusta este valor a la altura exacta de tu Nav principal */
     left: 0 !important;
     right: 0 !important;
-    width: 100%;
+    width: 250px;
     height: 48px; /* Altura de la barra */
     z-index: 10001;
     display: flex;
@@ -1807,7 +1807,7 @@ body.menu-abierto {
     position: fixed;
     top: 0;
     right: -100%; /* Escondido a la izquierda */
-    width: 200px;
+    width: 250px;
     height: 100%;
     background: #000;
     z-index: 2000;
