@@ -490,8 +490,9 @@ function crearContenedorSPA() {
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
 function agregarAlCarrito(producto, variacion = null) {
+    // 1. Crear el objeto del item
     const item = {
-        id: producto.id || Date.now(),
+        id: producto.id,
         nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
         precio: variacion ? variacion.precio : producto.precio,
         imagen: producto.imagen
@@ -506,8 +507,11 @@ function agregarAlCarrito(producto, variacion = null) {
     actualizarContadorCarrito();
     renderizarCarrito();
 
-    // MOSTRAR AVISO, PERO NO ABRIR PANEL
-    mostrarNotificacion(item.nombre);
+    // 4. 🔥 AUTO-ABRIR el carrito para feedback
+    const panel = document.getElementById("carrito-izquierdo");
+    if (panel) {
+        panel.classList.add("activo");
+    }
 }
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -527,21 +531,6 @@ function calcularSubtotal() {
     return carrito.reduce((acc, p) => acc + parseInt(p.precio), 0);
 }
 
-function mostrarNotificacion(nombre) {
-    // Eliminar si ya hay una abierta
-    const previa = document.querySelector(".notificacion-carrito");
-    if (previa) previa.remove();
-
-    const aviso = document.createElement("div");
-    aviso.className = "notificacion-carrito";
-    aviso.innerHTML = `<i class="fas fa-check-circle"></i> ${nombre} añadido al carrito`;
-    
-    document.body.appendChild(aviso);
-
-    // Se borra sola después de la animación
-    setTimeout(() => { aviso.remove(); }, 3000);
-}
-      
 // Función para renderizar el Carrito Lateral con el Subtotal y Botones
 function renderizarCarrito() {
     const contenedor = document.getElementById("carrito-contenido-izq");
@@ -1453,24 +1442,30 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 
  <script> 
 function irAlCarritoDetalle(nombreProducto) {
+    // 1. Obtenemos los valores que el usuario seleccionó en la pantalla de detalles
     const capacidad = modeloSeleccionado || "N/A"; 
     const color = colorSeleccionado || "Original";
     const precioTexto = document.getElementById("spanPrecio").innerText;
+    
+    // Limpiamos el precio por si tiene "RD$" o comas, para que sea un número puro
     const precioLimpio = precioTexto.replace(/[^\d]/g, "");
 
+    // 2. Creamos el objeto del producto con sus variaciones
+    // Buscamos el producto original en tu base de datos 'productos' usando el nombre
     const productoOriginal = productos.find(p => p.nombre === nombreProducto);
 
     const productoParaCarrito = {
         id: productoOriginal ? productoOriginal.id : Date.now(),
-        nombre: nombreProducto,
-        // Usamos una variación interna para que el nombre se vea bonito
-        variacion: `${capacidad} / ${color}`,
+        nombre: `${nombreProducto} (${capacidad} / ${color})`,
         precio: precioLimpio,
         imagen: productoOriginal ? productoOriginal.imagen : "" 
     };
 
-    // Llamamos a la función que ahora SOLO notifica
-    agregarAlCarrito(productoParaCarrito, { nombre: productoParaCarrito.variacion, precio: precioLimpio });
+    // 3. Lo mandamos al carrito global
+    agregarAlCarrito(productoParaCarrito);
+
+    // Opcional: Cerrar el modal o vista de detalles si lo deseas
+    // cerrarModalProducto(); 
 }
 </script>
 
