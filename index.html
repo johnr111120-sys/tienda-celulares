@@ -480,6 +480,28 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
+function agregarAlCarrito(producto, variacion = null) {
+    // 1. Crear el objeto del item
+    const item = {
+        id: producto.id,
+        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
+        precio: variacion ? variacion.precio : producto.precio,
+        imagen: producto.imagen
+    };
+
+    // 2. Guardar en el array y localStorage
+    carrito.push(item);
+    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
+
+    // 3. Actualizar la interfaz
+    actualizarContadorCarrito();
+    renderizarCarrito();
+
+    // 4. 🔥 AUTO-ABRIR el carrito para feedback
+    const panel = document.getElementById("carrito-izquierdo");
+    if (panel) panel.classList.add("activo");
+}
+
 // Variable global (asegúrate de que agregarAlCarrito la use)
 let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
 
@@ -497,20 +519,26 @@ function renderizarCarrito() {
     if (!contenedor) return;
 
     if (carrito.length === 0) {
+        // Texto visible sobre fondo negro
         contenedor.innerHTML = `<p class="carrito-vacio">No hay productos en el carrito.</p>`;
     } else {
         contenedor.innerHTML = carrito.map((p, index) => `
-            <div style="display:flex; align-items:center; gap:10px; padding:10px; border-bottom:1px solid #333;">
-                <img src="${p.imagen}" style="width:50px; border-radius:5px;">
+            <div class="item-carrito">
+                <img src="${p.imagen}" style="width:60px; height:60px; object-fit:cover; border-radius:5px;">
                 <div style="flex:1;">
-                    <p style="margin:0; font-size:14px;">${p.nombre}</p>
-                    <p style="margin:0; font-size:12px; color:#3498db;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+                    <p style="margin:0; font-weight:bold; color:white;">${p.nombre}</p>
+                    <p style="margin:5px 0 0; color:#3498db;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
                 </div>
-                <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer;">
-                    <i class="fas fa-trash"></i>
-                </button>
+                <i class="fas fa-trash" onclick="eliminarDelCarrito(${index})" style="color:#ff4757; cursor:pointer;"></i>
             </div>
         `).join("");
+        
+        // Agregar botón de finalizar compra si hay items
+        contenedor.innerHTML += `
+            <div style="padding:20px;">
+                <button class="btn-comprar" style="width:100%;" onclick="irAWhatsAppCarrito()">Finalizar Pedido</button>
+            </div>
+        `;
     }
 }
 
@@ -1270,12 +1298,10 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
 
 <div id="carrito-izquierdo" class="carrito-lateral">
     <button class="cerrar-carrito-x" onclick="toggleCarritoIzquierdo()">✕</button>
-    
     <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
-    
-    <div id="carrito-contenido-der" class="carrito-cuerpo"></div>
+    <div id="carrito-contenido-izq"></div>
 </div>
-
+    
 <div id="modal-login-contenedor" class="modal-login">
     <div class="login-card">
         <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
