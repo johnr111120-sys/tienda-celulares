@@ -532,7 +532,6 @@ function renderizarCarrito() {
     if (carrito.length === 0) {
         contenedor.innerHTML = `<p class="carrito-vacio">No hay productos en el carrito.</p>`;
     } else {
-        // Render de productos
         let htmlProductos = carrito.map((p, index) => `
             <div class="item-carrito">
                 <img src="${p.imagen}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
@@ -545,19 +544,23 @@ function renderizarCarrito() {
         `).join("");
 
         contenedor.innerHTML = `
-            <div class="carrito-items-scroll">${htmlProductos}</div>
+            <div class="carrito-items-scroll" style="flex: 1; overflow-y: auto;">
+                ${htmlProductos}
+            </div>
+            
             <div class="carrito-footer-fijo">
                 <div class="subtotal-box">
-                    <span>Subtotal:</span>
+                    <span>SUBTOTAL:</span>
                     <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
                 </div>
-                <button class="btn-ver-carrito" onclick="navegarAVerCarrito()">Ver Carrito</button>
-                <button class="btn-comprar" style="width:100%; margin-top:10px;" onclick="irAWhatsAppCarrito()">Finalizar Pedido</button>
+                
+                <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
+                <button class="btn-carrito-estilo" onclick="irAWhatsAppCarrito()" style="margin-top: 10px;">FINALIZAR COMPRA</button>
             </div>
         `;
     }
 }
-
+      
 // Función SPA para la vista "Ver Carrito" detallada
 function navegarAVerCarrito() {
     toggleCarritoIzquierdo(); // Cerramos el panel lateral
