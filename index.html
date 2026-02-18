@@ -262,23 +262,29 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
-// VARIABLES GLOBALES ÚNICAS
-let productos = []; 
 let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
-let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
-let usuarioLogueado = JSON.parse(localStorage.getItem("usuario_sesion")) || null;
-      
+let usuarioLogueado = false;
+let datosUsuario = {
+    nombre: "Juan Pérez",
+    correo: "cliente@ejemplo.com",
+    direccion: "Av. Independencia #123, Santo Domingo",
+    historial: [
+        { id: "1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" },
+        { id: "1055", fecha: "15/02/2024", total: "1,200", estado: "En camino" }
+    ]
+};
+
 /* ===============================
    LÓGICA DE LOGIN
 =================================*/
 function mostrarModalLogin() {
     const modal = document.getElementById("modal-login-contenedor");
-    if (modal) modal.style.display = "flex";
+    if(modal) modal.style.display = "flex";
 }
 
 function cerrarLogin() {
     const modal = document.getElementById("modal-login-contenedor");
-    if (modal) modal.style.display = "none";
+    if(modal) modal.style.display = "none";
 }
 
 function procesarLogin() {
@@ -368,44 +374,47 @@ function renderizarPerfil(contenedor) {
                 </div>
                 <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
                     <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
-                    // Dentro de renderizarPerfil(contenedor) busca el mapeo del historial:
-                     ${datosUsuario.historial.map(p => `
-                          <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
-                            <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
-                              <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
-                             <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
-                           <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
-                         </span>
+                    ${datosUsuario.historial.map(p => `
+                        <div style="border-bottom:1px solid #333; padding:12px 0; font-size:14px;">
+                            <b>Pedido #${p.id}</b> - RD$ ${p.total} <br>
+                            <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">• ${p.estado}</span>
                         </div>
-                   `).join('')}
+                    `).join('')}
                 </div>
             </div>
         </div>`;
 }
 
 function toggleFavorito(idProducto, evento) {
-    if (evento) evento.stopPropagation();
+    if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
 
     const index = favoritos.findIndex(p => p.id === idProducto);
     const producto = productos.find(p => p.id === idProducto);
 
     if (index === -1) {
-        if (producto) {
-            favoritos.push(producto);
-            mostrarNotificacion("Añadido a favoritos ❤️");
-        }
+        // No está, lo agregamos
+        favoritos.push(producto);
+        alert("❤️ Añadido a favoritos");
     } else {
+        // Ya está, lo quitamos
         favoritos.splice(index, 1);
-        mostrarNotificacion("Eliminado de favoritos 🖤");
+        alert("🖤 Eliminado de favoritos");
     }
 
+    // Guardamos en la memoria del navegador
     localStorage.setItem("mis_favoritos", JSON.stringify(favoritos));
-    actualizarContadorFavoritos();
     
-    // Si estamos en la vista de favoritos, refrescarla
-    if (window.location.hash === "#/favoritos") {
-        router();
-    }
+    // Si estamos en la vista de favoritos, refrescarla de inmediato
+    if (document.getElementById("vista-spa-cliente").style.display === "block") {
+        renderizarFavoritos(document.getElementById("vista-spa-cliente"));
+    
+    function toggleFavorito(idProducto, evento) {
+    // ... (todo tu código anterior de agregar/quitar favoritos) ...
+
+    // Al final, añade esto:
+    actualizarContadorFavoritos();
+   }
+  }
 }
 
 function actualizarContadorFavoritos() {
@@ -476,12 +485,12 @@ function crearContenedorSPA() {
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
 function agregarAlCarrito(producto, variacion = null) {
+    // 1. Crear el objeto del item
     const item = {
-        id: producto.id || Date.now(),
+        id: producto.id,
         nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
         precio: variacion ? variacion.precio : producto.precio,
         imagen: producto.imagen
-        slug: producto.slug
     };
 
     // 2. Guardar en el array y localStorage
@@ -492,8 +501,9 @@ function agregarAlCarrito(producto, variacion = null) {
     actualizarContadorCarrito();
     renderizarCarrito();
 
-    // MOSTRAR AVISO, PERO NO ABRIR PANEL
-    mostrarNotificacion(item.nombre);
+    // 4. 🔥 AUTO-ABRIR el carrito para feedback
+    const panel = document.getElementById("carrito-izquierdo");
+    if (panel) panel.classList.add("activo");
 }
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -513,21 +523,6 @@ function calcularSubtotal() {
     return carrito.reduce((acc, p) => acc + parseInt(p.precio), 0);
 }
 
-function mostrarNotificacion(nombre) {
-    // Eliminar si ya hay una abierta
-    const previa = document.querySelector(".notificacion-carrito");
-    if (previa) previa.remove();
-
-    const aviso = document.createElement("div");
-    aviso.className = "notificacion-carrito";
-    aviso.innerHTML = `<i class="fas fa-check-circle"></i> ${nombre} añadido al carrito`;
-    
-    document.body.appendChild(aviso);
-
-    // Se borra sola después de la animación
-    setTimeout(() => { aviso.remove(); }, 3000);
-}
-      
 // Función para renderizar el Carrito Lateral con el Subtotal y Botones
 function renderizarCarrito() {
     const contenedor = document.getElementById("carrito-contenido-izq");
@@ -642,12 +637,10 @@ window.addEventListener("load", () => {
 
 // Modifica tu función toggleCarritoIzquierdo para que refresque la lista
 function toggleCarritoIzquierdo() {
-    const carritoSide = document.getElementById("carrito-izquierdo");
-    if (carritoSide) {
-        carritoSide.classList.toggle("activo");
-        if (carritoSide.classList.contains("activo")) {
-            renderizarCarrito();
-        }
+    const panel = document.getElementById("carrito-izquierdo");
+    panel.classList.toggle("activo");
+    if (panel.classList.contains("activo")) {
+        renderizarCarrito();
     }
 }
 
@@ -703,16 +696,10 @@ function navegarAFinalizarCompra() {
                 <div class="checkout-col">
                     <div class="checkout-card">
                         <h3>Tu Pedido</h3>
-                       <div class="tracking-box">
-                      <div>
-                         <span>Número de Rastreo:</span><br>
-                         <strong id="num-tracking-final">${trackingNum}</strong>
-                     </div>
-                        <button class="btn-copiar-rastreo" onclick="copiarRastreo('${trackingNum}')" 
-                        style="background:#555; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">
-                        <i class="fas fa-copy"></i> COPIAR
-                    </button>
-                    </div>
+                        <div class="tracking-box">
+                            <span>Número de Rastreo:</span>
+                            <strong id="num-tracking-final">${trackingNum}</strong>
+                        </div>
                         
                         <div class="resumen-pedido">
                             <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
@@ -738,36 +725,21 @@ function navegarAFinalizarCompra() {
 }
 
 function enviarPedidoWhatsApp(tracking) {
+    // 1. Capturamos los datos del formulario de Checkout
     const nombre = document.getElementById("ch-nombre").value.trim();
     const apellido = document.getElementById("ch-apellido").value.trim();
     const telefono = document.getElementById("ch-telefono").value.trim();
     const ciudad = document.getElementById("ch-ciudad").value.trim();
     const direccion = document.getElementById("ch-direccion").value.trim();
 
+    // 2. Validación estricta: Si falta algo, no se envía ni se borra nada
     if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
         alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
         return;
     }
 
-    // --- NUEVO: GUARDAR EN EL HISTORIAL DEL PERFIL ---
-    if (usuarioLogueado) {
-        const nuevoPedido = {
-            id: tracking, // Usamos el número de rastreo como ID de pedido
-            fecha: new Date().toLocaleDateString(), // Fecha de hoy
-            total: calcularSubtotal().toLocaleString(),
-            estado: "Pendiente" // Estado inicial
-        };
-        
-        // Lo agregamos al principio de la lista
-        datosUsuario.historial.unshift(nuevoPedido);
-        
-        // Opcional: Guardar en localStorage para que no se borre al recargar
-        localStorage.setItem("datos_usuario_moises", JSON.stringify(datosUsuario));
-    }
-    // ------------------------------------------------
-
-    // Preparar y enviar a WhatsApp (tu código anterior)
-   let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
+    // 3. Construimos la lista de productos para el mensaje
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
     
     // 4. Creamos el mensaje profesional para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
@@ -788,28 +760,19 @@ function enviarPedidoWhatsApp(tracking) {
     const numWhatsApp = "59891547599"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
+
+    // 6. 🔥 AHORA SÍ: Limpieza total tras el éxito
+    carrito = []; // Vaciar array
+    localStorage.removeItem("carrito_compras"); // Borrar memoria persistente
     
-    // Limpieza
-    carrito = [];
-    localStorage.removeItem("carrito_compras");
+    // 7. Actualizar interfaz
     actualizarContadorCarrito();
     renderizarCarrito();
-    
-    alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
-    window.location.hash = "#/";
-    location.reload();
-}
 
-function copiarRastreo(texto) {
-    navigator.clipboard.writeText(texto).then(() => {
-        const btn = document.querySelector(".btn-copiar-rastreo");
-        btn.innerHTML = '<i class="fas fa-check"></i> COPIADO';
-        btn.style.background = "#27ae60";
-        setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-copy"></i> COPIAR';
-            btn.style.background = "#555";
-        }, 2000);
-    });
+    // 8. Confirmación y regreso al inicio
+    alert("✅ ¡Pedido enviado con éxito! Redirigiendo al inicio...");
+    window.location.hash = "#/";
+    location.reload(); // Esto restaura el Nav y el Footer completo
 }
       
 // --- MODAL LOGIN (ESTILO IMAGEN) ---
@@ -907,7 +870,7 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-                <button class="btn-comprar-spa" onclick="irAlCarritoDetalle('${p.nombre}')">
+                <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
                     Comprar ahora
                 </button>
             </div>
@@ -1197,6 +1160,7 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    VARIABLES GLOBALES
 =================================*/
+let productos = "";
 let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
@@ -1328,14 +1292,10 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
 
- // Si productos está vacío (porque el fetch no ha terminado), esperamos un poco
-    if (productos.length === 0) {
-        setTimeout(() => mostrarProductosPorSubcategoria(sub), 500);
-        return;
-    }
-    const filtrados = productos.filter(p => p.subcategoria === sub);
-    renderizarListaProductos(filtrados, sub);
-}
+  const filtrados = productos.filter(
+  p => p.subcategoria.toLowerCase().trim() === 
+       subcategoria.toLowerCase().trim()
+);
 
   if (filtrados.length === 0) {
     contenedor.innerHTML = "<p>No hay productos</p>";
@@ -1443,25 +1403,23 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 
 
  <script> 
-function irAlCarritoDetalle(nombreProducto) {
-    const capacidad = modeloSeleccionado || "N/A"; 
-    const color = colorSeleccionado || "Original";
-    const precioTexto = document.getElementById("spanPrecio").innerText;
-    const precioLimpio = precioTexto.replace(/[^\d]/g, "");
+function irAWhatsApp(nombreProducto) {
+    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
+    const capacidad = modeloSeleccionado || "64GB"; 
+    const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
 
-    const productoOriginal = productos.find(p => p.nombre === nombreProducto);
+    // Mensaje con el enlace de la imagen al final
+    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
+                    `• *Capacidad:* ${capacidad}\n` +
+                    `• *Color:* ${color}\n` +
+                    `• *Precio:* RD$ ${precio}\n\n` +
+                    `¿Está disponible?`;
 
-    const productoParaCarrito = {
-        id: productoOriginal ? productoOriginal.id : Date.now(),
-        nombre: nombreProducto,
-        // Usamos una variación interna para que el nombre se vea bonito
-        variacion: `${capacidad} / ${color}`,
-        precio: precioLimpio,
-        imagen: productoOriginal ? productoOriginal.imagen : "" 
-    };
-
-    // Llamamos a la función que ahora SOLO notifica
-    agregarAlCarrito(productoParaCarrito, { nombre: productoParaCarrito.variacion, precio: precioLimpio });
+    const telefono = "59891547599"; // Tu número
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+    
+    window.open(url, '_blank');
 }
 </script>
 
@@ -1492,37 +1450,30 @@ function buscarEnTiempoReal() {
     }
 }
 
-function renderizarListaProductos(lista, titulo) {
-    const contenedor = document.getElementById("contenedor-productos");
-    const tituloSeccion = document.getElementById("titulo-seccion");
-    if (!contenedor) return;
-
-    contenedor.innerHTML = "";
-    tituloSeccion.innerText = titulo;
+function renderizarListaFiltrada(lista) {
+    const contenedor = document.getElementById("productos");
+    contenedor.innerHTML = ""; // Limpiar grid
 
     if (lista.length === 0) {
-        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: white;">No hay productos disponibles.</p>`;
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: white;">No se encontraron resultados.</p>`;
         return;
     }
 
-    lista.forEach(p => {
-        // Verificar si el producto ya es favorito
-        const esFav = favoritos.some(f => f.id === p.id);
-        
-        const div = document.createElement("div");
-        div.className = "producto-card";
-        div.innerHTML = `
-            <div class="card-container">
-                <i class="fas fa-heart btn-favorito-corazon ${esFav ? 'activo' : ''}" 
-                   onclick="toggleFavorito(${p.id}, event)"></i>
-                <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
-                <h3>${p.nombre}</h3>
-                <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-                <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
-            </div>
-        `;
-        contenedor.appendChild(div);
-    });
+   lista.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "producto-card";
+    div.innerHTML = `
+        <div class="card-container">
+            <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
+               onclick="toggleFavorito(${p.id}, event)"></i>
+            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
+            <h3>${p.nombre}</h3>
+            <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
+            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
+        </div>
+    `;
+    contenedor.appendChild(div);
+});
 }
     </script>
     
