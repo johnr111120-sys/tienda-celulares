@@ -367,36 +367,36 @@ function activarOpcionesProducto() {
     areaOpciones.onclick = function(e) {
         const target = e.target;
 
-        // Si hacemos clic en un MODELO (Capacidad)
+       // --- Lógica de MODELO (Capacidad) ---
         if (target.classList.contains('modelo-opcion') && target.dataset.precio) {
             const hermanos = target.parentElement.querySelectorAll('.modelo-opcion');
             hermanos.forEach(h => h.classList.remove('activo'));
             target.classList.add('activo');
 
-            // Actualizar precio
             precioActual = target.dataset.precio;
             modeloSeleccionado = target.dataset.nombre;
             document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
         }
-
-       // Dentro del evento onclick de las opciones:
-if (target.classList.contains('color-opcion')) {
-    const hermanos = target.parentElement.querySelectorAll('.color-opcion');
-    hermanos.forEach(h => h.classList.remove('activo'));
-    target.classList.add('activo');
-
-    // Actualizamos el nombre legible del color
-    colorSeleccionado = target.dataset.name; 
-
-    // Si el color tiene una imagen específica, actualizamos la vista y el enlace de WhatsApp
-    if (target.dataset.img) {
-        const nuevaImg = target.dataset.img;
-        document.getElementById("imgPrincipal").src = nuevaImg;
         
-        // Actualizamos la variable para que WhatsApp mande la foto del color elegido
-        imagenSeleccionada = window.location.origin + "/" + nuevaImg;
-    }
-}
+      // --- Lógica de COLOR ---
+        if (target.classList.contains('color-opcion')) {
+            const hermanos = target.parentElement.querySelectorAll('.color-opcion');
+            hermanos.forEach(h => h.classList.remove('activo'));
+            target.classList.add('activo');
+
+            // Guardamos el nombre (ej: "Azul") que viene del dataset
+            colorSeleccionado = target.dataset.name; 
+
+            if (target.dataset.img) {
+                const nuevaImg = target.dataset.img;
+                document.getElementById("imgPrincipal").src = nuevaImg;
+                // Actualizamos la imagen para WhatsApp (URL completa)
+                imagenSeleccionada = window.location.origin + "/" + nuevaImg;
+            }
+        }
+    }; // Cerramos el onclick correctamente
+} // Cerramos la función activarOpcionesProducto correctamente
+    
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
   document.body.classList.remove("no-scroll");
