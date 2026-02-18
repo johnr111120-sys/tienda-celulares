@@ -411,6 +411,11 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
+
+    // Esto refresca la vista actual para que el corazón cambie de color
+    const currentHash = window.location.hash;
+    router();
+  }
     
     function toggleFavorito(idProducto, evento) {
     // ... (todo tu código anterior de agregar/quitar favoritos) ...
