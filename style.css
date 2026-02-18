@@ -856,37 +856,6 @@ body.modal-abierto .whatsapp{
   transform: translateX(-100%);
   opacity: 0;
 }
-
-/* =========================
-   MODALES
-========================= */
-.modal-carrito {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.4);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease;
-  z-index: 2000;
-}
-
-.modal-carrito.activo {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.carrito-contenido {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  width: min(90%, 420px);
-}
-
 /* =========================
    UTILIDADES
 ========================= */
@@ -1958,9 +1927,9 @@ body.menu-abierto {
 /* Carrito lateral desde la DERECHA */
 .carrito-lateral {
     position: fixed;
-    top: 0;
+    top: 108px;
     right: -100%; /* Escondido a la derecha */
-    width: 320px;
+    width: 250px;
     height: 100%;
     background-color: #111; /* Fondo oscuro */
     z-index: 3000;
