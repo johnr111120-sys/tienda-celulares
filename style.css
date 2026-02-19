@@ -2021,11 +2021,10 @@ body.menu-abierto {
 }
 
 .checkout-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    color: #333;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1100px; /* O el ancho que prefieras */
+    margin: 0 auto;    /* Esto es lo que centra el contenido horizontalmente */
+    padding: 20px;
+    display: block;    /* Asegura que se comporte como bloque para respetar el margin auto */
 }
 
 .checkout-titulo {
@@ -2038,6 +2037,12 @@ body.menu-abierto {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     gap: 30px;
+}
+/* En móviles, que ocupe todo el ancho */
+@media (max-width: 768px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .checkout-card {
