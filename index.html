@@ -774,15 +774,36 @@ function renderizarTablaCarrito(contenedor) {
     `;
 }
 
-// Función lógica para cambiar cantidades
 function cambiarCantidad(index, delta) {
-    carrito[index].cantidad += delta;
-    if (carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1); // Si llega a 0, se elimina
+    try {
+        if (!carrito[index]) return;
+
+        carrito[index].cantidad += delta;
+
+        // Si la cantidad es menor a 1, eliminamos el producto
+        if (carrito[index].cantidad < 1) {
+            carrito.splice(index, 1);
+        }
+
+        // Guardar en LocalStorage si lo usas
+        if (typeof guardarCarritoEnLocalStorage === 'function') {
+            guardarCarritoEnLocalStorage();
+        }
+
+        // Actualizamos las interfaces de forma asíncrona para evitar bloqueos
+        setTimeout(() => {
+            if (typeof renderizarCarrito === 'function') renderizarCarrito();
+            
+            // Solo refrescamos la vista SPA si estamos en ella
+            const contenedorSPA = document.getElementById("vista-spa-cliente");
+            if (contenedorSPA && contenedorSPA.style.display === "block") {
+                navegarAVerCarrito();
+            }
+        }, 10);
+
+    } catch (error) {
+        console.error("Error al cambiar cantidad:", error);
     }
-    // Refrescamos ambas vistas
-    renderizarCarrito();      // Barra lateral
-    navegarAVerCarrito();     // Vista principal SPA
 }
       
 function eliminarDelCarrito(index) {
