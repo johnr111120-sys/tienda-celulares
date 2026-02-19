@@ -2345,6 +2345,7 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 
 /* Evitar que el dropdown se cierre si el mouse se mueve un poco entre el icono y el menú */
 #contenedor-perfil-header::after {
+    top: 15px;
     content: "";
     position: absolute;
     bottom: -15px;
