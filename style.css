@@ -2195,29 +2195,3 @@ body.menu-abierto {
     .form-grid { grid-template-columns: 1fr; }
     .form-grid input, .form-grid textarea { grid-column: span 1; }
 }
-
-/* Estilo para la notificación flotante */
-.notificacion-carrito {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #27ae60; /* Verde éxito */
-    color: white;
-    padding: 12px 25px;
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 5000;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: slideDownUp 3s ease-in-out forwards;
-}
-
-@keyframes slideDownUp {
-    0% { top: -60px; opacity: 0; }
-    15% { top: 20px; opacity: 1; }
-    85% { top: 20px; opacity: 1; }
-    100% { top: -60px; opacity: 0; }
-}
