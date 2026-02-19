@@ -2021,11 +2021,11 @@ body.menu-abierto {
 }
 
 .checkout-container {
-    max-width: 1100px; /* O el ancho que prefieras */
-    margin: 0 auto;    /* Esto es lo que centra el contenido horizontalmente */
-    padding: 20px;
-    display: block;    /* Asegura que se comporte como bloque para respetar el margin auto */
-}
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 10px !important;
+    }
 
 .checkout-titulo {
     font-size: 32px;
@@ -2034,10 +2034,10 @@ body.menu-abierto {
 }
 
 .checkout-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 30px;
-}
+        display: flex !important;
+        flex-direction: column !important; /* Apila las columnas una debajo de otra */
+        align-items: center !important;
+    }
 /* En móviles, que ocupe todo el ancho */
 @media (max-width: 768px) {
     .checkout-grid {
@@ -2045,6 +2045,18 @@ body.menu-abierto {
     }
 }
 
+.checkout-col {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+/* Esto asegura que en pantallas pequeñas todo se centre */
+@media (max-width: 768px) {
+    #vista-spa-cliente {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin-left: 0 !important; /* Elimina el espacio del menú lateral si existía */
+    }
+   
 .checkout-card {
     background: white;
     padding: 25px;
@@ -2207,7 +2219,7 @@ body.menu-abierto {
     padding-top: 80px; /* Ajusta este valor según el alto de tu Nav */
     min-height: 100vh;
     margin-left: auto !important;
-    margin-right: 20px !important;
+    margin-right: auto !important;
 }
 
 .checkout-container, .carrito-container {
