@@ -429,7 +429,7 @@ function toggleFavorito(idProducto, evento) {
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
     
-    function toggleFavorito(idProducto, evento) {
+function toggleFavorito(idProducto, evento) {
     // ... (todo tu código anterior de agregar/quitar favoritos) ...
 
     // Al final, añade esto:
@@ -521,8 +521,8 @@ function agregarAlCarrito(producto, variacion = null) {
     renderizarCarrito();
 }
 
-// Variable global (asegúrate de que agregarAlCarrito la use)
-let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
+    // Variable global (asegúrate de que agregarAlCarrito la use)
+    let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
 
 function actualizarContadorCarrito() {
     const contador = document.getElementById("contador-carrito");
@@ -785,12 +785,29 @@ window.addEventListener("load", () => {
     renderizarCarrito();
 });
 
-// Modifica tu función toggleCarritoIzquierdo para que refresque la lista
 function toggleCarritoIzquierdo() {
-    const panel = document.getElementById("carrito-izquierdo");
-    panel.classList.toggle("activo");
-    if (panel.classList.contains("activo")) {
-        renderizarCarrito();
+    try {
+        const carrito = document.getElementById("carrito-izquierdo");
+        if (!carrito) return; // Si no hay carrito, no hace nada y no rompe
+
+        carrito.classList.toggle("activo");
+
+        // Lógica de WhatsApp protegida
+        const btnWhatsapp = document.querySelector(".btn-whatsapp") || 
+                           document.querySelector('[href*="wa.me"]') || 
+                           document.querySelector(".float-whatsapp");
+
+        if (btnWhatsapp) {
+            if (carrito.classList.contains("activo")) {
+                btnWhatsapp.style.opacity = "0";
+                btnWhatsapp.style.pointerEvents = "none";
+            } else {
+                btnWhatsapp.style.opacity = "1";
+                btnWhatsapp.style.pointerEvents = "auto";
+            }
+        }
+    } catch (error) {
+        console.warn("Error en el toggle del carrito, pero la web sigue funcionando.");
     }
 }
 
