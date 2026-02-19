@@ -578,12 +578,12 @@ function renderizarCarrito() {
         contenedor.innerHTML = `<p class="carrito-vacio">No hay productos en el carrito.</p>`;
     } else {
         let htmlProductos = carrito.map((p, index) => `
-             <div class="item-carrito">
-                <img src="${p.imagen}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
-                <div style="flex:1;">
-                    <p style="margin:0; font-weight:bold; color:white; font-size:13px;">${p.nombre}</p>
-                    <p style="margin:2px 0 0; color:#3498db; font-size:12px;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-                </div>
+              `<div class="item-carrito">
+                 <img src="${p.imagen}" width="40" height="40" style="object-fit: cover; border-radius: 4px;">
+                 <div class="info">
+                  <span>${p.nombre}</span>
+                   ${p.color ? `<small>Color: ${p.color}</small>` : ''}
+                  </div>
                 <i class="fas fa-trash" onclick="eliminarDelCarrito(${index})" style="color:#ff4757; cursor:pointer; font-size:12px;"></i>
             </div>
         `).join("");
