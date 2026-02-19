@@ -406,6 +406,119 @@ function renderizarPerfil(contenedor) {
         </div>`;
 }
 
+function mostrarPerfil() {
+    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
+    
+    // Ocultamos todo lo demás
+    const vistas = ["vista-inicio", "vista-productos", "menu-categorias", "mapa-contacto-footer"];
+    vistas.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.style.display = "none";
+    });
+
+    contenedorSPA.style.display = "block";
+    contenedorSPA.innerHTML = `
+        <div id="auth-container" style="max-width: 400px; margin: 50px auto; padding: 30px; background: white; border-radius: 12px; shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
+            <div id="auth-forms">
+                ${renderFormLogin()}
+            </div>
+        </div>
+    `;
+}
+
+function renderFormLogin() {
+    return `
+        <h2 style="margin-bottom: 20px;">Iniciar Sesión</h2>
+        <input type="email" id="login-email" placeholder="Correo Electrónico" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
+        <input type="password" id="login-pass" placeholder="Contraseña" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:6px;">
+        <button onclick="ejecutarLogin()" style="width:100%; padding:14px; background:#3498db; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">ENTRAR</button>
+        <p style="margin-top:20px; font-size:14px;">¿No tienes cuenta? <a href="#" onclick="cambiarAuth('registro')" style="color:#3498db; font-weight:bold;">Regístrate aquí</a></p>
+    `;
+}
+
+function renderFormRegistro() {
+    return `
+        <h2 style="margin-bottom: 20px;">Crear Cuenta</h2>
+        <input type="text" id="reg-nombre" placeholder="Nombre Completo" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
+        <input type="email" id="reg-email" placeholder="Correo Electrónico" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
+        <input type="password" id="reg-pass" placeholder="Contraseña" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:6px;">
+        <button onclick="ejecutarRegistro()" style="width:100%; padding:14px; background:#27ae60; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">CREAR CUENTA</button>
+        <p style="margin-top:20px; font-size:14px;">¿Ya tienes cuenta? <a href="#" onclick="cambiarAuth('login')" style="color:#3498db; font-weight:bold;">Inicia sesión</a></p>
+    `;
+}
+
+function cambiarAuth(tipo) {
+    const contenedor = document.getElementById("auth-forms");
+    if (tipo === 'registro') {
+        contenedor.innerHTML = renderFormRegistro();
+    } else {
+        contenedor.innerHTML = renderFormLogin();
+    }
+}
+
+// REGISTRO
+function ejecutarRegistro() {
+    const nombre = document.getElementById("reg-nombre").value;
+    const email = document.getElementById("reg-email").value;
+    const pass = document.getElementById("reg-pass").value;
+
+    if (!nombre || !email || !pass) return alert("Llena todos los campos");
+
+    // Obtenemos usuarios ya guardados
+    let usuarios = JSON.parse(localStorage.getItem("usuarios_tienda")) || [];
+    
+    // Validar si el correo ya existe
+    if (usuarios.find(u => u.email === email)) return alert("El correo ya está registrado");
+
+    // Guardar nuevo usuario
+    usuarios.push({ nombre, email, pass });
+    localStorage.setItem("usuarios_tienda", JSON.stringify(usuarios));
+
+    alert("¡Cuenta creada con éxito! Ahora inicia sesión.");
+    cambiarAuth('login');
+}
+
+// LOGIN
+function ejecutarLogin() {
+    const email = document.getElementById("login-email").value;
+    const pass = document.getElementById("login-pass").value;
+
+    let usuarios = JSON.parse(localStorage.getItem("usuarios_tienda")) || [];
+    const usuarioValidado = usuarios.find(u => u.email === email && u.pass === pass);
+
+    if (usuarioValidado) {
+        // Guardamos la sesión activa
+        localStorage.setItem("usuario_logueado", JSON.stringify(usuarioValidado));
+        alert("Bienvenido, " + usuarioValidado.nombre);
+        mostrarPerfilUsuarioLogueado();
+    } else {
+        alert("Correo o contraseña incorrectos");
+    }
+}
+function mostrarPerfilUsuarioLogueado() {
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    const usuario = JSON.parse(localStorage.getItem("usuario_logueado"));
+
+    if (!usuario) return mostrarPerfil(); // Si no hay nadie, mostrar login
+
+    contenedorSPA.innerHTML = `
+        <div style="max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h1>Mi Perfil</h1>
+            <p style="font-size: 18px;">Hola, <strong>${usuario.nombre}</strong></p>
+            <p>Email: ${usuario.email}</p>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <h3>Mis Pedidos</h3>
+            <p style="color: #888;">Aún no tienes pedidos realizados.</p>
+            <button onclick="cerrarSesion()" style="margin-top: 30px; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cerrar Sesión</button>
+        </div>
+    `;
+}
+
+function cerrarSesion() {
+    localStorage.removeItem("usuario_logueado");
+    mostrarPerfil();
+}
+      
 function toggleFavorito(idProducto, evento) {
     if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
 
