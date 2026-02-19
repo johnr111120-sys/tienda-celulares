@@ -2154,7 +2154,7 @@ body.menu-abierto {
 }
 
 .btn-comprar-ahora {
-    background-color: #3498db; /* Tu azul original */
+    background-color: #007bff; /* Tu azul original */
     color: white;
     border: none;
     padding: 15px 30px;
@@ -2169,7 +2169,8 @@ body.menu-abierto {
 }
 
 .btn-comprar-ahora:hover {
-    background-color: #2980b9; /* Un azul un poco más oscuro al pasar el mouse */
+    background-color: #ED2100; /* Un rojo un poco más oscuro al pasar el mouse */
+    transform: scale(1.02);
 }
 /* Ajuste para pantallas grandes (PC) */
 @media (min-width: 768px) {
