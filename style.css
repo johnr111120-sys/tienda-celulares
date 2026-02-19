@@ -2331,6 +2331,7 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     display: flex;
     align-items: center;
     gap: 10px;
+    right: 10px;
     padding: 12px 15px;
     text-decoration: none;
     color: #ccc;
