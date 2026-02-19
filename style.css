@@ -2337,20 +2337,14 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     background-color: #2980b9 !important;
 }
 
-#dropdown-perfil a:hover {
-    background-color: #f8f9fa;
-    padding-left: 20px !important; /* Pequeño efecto de movimiento */
+#contenido-menu-dinamico a:hover {
+    background-color: #f1f1f1;
+    color: #007bff !important;
 }
 
-/* Evitar que el dropdown se cierre si el mouse se mueve un poco entre el icono y el menú */
-#contenedor-perfil-header::after {
-    top: 15px;
-    content: "";
-    position: fixed;
-    bottom: -15px;
-    left: 0;
-    width: 100%;
-    height: 20px;
+#contenido-menu-dinamico i {
+    width: 20px; /* Alinea los iconos del menú */
+    text-align: center;
     z-index: 99999;
 }
 
