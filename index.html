@@ -40,7 +40,12 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
+    <div id="contenedor-perfil-header" onclick="mostrarPerfil()" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+    <div class="icono-perfil-circulo" style="width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f0f0f0; transition: 0.3s;">
+        <i class="fas fa-user" id="user-icon-img" style="color: #333; font-size: 18px;"></i>
+    </div>
+    <span id="user-name-header" style="font-size: 14px; font-weight: bold; color: #333; display: none;"></span>
+</div>
     <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
@@ -305,37 +310,6 @@ function cerrarLogin() {
     router();
 }
 
-function procesarLogin() {
-    // Seleccionamos los inputs correctamente dentro de la card
-    const inputs = document.querySelectorAll('.login-card input');
-    const correo = inputs[0].value.trim();
-    const pass = inputs[1].value.trim();
-
-    if (correo.length > 3 && pass.length > 3) {
-        usuarioLogueado = true;
-        cerrarLogin();
-        
-        // Al loguearse, vamos directo al perfil
-        navegarSPA('perfil'); 
-        
-        // Feedback visual en el nav
-        const btnPerfil = document.getElementById("btn-perfil");
-        if(btnPerfil) btnPerfil.style.color = "#00ff00"; 
-        
-        console.log("Sesión iniciada con éxito");
-    } else {
-        alert("Por favor, ingresa un correo y contraseña válidos.");
-    }
-}
-
-function cerrarSesion() {
-    usuarioLogueado = false;
-    const btnPerfil = document.getElementById("btn-perfil");
-    if(btnPerfil) btnPerfil.style.color = "";
-    location.hash = "#/";
-    location.reload(); 
-}
-
 /* ===============================
    NAVEGACIÓN SPA (PERFIL / FAVORITOS)
 =================================*/
@@ -429,26 +403,6 @@ function renderizarPerfil(contenedor) {
         </div>`;
 }
 
-function mostrarPerfil() {
-    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
-    
-    // Ocultamos todo lo demás
-    const vistas = ["vista-inicio", "vista-productos", "menu-categorias", "mapa-contacto-footer"];
-    vistas.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.style.display = "none";
-    });
-
-    contenedorSPA.style.display = "block";
-    contenedorSPA.innerHTML = `
-        <div id="auth-container" style="max-width: 400px; margin: 50px auto; padding: 30px; background: white; border-radius: 12px; shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center;">
-            <div id="auth-forms">
-                ${renderFormLogin()}
-            </div>
-        </div>
-    `;
-}
-
 function mostrarFormulariosAuth(modo = 'login') {
     const contenedorSPA = document.getElementById("vista-spa-cliente");
     
@@ -508,7 +462,8 @@ function procesarLogin() {
 
     let usuarios = JSON.parse(localStorage.getItem("db_usuarios")) || [];
     const usuario = usuarios.find(u => u.email === email && u.pass === pass);
-
+    actualizarIconoPerfil();
+    
     if (usuario) {
         localStorage.setItem("usuario_logueado", JSON.stringify(usuario));
         mostrarPerfil(); // Recarga la vista para mostrar los datos del usuario
@@ -613,15 +568,35 @@ function mostrarPerfilUsuarioLogueado(usuario) {
         </div>
     `;
 }
-
-function cerrarSesion() {
-    localStorage.removeItem("usuario_logueado");
-    mostrarPerfil();
-}
       
 function cerrarSesion() {
     localStorage.removeItem("usuario_logueado");
+    actualizarIconoPerfil();
     mostrarPerfil();
+}
+
+function actualizarIconoPerfil() {
+    const usuarioLogueado = JSON.parse(localStorage.getItem("usuario_logueado"));
+    const iconoCirculo = document.querySelector(".icono-perfil-circulo");
+    const iconoImagen = document.getElementById("user-icon-img");
+    const nombreTexto = document.getElementById("user-name-header");
+
+    if (usuarioLogueado) {
+        // Estilo cuando hay usuario
+        iconoCirculo.style.background = "#3498db"; // Color azul
+        iconoImagen.style.color = "white";
+        
+        // Mostrar nombre (opcional)
+        if (nombreTexto) {
+            nombreTexto.innerText = usuarioLogueado.nombre.split(' ')[0]; // Solo el primer nombre
+            nombreTexto.style.display = "block";
+        }
+    } else {
+        // Estilo cuando es invitado
+        iconoCirculo.style.background = "#f0f0f0";
+        iconoImagen.style.color = "#333";
+        if (nombreTexto) nombreTexto.style.display = "none";
+    }
 }
       
 function toggleFavorito(idProducto, evento) {
@@ -1933,6 +1908,8 @@ function regresarALaTienda() {
     router();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+document.addEventListener("DOMContentLoaded", actualizarIconoPerfil);
 </script>
       
 <div id="panel-lateral" class="panel-lateral">
