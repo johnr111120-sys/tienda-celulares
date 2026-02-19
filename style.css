@@ -135,7 +135,7 @@ nav a{
 .barra-categorias{
   position: sticky;
   top: 100%;              /* MISMA altura del header */
-  z-index: 100 !important;           /* debajo del nav */
+  z-index: 999;           /* debajo del nav */
 
   height: auto;
   background: #000;       /* mismo negro que el header */
@@ -2326,29 +2326,3 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-
-.icono-perfil-circulo:hover {
-    transform: scale(1.1);
-    background-color: #e0e0e0;
-}
-
-/* Si el usuario está logueado y el fondo es azul, que brille un poco más */
-.icono-perfil-circulo[style*="background: rgb(52, 152, 219)"]:hover {
-    background-color: #2980b9 !important;
-}
-
-#contenido-menu-dinamico a:hover {
-    background-color: #f1f1f1;
-    color: #007bff !important;
-}
-
-#contenido-menu-dinamico i {
-    width: 20px; /* Alinea los iconos del menú */
-    text-align: center;
-}
-
-/* Aseguramos que el menú del perfil sea el rey de la pantalla */
-#dropdown-perfil {
-    z-index: 99999 !important;
-}
-
