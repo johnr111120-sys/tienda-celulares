@@ -505,9 +505,21 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function agregarAlCarrito(producto, variacion = null) {
-    const item = {
-        id: producto.id,
+function agregarAlCarrito(productoId, colorSeleccionado = null) {
+    const producto = productos.find(p => p.id === productoId);
+    
+    // Si hay color seleccionado, buscamos su imagen específica
+    let imagenFinal = producto.imagen;
+    if (colorSeleccionado && producto.colores && producto.colores[colorSeleccionado]) {
+        imagenFinal = producto.colores[colorSeleccionado].imagen;
+    }
+
+    const itemExistente = carrito.find(item => item.id === productoId && item.color === colorSeleccionado);
+
+    if (itemExistente) {
+        itemExistente.cantidad++;
+    } else {
+        id: Date.now() + Math.random(),
         nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
         precio: variacion ? variacion.precio : producto.precio,
         imagen: producto.imagen,
@@ -748,9 +760,9 @@ function renderizarTablaCarrito(contenedor) {
                             <td style="padding:15px 10px;">
                                 <div style="display:flex; align-items:center; gap:10px;">
                                     <img src="${p.imagen}" width="50" style="border-radius:5px; object-fit:cover;">
-                                    <div>
+                                     <div style="display: flex; flex-direction: column;">
                                         <div style="font-weight:bold;">${p.nombre}</div>
-                                        ${p.color ? `<small style="color:gray;">Color: ${p.color}</small>` : ''}
+                                        ${p.color ? `<small style="color:gray;">color: ${p.color}</small>` : ''}
                                     </div>
                                 </div>
                             </td>
