@@ -2343,6 +2343,7 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 }
 
 #contenido-menu-dinamico i {
+    position: fixed;
     width: 20px; /* Alinea los iconos del menú */
     text-align: center;
     z-index: 99999;
