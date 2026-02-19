@@ -40,21 +40,7 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-   <div id="contenedor-perfil-header" style="position: relative; display: flex; align-items: center; gap: 8px;">
-    
-    <div onclick="toggleDropdown(event)" class="icono-perfil-circulo" style="width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f0f0f0; cursor: pointer; position: relative; z-index: 10001;">
-        <i class="fas fa-user" id="user-icon-img" style="color: #333; font-size: 18px;"></i>
-    </div>
-
-    <div id="dropdown-perfil" style="display: none; position: absolute; top: 120%; right: 0; width: 230px; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10000; padding: 0; border: 1px solid #eee;">
-        <div style="display: flex; justify-content: flex-end; padding: 10px 15px 0;">
-            <i class="fas fa-times" onclick="toggleDropdown(event)" style="cursor: pointer; color: #888; font-size: 18px;"></i>
-        </div>
-        
-        <div id="contenido-menu-dinamico"></div>
-    </div>
-</div>
-    
+    <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
     <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
@@ -319,6 +305,37 @@ function cerrarLogin() {
     router();
 }
 
+function procesarLogin() {
+    // Seleccionamos los inputs correctamente dentro de la card
+    const inputs = document.querySelectorAll('.login-card input');
+    const correo = inputs[0].value.trim();
+    const pass = inputs[1].value.trim();
+
+    if (correo.length > 3 && pass.length > 3) {
+        usuarioLogueado = true;
+        cerrarLogin();
+        
+        // Al loguearse, vamos directo al perfil
+        navegarSPA('perfil'); 
+        
+        // Feedback visual en el nav
+        const btnPerfil = document.getElementById("btn-perfil");
+        if(btnPerfil) btnPerfil.style.color = "#00ff00"; 
+        
+        console.log("Sesión iniciada con éxito");
+    } else {
+        alert("Por favor, ingresa un correo y contraseña válidos.");
+    }
+}
+
+function cerrarSesion() {
+    usuarioLogueado = false;
+    const btnPerfil = document.getElementById("btn-perfil");
+    if(btnPerfil) btnPerfil.style.color = "";
+    location.hash = "#/";
+    location.reload(); 
+}
+
 /* ===============================
    NAVEGACIÓN SPA (PERFIL / FAVORITOS)
 =================================*/
@@ -360,127 +377,6 @@ function navegarSPA(seccion) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function mostrarPerfil() {
-    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
-    
-    // 1. Ocultar el resto de la web
-    const elementosAOcultar = ["vista-inicio", "vista-productos", "menu-categorias", "mapa-contacto-footer", "header-principal"];
-    elementosAOcultar.forEach(id => {
-        const el = document.getElementById(id) || document.querySelector("." + id);
-        if(el) el.style.display = "none";
-    });
-
-    contenedorSPA.style.display = "block";
-    contenedorSPA.style.backgroundColor = "#f4f4f4";
-
-    // 2. Verificar si hay sesión activa
-    const usuarioActivo = JSON.parse(localStorage.getItem("usuario_logueado"));
-
-    if (usuarioActivo) {
-        mostrarPerfilUsuarioLogueado(usuarioActivo);
-    } else {
-        mostrarFormulariosAuth();
-    }
-}
-
-function toggleDropdown(event) {
-    if (event) event.stopPropagation(); // Evita que el clic se propague
-    const dropdown = document.getElementById("dropdown-perfil");
-    const estaAbierto = dropdown.style.display === "block";
-    
-    if (estaAbierto) {
-        dropdown.style.display = "none";
-    } else {
-        generarContenidoMenu();
-        dropdown.style.display = "block";
-    }
-}
-
-function generarContenidoMenu() {
-    const contenedor = document.getElementById("contenido-menu-dinamico");
-    const usuario = JSON.parse(localStorage.getItem("usuario_logueado"));
-
-    if (usuario) {
-        contenedor.innerHTML = `
-            <div style="padding: 0 20px 15px; border-bottom: 1px solid #eee; margin-bottom: 5px; text-align: left;">
-                <small style="color: #888; display: block;">Sesión iniciada como</small>
-                <strong style="color: #333; font-size: 16px;">${usuario.nombre}</strong>
-            </div>
-            <a href="#" onclick="irASeccionPerfil('pedidos')" style="${estiloLink()}"><i class="fas fa-box"></i> Mis Pedidos</a>
-            <a href="#" onclick="irASeccionPerfil('direcciones')" style="${estiloLink()}"><i class="fas fa-map-marker-alt"></i> Direcciones</a>
-            <a href="#" onclick="irASeccionPerfil('detalles')" style="${estiloLink()}"><i class="fas fa-user-cog"></i> Detalles de la Cuenta</a>
-            <div style="border-top: 1px solid #eee; margin-top: 5px; background: #fff5f5;">
-                <a href="#" onclick="cerrarSesion()" style="${estiloLink('#e74c3c')}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
-            </div>
-        `;
-    } else {
-        contenedor.innerHTML = `
-            <div style="padding: 15px;">
-                <button onclick="mostrarPerfil()" style="width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">INICIAR SESIÓN</button>
-                <button onclick="mostrarPerfil()" style="width: 100%; padding: 10px; background: white; color: #3498db; border: 1px solid #3498db; border-radius: 6px; font-weight: bold; cursor: pointer;">CREAR CUENTA</button>
-            </div>
-        `;
-    }
-}
-
-// Cerrar el menú si se toca cualquier otra parte de la pantalla
-window.onclick = function(event) {
-    const dropdown = document.getElementById("dropdown-perfil");
-    if (dropdown && dropdown.style.display === "block") {
-        if (!event.target.closest('#contenedor-perfil-header')) {
-            dropdown.style.display = "none";
-        }
-    }
-}
-
-function estiloLink(color = '#333') {
-    return `display: flex; align-items: center; gap: 12px; padding: 12px 20px; text-decoration: none; color: ${color}; font-size: 14px; transition: 0.2s; font-weight: 500;`;
-}
-
-// Función para navegar y cerrar automáticamente
-function irASeccionPerfil(seccion) {
-    // 1. Ejecutamos la navegación al perfil
-    mostrarPerfil(); 
-
-    // 2. Cerramos el menú inmediatamente
-    const dropdown = document.getElementById("dropdown-perfil");
-    if (dropdown) {
-        dropdown.style.display = "none";
-    }
-
-    console.log("Cerrando menú y navegando a: " + seccion);
-    
-    // Aquí puedes añadir lógica para scroll a la sección si es necesario
-}
-
-// Modificamos también generarContenidoMenu para que use esta función de cierre
-function generarContenidoMenu() {
-    const contenedor = document.getElementById("contenido-menu-dinamico");
-    const usuario = JSON.parse(localStorage.getItem("usuario_logueado"));
-
-    if (usuario) {
-        contenedor.innerHTML = `
-            <div style="padding: 0 20px 15px; border-bottom: 1px solid #eee; margin-bottom: 5px;">
-                <small style="color: #888; display: block;">Sesión de</small>
-                <strong style="color: #333;">${usuario.nombre}</strong>
-            </div>
-            <a href="#" onclick="irASeccionPerfil('pedidos')" style="${estiloLink()}"><i class="fas fa-box"></i> Mis Pedidos</a>
-            <a href="#" onclick="irASeccionPerfil('direcciones')" style="${estiloLink()}"><i class="fas fa-map-marker-alt"></i> Direcciones</a>
-            <a href="#" onclick="irASeccionPerfil('detalles')" style="${estiloLink()}"><i class="fas fa-user-cog"></i> Detalles de la Cuenta</a>
-            <div style="border-top: 1px solid #eee; margin-top: 5px;">
-                <a href="#" onclick="cerrarSesion(); toggleDropdown();" style="${estiloLink('#e74c3c')}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
-            </div>
-        `;
-    } else {
-        contenedor.innerHTML = `
-            <div style="padding: 15px;">
-                <button onclick="mostrarPerfil(); toggleDropdown();" style="width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">INICIAR SESIÓN</button>
-                <button onclick="mostrarPerfil(); toggleDropdown();" style="width: 100%; padding: 10px; background: white; color: #3498db; border: 1px solid #3498db; border-radius: 6px; font-weight: bold; cursor: pointer;">CREAR CUENTA</button>
-            </div>
-        `;
-    }
-}
-      
 function renderizarPerfil(contenedor) {
     contenedor.innerHTML = `
         <div class="perfil-container" style="padding:40px 20px; max-width:800px; margin:auto; color:white;">
@@ -510,202 +406,6 @@ function renderizarPerfil(contenedor) {
         </div>`;
 }
 
-function mostrarFormulariosAuth(modo = 'login') {
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    
-    const esLogin = modo === 'login';
-
-    contenedorSPA.innerHTML = `
-        <div style="max-width: 450px; margin: 60px auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; font-family: sans-serif;">
-            <h2 style="margin-bottom: 10px;">${esLogin ? '¡Bienvenido de nuevo!' : 'Crea tu cuenta'}</h2>
-            <p style="color: #666; margin-bottom: 30px;">${esLogin ? 'Ingresa tus datos para continuar' : 'Únete a nuestra comunidad'}</p>
-            
-            <div id="auth-error-msg" style="color: #e74c3c; margin-bottom: 15px; display: none; font-size: 14px;"></div>
-
-            ${!esLogin ? '<input type="text" id="reg-nombre" placeholder="Nombre completo" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">' : ''}
-            
-            <input type="email" id="auth-email" placeholder="Correo electrónico" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
-            
-            <input type="password" id="auth-pass" placeholder="Contraseña" style="width:100%; padding:14px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
-
-            <button onclick="${esLogin ? 'procesarLogin()' : 'procesarRegistro()'}" style="width:100%; padding:16px; background:#3498db; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; font-size:16px; transition: 0.3s;">
-                ${esLogin ? 'INICIAR SESIÓN' : 'REGISTRARME'}
-            </button>
-
-            <p style="margin-top:25px; color: #555;">
-                ${esLogin ? '¿Aún no tienes cuenta?' : '¿Ya tienes una cuenta?'} 
-                <span onclick="mostrarFormulariosAuth('${esLogin ? 'registro' : 'login'}')" style="color:#3498db; cursor:pointer; font-weight:bold; text-decoration: underline;">
-                    ${esLogin ? 'Regístrate' : 'Inicia sesión'}
-                </span>
-            </p>
-            <button onclick="regresarALaTienda()" style="margin-top:20px; background:none; border:none; color:#888; cursor:pointer;">Volver a la tienda</button>
-        </div>
-    `;
-}
-
-function procesarRegistro() {
-    const nombre = document.getElementById("reg-nombre").value;
-    const email = document.getElementById("auth-email").value;
-    const pass = document.getElementById("auth-pass").value;
-
-    if (!nombre || !email || !pass) return alert("Por favor, completa todos los campos");
-
-    let usuarios = JSON.parse(localStorage.getItem("db_usuarios")) || [];
-    
-    if (usuarios.find(u => u.email === email)) {
-        alert("Este correo ya está registrado");
-        return;
-    }
-
-    usuarios.push({ nombre, email, pass });
-    localStorage.setItem("db_usuarios", JSON.stringify(usuarios));
-    alert("¡Cuenta creada! Ahora puedes iniciar sesión.");
-    mostrarFormulariosAuth('login');
-}
-
-function procesarLogin() {
-    const email = document.getElementById("auth-email").value;
-    const pass = document.getElementById("auth-pass").value;
-
-    let usuarios = JSON.parse(localStorage.getItem("db_usuarios")) || [];
-    const usuario = usuarios.find(u => u.email === email && u.pass === pass);
-    actualizarIconoPerfil();
-    
-    if (usuario) {
-        localStorage.setItem("usuario_logueado", JSON.stringify(usuario));
-        mostrarPerfil(); // Recarga la vista para mostrar los datos del usuario
-    } else {
-        const errorMsg = document.getElementById("auth-error-msg");
-        errorMsg.innerText = "Correo o contraseña incorrectos";
-        errorMsg.style.display = "block";
-    }
-}
-
-function renderFormLogin() {
-    return `
-        <h2 style="margin-bottom: 20px;">Iniciar Sesión</h2>
-        <input type="email" id="login-email" placeholder="Correo Electrónico" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-        <input type="password" id="login-pass" placeholder="Contraseña" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:6px;">
-        <button onclick="ejecutarLogin()" style="width:100%; padding:14px; background:#3498db; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">ENTRAR</button>
-        <p style="margin-top:20px; font-size:14px;">¿No tienes cuenta? <a href="#" onclick="cambiarAuth('registro')" style="color:#3498db; font-weight:bold;">Regístrate aquí</a></p>
-    `;
-}
-
-function renderFormRegistro() {
-    return `
-        <h2 style="margin-bottom: 20px;">Crear Cuenta</h2>
-        <input type="text" id="reg-nombre" placeholder="Nombre Completo" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-        <input type="email" id="reg-email" placeholder="Correo Electrónico" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;">
-        <input type="password" id="reg-pass" placeholder="Contraseña" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:6px;">
-        <button onclick="ejecutarRegistro()" style="width:100%; padding:14px; background:#27ae60; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">CREAR CUENTA</button>
-        <p style="margin-top:20px; font-size:14px;">¿Ya tienes cuenta? <a href="#" onclick="cambiarAuth('login')" style="color:#3498db; font-weight:bold;">Inicia sesión</a></p>
-    `;
-}
-
-function cambiarAuth(tipo) {
-    const contenedor = document.getElementById("auth-forms");
-    if (tipo === 'registro') {
-        contenedor.innerHTML = renderFormRegistro();
-    } else {
-        contenedor.innerHTML = renderFormLogin();
-    }
-}
-
-// REGISTRO
-function ejecutarRegistro() {
-    const nombre = document.getElementById("reg-nombre").value;
-    const email = document.getElementById("reg-email").value;
-    const pass = document.getElementById("reg-pass").value;
-
-    if (!nombre || !email || !pass) return alert("Llena todos los campos");
-
-    // Obtenemos usuarios ya guardados
-    let usuarios = JSON.parse(localStorage.getItem("usuarios_tienda")) || [];
-    
-    // Validar si el correo ya existe
-    if (usuarios.find(u => u.email === email)) return alert("El correo ya está registrado");
-
-    // Guardar nuevo usuario
-    usuarios.push({ nombre, email, pass });
-    localStorage.setItem("usuarios_tienda", JSON.stringify(usuarios));
-
-    alert("¡Cuenta creada con éxito! Ahora inicia sesión.");
-    cambiarAuth('login');
-}
-
-// LOGIN
-function ejecutarLogin() {
-    const email = document.getElementById("login-email").value;
-    const pass = document.getElementById("login-pass").value;
-
-    let usuarios = JSON.parse(localStorage.getItem("usuarios_tienda")) || [];
-    const usuarioValidado = usuarios.find(u => u.email === email && u.pass === pass);
-
-    if (usuarioValidado) {
-        // Guardamos la sesión activa
-        localStorage.setItem("usuario_logueado", JSON.stringify(usuarioValidado));
-        alert("Bienvenido, " + usuarioValidado.nombre);
-        mostrarPerfilUsuarioLogueado();
-    } else {
-        alert("Correo o contraseña incorrectos");
-    }
-}
-      
-function mostrarPerfilUsuarioLogueado(usuario) {
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    
-    contenedorSPA.innerHTML = `
-        <div style="max-width: 600px; margin: 50px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center;">
-            <div style="width: 80px; height: 80px; background: #3498db; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 20px;">
-                ${usuario.nombre.charAt(0).toUpperCase()}
-            </div>
-            <h1>Hola, ${usuario.nombre}</h1>
-            <p style="color: #666;">${usuario.email}</p>
-            
-            <div style="margin-top: 30px; padding: 20px; border: 1px dashed #ddd; border-radius: 8px;">
-                <h3>Mis Pedidos</h3>
-                <p style="font-size: 14px; color: #999;">Aún no has realizado ninguna compra.</p>
-            </div>
-
-            <button onclick="cerrarSesion()" style="margin-top: 40px; background: #e74c3c; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                CERRAR SESIÓN
-            </button>
-            <br>
-            <button onclick="regresarALaTienda()" style="margin-top: 20px; background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold;">IR A COMPRAR</button>
-        </div>
-    `;
-}
-      
-function cerrarSesion() {
-    localStorage.removeItem("usuario_logueado");
-    actualizarIconoPerfil();
-    mostrarPerfil();
-}
-
-function actualizarIconoPerfil() {
-    const usuarioLogueado = JSON.parse(localStorage.getItem("usuario_logueado"));
-    const iconoCirculo = document.querySelector(".icono-perfil-circulo");
-    const iconoImagen = document.getElementById("user-icon-img");
-    const nombreTexto = document.getElementById("user-name-header");
-
-    if (usuarioLogueado) {
-        // Estilo cuando hay usuario
-        iconoCirculo.style.background = "#3498db"; // Color azul
-        iconoImagen.style.color = "white";
-        
-        // Mostrar nombre (opcional)
-        if (nombreTexto) {
-            nombreTexto.innerText = usuarioLogueado.nombre.split(' ')[0]; // Solo el primer nombre
-            nombreTexto.style.display = "block";
-        }
-    } else {
-        // Estilo cuando es invitado
-        iconoCirculo.style.background = "#f0f0f0";
-        iconoImagen.style.color = "#333";
-        if (nombreTexto) nombreTexto.style.display = "none";
-    }
-}
-      
 function toggleFavorito(idProducto, evento) {
     if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
 
@@ -2015,8 +1715,6 @@ function regresarALaTienda() {
     router();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-document.addEventListener("DOMContentLoaded", actualizarIconoPerfil);
 </script>
       
 <div id="panel-lateral" class="panel-lateral">
