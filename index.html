@@ -501,12 +501,6 @@ function agregarAlCarrito(producto, variacion = null) {
 
     actualizarContadorCarrito();
     renderizarCarrito();
-
-    // 🔥 ABRIR EL CARRITO AUTOMÁTICAMENTE
-    const panel = document.getElementById("carrito-izquierdo");
-    if (panel) {
-        panel.classList.add("activo");
-    }
 }
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -565,19 +559,18 @@ function renderizarCarrito() {
 
 // Esta función reemplaza a la antigua irAWhatsApp
 function añadirAlCarritoDesdeDetalle(nombreProducto) {
-    // 1. Capturar lo que el usuario seleccionó en los círculos/botones
+    // 1. Obtener variaciones y precio
     const capacidad = typeof modeloSeleccionado !== 'undefined' ? modeloSeleccionado : "N/A"; 
     const color = typeof colorSeleccionado !== 'undefined' ? colorSeleccionado : "Original";
     
-    // 2. Obtener el precio actual del span
     const precioElemento = document.getElementById("spanPrecio");
     const precioTexto = precioElemento ? precioElemento.innerText : "0";
     const precioLimpio = precioTexto.replace(/[^\d]/g, "");
 
-    // 3. Buscar el producto en tu lista global para obtener la imagen
+    // 2. Buscar imagen del producto
     const productoBase = productos.find(p => p.nombre === nombreProducto);
 
-    // 4. Crear el objeto para el carrito
+    // 3. Crear objeto para el carrito
     const productoParaCarrito = {
         id: productoBase ? productoBase.id : Date.now(),
         nombre: nombreProducto,
@@ -586,14 +579,20 @@ function añadirAlCarritoDesdeDetalle(nombreProducto) {
         imagen: productoBase ? productoBase.imagen : ""
     };
 
-    // 5. Agregar al carrito (Llamamos a tu función principal)
+    // 4. Agregar al carrito internamente
+    // Importante: Asegúrate de que tu función 'agregarAlCarrito' NO tenga 
+    // líneas que abran el panel lateral (como classList.add('activo'))
     agregarAlCarrito(productoParaCarrito, { 
         nombre: productoParaCarrito.variacion, 
         precio: precioLimpio 
     });
 
-    // 6. Mostrar la notificación visual
-    mostrarNotificacion(`${nombreProducto} añadido`);
+    // 5. CERRAR EL MODAL AUTOMÁTICAMENTE
+    // Usamos la función que ya tienes en tu código para cerrar el detalle
+    cerrarProducto(); 
+
+    // 6. Mostrar notificación de confirmación
+    mostrarNotificacion(`${nombreProducto} añadido al carrito`);
 }
 
 // Función para la notificación (Toast)
