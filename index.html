@@ -780,6 +780,17 @@ function renderizarTablaCarrito(contenedor) {
         </div>
     `;
 }
+
+// Función lógica para cambiar cantidades
+function cambiarCantidad(index, delta) {
+    carrito[index].cantidad += delta;
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1); // Si llega a 0, se elimina
+    }
+    // Refrescamos ambas vistas
+    renderizarCarrito();      // Barra lateral
+    navegarAVerCarrito();     // Vista principal SPA
+}
       
 function eliminarDelCarrito(index) {
     carrito.splice(index, 1);
