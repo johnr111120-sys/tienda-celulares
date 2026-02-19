@@ -701,111 +701,6 @@ function generarNumeroRastreo() {
     const random = Math.floor(1000 + Math.random() * 9000);
     return `MC-2026-${random}`;
 }
-
-function navegarAFinalizarCompra() {
-    toggleCarritoIzquierdo(); // Cerrar panel lateral
-    
-    // 1. Manejo de Vistas SPA
-    document.getElementById("vista-inicio").style.display = "none";
-    document.getElementById("vista-productos").style.display = "none";
-    
-    // 2. Ocultar Barra de Categorías y Footer (Lo que marcaste en verde)
-    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
-    if(barraCategorias) barraCategorias.style.display = "none";
-    
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "none";
-
-    // 3. Renderizar el Checkout
-    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
-    contenedorSPA.style.display = "block";
-    contenedorSPA.style.backgroundColor = "#f4f4f4";
-
-    const trackingNum = generarNumeroRastreo();
-    const subtotal = calcularSubtotal();
-
-    contenedorSPA.innerHTML = `
-        <div style="padding: 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
-            <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
-            </button>
-        </div>
-
-        <div class="checkout-container">
-            <h1 class="checkout-titulo">Finalizar Pedido</h1>
-            
-            <div class="checkout-grid">
-                <div class="checkout-col">
-                    <div class="checkout-card">
-                        <h3>Detalles de Facturación</h3>
-                        <div class="form-grid">
-                            <input type="text" id="ch-nombre" placeholder="Nombre *">
-                            <input type="text" id="ch-apellido" placeholder="Apellido *">
-                            <input type="text" id="ch-cedula" placeholder="Documento Identidad">
-                            <input type="text" id="ch-telefono" placeholder="Teléfono *">
-                            <input type="email" id="ch-email" placeholder="Email *">
-                            <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
-                            <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
-                            <textarea id="ch-notas" placeholder="Notas del pedido (opcional)" rows="2"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="checkout-col">
-                    <div class="checkout-card">
-                        <h3>Tu Pedido</h3>
-                        <div class="tracking-box">
-                            <span>Número de Rastreo:</span>
-                            <strong id="num-tracking-final">${trackingNum}</strong>
-                        </div>
-                        
-                        <div class="resumen-pedido">
-                            <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
-                            <div class="resumen-fila"><span>Envío</span> <span>A calcular</span></div>
-                            <div class="resumen-fila total"><span>Total</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
-                        </div>
-
-                        <div class="metodo-pago">
-                            <h4>Método de Pago</h4>
-                            <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
-                            <label><input type="radio" name="pago"> Transferencia Bancaria</label>
-                        </div>
-
-                        <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
-                            REALIZAR EL COMPRA
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function regresarALaTienda() {
-    // 1. Mostrar de nuevo las vistas principales
-    document.getElementById("vista-inicio").style.display = "block";
-    
-    // 2. Encender la barra de categorías y el mapa (Lo verde)
-    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
-    if(barraCategorias) barraCategorias.style.display = "block";
-    
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "block";
-
-    // 3. Ocultar y vaciar el contenedor SPA del checkout
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if(contenedorSPA) {
-        contenedorSPA.style.display = "none";
-        contenedorSPA.innerHTML = "";
-    }
-
-    // 4. Resetear la URL y ejecutar el router para que carguen los productos
-    window.location.hash = "#/";
-    router();
-    
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
       
 function enviarPedidoWhatsApp(tracking) {
     const nombre = document.getElementById("ch-nombre").value.trim();
@@ -1568,7 +1463,114 @@ function renderizarListaFiltrada(lista) {
 });
 }
     </script>
+
+     <script>
+function navegarAFinalizarCompra() {
+    toggleCarritoIzquierdo(); // Cerrar panel lateral
     
+    // 1. Manejo de Vistas SPA
+    document.getElementById("vista-inicio").style.display = "none";
+    document.getElementById("vista-productos").style.display = "none";
+    
+    // 2. Ocultar Barra de Categorías y Footer (Lo que marcaste en verde)
+    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
+    if(barraCategorias) barraCategorias.style.display = "none";
+    
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
+    if(mapaContacto) mapaContacto.style.display = "none";
+
+    // 3. Renderizar el Checkout
+    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
+    contenedorSPA.style.display = "block";
+    contenedorSPA.style.backgroundColor = "#f4f4f4";
+
+    const trackingNum = generarNumeroRastreo();
+    const subtotal = calcularSubtotal();
+
+    contenedorSPA.innerHTML = `
+        <div style="padding: 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
+            <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
+            </button>
+        </div>
+
+        <div class="checkout-container">
+            <h1 class="checkout-titulo">Finalizar Pedido</h1>
+            
+            <div class="checkout-grid">
+                <div class="checkout-col">
+                    <div class="checkout-card">
+                        <h3>Detalles de Facturación</h3>
+                        <div class="form-grid">
+                            <input type="text" id="ch-nombre" placeholder="Nombre *">
+                            <input type="text" id="ch-apellido" placeholder="Apellido *">
+                            <input type="text" id="ch-cedula" placeholder="Documento Identidad">
+                            <input type="text" id="ch-telefono" placeholder="Teléfono *">
+                            <input type="email" id="ch-email" placeholder="Email *">
+                            <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
+                            <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
+                            <textarea id="ch-notas" placeholder="Notas del pedido (opcional)" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-col">
+                    <div class="checkout-card">
+                        <h3>Tu Pedido</h3>
+                        <div class="tracking-box">
+                            <span>Número de Rastreo:</span>
+                            <strong id="num-tracking-final">${trackingNum}</strong>
+                        </div>
+                        
+                        <div class="resumen-pedido">
+                            <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                            <div class="resumen-fila"><span>Envío</span> <span>A calcular</span></div>
+                            <div class="resumen-fila total"><span>Total</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                        </div>
+
+                        <div class="metodo-pago">
+                            <h4>Método de Pago</h4>
+                            <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
+                            <label><input type="radio" name="pago"> Transferencia Bancaria</label>
+                        </div>
+
+                        <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
+                            REALIZAR EL COMPRA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function regresarALaTienda() {
+    // 1. Mostrar de nuevo las vistas principales
+    document.getElementById("vista-inicio").style.display = "block";
+    
+    // 2. Encender la barra de categorías y el mapa (Lo verde)
+    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
+    if(barraCategorias) barraCategorias.style.display = "block";
+    
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
+    if(mapaContacto) mapaContacto.style.display = "block";
+
+    // 3. Ocultar y vaciar el contenedor SPA del checkout
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    if(contenedorSPA) {
+        contenedorSPA.style.display = "none";
+        contenedorSPA.innerHTML = "";
+    }
+
+    // 4. Resetear la URL y ejecutar el router para que carguen los productos
+    window.location.hash = "#/";
+    router();
+    
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+      
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
