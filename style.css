@@ -1922,12 +1922,13 @@ body.menu-abierto {
 }
 
 .subtotal-box {
-    background: #2a2a2a; /* Rectángulo gris */
+    background: #000; /* Rectángulo gris */
     color: white;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
-    border-radius: 4px;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid white;
     font-weight: bold;
     margin-bottom: 20px;
     letter-spacing: 1px;
