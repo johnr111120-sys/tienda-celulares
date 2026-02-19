@@ -505,41 +505,22 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function agregarAlCarrito(productoId, nombreColor = null) {
-    const idBuscado = Number(productoId);
-    const producto = productos.find(p => Number(p.id) === idBuscado);
-    
-    if (!producto) return;
+function agregarAlCarrito(producto, variacion = null) {
+    const item = {
+        id: producto.id,
+        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
+        precio: variacion ? variacion.precio : producto.precio,
+        imagen: producto.imagen,
+        slug: producto.slug
+    };
 
-    // Buscamos la imagen del color (Tu lógica JSON)
-    let imagenFinal = producto.imagen;
-    if (nombreColor && producto.colores) {
-        const objetoColor = producto.colores.find(c => c.nombre === nombreColor);
-        if (objetoColor && objetoColor.imagen) {
-            imagenFinal = objetoColor.imagen;
-        }
-    }
+    carrito.push(item);
+    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
 
-    const itemExistente = carrito.find(item => 
-        Number(item.id) === idBuscado && item.color === nombreColor
-    );
-
-    if (itemExistente) {
-        itemExistente.cantidad = parseInt(itemExistente.cantidad) + 1;
-    } else {
-        carrito.push({
-            id: idBuscado,
-            nombre: producto.nombre,
-            // Nos aseguramos de que el precio sea un número puro
-            precio: parseFloat(producto.precio), 
-            imagen: imagenFinal,
-            color: nombreColor,
-            cantidad: 1
-        });
-    }
-
-    actualizarInterfazSegura();
+    actualizarContadorCarrito();
+    renderizarCarrito();
 }
+
     // Variable global (asegúrate de que agregarAlCarrito la use)
     let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
 
