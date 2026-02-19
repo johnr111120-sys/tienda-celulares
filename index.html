@@ -862,31 +862,6 @@ function enviarPedidoWhatsApp(tracking) {
     window.location.hash = "#/";
     location.reload();
 }
-      
-// --- MODAL LOGIN (ESTILO IMAGEN) ---
-function mostrarModalLogin() {
-    const modal = document.getElementById("modal-login-contenedor");
-    modal.style.display = "flex";
-}
-
-function cerrarLogin() {
-    const modal = document.getElementById("modal-login-contenedor");
-    if (modal) modal.style.display = "none";
-    
-    // Si no estamos logueados o simplemente cerramos el modal:
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if (contenedorSPA) {
-        contenedorSPA.style.display = "none"; // Apagamos el hueco gris
-        contenedorSPA.innerHTML = "";        // Limpiamos contenido
-    }
-
-    // Volvemos a mostrar la tienda normal
-    document.getElementById("vista-inicio").style.display = "block";
-    
-    // Opcional: resetear URL al inicio
-    window.location.hash = "#/";
-    router();
-}
 
 function crearContenedorSPA() {
     const div = document.createElement("div");
