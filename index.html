@@ -506,11 +506,23 @@ function crearContenedorSPA() {
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
 function agregarAlCarrito(productoId, nombreColor = null) {
-    // 1. Buscar el producto en tu lista
-    const producto = productos.find(p => p.id === productoId);
-    if (!producto) return;
+    // 1. Forzamos que el ID sea un número (por si el JSON lo trae como string)
+    const idBuscado = Number(productoId);
 
-    // 2. Lógica de imagen: si hay color, buscamos su imagen en el array 'colores'
+    // 2. Buscamos el producto asegurándonos de que la lista existe
+    if (typeof productos === 'undefined') {
+        console.error("La lista de productos no está cargada.");
+        return;
+    }
+
+    const producto = productos.find(p => Number(p.id) === idBuscado);
+    
+    if (!producto) {
+        console.error("No se encontró el producto con ID:", idBuscado);
+        return;
+    }
+
+    // 3. Buscar la imagen del color en el array del JSON
     let imagenFinal = producto.imagen;
     if (nombreColor && producto.colores) {
         const objetoColor = producto.colores.find(c => c.nombre === nombreColor);
@@ -519,28 +531,36 @@ function agregarAlCarrito(productoId, nombreColor = null) {
         }
     }
 
-    // 3. Verificamos si ya existe en el carrito (mismo ID y mismo Color)
-    const itemExistente = carrito.find(item => item.id === productoId && item.color === nombreColor);
+    // 4. Buscar si ya existe en el carrito
+    // Importante: comparamos ID y Color para no mezclar un iPhone rojo con uno azul
+    const itemExistente = carrito.find(item => 
+        Number(item.id) === idBuscado && item.color === nombreColor
+    );
 
     if (itemExistente) {
         itemExistente.cantidad++;
     } else {
+        // Agregamos el nuevo objeto al carrito
         carrito.push({
-            id: producto.id,
+            id: idBuscado,
             nombre: producto.nombre,
             precio: producto.precio,
-            imagen: imagenFinal, // Guardamos la imagen específica del color
+            imagen: imagenFinal,
             color: nombreColor,
             cantidad: 1
         });
     }
 
-    // 4. Actualizar visualmente (Solo si las funciones existen)
-    if (typeof actualizarInterfazCarrito === 'function') {
-        actualizarInterfazCarrito();
-    } else {
+    // 5. Feedback y Actualización (Sin romper la web)
+    console.log("Producto agregado al carrito:", producto.nombre, "Color:", nombreColor);
+    
+    // Ejecutamos las actualizaciones de interfaz de forma segura
+    try {
         if (typeof renderizarCarrito === 'function') renderizarCarrito();
         if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
+        if (typeof guardarCarritoEnLocalStorage === 'function') guardarCarritoEnLocalStorage();
+    } catch (e) {
+        console.warn("Error visual al actualizar, pero el producto se guardó.");
     }
 }
 
