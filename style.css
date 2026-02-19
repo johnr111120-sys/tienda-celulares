@@ -2338,7 +2338,6 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 }
 
 #dropdown-perfil a:hover {
-    top: 15px;
     background-color: #f8f9fa;
     padding-left: 20px !important; /* Pequeño efecto de movimiento */
 }
@@ -2347,10 +2346,11 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 #contenedor-perfil-header::after {
     top: 15px;
     content: "";
-    position: absolute;
+    position: fixed;
     bottom: -15px;
     left: 0;
     width: 100%;
     height: 20px;
+    z-index: 99999;
 }
 
