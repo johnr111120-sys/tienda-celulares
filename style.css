@@ -2326,3 +2326,33 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.item-drop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #ccc;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.item-drop:hover {
+    background: #252525;
+    color: #3498db;
+    padding-left: 20px;
+}
+
+.item-drop i {
+    width: 16px;
+    text-align: center;
+}
+
+/* Asegurar que nada pise el menú */
+.barra-herramientas-fija {
+    z-index: 1000 !important;
+}
+#dropdown-perfil {
+    z-index: 99999 !important;
+}
