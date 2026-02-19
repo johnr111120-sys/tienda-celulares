@@ -221,6 +221,7 @@ button {
 }
 
 .header-logo{
+   top: 10px !important;
    right: -35px !important;
    position: relative !important;
    padding: 62px
