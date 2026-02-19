@@ -1595,8 +1595,11 @@ function renderizarListaFiltrada(lista) {
 
      <script>
 function navegarAFinalizarCompra() {
-    toggleCarritoIzquierdo(); // Cerrar panel lateral
-    
+    // Si el carrito lateral está abierto, lo cerramos
+    const carritoLateral = document.getElementById("carrito-izquierdo");
+    if (carritoLateral && carritoLateral.classList.contains("activo")) {
+        toggleCarritoIzquierdo(); 
+    }
     // 1. Manejo de Vistas SPA
     document.getElementById("vista-inicio").style.display = "none";
     document.getElementById("vista-productos").style.display = "none";
