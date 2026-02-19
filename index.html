@@ -554,7 +554,12 @@ function actualizarContadorCarrito() {
 
 // Función para calcular el subtotal de productos
 function calcularSubtotal() {
-    return carrito.reduce((acc, p) => acc + parseInt(p.precio), 0);
+    return carrito.reduce((total, item) => {
+        // Forzamos precio y cantidad a números antes de sumar
+        const precio = parseFloat(item.precio) || 0;
+        const cantidad = parseInt(item.cantidad) || 0;
+        return total + (precio * cantidad);
+    }, 0);
 }
 
 // Función para renderizar el Carrito Lateral con el Subtotal y Botones
@@ -774,14 +779,17 @@ function renderizarTablaCarrito(contenedor) {
                                 </div>
                             </td>
                             <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                            <td style="padding:15px 10px; text-align:center;">
-                                <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                                    <button onclick="cambiarCantidad(${index}, -1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">-</button>
-                                    <span>${p.cantidad}</span>
-                                    <button onclick="cambiarCantidad(${index}, 1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">+</button>
-                                </div>
-                            </td>
-                            <td style="padding:15px 10px;">RD$ ${(parseInt(p.precio) * p.cantidad).toLocaleString()}</td>
+                           <td style="padding:10px; text-align:center;">
+                       <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                      <button onclick="cambiarCantidad(${index}, -1)" style="width:24px; height:24px; cursor:pointer;">-</button>
+                       <span style="font-weight:bold;">${parseInt(p.cantidad) || 1}</span>
+                        <button onclick="cambiarCantidad(${index}, 1)" style="width:24px; height:24px; cursor:pointer;">+</button>
+                        </div>
+                        </td>
+
+                       <td style="padding:10px; font-weight:bold;">
+                        RD$ ${ (parseFloat(p.precio) * (parseInt(p.cantidad) || 1)).toLocaleString() }
+                          </td>
                         </tr>
                     `).join('')}
                 </tbody>
