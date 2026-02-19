@@ -2120,30 +2120,25 @@ body.menu-abierto {
     .form-grid input, .form-grid textarea { grid-column: span 1; }
 }
 
-/* Estilo para la notificación flotante */
+/* CSS de la notificación */
 .notificacion-carrito {
     position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 80px; /* Ajustado para que no tape el Nav */
+    right: 20px;
     background: #27ae60;
     color: white;
-    padding: 12px 25px;
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 9999;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: bajarSubir 3s ease-in-out forwards;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    animation: fadeInOut 3s forwards;
 }
 
-@keyframes bajarSubir {
-    0% { top: -60px; opacity: 0; }
-    15% { top: 20px; opacity: 1; }
-    85% { top: 20px; opacity: 1; }
-    100% { top: -60px; opacity: 0; }
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
 }
 
 /* Contenedor fijo en la parte inferior del modal */
@@ -2158,48 +2153,23 @@ body.menu-abierto {
     z-index: 100;
 }
 
-/* El Botón de WhatsApp estilo SPA */
-.btn-comprar-spa {
-    position: relative; /* Necesario para el brillo */
-    overflow: hidden;   /* Para que el brillo no se salga del botón */
-    background-color: #1591EA;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%; /* Ancho completo en móvil */
-    background-color: #007bff; /* Verde WhatsApp */
+.btn-comprar-ahora {
+    background-color: #3498db; /* Tu azul original */
     color: white;
     border: none;
-    padding: 18px; /* Más alto para que sea fácil de tocar */
-    border-radius: 12px;
-    font-size: 18px;
+    padding: 15px 30px;
+    font-size: 16px;
     font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.4s, background-color 0.2s;
-    text-decoration: none;
+    width: 100%; /* Para que ocupe todo el ancho en móviles */
+    transition: background 0.3s ease;
+    margin-top: 15px;
 }
 
-.btn-comprar-spa:active {
-    transform: scale(0.96); /* Efecto de pulsación al tocar */
-    background-color: #ED2100;
-}
-
-.btn-comprar-spa i {
-    font-size: 22px; /* Icono un poco más grande */
-    margin-right: 10px;
-}
-/* El elemento que hace el brillo */
-.btn-comprar-spa::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 45px;
-    background: rgba(255, 255, 255, 0.4);
-    transform: skewX(-45deg); /* Inclinación del brillo */
-    left: -150%;
-    animation: brilloEfecto 2s infinite; /* Se repite cada 3 segundos */
+.btn-comprar-ahora:hover {
+    background-color: #2980b9; /* Un azul un poco más oscuro al pasar el mouse */
 }
 /* Ajuste para pantallas grandes (PC) */
 @media (min-width: 768px) {
