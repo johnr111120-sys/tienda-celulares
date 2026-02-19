@@ -412,9 +412,6 @@ function toggleFavorito(idProducto, evento) {
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
     
-    function toggleFavorito(idProducto, evento) {
-    // ... (todo tu código anterior de agregar/quitar favoritos) ...
-
     // Al final, añade esto:
     actualizarContadorFavoritos();
    }
@@ -508,9 +505,7 @@ function agregarAlCarrito(producto, variacion = null) {
 
     // 4. 🔥 AUTO-ABRIR el carrito para feedback
     const panel = document.getElementById("carrito-izquierdo");
-    if (panel) {
-        panel.classList.add("activo");
-    }
+    if (panel) panel.classList.add("activo");
 }
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -890,7 +885,7 @@ function abrirProducto(id) {
 
    // ... dentro de abrirProducto ...
     contenedor.innerHTML = `
-        <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
+        <button class="cerrar-modal" onclick="cerrarProducto()">Volver</button>
         <div class="spa-layout">
             <div class="spa-header">
                 <img src="${p.imagen}" id="imgPrincipal" class="modal-img">
@@ -1197,7 +1192,6 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    VARIABLES GLOBALES
 =================================*/
-let productos = "";
 let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
@@ -1245,8 +1239,6 @@ function navegar(ruta) {
     window.location.hash = nuevaHash;
   }
 }
-
-
 
 window.addEventListener("load", router);
 window.addEventListener("hashchange", router);
@@ -1442,9 +1434,9 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
  <script> 
 function irAlCarritoDetalle(nombreProducto) {
     // 1. Obtenemos los valores que el usuario seleccionó en la pantalla de detalles
-    const capacidad = modeloSeleccionado || "N/A"; 
-    const color = colorSeleccionado || "Original";
-    const precioTexto = document.getElementById("spanPrecio").innerText;
+    const capacidad = modeloSeleccionado || "64GB"; 
+    const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
     
     // Limpiamos el precio por si tiene "RD$" o comas, para que sea un número puro
     const precioLimpio = precioTexto.replace(/[^\d]/g, "");
