@@ -2195,3 +2195,13 @@ body.menu-abierto {
     100% { left: 150%; }
 }
 }
+
+/* Espaciado para que el contenido no se pegue al Nav */
+#vista-spa-cliente {
+    padding-top: 40px; /* Ajusta este valor según el alto de tu Nav */
+    min-height: 80vh;
+}
+
+.checkout-container, .carrito-container {
+    margin-top: 20px;
+}
