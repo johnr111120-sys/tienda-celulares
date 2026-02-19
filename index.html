@@ -565,55 +565,45 @@ function renderizarCarrito() {
 
 // Esta función reemplaza a la antigua irAWhatsApp
 function añadirAlCarritoDesdeDetalle(nombreProducto) {
-    // 1. Obtener los valores seleccionados en la interfaz
-    // modeloSeleccionado y colorSeleccionado son las variables que ya usas en tu script
-    const capacidad = modeloSeleccionado || "N/A"; 
-    const color = colorSeleccionado || "Original";
+    // 1. Capturar lo que el usuario seleccionó en los círculos/botones
+    const capacidad = typeof modeloSeleccionado !== 'undefined' ? modeloSeleccionado : "N/A"; 
+    const color = typeof colorSeleccionado !== 'undefined' ? colorSeleccionado : "Original";
     
-    // Capturamos el precio que se muestra actualmente (por si cambia al elegir capacidad)
-    const precioTexto = document.getElementById("spanPrecio").innerText;
-    // Limpiamos el precio para dejar solo números (ej: "RD$ 25,000" -> "25000")
+    // 2. Obtener el precio actual del span
+    const precioElemento = document.getElementById("spanPrecio");
+    const precioTexto = precioElemento ? precioElemento.innerText : "0";
     const precioLimpio = precioTexto.replace(/[^\d]/g, "");
 
-    // 2. Buscamos la imagen del producto en tu base de datos global 'productos'
+    // 3. Buscar el producto en tu lista global para obtener la imagen
     const productoBase = productos.find(p => p.nombre === nombreProducto);
-    const imagenProducto = productoBase ? productoBase.imagen : "";
 
-    // 3. Creamos el objeto formateado para el carrito
+    // 4. Crear el objeto para el carrito
     const productoParaCarrito = {
         id: productoBase ? productoBase.id : Date.now(),
         nombre: nombreProducto,
-        // Guardamos la combinación elegida para que aparezca en el mensaje final
         variacion: `${capacidad} / ${color}`, 
         precio: precioLimpio,
-        imagen: imagenProducto
+        imagen: productoBase ? productoBase.imagen : ""
     };
 
-    // 4. Llamamos a la función principal del carrito
-    // Pasamos el producto y la variación por separado para que agregarAlCarrito la procese
+    // 5. Agregar al carrito (Llamamos a tu función principal)
     agregarAlCarrito(productoParaCarrito, { 
         nombre: productoParaCarrito.variacion, 
         precio: precioLimpio 
     });
 
-    // 5. Feedback visual: Notificación en lugar de abrir el panel
-    mostrarNotificacion(`${nombreProducto} añadido al carrito`);
+    // 6. Mostrar la notificación visual
+    mostrarNotificacion(`${nombreProducto} añadido`);
 }
 
-// Función para mostrar la alerta visual (Toast)
+// Función para la notificación (Toast)
 function mostrarNotificacion(mensaje) {
-    const previa = document.querySelector(".notificacion-carrito");
-    if (previa) previa.remove();
-
     const aviso = document.createElement("div");
     aviso.className = "notificacion-carrito";
     aviso.innerHTML = `<i class="fas fa-check-circle"></i> ${mensaje}`;
-    
     document.body.appendChild(aviso);
 
-    setTimeout(() => { 
-        if(aviso) aviso.remove(); 
-    }, 3000);
+    setTimeout(() => { aviso.remove(); }, 3000);
 }
       
 // Función SPA para la vista "Ver Carrito" detallada
@@ -906,7 +896,7 @@ function abrirProducto(id) {
 
    // ... dentro de abrirProducto ...
     contenedor.innerHTML = `
-        <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
+        <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
         <div class="spa-layout">
             <div class="spa-header">
                 <img src="${p.imagen}" id="imgPrincipal" class="modal-img">
@@ -923,9 +913,9 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-                <button class="btn-comprar-ahora" onclick="añadirAlCarritoDesdeDetalle('${p.nombre}')">
-               COMPRAR AHORA
-               </button>
+               <button class="btn-comprar-ahora" onclick="añadirAlCarritoDesdeDetalle('${p.nombre}')">
+        COMPRAR AHORA
+    </button>
             </div>
         </div>
    `;
