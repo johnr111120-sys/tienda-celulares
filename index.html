@@ -625,42 +625,41 @@ function mostrarNotificacion(mensaje) {
       
 // Función SPA para la vista "Ver Carrito" detallada
 function navegarAVerCarrito() {
-    toggleCarritoIzquierdo(); // Cerramos el panel lateral
-    
+    if (typeof toggleCarritoIzquierdo === 'function') toggleCarritoIzquierdo();
+
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
     const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
 
-    // 1. Ocultar vistas principales
-    if(vistaInicio) vistaInicio.style.display = "none";
-    if(vistaProductos) vistaProductos.style.display = "none";
-    
-    // 2. Ocultar el Logo Header (La imagen grande de arriba)
+    // 1. Ocultar Logo y Vistas
     const headerLogo = document.querySelector(".header-principal");
     if(headerLogo) headerLogo.style.display = "none";
+    if(vistaInicio) vistaInicio.style.display = "none";
+    if(vistaProductos) vistaProductos.style.display = "none";
 
-    // 3. Ocultar Barra de Categorías (Si la tienes abierta)
-    const barraCat = document.getElementById("menu-categorias");
+    // 2. Ocultar Categorías y Mapa
+    const barraCat = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
     if(barraCat) barraCat.style.display = "none";
-    
-    // 4. Ocultar Mapa y Contacto
     const mapaContacto = document.querySelector(".mapa-contacto-footer");
     if(mapaContacto) mapaContacto.style.display = "none";
 
-    // 5. Preparar el contenedor con el botón de VOLVER
+    // 3. Preparar contenedor con MARGEN SUPERIOR
     contenedorSPA.style.display = "block";
+    contenedorSPA.style.backgroundColor = "#f4f4f4";
+
     contenedorSPA.innerHTML = `
-        <div style="padding: 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
+        <div style="padding: 40px 15px 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
             <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display:flex; align-items:center; gap:8px;">
                 <i class="fas fa-arrow-left"></i> VOLVER A LA TIENDA
             </button>
         </div>
-        <div id="espacio-tabla-carrito"></div>
+        <div id="espacio-tabla-carrito" style="padding: 0 15px;"></div>
     `;
 
-    // 6. Renderizar la tabla dentro del espacio que acabamos de crear
     const destinoTabla = document.getElementById("espacio-tabla-carrito");
-    renderizarTablaCarrito(destinoTabla);
+    if (typeof renderizarTablaCarrito === 'function') {
+        renderizarTablaCarrito(destinoTabla);
+    }
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -1585,7 +1584,7 @@ function navegarAFinalizarCompra() {
     const subtotal = calcularSubtotal();
 
     contenedorSPA.innerHTML = `
-        <div style="padding: 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
+        <div style="padding: 15px; max-width: 100%; margin: 0 auto; text-align: left;">
             <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display: flex; align-items: center; gap: 8px;">
                 <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
             </button>
