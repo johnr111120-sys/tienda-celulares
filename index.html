@@ -724,7 +724,6 @@ function regresarALaTienda() {
 }
       
 function renderizarTablaCarrito(contenedor) {
-    // Si no le pasas contenedor, que use el de por defecto
     const target = contenedor || document.getElementById("vista-spa-cliente");
     
     if (carrito.length === 0) {
@@ -732,7 +731,6 @@ function renderizarTablaCarrito(contenedor) {
         return;
     }
 
-    // Renderizamos solo la tabla de productos
     target.innerHTML = `
         <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; border-radius:8px 8px 0 0;">
             <table class="carrito-tabla-detallada" style="width:100%; border-collapse: collapse;">
@@ -740,23 +738,23 @@ function renderizarTablaCarrito(contenedor) {
                     <tr style="border-bottom: 2px solid #eee;">
                         <th style="text-align:left; padding:10px;">Producto</th>
                         <th style="text-align:left; padding:10px;">Precio</th>
-                         <th style="text-align:center; padding:10px;">Cantidad</th>
+                        <th style="text-align:center; padding:10px;">Cantidad</th>
                         <th style="text-align:left; padding:10px;">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    ${carrito.map(p => `
+                    ${carrito.map((p, index) => `
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding:15px 10px;">
-                                <div style="display:flex; align-items:center; gap:10px; text-align: left;">
-                                 <img src="${p.imagen}" width="50" style="border-radius:5px; object-fit: cover; flex-shrink: 0;">
-                                 <div style="display: flex; flex-direction: column;">
-                                 <span style="font-weight: bold; line-height: 1.2; font-size: 15px;">${p.nombre}</span>
-                                 <small style="color: #888;">Ref: ${p.id}</small> 
-                               </div>
-                             </div>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <img src="${p.imagen}" width="50" style="border-radius:5px; object-fit:cover;">
+                                    <div>
+                                        <div style="font-weight:bold;">${p.nombre}</div>
+                                        ${p.color ? `<small style="color:gray;">Color: ${p.color}</small>` : ''}
+                                    </div>
+                                </div>
                             </td>
-                           <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
+                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
                             <td style="padding:15px 10px; text-align:center;">
                                 <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
                                     <button onclick="cambiarCantidad(${index}, -1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">-</button>
