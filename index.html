@@ -767,49 +767,47 @@ function regresarALaTienda() {
 }
       
 function renderizarTablaCarrito(contenedor) {
-    const target = contenedor || document.getElementById("vista-spa-cliente");
-    
-    if (carrito.length === 0) {
+    const target = contenedor || document.getElementById("espacio-tabla-carrito");
+    if (!target) return;
+
+    if (!carrito || carrito.length === 0) {
         target.innerHTML = "<h3 style='text-align:center; padding:50px;'>Tu carrito está vacío</h3>";
         return;
     }
 
     target.innerHTML = `
-        <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; border-radius:8px 8px 0 0;">
-            <table class="carrito-tabla-detallada" style="width:100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="border-bottom: 2px solid #eee;">
-                        <th style="text-align:left; padding:10px;">Producto</th>
-                        <th style="text-align:left; padding:10px;">Precio</th>
-                        <th style="text-align:center; padding:10px;">Cantidad</th>
-                        <th style="text-align:left; padding:10px;">Subtotal</th>
+        <div class="tabla-carrito-container" style="background:white; color:#333; padding:15px; border-radius:8px;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead class="ocultar-movil-header">
+                    <tr style="border-bottom: 2px solid #eee; text-align:left;">
+                        <th style="padding:10px;">Producto</th>
+                        <th style="padding:10px;">Precio</th>
+                        <th style="padding:10px; text-align:center;">Cant.</th>
+                        <th style="padding:10px;">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${carrito.map((p, index) => `
                         <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding:15px 10px;">
+                            <td style="padding:10px;">
                                 <div style="display:flex; align-items:center; gap:10px;">
-                                    <img src="${p.imagen}" width="50" style="border-radius:5px; object-fit:cover;">
-                                     <div style="display: flex; flex-direction: column;">
-                                        <div style="font-weight:bold;">${p.nombre}</div>
-                                        ${p.color ? `<small style="color:gray;">color: ${p.color}</small>` : ''}
-                                    </div>
+                                    <img src="${p.imagen}" width="45" height="45" style="object-fit:cover; border-radius:4px;">
+                                    <span style="font-size:14px; font-weight:500;">${p.nombre}</span>
                                 </div>
                             </td>
-                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                            <td style="padding:15px 10px; text-align:center;">
-                                <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                                    <button onclick="cambiarCantidad(${index}, -1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">-</button>
-                                    <span>${p.cantidad}</span>
-                                    <button onclick="cambiarCantidad(${index}, 1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">+</button>
+                            <td style="padding:10px; font-size:14px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
+                            <td style="padding:10px;">
+                                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                                    <button onclick="cambiarCantidad(${index}, -1)" style="width:24px; height:24px; cursor:pointer; background:#eee; border:1px solid #ddd; border-radius:4px;">-</button>
+                                    <span style="min-width:20px; text-align:center; font-weight:bold;">${p.cantidad}</span>
+                                    <button onclick="cambiarCantidad(${index}, 1)" style="width:24px; height:24px; cursor:pointer; background:#eee; border:1px solid #ddd; border-radius:4px;">+</button>
                                 </div>
                             </td>
-                            <td style="padding:15px 10px;">RD$ ${(parseInt(p.precio) * p.cantidad).toLocaleString()}</td>
+                            <td style="padding:10px; font-size:14px; font-weight:bold;">RD$ ${(p.precio * p.cantidad).toLocaleString()}</td>
                         </tr>
                     `).join('')}
                 </tbody>
-            </table>
+              </table>
             <div class="totales-tabla-box">
                <div class="fila-total"><span>Envío:</span> <span>A Cordinar</span></div>   
             </div>
@@ -817,15 +815,36 @@ function renderizarTablaCarrito(contenedor) {
     `;
 }
 
-// Función lógica para cambiar cantidades
 function cambiarCantidad(index, delta) {
-    carrito[index].cantidad += delta;
-    if (carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1); // Si llega a 0, se elimina
+    try {
+        if (!carrito[index]) return;
+
+        carrito[index].cantidad += delta;
+
+        // Si la cantidad es menor a 1, eliminamos el producto
+        if (carrito[index].cantidad < 1) {
+            carrito.splice(index, 1);
+        }
+
+        // Guardar en LocalStorage si lo usas
+        if (typeof guardarCarritoEnLocalStorage === 'function') {
+            guardarCarritoEnLocalStorage();
+        }
+
+        // Actualizamos las interfaces de forma asíncrona para evitar bloqueos
+        setTimeout(() => {
+            if (typeof renderizarCarrito === 'function') renderizarCarrito();
+            
+            // Solo refrescamos la vista SPA si estamos en ella
+            const contenedorSPA = document.getElementById("vista-spa-cliente");
+            if (contenedorSPA && contenedorSPA.style.display === "block") {
+                navegarAVerCarrito();
+            }
+        }, 10);
+
+    } catch (error) {
+        console.error("Error al cambiar cantidad:", error);
     }
-    // Refrescamos ambas vistas
-    renderizarCarrito();      // Barra lateral
-    navegarAVerCarrito();     // Vista principal SPA
 }
       
 function eliminarDelCarrito(index) {
@@ -1055,9 +1074,8 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-               <button class="btn-comprar-ahora" onclick="añadirAlCarritoDesdeDetalle('${p.nombre}')">
+               <button onclick="agregarAlCarrito(1, 'Amarillo')">Agregar</button>
         COMPRAR AHORA
-    </button>
             </div>
         </div>
    `;
