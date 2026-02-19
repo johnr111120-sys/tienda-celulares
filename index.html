@@ -557,21 +557,22 @@ function renderizarCarrito() {
             </div>
         `).join("");
 
-        contenedor.innerHTML = `
+           contenedor.innerHTML = `
             <div class="carrito-items-scroll" style="flex: 1; overflow-y: auto;">
-                ${htmlProductos}
-            </div>
+               ${htmlProductos}
+           </div>
             
-            <div class="carrito-footer-fijo">
-                <div class="subtotal-box">
-                    <span>SUBTOTAL:</span>
-                    <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
-                </div>
-                
-                <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
-                <button class="btn-carrito-estilo" onclick="navegarAFinalizarCompra()">FINALIZAR COMPRA</button>
-            </div>
-        `;
+           <div class="carrito-footer-fijo">
+        <div class="subtotal-box">
+            <span>SUBTOTAL:</span>
+            <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
+        </div>
+        
+        <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
+        
+        <button class="btn-carrito-estilo" onclick="navegarAFinalizarCompra()">FINALIZAR COMPRA</button>
+       </div>
+     `;
     }
 }
 
