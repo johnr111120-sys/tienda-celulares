@@ -2123,13 +2123,13 @@ body.menu-abierto {
 /* CSS de la notificación */
 .notificacion-carrito {
     position: fixed;
-    top: 80px; /* Ajustado para que no tape el Nav */
-    right: 20px;
+    top: 100px; /* Ajustado para que no tape el Nav */
+    width: 100%;
     background: #27ae60;
     color: white;
     padding: 12px 20px;
     border-radius: 8px;
-    z-index: 10000;
+    z-index: 100;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     animation: fadeInOut 3s forwards;
 }
@@ -2187,7 +2187,9 @@ body.menu-abierto {
 
 /* Definición de la animación de brillo */
 @keyframes brilloEfecto {
+ .contenedor-accion-fija {
     0% { left: -150%; }
     50% { left: 150%; }
     100% { left: 150%; }
+}
 }
