@@ -2340,7 +2340,7 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 }
 
 .item-drop:hover {
-    background: #252525;
+    background: #F1F1F1;
     color: #3498db;
     padding-left: 20px;
 }
