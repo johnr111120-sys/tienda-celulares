@@ -730,44 +730,38 @@ function renderizarTablaCarrito(contenedor) {
     const target = contenedor || document.getElementById("vista-spa-cliente");
     
     if (carrito.length === 0) {
-        target.innerHTML = "<h3>Tu carrito está vacío</h3>";
+        target.innerHTML = "<h3 style='text-align:center; padding:50px;'>Tu carrito está vacío</h3>";
         return;
     }
-    contenedor.innerHTML = `
-        <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; min-height:60vh;">
-            <h1 style="text-align:center; margin-bottom:30px;">Carrito</h1>
-            <table class="carrito-tabla-detallada">
+
+    // Renderizamos solo la tabla de productos
+    target.innerHTML = `
+        <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; border-radius:8px 8px 0 0;">
+            <table class="carrito-tabla-detallada" style="width:100%; border-collapse: collapse;">
                 <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
+                    <tr style="border-bottom: 2px solid #eee;">
+                        <th style="text-align:left; padding:10px;">Producto</th>
+                        <th style="text-align:left; padding:10px;">Precio</th>
+                        <th style="text-align:left; padding:10px;">Cantidad</th>
+                        <th style="text-align:left; padding:10px;">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${carrito.map(p => `
-                        <tr>
-                            <td>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding:15px 10px;">
                                 <div style="display:flex; align-items:center; gap:10px;">
-                                    <img src="${p.imagen}" width="50">
+                                    <img src="${p.imagen}" width="50" style="border-radius:5px;">
                                     <span>${p.nombre}</span>
                                 </div>
                             </td>
-                            <td>RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                            <td>1</td>
-                            <td>RD$ ${parseInt(p.precio).toLocaleString()}</td>
+                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
+                            <td style="padding:15px 10px;">1</td>
+                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
                         </tr>
                     `).join('')}
                 </tbody>
             </table>
-            
-            <div class="totales-tabla-box">
-                <div class="fila-total"><span>Subtotal:</span> <b>RD$ ${calcularSubtotal().toLocaleString()}</b></div>
-                <div class="fila-total"><span>Envío:</span> <span>Calculado en Checkout</span></div>
-                <div class="fila-total total-final"><span>Total:</span> <b>RD$ ${calcularSubtotal().toLocaleString()}</b></div>
-                <button class="btn-checkout" onclick="irAWhatsAppCarrito()">CHECKOUT</button>
-            </div>
         </div>
     `;
 }
