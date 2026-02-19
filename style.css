@@ -2199,7 +2199,7 @@ body.menu-abierto {
 
 /* Espaciado para que el contenido no se pegue al Nav */
 #vista-spa-cliente {
-    padding-top: 60px; /* Ajusta este valor según el alto de tu Nav */
+    padding-top: 80px; /* Ajusta este valor según el alto de tu Nav */
     min-height: 100vh;
 }
 
