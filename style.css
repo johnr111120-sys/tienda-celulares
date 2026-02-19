@@ -2326,3 +2326,13 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.icono-perfil-circulo:hover {
+    transform: scale(1.1);
+    background-color: #e0e0e0;
+}
+
+/* Si el usuario está logueado y el fondo es azul, que brille un poco más */
+.icono-perfil-circulo[style*="background: rgb(52, 152, 219)"]:hover {
+    background-color: #2980b9 !important;
+}
