@@ -2207,7 +2207,7 @@ body.menu-abierto {
     padding-top: 80px; /* Ajusta este valor según el alto de tu Nav */
     min-height: 100vh;
     margin-left: auto !important;
-    margin-right: auto !important;
+    margin-right: 20px !important;
 }
 
 .checkout-container, .carrito-container {
