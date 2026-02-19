@@ -2270,3 +2270,59 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 #espacio-tabla-carrito button[style*="background-color: red"] {
     display: none !important;
 }
+
+@media (max-width: 768px) {
+    /* Convertimos la tabla en bloques individuales */
+    .carrito-tabla-detallada, 
+    .carrito-tabla-detallada thead, 
+    .carrito-tabla-detallada tbody, 
+    .carrito-tabla-detallada tr, 
+    .carrito-tabla-detallada td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Escondemos el encabezado de la tabla en móvil */
+    .carrito-tabla-detallada thead {
+        display: none;
+    }
+
+    .carrito-tabla-detallada tr {
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+    .carrito-tabla-detallada td {
+        text-align: right;
+        padding: 8px 0;
+        position: relative;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    /* El nombre del producto lo dejamos a la izquierda y con espacio */
+    .carrito-tabla-detallada td:first-child {
+        justify-content: flex-start;
+        border-bottom: 1px solid #f9f9f9;
+        padding-bottom: 12px;
+        margin-bottom: 10px;
+    }
+
+    /* Añadimos etiquetas para saber qué es cada número */
+    .carrito-tabla-detallada td:nth-child(2):before { content: "Precio:"; font-weight: bold; color: #888; }
+    .carrito-tabla-detallada td:nth-child(3):before { content: "Cantidad:"; font-weight: bold; color: #888; }
+    .carrito-tabla-detallada td:nth-child(4):before { content: "Subtotal:"; font-weight: bold; color: #888; }
+}
+
+.carrito-tabla-detallada span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas de texto */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
