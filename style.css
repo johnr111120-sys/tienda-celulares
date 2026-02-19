@@ -135,7 +135,7 @@ nav a{
 .barra-categorias{
   position: sticky;
   top: 100%;              /* MISMA altura del header */
-  z-index: 999;           /* debajo del nav */
+  z-index: 100 !important;           /* debajo del nav */
 
   height: auto;
   background: #000;       /* mismo negro que el header */
@@ -2343,9 +2343,12 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 }
 
 #contenido-menu-dinamico i {
-    position: fixed;
     width: 20px; /* Alinea los iconos del menú */
     text-align: center;
-    z-index: 10000;
+}
+
+/* Aseguramos que el menú del perfil sea el rey de la pantalla */
+#dropdown-perfil {
+    z-index: 99999 !important;
 }
 
