@@ -377,6 +377,29 @@ function navegarSPA(seccion) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function mostrarPerfil() {
+    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
+    
+    // 1. Ocultar el resto de la web
+    const elementosAOcultar = ["vista-inicio", "vista-productos", "menu-categorias", "mapa-contacto-footer", "header-principal"];
+    elementosAOcultar.forEach(id => {
+        const el = document.getElementById(id) || document.querySelector("." + id);
+        if(el) el.style.display = "none";
+    });
+
+    contenedorSPA.style.display = "block";
+    contenedorSPA.style.backgroundColor = "#f4f4f4";
+
+    // 2. Verificar si hay sesión activa
+    const usuarioActivo = JSON.parse(localStorage.getItem("usuario_logueado"));
+
+    if (usuarioActivo) {
+        mostrarPerfilUsuarioLogueado(usuarioActivo);
+    } else {
+        mostrarFormulariosAuth();
+    }
+}
+      
 function renderizarPerfil(contenedor) {
     contenedor.innerHTML = `
         <div class="perfil-container" style="padding:40px 20px; max-width:800px; margin:auto; color:white;">
@@ -424,6 +447,76 @@ function mostrarPerfil() {
             </div>
         </div>
     `;
+}
+
+function mostrarFormulariosAuth(modo = 'login') {
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    
+    const esLogin = modo === 'login';
+
+    contenedorSPA.innerHTML = `
+        <div style="max-width: 450px; margin: 60px auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; font-family: sans-serif;">
+            <h2 style="margin-bottom: 10px;">${esLogin ? '¡Bienvenido de nuevo!' : 'Crea tu cuenta'}</h2>
+            <p style="color: #666; margin-bottom: 30px;">${esLogin ? 'Ingresa tus datos para continuar' : 'Únete a nuestra comunidad'}</p>
+            
+            <div id="auth-error-msg" style="color: #e74c3c; margin-bottom: 15px; display: none; font-size: 14px;"></div>
+
+            ${!esLogin ? '<input type="text" id="reg-nombre" placeholder="Nombre completo" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">' : ''}
+            
+            <input type="email" id="auth-email" placeholder="Correo electrónico" style="width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+            
+            <input type="password" id="auth-pass" placeholder="Contraseña" style="width:100%; padding:14px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;">
+
+            <button onclick="${esLogin ? 'procesarLogin()' : 'procesarRegistro()'}" style="width:100%; padding:16px; background:#3498db; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; font-size:16px; transition: 0.3s;">
+                ${esLogin ? 'INICIAR SESIÓN' : 'REGISTRARME'}
+            </button>
+
+            <p style="margin-top:25px; color: #555;">
+                ${esLogin ? '¿Aún no tienes cuenta?' : '¿Ya tienes una cuenta?'} 
+                <span onclick="mostrarFormulariosAuth('${esLogin ? 'registro' : 'login'}')" style="color:#3498db; cursor:pointer; font-weight:bold; text-decoration: underline;">
+                    ${esLogin ? 'Regístrate' : 'Inicia sesión'}
+                </span>
+            </p>
+            <button onclick="regresarALaTienda()" style="margin-top:20px; background:none; border:none; color:#888; cursor:pointer;">Volver a la tienda</button>
+        </div>
+    `;
+}
+
+function procesarRegistro() {
+    const nombre = document.getElementById("reg-nombre").value;
+    const email = document.getElementById("auth-email").value;
+    const pass = document.getElementById("auth-pass").value;
+
+    if (!nombre || !email || !pass) return alert("Por favor, completa todos los campos");
+
+    let usuarios = JSON.parse(localStorage.getItem("db_usuarios")) || [];
+    
+    if (usuarios.find(u => u.email === email)) {
+        alert("Este correo ya está registrado");
+        return;
+    }
+
+    usuarios.push({ nombre, email, pass });
+    localStorage.setItem("db_usuarios", JSON.stringify(usuarios));
+    alert("¡Cuenta creada! Ahora puedes iniciar sesión.");
+    mostrarFormulariosAuth('login');
+}
+
+function procesarLogin() {
+    const email = document.getElementById("auth-email").value;
+    const pass = document.getElementById("auth-pass").value;
+
+    let usuarios = JSON.parse(localStorage.getItem("db_usuarios")) || [];
+    const usuario = usuarios.find(u => u.email === email && u.pass === pass);
+
+    if (usuario) {
+        localStorage.setItem("usuario_logueado", JSON.stringify(usuario));
+        mostrarPerfil(); // Recarga la vista para mostrar los datos del usuario
+    } else {
+        const errorMsg = document.getElementById("auth-error-msg");
+        errorMsg.innerText = "Correo o contraseña incorrectos";
+        errorMsg.style.display = "block";
+    }
 }
 
 function renderFormLogin() {
@@ -495,25 +588,37 @@ function ejecutarLogin() {
         alert("Correo o contraseña incorrectos");
     }
 }
-function mostrarPerfilUsuarioLogueado() {
+      
+function mostrarPerfilUsuarioLogueado(usuario) {
     const contenedorSPA = document.getElementById("vista-spa-cliente");
-    const usuario = JSON.parse(localStorage.getItem("usuario_logueado"));
-
-    if (!usuario) return mostrarPerfil(); // Si no hay nadie, mostrar login
-
+    
     contenedorSPA.innerHTML = `
-        <div style="max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h1>Mi Perfil</h1>
-            <p style="font-size: 18px;">Hola, <strong>${usuario.nombre}</strong></p>
-            <p>Email: ${usuario.email}</p>
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-            <h3>Mis Pedidos</h3>
-            <p style="color: #888;">Aún no tienes pedidos realizados.</p>
-            <button onclick="cerrarSesion()" style="margin-top: 30px; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cerrar Sesión</button>
+        <div style="max-width: 600px; margin: 50px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center;">
+            <div style="width: 80px; height: 80px; background: #3498db; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 20px;">
+                ${usuario.nombre.charAt(0).toUpperCase()}
+            </div>
+            <h1>Hola, ${usuario.nombre}</h1>
+            <p style="color: #666;">${usuario.email}</p>
+            
+            <div style="margin-top: 30px; padding: 20px; border: 1px dashed #ddd; border-radius: 8px;">
+                <h3>Mis Pedidos</h3>
+                <p style="font-size: 14px; color: #999;">Aún no has realizado ninguna compra.</p>
+            </div>
+
+            <button onclick="cerrarSesion()" style="margin-top: 40px; background: #e74c3c; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                CERRAR SESIÓN
+            </button>
+            <br>
+            <button onclick="regresarALaTienda()" style="margin-top: 20px; background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold;">IR A COMPRAR</button>
         </div>
     `;
 }
 
+function cerrarSesion() {
+    localStorage.removeItem("usuario_logueado");
+    mostrarPerfil();
+}
+      
 function cerrarSesion() {
     localStorage.removeItem("usuario_logueado");
     mostrarPerfil();
