@@ -429,9 +429,6 @@ function toggleFavorito(idProducto, evento) {
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
     
-    function toggleFavorito(idProducto, evento) {
-    // ... (todo tu código anterior de agregar/quitar favoritos) ...
-
     // Al final, añade esto:
     actualizarContadorFavoritos();
    }
@@ -754,10 +751,18 @@ window.addEventListener("load", () => {
 
 // Modifica tu función toggleCarritoIzquierdo para que refresque la lista
 function toggleCarritoIzquierdo() {
-    const panel = document.getElementById("carrito-izquierdo");
-    panel.classList.toggle("activo");
-    if (panel.classList.contains("activo")) {
-        renderizarCarrito();
+    const carrito = document.getElementById("carrito-izquierdo");
+    const btnWhatsapp = document.querySelector(".btn-whatsapp"); // Ajusta a la clase real de tu botón
+
+    carrito.classList.toggle("activo");
+
+    // Lógica para el botón de WhatsApp
+    if (btnWhatsapp) {
+        if (carrito.classList.contains("activo")) {
+            btnWhatsapp.style.display = "none";
+        } else {
+            btnWhatsapp.style.display = "block";
+        }
     }
 }
 
