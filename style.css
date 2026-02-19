@@ -2327,17 +2327,21 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     overflow: hidden;
 }
 
-/* Estilo para los ítems del menú desplegable */
+/* Esto evita que el botón de perfil empuje a los demás en el flex de nav-socials */
+#contenedor-perfil-header {
+    margin-right: 5px;
+}
+
+/* Estilo para los textos dentro del menú */
 .item-drop {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 20px;
+    padding: 12px 18px;
     text-decoration: none;
     color: #eee;
-    font-size: 14px;
-    transition: 0.3s;
-    text-align: left;
+    font-size: 13px;
+    transition: background 0.2s;
 }
 
 .item-drop:hover {
@@ -2345,7 +2349,8 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     color: #3498db;
 }
 
-/* Para que el menú no flote muy lejos del botón */
+/* MUY IMPORTANTE: Que el menú esté por encima de la barra de herramientas y categorías */
 #dropdown-perfil {
-    margin-top: 5px;
+    z-index: 999999 !important;
 }
+
