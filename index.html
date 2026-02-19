@@ -505,33 +505,20 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function agregarAlCarrito(productoId, colorSeleccionado = null) {
-    const producto = productos.find(p => p.id === productoId);
-    
-    // Si hay color seleccionado, buscamos su imagen específica
-    let imagenFinal = producto.imagen;
-    if (colorSeleccionado && producto.colores && producto.colores[colorSeleccionado]) {
-        imagenFinal = producto.colores[colorSeleccionado].imagen;
-    }
+function agregarAlCarrito(producto, variacion = null) {
+    const item = {
+        id: producto.id,
+        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
+        precio: variacion ? variacion.precio : producto.precio,
+        imagen: producto.imagen,
+        slug: producto.slug
+    };
 
-    const itemExistente = carrito.find(item => item.id === productoId && item.color === colorSeleccionado);
+    carrito.push(item);
+    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
 
-    if (itemExistente) {
-        itemExistente.cantidad++;
-    } else {
-        carrito.push({
-            ...producto,
-            idUnico: Date.now() + Math.random(), // Para diferenciar productos iguales de distinto color
-            nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
-            precio: variacion ? variacion.precio : producto.precio,
-            imagen: imagenFinal,
-            color: colorSeleccionado,
-            slug: producto.slug
-            cantidad: 1
-   
     actualizarContadorCarrito();
     renderizarCarrito();
-  });
 }
 
     // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -575,18 +562,19 @@ function renderizarCarrito() {
                ${htmlProductos}
            </div>
             
-          <div class="carrito-footer-fijo" style="padding: 20px; border-top: 1px solid #eee;">
-            <div class="subtotal-box" style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;">
-                <span>SUBTOTAL:</span>
-                <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
-            </div>
-        
-       <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()" style="width:100%; padding:12px; background:#3498db; color:white; border:none; cursor:pointer; font-weight:bold;">
-                VER CARRITO
-            </button>
+           <div class="carrito-footer-fijo">
+        <div class="subtotal-box">
+            <span>SUBTOTAL:</span>
+            <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
         </div>
+        
+        <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
+        
+        <button class="btn-carrito-estilo" onclick="navegarAFinalizarCompra()">FINALIZAR COMPRA</button>
+       </div>
      `;
     }
+}
 
 // Esta función reemplaza a la antigua irAWhatsApp
 function añadirAlCarritoDesdeDetalle(nombreProducto) {
@@ -748,37 +736,31 @@ function renderizarTablaCarrito(contenedor) {
 
     // Renderizamos solo la tabla de productos
     target.innerHTML = `
-       <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; border-radius:8px 8px 0 0;">
+        <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; border-radius:8px 8px 0 0;">
             <table class="carrito-tabla-detallada" style="width:100%; border-collapse: collapse;">
                 <thead>
                     <tr style="border-bottom: 2px solid #eee;">
                         <th style="text-align:left; padding:10px;">Producto</th>
                         <th style="text-align:left; padding:10px;">Precio</th>
-                        <th style="text-align:center; padding:10px;">Cantidad</th>
+                        <th style="text-align:left; padding:10px;">Cantidad</th>
                         <th style="text-align:left; padding:10px;">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    ${carrito.map((p, index) => `
+                    ${carrito.map(p => `
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding:15px 10px;">
-                                <div style="display:flex; align-items:center; gap:10px;">
-                                    <img src="${p.imagen}" width="50" style="border-radius:5px; object-fit:cover;">
-                                    <div>
-                                        <div style="font-weight:bold;">${p.nombre}</div>
-                                        ${p.color ? `<small style="color:gray;">Color: ${p.color}</small>` : ''}
-                                    </div>
-                                </div>
+                                <div style="display:flex; align-items:center; gap:15px; text-align: left;">
+                                 <img src="${p.imagen}" width="60" style="border-radius:5px; object-fit: cover; flex-shrink: 0;">
+                                 <div style="display: flex; flex-direction: column;">
+                                 <span style="font-weight: bold; line-height: 1.2; font-size: 15px;">${p.nombre}</span>
+                                 <small style="color: #888;">Ref: ${p.id}</small> 
+                               </div>
+                             </div>
                             </td>
                             <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                            <td style="padding:15px 10px; text-align:center;">
-                                <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-                                    <button onclick="cambiarCantidad(${index}, -1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">-</button>
-                                    <span>${p.cantidad}</span>
-                                    <button onclick="cambiarCantidad(${index}, 1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">+</button>
-                                </div>
-                            </td>
-                            <td style="padding:15px 10px;">RD$ ${(parseInt(p.precio) * p.cantidad).toLocaleString()}</td>
+                            <td style="padding:15px 10px;">1</td>
+                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -788,17 +770,6 @@ function renderizarTablaCarrito(contenedor) {
             </div>
         </div>
     `;
-}
-
-// Función lógica para cambiar cantidades
-function cambiarCantidad(index, delta) {
-    carrito[index].cantidad += delta;
-    if (carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1); // Si llega a 0, se elimina
-    }
-    // Refrescamos ambas vistas
-    renderizarCarrito();      // Barra lateral
-    navegarAVerCarrito();     // Vista principal SPA
 }
       
 function eliminarDelCarrito(index) {
