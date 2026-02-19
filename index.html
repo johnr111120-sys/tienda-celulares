@@ -495,7 +495,6 @@ function agregarAlCarrito(producto, variacion = null) {
         nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
         precio: variacion ? variacion.precio : producto.precio,
         imagen: producto.imagen
-        slug: producto.slug
     };
 
     // 2. Guardar en el array y localStorage
@@ -508,9 +507,7 @@ function agregarAlCarrito(producto, variacion = null) {
 
     // 4. 🔥 AUTO-ABRIR el carrito para feedback
     const panel = document.getElementById("carrito-izquierdo");
-    if (panel) {
-        panel.classList.add("activo");
-    }
+    if (panel) panel.classList.add("activo");
 }
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -703,16 +700,10 @@ function navegarAFinalizarCompra() {
                 <div class="checkout-col">
                     <div class="checkout-card">
                         <h3>Tu Pedido</h3>
-                       <div class="tracking-box">
-                      <div>
-                         <span>Número de Rastreo:</span><br>
-                         <strong id="num-tracking-final">${trackingNum}</strong>
-                     </div>
-                        <button class="btn-copiar-rastreo" onclick="copiarRastreo('${trackingNum}')" 
-                        style="background:#555; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">
-                        <i class="fas fa-copy"></i> COPIAR
-                    </button>
-                    </div>
+                        <div class="tracking-box">
+                            <span>Número de Rastreo:</span>
+                            <strong id="num-tracking-final">${trackingNum}</strong>
+                        </div>
                         
                         <div class="resumen-pedido">
                             <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
@@ -798,18 +789,6 @@ function enviarPedidoWhatsApp(tracking) {
     alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
     window.location.hash = "#/";
     location.reload();
-}
-
-function copiarRastreo(texto) {
-    navigator.clipboard.writeText(texto).then(() => {
-        const btn = document.querySelector(".btn-copiar-rastreo");
-        btn.innerHTML = '<i class="fas fa-check"></i> COPIADO';
-        btn.style.background = "#27ae60";
-        setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-copy"></i> COPIAR';
-            btn.style.background = "#555";
-        }, 2000);
-    });
 }
       
 // --- MODAL LOGIN (ESTILO IMAGEN) ---
@@ -907,7 +886,7 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-                <button class="btn-comprar-spa" onclick="irAlCarritoDetalle('${p.nombre}')">
+                <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
                     Comprar ahora
                 </button>
             </div>
@@ -1440,31 +1419,23 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 
 
  <script> 
-function irAlCarritoDetalle(nombreProducto) {
-    // 1. Obtenemos los valores que el usuario seleccionó en la pantalla de detalles
-    const capacidad = modeloSeleccionado || "N/A"; 
-    const color = colorSeleccionado || "Original";
-    const precioTexto = document.getElementById("spanPrecio").innerText;
+function irAWhatsApp(nombreProducto) {
+    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
+    const capacidad = modeloSeleccionado || "64GB"; 
+    const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
+
+    // Mensaje con el enlace de la imagen al final
+    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
+                    `• *Capacidad:* ${capacidad}\n` +
+                    `• *Color:* ${color}\n` +
+                    `• *Precio:* RD$ ${precio}\n\n` +
+                    `¿Está disponible?`;
+
+    const telefono = "59891547599"; // Tu número
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
     
-    // Limpiamos el precio por si tiene "RD$" o comas, para que sea un número puro
-    const precioLimpio = precioTexto.replace(/[^\d]/g, "");
-
-    // 2. Creamos el objeto del producto con sus variaciones
-    // Buscamos el producto original en tu base de datos 'productos' usando el nombre
-    const productoOriginal = productos.find(p => p.nombre === nombreProducto);
-
-    const productoParaCarrito = {
-        id: productoOriginal ? productoOriginal.id : Date.now(),
-        nombre: `${nombreProducto} (${capacidad} / ${color})`,
-        precio: precioLimpio,
-        imagen: productoOriginal ? productoOriginal.imagen : "" 
-    };
-
-    // 3. Lo mandamos al carrito global
-    agregarAlCarrito(productoParaCarrito);
-
-    // Opcional: Cerrar el modal o vista de detalles si lo deseas
-    // cerrarModalProducto(); 
+    window.open(url, '_blank');
 }
 </script>
 
