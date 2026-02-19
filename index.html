@@ -505,20 +505,51 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function agregarAlCarrito(producto, variacion = null) {
-    const item = {
-        id: producto.id,
-        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
-        precio: variacion ? variacion.precio : producto.precio,
-        imagen: producto.imagen,
-        slug: producto.slug
-    };
+function agregarAlCarrito(productoId, colorSeleccionado = null) {
+    try {
+        const producto = productos.find(p => p.id === productoId);
+        if (!producto) return;
 
-    carrito.push(item);
-    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
+        // --- LÓGICA DE IMAGEN SEGURA ---
+        let imagenParaElCarrito = producto.imagen; // Imagen por defecto
 
-    actualizarContadorCarrito();
-    renderizarCarrito();
+        // Verificamos si hay un color y si ese color tiene una imagen propia
+        if (colorSeleccionado && producto.variantes && producto.variantes[colorSeleccionado]) {
+            imagenParaElCarrito = producto.variantes[colorSeleccionado].imagen || producto.imagen;
+        } else if (colorSeleccionado && producto.imagenesColores && producto.imagenesColores[colorSeleccionado]) {
+            // Intento secundario por si tu objeto usa 'imagenesColores'
+            imagenParaElCarrito = producto.imagenesColores[colorSeleccionado];
+        }
+
+        // Buscamos si ya existe el mismo producto con el mismo color en el carrito
+        const itemExistente = carrito.find(item => item.id === productoId && item.color === colorSeleccionado);
+
+        if (itemExistente) {
+            itemExistente.cantidad++;
+        } else {
+            // Agregamos el nuevo item con la imagen ya decidida
+            carrito.push({
+                ...producto, // Copiamos datos básicos
+                id: productoId,
+                nombre: producto.nombre,
+                precio: producto.precio,
+                imagen: imagenParaElCarrito, // Aquí va la imagen del color o la general
+                color: colorSeleccionado,
+                cantidad: 1
+            });
+        }
+
+        // Actualizamos las interfaces sin saturar el navegador
+        if (typeof actualizarInterfazCarrito === 'function') {
+            actualizarInterfazCarrito();
+        } else {
+            if (typeof renderizarCarrito === 'function') renderizarCarrito();
+            if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
+        }
+
+    } catch (error) {
+        console.error("Error al agregar al carrito: ", error);
+    }
 }
 
     // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -535,12 +566,7 @@ function actualizarContadorCarrito() {
 
 // Función para calcular el subtotal de productos
 function calcularSubtotal() {
-    return carrito.reduce((total, item) => {
-        // Forzamos precio y cantidad a números antes de sumar
-        const precio = parseFloat(item.precio) || 0;
-        const cantidad = parseInt(item.cantidad) || 0;
-        return total + (precio * cantidad);
-    }, 0);
+    return carrito.reduce((acc, p) => acc + parseInt(p.precio), 0);
 }
 
 // Función para renderizar el Carrito Lateral con el Subtotal y Botones
@@ -760,17 +786,14 @@ function renderizarTablaCarrito(contenedor) {
                                 </div>
                             </td>
                             <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                           <td style="padding:10px; text-align:center;">
-                       <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                      <button onclick="cambiarCantidad(${index}, -1)" style="width:24px; height:24px; cursor:pointer;">-</button>
-                       <span style="font-weight:bold;">${parseInt(p.cantidad) || 1}</span>
-                        <button onclick="cambiarCantidad(${index}, 1)" style="width:24px; height:24px; cursor:pointer;">+</button>
-                        </div>
-                        </td>
-
-                       <td style="padding:10px; font-weight:bold;">
-                        RD$ ${ (parseFloat(p.precio) * (parseInt(p.cantidad) || 1)).toLocaleString() }
-                          </td>
+                            <td style="padding:15px 10px; text-align:center;">
+                                <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                                    <button onclick="cambiarCantidad(${index}, -1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">-</button>
+                                    <span>${p.cantidad}</span>
+                                    <button onclick="cambiarCantidad(${index}, 1)" style="cursor:pointer; width:25px; border:1px solid #ccc;">+</button>
+                                </div>
+                            </td>
+                            <td style="padding:15px 10px;">RD$ ${(parseInt(p.precio) * p.cantidad).toLocaleString()}</td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -782,36 +805,15 @@ function renderizarTablaCarrito(contenedor) {
     `;
 }
 
+// Función lógica para cambiar cantidades
 function cambiarCantidad(index, delta) {
-    try {
-        if (!carrito[index]) return;
-
-        carrito[index].cantidad += delta;
-
-        // Si la cantidad es menor a 1, eliminamos el producto
-        if (carrito[index].cantidad < 1) {
-            carrito.splice(index, 1);
-        }
-
-        // Guardar en LocalStorage si lo usas
-        if (typeof guardarCarritoEnLocalStorage === 'function') {
-            guardarCarritoEnLocalStorage();
-        }
-
-        // Actualizamos las interfaces de forma asíncrona para evitar bloqueos
-        setTimeout(() => {
-            if (typeof renderizarCarrito === 'function') renderizarCarrito();
-            
-            // Solo refrescamos la vista SPA si estamos en ella
-            const contenedorSPA = document.getElementById("vista-spa-cliente");
-            if (contenedorSPA && contenedorSPA.style.display === "block") {
-                navegarAVerCarrito();
-            }
-        }, 10);
-
-    } catch (error) {
-        console.error("Error al cambiar cantidad:", error);
+    carrito[index].cantidad += delta;
+    if (carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1); // Si llega a 0, se elimina
     }
+    // Refrescamos ambas vistas
+    renderizarCarrito();      // Barra lateral
+    navegarAVerCarrito();     // Vista principal SPA
 }
       
 function eliminarDelCarrito(index) {
