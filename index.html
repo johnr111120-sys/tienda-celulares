@@ -243,10 +243,11 @@ referrerpolicy="no-referrer-when-downgrade">
     
 <footer>
     <div class="mapa-contacto-footer">
-        </div>
-  <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
-  <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
-  <p>📞 WhatsApp: +1 829 201 7321</p>
+        <p>📍 La Canela, Santiago, R.D. — Calle Pricipal, Al lado de Plaza La Canela</p>
+        <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
+        <p>📞 WhatsApp: +1 829 201 7321</p>
+    </div>
+
     <div class="footer-negro-final">
         <p>© 2026 Moises Celulares - Todos los derechos reservados</p>
     </div>
@@ -1546,27 +1547,26 @@ function navegarAFinalizarCompra() {
 }
 
 function regresarALaTienda() {
-    // 1. Mostrar de nuevo las vistas principales
+    // 1. Mostrar de nuevo la tienda
     document.getElementById("vista-inicio").style.display = "block";
     
-    // 2. Encender la barra de categorías y el mapa (Lo verde)
+    // 2. Encender barra de categorías
     const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
     if(barraCategorias) barraCategorias.style.display = "block";
     
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "block";
+    // 3. Encender el mapa y los datos que acabamos de agrupar
+    const infoFooter = document.querySelector(".mapa-contacto-footer");
+    if(infoFooter) infoFooter.style.display = "block";
 
-    // 3. Ocultar y vaciar el contenedor SPA del checkout
+    // 4. Limpiar el checkout
     const contenedorSPA = document.getElementById("vista-spa-cliente");
     if(contenedorSPA) {
         contenedorSPA.style.display = "none";
         contenedorSPA.innerHTML = "";
     }
 
-    // 4. Resetear la URL y ejecutar el router para que carguen los productos
     window.location.hash = "#/";
     router();
-    
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 </script>
