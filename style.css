@@ -2202,20 +2202,20 @@ body.menu-abierto {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #27ae60; /* Verde éxito */
+    background: #27ae60;
     color: white;
     padding: 12px 25px;
     border-radius: 30px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 5000;
+    z-index: 9999;
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 10px;
-    animation: slideDownUp 3s ease-in-out forwards;
+    animation: bajarSubir 3s ease-in-out forwards;
 }
 
-@keyframes slideDownUp {
+@keyframes bajarSubir {
     0% { top: -60px; opacity: 0; }
     15% { top: 20px; opacity: 1; }
     85% { top: 20px; opacity: 1; }
