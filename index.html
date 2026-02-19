@@ -626,7 +626,13 @@ function mostrarNotificacion(mensaje) {
       
 // Función SPA para la vista "Ver Carrito" detallada
 function navegarAVerCarrito() {
-    if (typeof toggleCarritoIzquierdo === 'function') toggleCarritoIzquierdo();
+    // Cerramos el carrito lateral de forma segura
+    if (typeof toggleCarritoIzquierdo === 'function') {
+        const carritoLat = document.getElementById("carrito-izquierdo");
+        if (carritoLat && carritoLat.classList.contains("activo")) {
+            toggleCarritoIzquierdo();
+        }
+    }
 
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
@@ -647,6 +653,15 @@ function navegarAVerCarrito() {
     // 3. Preparar contenedor con MARGEN SUPERIOR
     contenedorSPA.style.display = "block";
     contenedorSPA.style.backgroundColor = "#f4f4f4";
+    
+    // Calculamos subtotal de forma segura
+    let subtotalFinal = 0;
+    try {
+        subtotalFinal = (typeof calcularSubtotal === 'function') ? calcularSubtotal() : 0;
+    } catch (e) { console.error("Error al calcular subtotal", e); }
+
+    // Solo mostramos el botón si hay productos en el carrito
+    const tieneProductos = (typeof carrito !== 'undefined' && carrito.length > 0);
 
     contenedorSPA.innerHTML = `
         <div style="padding: 40px 15px 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
@@ -654,11 +669,28 @@ function navegarAVerCarrito() {
                 <i class="fas fa-arrow-left"></i> VOLVER A LA TIENDA
             </button>
         </div>
-        <div id="espacio-tabla-carrito"></div>
+
+        <div class="carrito-container-completo" style="max-width: 1100px; margin: 0 auto; padding: 0 15px;">
+            <h1 style="margin-bottom: 20px;">Tu Carrito</h1>
+            
+            <div id="espacio-tabla-carrito"></div>
+
+            ${tieneProductos ? `
+                <div id="checkout-sector-spa" style="background: white; padding: 25px; border-radius: 8px; margin-top: 20px; text-align: right; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 40px;">
+                    <h2 style="margin-bottom: 15px; color: #333;">Total: RD$ ${subtotalFinal.toLocaleString()}</h2>
+                    <button onclick="navegarAFinalizarCompra()" 
+                            class="btn-realizar-compra" 
+                            style="width: auto; padding: 15px 50px; font-size: 18px; cursor: pointer; background-color: #27ae60; color: white; border: none; border-radius: 5px; font-weight: bold;">
+                        PROCEDER AL PAGO (CHECKOUT)
+                    </button>
+                </div>
+            ` : `<p style="text-align:center; padding: 50px;">Tu carrito está vacío actualmente.</p>`}
+        </div>
     `;
 
+    // 4. Renderizar la tabla
     const destinoTabla = document.getElementById("espacio-tabla-carrito");
-    if (typeof renderizarTablaCarrito === 'function') {
+    if (destinoTabla && typeof renderizarTablaCarrito === 'function') {
         renderizarTablaCarrito(destinoTabla);
     }
     
