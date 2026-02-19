@@ -505,20 +505,51 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function agregarAlCarrito(producto, variacion = null) {
-    const item = {
-        id: producto.id,
-        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
-        precio: variacion ? variacion.precio : producto.precio,
-        imagen: producto.imagen,
-        slug: producto.slug
-    };
+function agregarAlCarrito(productoId, colorSeleccionado = null) {
+    try {
+        const producto = productos.find(p => p.id === productoId);
+        if (!producto) return;
 
-    carrito.push(item);
-    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
+        // --- LÓGICA DE IMAGEN SEGURA ---
+        let imagenParaElCarrito = producto.imagen; // Imagen por defecto
 
-    actualizarContadorCarrito();
-    renderizarCarrito();
+        // Verificamos si hay un color y si ese color tiene una imagen propia
+        if (colorSeleccionado && producto.variantes && producto.variantes[colorSeleccionado]) {
+            imagenParaElCarrito = producto.variantes[colorSeleccionado].imagen || producto.imagen;
+        } else if (colorSeleccionado && producto.imagenesColores && producto.imagenesColores[colorSeleccionado]) {
+            // Intento secundario por si tu objeto usa 'imagenesColores'
+            imagenParaElCarrito = producto.imagenesColores[colorSeleccionado];
+        }
+
+        // Buscamos si ya existe el mismo producto con el mismo color en el carrito
+        const itemExistente = carrito.find(item => item.id === productoId && item.color === colorSeleccionado);
+
+        if (itemExistente) {
+            itemExistente.cantidad++;
+        } else {
+            // Agregamos el nuevo item con la imagen ya decidida
+            carrito.push({
+                ...producto, // Copiamos datos básicos
+                id: productoId,
+                nombre: producto.nombre,
+                precio: producto.precio,
+                imagen: imagenParaElCarrito, // Aquí va la imagen del color o la general
+                color: colorSeleccionado,
+                cantidad: 1
+            });
+        }
+
+        // Actualizamos las interfaces sin saturar el navegador
+        if (typeof actualizarInterfazCarrito === 'function') {
+            actualizarInterfazCarrito();
+        } else {
+            if (typeof renderizarCarrito === 'function') renderizarCarrito();
+            if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
+        }
+
+    } catch (error) {
+        console.error("Error al agregar al carrito: ", error);
+    }
 }
 
     // Variable global (asegúrate de que agregarAlCarrito la use)
