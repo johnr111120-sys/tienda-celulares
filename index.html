@@ -622,21 +622,76 @@ function navegarAVerCarrito() {
     const vistaProductos = document.getElementById("vista-productos");
     const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
 
-    // Ocultar vistas principales
+    // 1. Ocultar vistas principales
     if(vistaInicio) vistaInicio.style.display = "none";
     if(vistaProductos) vistaProductos.style.display = "none";
     
-    // Configuración del Footer (Ocultar Mapa y Contacto)
-    const mapaContacto = document.querySelector(".mapa-contacto-footer"); // Asegúrate de que tu HTML tenga esta clase en esa sección
+    // 2. Ocultar el Logo Header (La imagen grande de arriba)
+    const headerLogo = document.querySelector(".header-principal");
+    if(headerLogo) headerLogo.style.display = "none";
+
+    // 3. Ocultar Barra de Categorías (Si la tienes abierta)
+    const barraCat = document.getElementById("menu-categorias");
+    if(barraCat) barraCat.style.display = "none";
+    
+    // 4. Ocultar Mapa y Contacto
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
     if(mapaContacto) mapaContacto.style.display = "none";
 
+    // 5. Preparar el contenedor con el botón de VOLVER
     contenedorSPA.style.display = "block";
-    renderizarTablaCarrito(contenedorSPA);
+    contenedorSPA.innerHTML = `
+        <div style="padding: 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
+            <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display:flex; align-items:center; gap:8px;">
+                <i class="fas fa-arrow-left"></i> VOLVER A LA TIENDA
+            </button>
+        </div>
+        <div id="espacio-tabla-carrito"></div>
+    `;
+
+    // 6. Renderizar la tabla dentro del espacio que acabamos de crear
+    const destinoTabla = document.getElementById("espacio-tabla-carrito");
+    renderizarTablaCarrito(destinoTabla);
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function regresarALaTienda() {
+    // 1. Mostrar de nuevo el Logo Header y las vistas
+    const headerLogo = document.querySelector(".header-principal");
+    if(headerLogo) headerLogo.style.display = "block";
+
+    const vistaInicio = document.getElementById("vista-inicio");
+    if(vistaInicio) vistaInicio.style.display = "block";
+
+    // 2. Mostrar categorías y Mapa
+    const barraCat = document.getElementById("menu-categorias");
+    if(barraCat) barraCat.style.display = "block";
+
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
+    if(mapaContacto) mapaContacto.style.display = "block";
+
+    // 3. Limpiar y ocultar el espacio SPA
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    if(contenedorSPA) {
+        contenedorSPA.style.display = "none";
+        contenedorSPA.innerHTML = "";
+    }
+
+    // 4. Resetear URL y navegar al inicio
+    window.location.hash = "#/";
+    router();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+      
 function renderizarTablaCarrito(contenedor) {
+    // Si no le pasas contenedor, que use el de por defecto
+    const target = contenedor || document.getElementById("vista-spa-cliente");
+    
+    if (carrito.length === 0) {
+        target.innerHTML = "<h3>Tu carrito está vacío</h3>";
+        return;
+    }
     contenedor.innerHTML = `
         <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; min-height:60vh;">
             <h1 style="text-align:center; margin-bottom:30px;">Carrito</h1>
@@ -782,26 +837,24 @@ function crearContenedorSPA() {
   <script>
 function alternarVisibilidadTienda(mostrar) {
     const estado = mostrar ? "block" : "none";
-    const estadoGrid = mostrar ? "grid" : "none";
 
-    // 1. Barra de Categorías (Lado izquierdo)
-    const menuCat = document.getElementById("menu-categorias");
-    if(menuCat) menuCat.style.display = estado;
+    // 1. Ocultar el Header Principal (Donde está el logo grande)
+    const headerLogo = document.querySelector(".header-principal"); 
+    if(headerLogo) headerLogo.style.display = estado;
 
-    // 2. Banner Principal / Header Verde
-    const headerVerde = document.querySelector(".header-principal");
-    if(headerVerde) headerVerde.style.display = estado;
-
-    // 3. El Footer completo (Mapa y Contacto)
-    const footerMapa = document.querySelector(".mapa-contacto-footer"); // Ajusta a tu clase real
-    if(footerMapa) footerMapa.style.display = estado;
-
-    // 4. El contenedor de productos principal
-    const contenedorProds = document.getElementById("contenedor-productos");
-    if(contenedorProds) contenedorProds.style.display = estadoGrid;
+    // 2. Ocultar Barra de Categorías
+    const barraCategorias = document.getElementById("menu-categorias");
+    if(barraCategorias) barraCategorias.style.display = estado;
     
-    const tituloSeccion = document.getElementById("titulo-seccion");
-    if(tituloSeccion) tituloSeccion.style.display = estado;
+    // 3. Ocultar Mapa y Contacto
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
+    if(mapaContacto) mapaContacto.style.display = estado;
+
+    // 4. Ocultar Vistas de productos
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
+    if(vistaInicio) vistaInicio.style.display = estado;
+    if(vistaProductos) vistaProductos.style.display = estado;
 }
 </script>
 
