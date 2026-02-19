@@ -505,43 +505,20 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
-function agregarAlCarrito(productoId, nombreColor = null) {
-    // 1. Buscar el producto en tu lista
-    const producto = productos.find(p => p.id === productoId);
-    if (!producto) return;
+function agregarAlCarrito(producto, variacion = null) {
+    const item = {
+        id: producto.id,
+        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
+        precio: variacion ? variacion.precio : producto.precio,
+        imagen: producto.imagen,
+        slug: producto.slug
+    };
 
-    // 2. Lógica de imagen: si hay color, buscamos su imagen en el array 'colores'
-    let imagenFinal = producto.imagen;
-    if (nombreColor && producto.colores) {
-        const objetoColor = producto.colores.find(c => c.nombre === nombreColor);
-        if (objetoColor && objetoColor.imagen) {
-            imagenFinal = objetoColor.imagen;
-        }
-    }
+    carrito.push(item);
+    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
 
-    // 3. Verificamos si ya existe en el carrito (mismo ID y mismo Color)
-    const itemExistente = carrito.find(item => item.id === productoId && item.color === nombreColor);
-
-    if (itemExistente) {
-        itemExistente.cantidad++;
-    } else {
-        carrito.push({
-            id: producto.id,
-            nombre: producto.nombre,
-            precio: producto.precio,
-            imagen: imagenFinal, // Guardamos la imagen específica del color
-            color: nombreColor,
-            cantidad: 1
-        });
-    }
-
-    // 4. Actualizar visualmente (Solo si las funciones existen)
-    if (typeof actualizarInterfazCarrito === 'function') {
-        actualizarInterfazCarrito();
-    } else {
-        if (typeof renderizarCarrito === 'function') renderizarCarrito();
-        if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
-    }
+    actualizarContadorCarrito();
+    renderizarCarrito();
 }
 
     // Variable global (asegúrate de que agregarAlCarrito la use)
