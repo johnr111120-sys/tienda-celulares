@@ -40,12 +40,19 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <div id="contenedor-perfil-header" onclick="mostrarPerfil()" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+   <div id="contenedor-perfil-header" onmouseenter="mostrarDropdown()" onmouseleave="ocultarDropdown()" style="position: relative; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 10px;">
+    
     <div class="icono-perfil-circulo" style="width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f0f0f0; transition: 0.3s;">
         <i class="fas fa-user" id="user-icon-img" style="color: #333; font-size: 18px;"></i>
     </div>
     <span id="user-name-header" style="font-size: 14px; font-weight: bold; color: #333; display: none;"></span>
+
+    <div id="dropdown-perfil" style="display: none; position: absolute; top: 100%; right: 0; width: 200px; background: white; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; padding: 10px 0; border: 1px solid #eee;">
+        </div>
 </div>
+    <span id="user-name-header" style="font-size: 14px; font-weight: bold; color: #333; display: none;"></span>
+</div>
+    
     <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
@@ -372,6 +379,44 @@ function mostrarPerfil() {
     } else {
         mostrarFormulariosAuth();
     }
+}
+
+function mostrarDropdown() {
+    const dropdown = document.getElementById("dropdown-perfil");
+    const usuario = JSON.parse(localStorage.getItem("usuario_logueado"));
+    
+    dropdown.style.display = "block";
+
+    if (usuario) {
+        // Opciones para usuario LOGUEADO
+        dropdown.innerHTML = `
+            <div style="padding: 10px 15px; border-bottom: 1px solid #eee; margin-bottom: 5px;">
+                <small style="color: #888; display: block;">Hola,</small>
+                <strong style="color: #333;">${usuario.nombre.split(' ')[0]}</strong>
+            </div>
+            <a href="#" onclick="mostrarPerfil()" style="${estiloLink()}">Mis Pedidos</a>
+            <a href="#" onclick="mostrarPerfil()" style="${estiloLink()}">Direcciones</a>
+            <a href="#" onclick="mostrarPerfil()" style="${estiloLink()}">Detalles de la Cuenta</a>
+            <div style="border-top: 1px solid #eee; margin-top: 5px;">
+                <a href="#" onclick="cerrarSesion()" style="${estiloLink('#e74c3c')}">Cerrar Sesión</a>
+            </div>
+        `;
+    } else {
+        // Opciones para INVITADO
+        dropdown.innerHTML = `
+            <a href="#" onclick="mostrarPerfil()" style="${estiloLink('#3498db')}">Iniciar Sesión</a>
+            <a href="#" onclick="mostrarPerfil()" style="${estiloLink()}">Crear Cuenta</a>
+        `;
+    }
+}
+
+function ocultarDropdown() {
+    document.getElementById("dropdown-perfil").style.display = "none";
+}
+
+// Función auxiliar para mantener el estilo de los links limpio
+function estiloLink(color = '#333') {
+    return `display: block; padding: 10px 15px; text-decoration: none; color: ${color}; font-size: 14px; transition: 0.2s; font-weight: 500;`;
 }
       
 function renderizarPerfil(contenedor) {
