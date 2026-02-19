@@ -1074,7 +1074,9 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-               <button onclick="agregarAlCarrito(1, 'Amarillo')">
+               <button onclick="añadirAlCarritoDesdeDetalle('${color.nombre}')">
+               style="background-color: ${color.codigo}; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid #eee;"
+               title="${color.nombre}">   
         COMPRAR AHORA
             </button>
             </div>
@@ -1088,6 +1090,23 @@ function abrirProducto(id) {
     activarOpcionesProducto();
 }
 
+let colorSeleccionadoParaCarrito = null; // Variable global
+
+function seleccionarColor(nombre) {
+    colorSeleccionadoParaCarrito = nombre;
+    
+    // OPCIONAL: Cambiar la imagen del modal automáticamente al tocar el color
+    const imgModal = document.getElementById("imagen-modal-detalles");
+    const productoActual = productos.find(p => p.id === idProductoAbierto); // Ajusta según tu código
+    const datosColor = productoActual.colores.find(c => c.nombre === nombre);
+    
+    if (datosColor && imgModal) {
+        imgModal.src = datosColor.imagen;
+    }
+    
+    console.log("Color elegido:", nombre);
+}
+    
 function renderOpciones(p) {
     let html = "";
     // Render de Modelos/Capacidad
