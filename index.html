@@ -1584,15 +1584,15 @@ function navegarAFinalizarCompra() {
     const subtotal = calcularSubtotal();
 
     contenedorSPA.innerHTML = `
-        <div style="padding:40px 15px 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
-            <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
-            </button>
-        </div>
+       <div style="padding: 40px 15px 15px; width: 100%; max-width: 1100px; margin: 0 auto;">
+        <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
+        </button>
+    </div>
 
-        <div class="checkout-container" style="max-width: 1100px; margin: 0 auto;">
+        <div class="checkout-container">
             <h1 class="checkout-titulo" style="text-align: center; margin-bottom: 30px;">Finalizar Pedido</h1>
-            
+           
             <div class="checkout-grid">
                 <div class="checkout-col">
                     <div class="checkout-card">
