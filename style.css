@@ -2263,3 +2263,10 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 .btn-whatsapp {
     transition: 0.3s all ease;
 }
+
+/* Oculta el total y el botón rojo antiguos dentro de la tabla del SPA */
+#espacio-tabla-carrito .total, 
+#espacio-tabla-carrito .btn-checkout,
+#espacio-tabla-carrito button[style*="background-color: red"] {
+    display: none !important;
+}
