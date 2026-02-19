@@ -374,16 +374,15 @@ function renderizarPerfil(contenedor) {
                 </div>
                 <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
                     <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
-                    // Dentro de renderizarPerfil(contenedor) busca el mapeo del historial:
-                     ${datosUsuario.historial.map(p => `
-                          <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
-                            <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
-                              <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
-                             <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
-                           <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
-                         </span>
-                        </div>
-                   `).join('')}
+                   ${datosUsuario.historial.map(p => `
+    <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
+        <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
+        <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
+        <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
+            <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
+        </span>
+    </div>
+`).join('')}
                 </div>
             </div>
         </div>`;
@@ -489,25 +488,25 @@ function crearContenedorSPA() {
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
 function agregarAlCarrito(producto, variacion = null) {
-    // 1. Crear el objeto del item
     const item = {
         id: producto.id,
         nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
         precio: variacion ? variacion.precio : producto.precio,
-        imagen: producto.imagen
+        imagen: producto.imagen,
+        slug: producto.slug
     };
 
-    // 2. Guardar en el array y localStorage
     carrito.push(item);
     localStorage.setItem("carrito_compras", JSON.stringify(carrito));
 
-    // 3. Actualizar la interfaz
     actualizarContadorCarrito();
     renderizarCarrito();
 
-    // 4. 🔥 AUTO-ABRIR el carrito para feedback
+    // 🔥 ABRIR EL CARRITO AUTOMÁTICAMENTE
     const panel = document.getElementById("carrito-izquierdo");
-    if (panel) panel.classList.add("activo");
+    if (panel) {
+        panel.classList.add("activo");
+    }
 }
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
@@ -562,6 +561,59 @@ function renderizarCarrito() {
             </div>
         `;
     }
+}
+
+// Esta función reemplaza a la antigua irAWhatsApp
+function añadirAlCarritoDesdeDetalle(nombreProducto) {
+    // 1. Obtener los valores seleccionados en la interfaz
+    // modeloSeleccionado y colorSeleccionado son las variables que ya usas en tu script
+    const capacidad = modeloSeleccionado || "N/A"; 
+    const color = colorSeleccionado || "Original";
+    
+    // Capturamos el precio que se muestra actualmente (por si cambia al elegir capacidad)
+    const precioTexto = document.getElementById("spanPrecio").innerText;
+    // Limpiamos el precio para dejar solo números (ej: "RD$ 25,000" -> "25000")
+    const precioLimpio = precioTexto.replace(/[^\d]/g, "");
+
+    // 2. Buscamos la imagen del producto en tu base de datos global 'productos'
+    const productoBase = productos.find(p => p.nombre === nombreProducto);
+    const imagenProducto = productoBase ? productoBase.imagen : "";
+
+    // 3. Creamos el objeto formateado para el carrito
+    const productoParaCarrito = {
+        id: productoBase ? productoBase.id : Date.now(),
+        nombre: nombreProducto,
+        // Guardamos la combinación elegida para que aparezca en el mensaje final
+        variacion: `${capacidad} / ${color}`, 
+        precio: precioLimpio,
+        imagen: imagenProducto
+    };
+
+    // 4. Llamamos a la función principal del carrito
+    // Pasamos el producto y la variación por separado para que agregarAlCarrito la procese
+    agregarAlCarrito(productoParaCarrito, { 
+        nombre: productoParaCarrito.variacion, 
+        precio: precioLimpio 
+    });
+
+    // 5. Feedback visual: Notificación en lugar de abrir el panel
+    mostrarNotificacion(`${nombreProducto} añadido al carrito`);
+}
+
+// Función para mostrar la alerta visual (Toast)
+function mostrarNotificacion(mensaje) {
+    const previa = document.querySelector(".notificacion-carrito");
+    if (previa) previa.remove();
+
+    const aviso = document.createElement("div");
+    aviso.className = "notificacion-carrito";
+    aviso.innerHTML = `<i class="fas fa-check-circle"></i> ${mensaje}`;
+    
+    document.body.appendChild(aviso);
+
+    setTimeout(() => { 
+        if(aviso) aviso.remove(); 
+    }, 3000);
 }
       
 // Función SPA para la vista "Ver Carrito" detallada
@@ -871,9 +923,9 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-                <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
-                    Comprar ahora
-                </button>
+                <button class="btn-comprar-ahora" onclick="añadirAlCarritoDesdeDetalle('${p.nombre}')">
+               COMPRAR AHORA
+               </button>
             </div>
         </div>
    `;
@@ -1400,28 +1452,6 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 });
 }
 
-</script>
-
-
- <script> 
-function irAWhatsApp(nombreProducto) {
-    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
-    const capacidad = modeloSeleccionado || "64GB"; 
-    const color = colorSeleccionado || "el de la imagen";
-    const precio = document.getElementById("spanPrecio").innerText;
-
-    // Mensaje con el enlace de la imagen al final
-    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
-                    `• *Capacidad:* ${capacidad}\n` +
-                    `• *Color:* ${color}\n` +
-                    `• *Precio:* RD$ ${precio}\n\n` +
-                    `¿Está disponible?`;
-
-    const telefono = "59891547599"; // Tu número
-    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-    
-    window.open(url, '_blank');
-}
 </script>
 
      <script>
