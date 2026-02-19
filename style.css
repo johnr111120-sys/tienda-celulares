@@ -63,7 +63,7 @@ html, body {
 .nav-right {
     display: flex !important;
     /* Aumentamos la separación a 25px para que no estén pegados */
-    gap: 25px !important; 
+    gap: 40px !important; 
     padding-right: 5px;
 }
 
@@ -99,7 +99,7 @@ html, body {
 /* --- AJUSTE DE REDES SOCIALES (Instagram y Facebook) --- */
 .nav-socials {
     display: flex;
-    gap: 10px;
+    gap: -10px;
     justify-content: center;
     flex-grow: 1; /* Ocupa el espacio central */
 }
