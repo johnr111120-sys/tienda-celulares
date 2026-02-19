@@ -2247,3 +2247,19 @@ body.menu-abierto {
 .checkout-container, .carrito-container {
     margin-top: 20px;
 }
+
+/* Cuando el carrito tiene la clase 'activo', escondemos el botón de WhatsApp */
+#carrito-izquierdo.activo ~ .btn-whatsapp, 
+#carrito-izquierdo.activo + .btn-whatsapp,
+body:has(#carrito-izquierdo.activo) .btn-whatsapp {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transform: scale(0); /* Opcional: para que se vea un efecto de encogimiento */
+    transition: 0.3s all ease;
+}
+
+/* Estilo base del botón para que la transición sea suave */
+.btn-whatsapp {
+    transition: 0.3s all ease;
+}
