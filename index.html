@@ -555,21 +555,20 @@ function renderizarCarrito() {
         `).join("");
 
         contenedor.innerHTML = `
-            div class="carrito-items-scroll" style="flex: 1; overflow-y: auto;">
-        ${htmlProductos}
-    </div>
-    
-    <div class="carrito-footer-fijo">
-        <div class="subtotal-box">
-            <span>SUBTOTAL:</span>
-            <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
-        </div>
-        
-        <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
-        
-        <button class="btn-carrito-estilo" onclick="navegarAFinalizarCompra()">FINALIZAR COMPRA</button>
-    </div>
-`;
+            <div class="carrito-items-scroll" style="flex: 1; overflow-y: auto;">
+                ${htmlProductos}
+            </div>
+            
+            <div class="carrito-footer-fijo">
+                <div class="subtotal-box">
+                    <span>SUBTOTAL:</span>
+                    <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
+                </div>
+                
+                <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
+                <button class="btn-carrito-estilo" onclick="navegarAFinalizarCompra()">FINALIZAR COMPRA</button>
+            </div>
+        `;
     }
 }
 
@@ -645,17 +644,13 @@ function navegarAVerCarrito() {
     contenedorSPA.style.display = "block";
     contenedorSPA.style.backgroundColor = "#f4f4f4";
 
-    // Calculamos el subtotal para mostrarlo abajo
-    const subtotal = typeof calcularSubtotal === 'function' ? calcularSubtotal() : 0;
-
     contenedorSPA.innerHTML = `
         <div style="padding: 40px 15px 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
             <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display:flex; align-items:center; gap:8px;">
                 <i class="fas fa-arrow-left"></i> VOLVER A LA TIENDA
             </button>
         </div>
-
-        <div class="carrito-container-completo" style="max-width: 1100px; margin: 0 auto; padding: 0 15px;">
+       <div class="carrito-container-completo" style="max-width: 1100px; margin: 0 auto; padding: 0 15px;">
             <h1 style="margin-bottom: 20px;">Tu Carrito</h1>
             
             <div id="espacio-tabla-carrito"></div>
@@ -679,7 +674,7 @@ function navegarAVerCarrito() {
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-      
+
 function regresarALaTienda() {
     // 1. Mostrar de nuevo el Logo Header y las vistas
     const headerLogo = document.querySelector(".header-principal");
