@@ -28,45 +28,27 @@
      <img src="./images/Logo3Expand.png" alt="Logo" class="nav-logo">
   </div>
     
-  <div class="nav-socials">
-  <!-- CENTRO -->
-  <a href="https://instagram.com/moisescelulares" target="_blank" class="nav-icon-social">
-      <i class="fab fa-instagram"></i>
- </a>
-  <a href="https://facebook.com/moisesscelulares" target="_blank" class="nav-icon-social">
-      <i class="fab fa-facebook"></i>
- </a>
-      
-<div id="contenedor-perfil-header" style="position: relative; display: inline-block;">
-        <button id="btn-perfil" class="nav-icon" onclick="toggleDropdownPerfil(event)" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">
+ <div class="nav-socials">
+    <a href="https://instagram.com/moisescelulares" target="_blank"><i class="fab fa-instagram"></i></a>
+    
+    <div id="contenedor-perfil-header" style="position: relative; display: flex; align-items: center;">
+        <button id="btn-perfil" class="nav-icon" onclick="toggleDropdownPerfil(event)">
             <i class="fas fa-user"></i>
         </button>
+        <span id="user-name-header" style="font-size: 11px; font-weight: bold; color: #3498db; display: none; margin-left: -5px; margin-right: 10px;"></span>
 
-   <div id="dropdown-perfil" style="display: none; position: absolute; top: 120%; right: 0; width: 230px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 99999; overflow: hidden;">
+        <div id="dropdown-perfil" style="display: none; position: absolute; top: 45px; right: 0; width: 220px; background: #111; border: 1px solid #333; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.7); z-index: 999999;">
             <div style="display: flex; justify-content: flex-end; padding: 10px 10px 0;">
-                <i class="fas fa-times" onclick="toggleDropdownPerfil(event)" style="cursor: pointer; color: #888; font-size: 16px;"></i>
+                <i class="fas fa-times" onclick="toggleDropdownPerfil(event)" style="cursor: pointer; color: #666; font-size: 16px; padding: 5px;"></i>
             </div>
-            <div id="contenido-menu-dinamico"></div>
+            <div id="contenido-menu-dinamico" style="padding-bottom: 10px;"></div>
         </div>
     </div>
-      <button class="nav-icon" onclick="toggleCarritoIzquierdo()">
+
+    <button class="nav-icon" onclick="toggleCarritoIzquierdo()">
         <i class="fas fa-shopping-cart"></i>
     </button>
 </div>
--------------------------------------------------------------------------------------------------------------------
-    <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
-    <div style="position: relative; display: inline-block;">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="contador-carrito" class="badge-carrito">0</span>
-    </div>
-</button>
-      
-<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
-    <div style="position: relative; display: inline-block;">
-        <i class="fas fa-heart"></i>
-        <span id="contador-favoritos" class="badge-favoritos">0</span>
-    </div>
-</button>
 </nav>   
  </header>
 
@@ -466,17 +448,17 @@ function renderizarContenidoDropdown() {
 
 // Función para cerrar automáticamente al seleccionar
 function clickOpcionMenu(seccion) {
-    navegarSPA(seccion); // Tu función original 
-    toggleDropdownPerfil(); // Cierra el menú
+    // 1. Navega a la sección (ya sea perfil, pedidos, etc)
+    navegarSPA(seccion); 
+    
+    // 2. Cierra el menú automáticamente
+    const dropdown = document.getElementById("dropdown-perfil");
+    if (dropdown) dropdown.style.display = "none";
 }
 
-// Cerrar al tocar fuera
-window.addEventListener("click", function(e) {
-    const dropdown = document.getElementById("dropdown-perfil");
-    if (dropdown && !document.getElementById("contenedor-perfil-header").contains(e.target)) {
-        dropdown.style.display = "none";
-    }
-});
+// Actualiza tu generarContenidoMenu para que use clickOpcionMenu
+// Ejemplo dentro de la función:
+// <a href="#" onclick="clickOpcionMenu('perfil')" class="item-drop">Mis Pedidos</a>
       
 function toggleFavorito(idProducto, evento) {
     if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
