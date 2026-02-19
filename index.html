@@ -750,10 +750,13 @@ function renderizarTablaCarrito(contenedor) {
                     ${carrito.map(p => `
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding:15px 10px;">
-                                <div style="display:flex; align-items:center; gap:10px;">
-                                    <img src="${p.imagen}" width="50" style="border-radius:5px;">
-                                    <span>${p.nombre}</span>
-                                </div>
+                                <div style="display:flex; align-items:center; gap:15px; text-align: left;">
+                                 <img src="${p.imagen}" width="60" style="border-radius:5px; object-fit: cover; flex-shrink: 0;">
+                                 <div style="display: flex; flex-direction: column;">
+                                 <span style="font-weight: bold; line-height: 1.2; font-size: 15px;">${p.nombre}</span>
+                                 <small style="color: #888;">Ref: ${p.id}</small> 
+                               </div>
+                             </div>
                             </td>
                             <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
                             <td style="padding:15px 10px;">1</td>
@@ -762,6 +765,10 @@ function renderizarTablaCarrito(contenedor) {
                     `).join('')}
                 </tbody>
             </table>
+            <div class="totales-tabla-box">
+                <div class="fila-total"><span>Subtotal:</span> <b>RD$ ${calcularSubtotal().toLocaleString()}</b></div>
+                <div class="fila-total"><span>Envío:</span> <span>A Cordinar</span></div>   
+            </div>
         </div>
     `;
 }
