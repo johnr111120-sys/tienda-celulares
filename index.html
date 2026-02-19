@@ -290,12 +290,19 @@ function cerrarLogin() {
     const modal = document.getElementById("modal-login-contenedor");
     if (modal) modal.style.display = "none";
     
-    // Si no hay sesión, forzamos el regreso al inicio para que la web respire
-    if (!usuarioLogueado) {
-        window.location.hash = "#/";
-        // Re-ejecutamos el router para que se pinten los productos de nuevo
-        router(); 
+    // Si no estamos logueados o simplemente cerramos el modal:
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    if (contenedorSPA) {
+        contenedorSPA.style.display = "none"; // Apagamos el hueco gris
+        contenedorSPA.innerHTML = "";        // Limpiamos contenido
     }
+
+    // Volvemos a mostrar la tienda normal
+    document.getElementById("vista-inicio").style.display = "block";
+    
+    // Opcional: resetear URL al inicio
+    window.location.hash = "#/";
+    router();
 }
 
 function procesarLogin() {
@@ -819,12 +826,19 @@ function cerrarLogin() {
     const modal = document.getElementById("modal-login-contenedor");
     if (modal) modal.style.display = "none";
     
-    // Si no hay sesión, forzamos el regreso al inicio para que la web respire
-    if (!usuarioLogueado) {
-        window.location.hash = "#/";
-        // Re-ejecutamos el router para que se pinten los productos de nuevo
-        router(); 
+    // Si no estamos logueados o simplemente cerramos el modal:
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    if (contenedorSPA) {
+        contenedorSPA.style.display = "none"; // Apagamos el hueco gris
+        contenedorSPA.innerHTML = "";        // Limpiamos contenido
     }
+
+    // Volvemos a mostrar la tienda normal
+    document.getElementById("vista-inicio").style.display = "block";
+    
+    // Opcional: resetear URL al inicio
+    window.location.hash = "#/";
+    router();
 }
 
 function crearContenedorSPA() {
@@ -1286,37 +1300,50 @@ window.addEventListener("hashchange", router);
 =================================*/
 
 function router() {
-
   const hash = window.location.hash || '#/';
   console.log("Router ejecutado", hash);
 
   const vistaInicio = document.getElementById("vista-inicio");
   const vistaProductos = document.getElementById("vista-productos");
+  const contenedorSPA = document.getElementById("vista-spa-cliente");
 
-  // --- ESTO CIERRA EL MENÚ AL NAVEGAR ---
-    const menu = document.getElementById("menu-categorias");
-    const overlay = document.getElementById("menu-overlay");
-    if (menu) menu.classList.remove("activo");
-    if (overlay) overlay.classList.remove("activo");
-    // --------------------------------------
+  // --- 1. LIMPIEZA PREVENTIVA AL NAVEGAR ---
+  // Cerramos menús laterales
+  const menu = document.getElementById("menu-categorias");
+  const overlay = document.getElementById("menu-overlay");
+  if (menu) menu.classList.remove("activo");
+  if (overlay) overlay.classList.remove("activo");
+
+  // --- 2. GESTIÓN DE VISTA SPA (Favoritos, Carrito, Checkout) ---
+  // Si volvemos al inicio o categorías, nos aseguramos de apagar el contenedor SPA
+  // para que no deje el hueco gris antes del footer.
+  if (hash === '#/' || hash.startsWith("#/productos/")) {
+    if (contenedorSPA) {
+      contenedorSPA.style.display = "none";
+      contenedorSPA.innerHTML = "";
+    }
+    // Restauramos visibilidad de elementos principales por si venimos de Checkout
+    const headerLogo = document.querySelector(".header-principal");
+    if(headerLogo) headerLogo.style.display = "block";
     
+    const mapaFooter = document.querySelector(".mapa-contacto-footer");
+    if(mapaFooter) mapaFooter.style.display = "block";
+    
+    if (menu) menu.style.display = "block";
+  }
+
   // ===============================
   // SUBCATEGORÍAS
   // ===============================
   if (hash.startsWith("#/productos/")) {
-
-    const subcategoria = decodeURIComponent(
-      hash.split("#/productos/")[1]
-    );
+    const subcategoria = decodeURIComponent(hash.split("#/productos/")[1]);
 
     if (vistaInicio) vistaInicio.style.display = "none";
     if (vistaProductos) vistaProductos.style.display = "block";
 
     mostrarProductosPorSubcategoria(subcategoria);
 
-     // 🔥 SOLO aquí hacemos scroll
     window.scrollTo({ top: 0, behavior: "smooth" });
-      
     return;
   }
 
@@ -1324,29 +1351,42 @@ function router() {
   // PRODUCTO INDIVIDUAL
   // ===============================
   if (hash.startsWith("#/producto/")) {
-
     const slug = hash.split("#/producto/")[1];
     const producto = productos.find(p => p.slug === slug);
 
     if (producto) {
-     abrirProducto(producto.id);
+      abrirProducto(producto.id);
     }
+    return;
+  }
 
-   
-    // ❌ AQUÍ NO HACEMOS SCROLL
+  // ===============================
+  // FAVORITOS (Si usas hash para favoritos)
+  // ===============================
+  if (hash === "#/favoritos") {
+    if (vistaInicio) vistaInicio.style.display = "none";
+    if (vistaProductos) vistaProductos.style.display = "none";
+    if (contenedorSPA) {
+        contenedorSPA.style.display = "block";
+        // Aquí llamarías a tu función de renderizar favoritos
+        // renderizarFavoritos(contenedorSPA); 
+    }
     return;
   }
 
   // ===============================
   // INICIO
   // ===============================
-  if (vistaInicio) vistaInicio.style.display = "block";
-  if (vistaProductos) vistaProductos.style.display = "none";
+  if (hash === '#/') {
+    if (vistaInicio) vistaInicio.style.display = "block";
+    if (vistaProductos) vistaProductos.style.display = "none";
 
-  document.getElementById("productos").innerHTML = "";
+    // Limpiamos el contenedor de búsqueda/productos si es necesario
+    const prodsDiv = document.getElementById("productos");
+    if (prodsDiv) prodsDiv.innerHTML = "";
 
-   // 🔥 SOLO aquí hacemos scroll
-  window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
 
 /* ===============================
