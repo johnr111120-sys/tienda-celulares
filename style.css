@@ -2329,16 +2329,19 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 
 .footer-negro-final{
     background: #ffffff;
-    color: #000;
+    color: #222;
     text-align: center;
-    padding: 8px 5px;
-    font-size: 12px;
-    border-top: 1px solid #ddd;
+    padding: 10px 8px;
+    font-size: 11px;
+    border-top: 1px solid #e5e5e5;
+    letter-spacing: 0.5px;
+    box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
 }
 
 .footer-negro-final p{
     margin: 0;
     white-space: nowrap;
+    opacity: 0.85;
 }
 
 body{
@@ -2349,4 +2352,6 @@ body{
 
 .footer-negro-final{
     margin-top: auto;
+    font-family: system-ui, -apple-system, Arial, sans-serif;
 }
+
