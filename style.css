@@ -2326,3 +2326,27 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.footer-negro-final{
+    background: #ffffff;
+    color: #000;
+    text-align: center;
+    padding: 8px 5px;
+    font-size: 12px;
+    border-top: 1px solid #ddd;
+}
+
+.footer-negro-final p{
+    margin: 0;
+    white-space: nowrap;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-negro-final{
+    margin-top: auto;
+}
