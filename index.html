@@ -11,7 +11,7 @@
 <body class="inicio">
   <div class="app">
       
-<a href="https://wa.me/59891547599?text=Hola%20quiero%20mas%20info%20sobre%20sus%20pructos%20🤗" 
+<a href="https://wa.me/18292017321?text=Hola%20quiero%20mas%20info%20sobre%20sus%20pructos%20🤗" 
    class="whatsapp" target="_blank">
  💬
 </a>
@@ -40,7 +40,7 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-   <button onclick="window.location.hash='#/perfil'; router();">👤</button>
+    <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
     <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
@@ -48,7 +48,7 @@
     </div>
 </button>
       
-<button id="btn-favoritos-nav" class="nav-icon" onclick=window.location.hash = "#/favoritos"; router();"></button>
+<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-heart"></i>
         <span id="contador-favoritos" class="badge-favoritos">0</span>
@@ -248,7 +248,7 @@ referrerpolicy="no-referrer-when-downgrade">
  <div class="footer-negro-final">
         <p>📍 La Canela, Santiago, R.D. — Calle Pricipal, Al lado de Plaza La Canela</p>
         <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
-        <p>📞 WhatsApp: +598 91 547 599</p>
+        <p>📞 WhatsApp: +1 829 201 7321</p>
           </div>
     
 <div class="footer-blanco-final">
@@ -266,145 +266,24 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
-let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
 let usuarioLogueado = false;
-
-const AuthSystem = {
-  usuarioActual: null,
-
-  iniciar(){
-    const sesion = localStorage.getItem("sesionActiva");
-    if(sesion){
-      this.usuarioActual = JSON.parse(sesion);
-    }
-  },
-
-  guardarSesion(usuario){
-    this.usuarioActual = usuario;
-    localStorage.setItem("sesionActiva", JSON.stringify(usuario));
-  },
-
-  cerrarSesion(){
-    this.usuarioActual = null;
-    localStorage.removeItem("sesionActiva");
-    renderMiCuenta();
-  }
+// Intentar cargar datos guardados o usar los de prueba si no hay nada
+let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
+    nombre: "Juan Pérez",
+    correo: "cliente@ejemplo.com",
+    direccion: "Av. Independencia #123, Santo Domingo",
+    historial: [
+        { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
+    ]
 };
 
-function renderMiCuenta(){
-
-  const contenedor = document.getElementById("modalContenidoCuenta");
-
-  if(AuthSystem.usuarioActual){
-    contenedor.innerHTML = `
-      <h2>Mi Perfil</h2>
-      <p><strong>Nombre:</strong> ${AuthSystem.usuarioActual.nombre}</p>
-      <p><strong>Email:</strong> ${AuthSystem.usuarioActual.email}</p>
-
-      <button class="btn-cerrar-sesion" onclick="AuthSystem.cerrarSesion()">
-        Cerrar sesión
-      </button>
-    `;
-    return;
-  }
-
-  mostrarLogin();
-}
-
-function mostrarLogin(){
-
-  const contenedor = document.getElementById("modalContenidoCuenta");
-
-  contenedor.innerHTML = `
-    <h2>Iniciar Sesión</h2>
-
-    <input type="email" id="loginEmail" placeholder="Correo">
-    <input type="password" id="loginPass" placeholder="Contraseña">
-
-    <button onclick="loginUsuario()">Entrar</button>
-
-    <p class="switch-form">
-      ¿No tienes cuenta?
-      <span onclick="mostrarRegistro()">Crear cuenta</span>
-    </p>
-  `;
-}
-
-function mostrarRegistro(){
-
-  const contenedor = document.getElementById("modalContenidoCuenta");
-
-  contenedor.innerHTML = `
-    <h2>Crear Cuenta</h2>
-
-    <input type="text" id="regNombre" placeholder="Nombre">
-    <input type="email" id="regEmail" placeholder="Correo">
-    <input type="password" id="regPass" placeholder="Contraseña">
-
-    <button onclick="registrarUsuario()">Registrarme</button>
-
-    <p class="switch-form">
-      ¿Ya tienes cuenta?
-      <span onclick="mostrarLogin()">Iniciar sesión</span>
-    </p>
-  `;
-}
-
-function registrarUsuario(){
-
-  const nombre = document.getElementById("regNombre").value.trim();
-  const email = document.getElementById("regEmail").value.trim();
-  const pass = document.getElementById("regPass").value.trim();
-
-  if(!nombre || !email || !pass){
-    alert("Completa todos los campos");
-    return;
-  }
-
-  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-  if(usuarios.find(u => u.email === email)){
-    alert("Este correo ya está registrado");
-    return;
-  }
-
-  const nuevoUsuario = { nombre, email, pass };
-
-  usuarios.push(nuevoUsuario);
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-  AuthSystem.guardarSesion(nuevoUsuario);
-
-  renderMiCuenta();
-}
-
-function loginUsuario(){
-
-  const email = document.getElementById("loginEmail").value.trim();
-  const pass = document.getElementById("loginPass").value.trim();
-
-  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-  const usuario = usuarios.find(u => u.email === email && u.pass === pass);
-
-  if(!usuario){
-    alert("Correo o contraseña incorrectos");
-    return;
-  }
-
-  AuthSystem.guardarSesion(usuario);
-  renderMiCuenta();
-}
-
-------------------------------------------------------------------------------
 /* ===============================
    LÓGICA DE LOGIN
 =================================*/
 function mostrarModalLogin() {
     const modal = document.getElementById("modal-login-contenedor");
     if(modal) modal.style.display = "flex";
-
-renderMiCuenta();
 }
 
 function cerrarLogin() {
@@ -424,6 +303,37 @@ function cerrarLogin() {
     // Opcional: resetear URL al inicio
     window.location.hash = "#/";
     router();
+}
+
+function procesarLogin() {
+    // Seleccionamos los inputs correctamente dentro de la card
+    const inputs = document.querySelectorAll('.login-card input');
+    const correo = inputs[0].value.trim();
+    const pass = inputs[1].value.trim();
+
+    if (correo.length > 3 && pass.length > 3) {
+        usuarioLogueado = true;
+        cerrarLogin();
+        
+        // Al loguearse, vamos directo al perfil
+        navegarSPA('perfil'); 
+        
+        // Feedback visual en el nav
+        const btnPerfil = document.getElementById("btn-perfil");
+        if(btnPerfil) btnPerfil.style.color = "#00ff00"; 
+        
+        console.log("Sesión iniciada con éxito");
+    } else {
+        alert("Por favor, ingresa un correo y contraseña válidos.");
+    }
+}
+
+function cerrarSesion() {
+    usuarioLogueado = false;
+    const btnPerfil = document.getElementById("btn-perfil");
+    if(btnPerfil) btnPerfil.style.color = "";
+    location.hash = "#/";
+    location.reload(); 
 }
 
 /* ===============================
@@ -467,6 +377,35 @@ function navegarSPA(seccion) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function renderizarPerfil(contenedor) {
+    contenedor.innerHTML = `
+        <div class="perfil-container" style="padding:40px 20px; max-width:800px; margin:auto; color:white;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444; padding-bottom:15px;">
+                <h1>Hola, ${datosUsuario.nombre}</h1>
+                <button onclick="cerrarSesion()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Cerrar Sesión</button>
+            </div>
+            <div style="margin-top:30px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
+                    <h3 style="color:#3498db;"><i class="fas fa-id-card"></i> Mis Datos</h3>
+                    <p style="margin:10px 0;"><b>Correo:</b> ${datosUsuario.correo}</p>
+                    <p style="margin:10px 0;"><b>Dirección:</b> ${datosUsuario.direccion}</p>
+                </div>
+                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
+                    <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
+                   ${datosUsuario.historial.map(p => `
+    <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
+        <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
+        <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
+        <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
+            <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
+        </span>
+    </div>
+`).join('')}
+                </div>
+            </div>
+        </div>`;
+}
+
 function toggleFavorito(idProducto, evento) {
     if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
 
@@ -489,8 +428,13 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
+    
+function toggleFavorito(idProducto, evento) {
+    // ... (todo tu código anterior de agregar/quitar favoritos) ...
 
-        guardarFavoritos();
+    // Al final, añade esto:
+    actualizarContadorFavoritos();
+   }
   }
 }
 
@@ -545,10 +489,6 @@ function renderizarFavoritos(contenedor) {
         `;
         grid.appendChild(div);
     });
-}
-
-function guardarFavoritos(){
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
 }
 
 function crearContenedorSPA() {
@@ -754,6 +694,34 @@ function navegarAVerCarrito() {
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+function regresarALaTienda() {
+    // 1. Mostrar de nuevo el Logo Header y las vistas
+    const headerLogo = document.querySelector(".header-principal");
+    if(headerLogo) headerLogo.style.display = "block";
+
+    const vistaInicio = document.getElementById("vista-inicio");
+    if(vistaInicio) vistaInicio.style.display = "block";
+
+    // 2. Mostrar categorías y Mapa
+    const barraCat = document.getElementById("menu-categorias");
+    if(barraCat) barraCat.style.display = "block";
+
+    const mapaContacto = document.querySelector(".mapa-contacto-footer");
+    if(mapaContacto) mapaContacto.style.display = "block";
+
+    // 3. Limpiar y ocultar el espacio SPA
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    if(contenedorSPA) {
+        contenedorSPA.style.display = "none";
+        contenedorSPA.innerHTML = "";
+    }
+
+    // 4. Resetear URL y navegar al inicio
+    window.location.hash = "#/";
+    router();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
       
 function renderizarTablaCarrito(contenedor) {
     // Si no le pasas contenedor, que use el de por defecto
@@ -895,6 +863,13 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
 
+function crearContenedorSPA() {
+    const div = document.createElement("div");
+    div.id = "vista-spa-cliente";
+    // Insertar antes del footer
+    document.querySelector("footer").before(div);
+    return div;
+}
 </script> 
 
   <script>
@@ -947,6 +922,8 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
+
+const modalProducto = document.getElementById("modal-producto");
 
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
@@ -1081,6 +1058,13 @@ function cerrarProducto(){
   document.body.classList.remove("no-scroll");
 }
 
+// 🔥 Cerrar tocando fuera
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
+
 function expandirDescripcion(){
   const desc = document.getElementById("descTexto");
   desc.style.webkitLineClamp = "unset";
@@ -1165,7 +1149,7 @@ let endY = 0;
 const imgModalSwipe = document.getElementById("img-modal");
 
 // Modal producto
-const productoModalSwipe = document.getElementById("modalProducto");
+const productoModalSwipe = document.getElementById("modalproducto");
 
 // Función genérica
 function activarSwipe(modal, cerrarFn){
@@ -1228,6 +1212,49 @@ window.addEventListener("scroll", () => {
   } else {
     nav.classList.remove("scrolled");
   }
+});
+</script>
+
+<script>    
+const btnMenu = document.getElementById("icono-menu");
+const menu = document.getElementById("menu-categorias");
+const overlay = document.getElementById("menu-overlay");
+
+btnMenu.addEventListener("click", () => {
+  menu.classList.toggle("activo");
+  overlay.classList.toggle("activo");
+  document.body.classList.toggle("menu-abierto");
+});
+
+overlay.addEventListener("click", () => {
+  menu.classList.remove("activo");
+  overlay.classList.remove("activo");
+  document.body.classList.remove("menu-abierto");
+});
+
+
+// acordeón (solo uno abierto)
+document.querySelectorAll(".categoria").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const sub = btn.nextElementSibling;
+    const icon = btn.querySelector("i");
+
+    document.querySelectorAll(".subcategoria").forEach(s => {
+      if (s !== sub) s.style.maxHeight = null;
+    });
+
+    document.querySelectorAll(".categoria i").forEach(i => {
+      if (i !== icon) i.className = "fi fi-bs-angle-up";
+    });
+
+    if (sub.style.maxHeight) {
+      sub.style.maxHeight = null;
+      icon.className = "fi fi-bs-angle-up";
+    } else {
+      sub.style.maxHeight = sub.scrollHeight + "px";
+      icon.className = "fi fi-bs-angle-down";
+    }
+  });
 });
 </script>
     
@@ -1663,9 +1690,6 @@ function regresarALaTienda() {
     router();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-         
-AuthSystem.iniciar();
-         
 </script>
       
 <div id="panel-lateral" class="panel-lateral">
@@ -1685,6 +1709,14 @@ AuthSystem.iniciar();
   </div>
 </div>
     
+     <script>
+document.getElementById("modalProducto").addEventListener("click", e=>{
+  if(e.target.id === "modalProducto"){
+    cerrarProducto();
+  }
+});
+</script>
+    
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
   <div class="modal-contenido" id="modalContenido"></div>
@@ -1698,9 +1730,19 @@ AuthSystem.iniciar();
     
 <div id="modal-login-contenedor" class="modal-login">
     <div class="login-card">
-        
-      <div id="modalContenidoCuenta"></div>  
-      
+        <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
+         <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
+        <p><b>MI CUENTA</b></p>
+        <input type="text" placeholder="Correo electrónico">
+        <input type="password" placeholder="Contraseña">
+        <div style="text-align:left; font-size:12px;">
+            <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
+        </div>
+        <button class="btn-ingresar">INGRESAR</button>
+        <p style="font-size:12px; margin-top:15px;">
+            <a href="#">Olvidé mi contraseña</a><br>
+            No soy usuario registrado y quiero <a href="#">crear una cuenta</a>
+        </p>
     </div>
 </div>
     
