@@ -267,16 +267,6 @@ referrerpolicy="no-referrer-when-downgrade">
    ESTADO GLOBAL Y DATOS
 =================================*/
 let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
-let usuarioLogueado = false;
-// Intentar cargar datos guardados o usar los de prueba si no hay nada
-let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
-    nombre: "Juan Pérez",
-    correo: "cliente@ejemplo.com",
-    direccion: "Av. Independencia #123, Santo Domingo",
-    historial: [
-        { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
-    ]
-};
 
 /* ===============================
    LÓGICA DE LOGIN
@@ -305,37 +295,6 @@ function cerrarLogin() {
     // Opcional: resetear URL al inicio
     window.location.hash = "#/";
     router();
-}
-
-function procesarLogin() {
-    // Seleccionamos los inputs correctamente dentro de la card
-    const inputs = document.querySelectorAll('.login-card input');
-    const correo = inputs[0].value.trim();
-    const pass = inputs[1].value.trim();
-
-    if (correo.length > 3 && pass.length > 3) {
-        usuarioLogueado = true;
-        cerrarLogin();
-        
-        // Al loguearse, vamos directo al perfil
-        navegarSPA('perfil'); 
-        
-        // Feedback visual en el nav
-        const btnPerfil = document.getElementById("btn-perfil");
-        if(btnPerfil) btnPerfil.style.color = "#00ff00"; 
-        
-        console.log("Sesión iniciada con éxito");
-    } else {
-        alert("Por favor, ingresa un correo y contraseña válidos.");
-    }
-}
-
-function cerrarSesion() {
-    usuarioLogueado = false;
-    const btnPerfil = document.getElementById("btn-perfil");
-    if(btnPerfil) btnPerfil.style.color = "";
-    location.hash = "#/";
-    location.reload(); 
 }
 
 /* ===============================
@@ -377,35 +336,6 @@ function navegarSPA(seccion) {
     if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
     
     window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function renderizarPerfil(contenedor) {
-    contenedor.innerHTML = `
-        <div class="perfil-container" style="padding:40px 20px; max-width:800px; margin:auto; color:white;">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444; padding-bottom:15px;">
-                <h1>Hola, ${datosUsuario.nombre}</h1>
-                <button onclick="cerrarSesion()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Cerrar Sesión</button>
-            </div>
-            <div style="margin-top:30px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
-                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
-                    <h3 style="color:#3498db;"><i class="fas fa-id-card"></i> Mis Datos</h3>
-                    <p style="margin:10px 0;"><b>Correo:</b> ${datosUsuario.correo}</p>
-                    <p style="margin:10px 0;"><b>Dirección:</b> ${datosUsuario.direccion}</p>
-                </div>
-                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
-                    <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
-                   ${datosUsuario.historial.map(p => `
-    <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
-        <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
-        <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
-        <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
-            <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
-        </span>
-    </div>
-`).join('')}
-                </div>
-            </div>
-        </div>`;
 }
 
 const AuthSystem = {
@@ -994,13 +924,6 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
 
-function crearContenedorSPA() {
-    const div = document.createElement("div");
-    div.id = "vista-spa-cliente";
-    // Insertar antes del footer
-    document.querySelector("footer").before(div);
-    return div;
-}
 </script> 
 
   <script>
@@ -1189,13 +1112,6 @@ function cerrarProducto(){
   document.body.classList.remove("no-scroll");
 }
 
-// 🔥 Cerrar tocando fuera
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
-
 function expandirDescripcion(){
   const desc = document.getElementById("descTexto");
   desc.style.webkitLineClamp = "unset";
@@ -1280,7 +1196,7 @@ let endY = 0;
 const imgModalSwipe = document.getElementById("img-modal");
 
 // Modal producto
-const productoModalSwipe = document.getElementById("modalproducto");
+const productoModalSwipe = document.getElementById("modalProducto");
 
 // Función genérica
 function activarSwipe(modal, cerrarFn){
@@ -1866,19 +1782,7 @@ AuthSystem.iniciar();
     <div class="login-card">
         
       <div id="modalContenidoCuenta"></div>  
-        <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
-         <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
-        <p><b>MI CUENTA</b></p>
-        <input type="text" placeholder="Correo electrónico">
-        <input type="password" placeholder="Contraseña">
-        <div style="text-align:left; font-size:12px;">
-            <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
-        </div>
-        <button class="btn-ingresar">INGRESAR</button>
-        <p style="font-size:12px; margin-top:15px;">
-            <a href="#">Olvidé mi contraseña</a><br>
-            No soy usuario registrado y quiero <a href="#">crear una cuenta</a>
-        </p>
+      
     </div>
 </div>
     
