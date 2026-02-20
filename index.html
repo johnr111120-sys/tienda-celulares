@@ -40,7 +40,7 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
+   <button onclick="window.location.hash='#/perfil'; router();">👤</button>
     <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
@@ -266,8 +266,8 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
+let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 let usuarioLogueado = false;
-let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
 
 const AuthSystem = {
   usuarioActual: null,
@@ -489,6 +489,8 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
+
+        guardarFavoritos();
   }
 }
 
@@ -543,6 +545,10 @@ function renderizarFavoritos(contenedor) {
         `;
         grid.appendChild(div);
     });
+}
+
+function guardarFavoritos(){
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
 }
 
 function crearContenedorSPA() {
