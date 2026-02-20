@@ -844,6 +844,8 @@ function enviarPedidoWhatsApp(tracking) {
 
     // Preparar y enviar a WhatsApp (tu código anterior)
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
+    
+    // 4. Creamos el mensaje profesional para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
                     `*Rastreo:* ${tracking}\n` +
                     `--------------------------\n` +
@@ -858,14 +860,18 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
-    window.open(`https://wa.me/59891547599?text=${encodeURIComponent(mensaje)}`, '_blank');
-
+   // 5. Abrimos WhatsApp en una nueva pestaña
+    const numWhatsApp = "59891547599"; 
+    const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+    
     // Limpieza
     carrito = [];
     localStorage.removeItem("carrito_compras");
     actualizarContadorCarrito();
-
-    alert(`✅ Pedido realizado. Tu número de rastreo es: ${tracking}`);
+    renderizarCarrito();
+    
+    alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
     window.location.hash = "#/";
     location.reload();
 }
