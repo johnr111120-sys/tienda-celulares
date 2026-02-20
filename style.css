@@ -2337,7 +2337,7 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 }
 
 .footer-negro-final p{
-    margin: 0;
+    margin: 100%;
     white-space: nowrap;
 }
 
@@ -2348,5 +2348,5 @@ body{
 }
 
 .footer-negro-final{
-    margin-top: 100%;
+    margin-top: auto;
 }
