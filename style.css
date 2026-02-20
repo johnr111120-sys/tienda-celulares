@@ -2337,12 +2337,12 @@ body:has(#carrito-izquierdo.activo) .btn-whatsapp {
 }
 
 .footer-negro-final p{
-    margin: 100%;
+    margin: 0;
     white-space: nowrap;
 }
 
 body{
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
 }
