@@ -428,14 +428,6 @@ function toggleFavorito(idProducto, evento) {
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
     
-function toggleFavorito(idProducto, evento) {
-    // ... (todo tu código anterior de agregar/quitar favoritos) ...
-
-    // Al final, añade esto:
-    actualizarContadorFavoritos();
-   }
-  }
-}
 
 function actualizarContadorFavoritos() {
     const contador = document.getElementById("contador-favoritos");
@@ -603,10 +595,6 @@ function añadirAlCarritoDesdeDetalle(nombreProducto) {
         precio: precioLimpio 
     });
 
-    // 5. CERRAR EL MODAL AUTOMÁTICAMENTE
-    // Usamos la función que ya tienes en tu código para cerrar el detalle
-    cerrarProducto(); 
-
     // 6. Mostrar notificación de confirmación
     mostrarNotificacion(`${nombreProducto} añadido al carrito`);
 }
@@ -694,33 +682,6 @@ function navegarAVerCarrito() {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function regresarALaTienda() {
-    // 1. Mostrar de nuevo el Logo Header y las vistas
-    const headerLogo = document.querySelector(".header-principal");
-    if(headerLogo) headerLogo.style.display = "block";
-
-    const vistaInicio = document.getElementById("vista-inicio");
-    if(vistaInicio) vistaInicio.style.display = "block";
-
-    // 2. Mostrar categorías y Mapa
-    const barraCat = document.getElementById("menu-categorias");
-    if(barraCat) barraCat.style.display = "block";
-
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "block";
-
-    // 3. Limpiar y ocultar el espacio SPA
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if(contenedorSPA) {
-        contenedorSPA.style.display = "none";
-        contenedorSPA.innerHTML = "";
-    }
-
-    // 4. Resetear URL y navegar al inicio
-    window.location.hash = "#/";
-    router();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
       
 function renderizarTablaCarrito(contenedor) {
     // Si no le pasas contenedor, que use el de por defecto
@@ -877,13 +838,6 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
 
-function crearContenedorSPA() {
-    const div = document.createElement("div");
-    div.id = "vista-spa-cliente";
-    // Insertar antes del footer
-    document.querySelector("footer").before(div);
-    return div;
-}
 </script> 
 
   <script>
@@ -936,8 +890,6 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-
-const modalProducto = document.getElementById("modal-producto");
 
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
@@ -1072,13 +1024,6 @@ function cerrarProducto(){
   document.body.classList.remove("no-scroll");
 }
 
-// 🔥 Cerrar tocando fuera
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
-
 function expandirDescripcion(){
   const desc = document.getElementById("descTexto");
   desc.style.webkitLineClamp = "unset";
@@ -1163,7 +1108,7 @@ let endY = 0;
 const imgModalSwipe = document.getElementById("img-modal");
 
 // Modal producto
-const productoModalSwipe = document.getElementById("modalproducto");
+const productoModalSwipe = document.getElementById("modalProducto");
 
 // Función genérica
 function activarSwipe(modal, cerrarFn){
@@ -1226,49 +1171,6 @@ window.addEventListener("scroll", () => {
   } else {
     nav.classList.remove("scrolled");
   }
-});
-</script>
-
-<script>    
-const btnMenu = document.getElementById("icono-menu");
-const menu = document.getElementById("menu-categorias");
-const overlay = document.getElementById("menu-overlay");
-
-btnMenu.addEventListener("click", () => {
-  menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
-});
-
-overlay.addEventListener("click", () => {
-  menu.classList.remove("activo");
-  overlay.classList.remove("activo");
-  document.body.classList.remove("menu-abierto");
-});
-
-
-// acordeón (solo uno abierto)
-document.querySelectorAll(".categoria").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const sub = btn.nextElementSibling;
-    const icon = btn.querySelector("i");
-
-    document.querySelectorAll(".subcategoria").forEach(s => {
-      if (s !== sub) s.style.maxHeight = null;
-    });
-
-    document.querySelectorAll(".categoria i").forEach(i => {
-      if (i !== icon) i.className = "fi fi-bs-angle-up";
-    });
-
-    if (sub.style.maxHeight) {
-      sub.style.maxHeight = null;
-      icon.className = "fi fi-bs-angle-up";
-    } else {
-      sub.style.maxHeight = sub.scrollHeight + "px";
-      icon.className = "fi fi-bs-angle-down";
-    }
-  });
 });
 </script>
     
@@ -1722,14 +1624,7 @@ function regresarALaTienda() {
 </div>  
   </div>
 </div>
-    
-     <script>
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
-</script>
+
     
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
