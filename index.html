@@ -11,7 +11,7 @@
 <body class="inicio">
   <div class="app">
       
-<a href="https://wa.me/18292017321?text=Hola%20quiero%20mas%20info%20sobre%20sus%20pructos%20🤗" 
+<a href="https://wa.me/59891547599?text=Hola%20quiero%20mas%20info%20sobre%20sus%20pructos%20🤗" 
    class="whatsapp" target="_blank">
  💬
 </a>
@@ -248,7 +248,7 @@ referrerpolicy="no-referrer-when-downgrade">
  <div class="footer-negro-final">
         <p>📍 La Canela, Santiago, R.D. — Calle Pricipal, Al lado de Plaza La Canela</p>
         <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
-        <p>📞 WhatsApp: +1 829 201 7321</p>
+        <p>📞 WhatsApp: +598 91 547 599</p>
           </div>
     
 <div class="footer-blanco-final">
@@ -266,77 +266,8 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
+let usuarioLogueado = false;
 let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
-
-/* ===============================
-   LÓGICA DE LOGIN
-=================================*/
-function mostrarModalLogin() {
-    const modal = document.getElementById("modal-login-contenedor");
-    if(modal) modal.style.display = "flex";
-
-renderMiCuenta();
-}
-
-function cerrarLogin() {
-    const modal = document.getElementById("modal-login-contenedor");
-    if (modal) modal.style.display = "none";
-    
-    // Si no estamos logueados o simplemente cerramos el modal:
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if (contenedorSPA) {
-        contenedorSPA.style.display = "none"; // Apagamos el hueco gris
-        contenedorSPA.innerHTML = "";        // Limpiamos contenido
-    }
-
-    // Volvemos a mostrar la tienda normal
-    document.getElementById("vista-inicio").style.display = "block";
-    
-    // Opcional: resetear URL al inicio
-    window.location.hash = "#/";
-    router();
-}
-
-/* ===============================
-   NAVEGACIÓN SPA (PERFIL / FAVORITOS)
-=================================*/
-function navegarSPA(seccion) {
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-    // Buscamos o creamos el contenedor para la sección del cliente
-    let contenedorSPA = document.getElementById("vista-spa-cliente");
-    
-    if (!contenedorSPA) {
-        contenedorSPA = crearContenedorSPA();
-    }
-
-    // Si NO está logueado, forzamos el modal de login
-    if (!usuarioLogueado) {
-        mostrarModalLogin();
-        // Ocultamos lo demás para que el fondo se vea limpio
-        if(vistaInicio) vistaInicio.style.display = "none";
-        if(vistaProductos) vistaProductos.style.display = "none";
-        contenedorSPA.style.display = "block";
-        contenedorSPA.innerHTML = `
-            <div style="text-align:center; padding:100px 20px; color:white;">
-                <i class="fas fa-user-lock" style="font-size:50px; margin-bottom:20px; color:#3498db;"></i>
-                <h2>Inicia Sesión</h2>
-                <p>Ingresa a tu cuenta para ver tus datos y favoritos.</p>
-                <button class="btn-comprar" onclick="mostrarModalLogin()" style="margin-top:20px; width:200px;">Abrir Login</button>
-            </div>`;
-        return;
-    }
-
-    // Si ya está logueado, mostramos la sección correspondiente
-    if(vistaInicio) vistaInicio.style.display = "none";
-    if(vistaProductos) vistaProductos.style.display = "none";
-    contenedorSPA.style.display = "block";
-
-    if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
-    if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
-    
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
 const AuthSystem = {
   usuarioActual: null,
@@ -466,7 +397,76 @@ function loginUsuario(){
 }
 
 ------------------------------------------------------------------------------
-      
+/* ===============================
+   LÓGICA DE LOGIN
+=================================*/
+function mostrarModalLogin() {
+    const modal = document.getElementById("modal-login-contenedor");
+    if(modal) modal.style.display = "flex";
+
+renderMiCuenta();
+}
+
+function cerrarLogin() {
+    const modal = document.getElementById("modal-login-contenedor");
+    if (modal) modal.style.display = "none";
+    
+    // Si no estamos logueados o simplemente cerramos el modal:
+    const contenedorSPA = document.getElementById("vista-spa-cliente");
+    if (contenedorSPA) {
+        contenedorSPA.style.display = "none"; // Apagamos el hueco gris
+        contenedorSPA.innerHTML = "";        // Limpiamos contenido
+    }
+
+    // Volvemos a mostrar la tienda normal
+    document.getElementById("vista-inicio").style.display = "block";
+    
+    // Opcional: resetear URL al inicio
+    window.location.hash = "#/";
+    router();
+}
+
+/* ===============================
+   NAVEGACIÓN SPA (PERFIL / FAVORITOS)
+=================================*/
+function navegarSPA(seccion) {
+    const vistaInicio = document.getElementById("vista-inicio");
+    const vistaProductos = document.getElementById("vista-productos");
+    // Buscamos o creamos el contenedor para la sección del cliente
+    let contenedorSPA = document.getElementById("vista-spa-cliente");
+    
+    if (!contenedorSPA) {
+        contenedorSPA = crearContenedorSPA();
+    }
+
+    // Si NO está logueado, forzamos el modal de login
+    if (!usuarioLogueado) {
+        mostrarModalLogin();
+        // Ocultamos lo demás para que el fondo se vea limpio
+        if(vistaInicio) vistaInicio.style.display = "none";
+        if(vistaProductos) vistaProductos.style.display = "none";
+        contenedorSPA.style.display = "block";
+        contenedorSPA.innerHTML = `
+            <div style="text-align:center; padding:100px 20px; color:white;">
+                <i class="fas fa-user-lock" style="font-size:50px; margin-bottom:20px; color:#3498db;"></i>
+                <h2>Inicia Sesión</h2>
+                <p>Ingresa a tu cuenta para ver tus datos y favoritos.</p>
+                <button class="btn-comprar" onclick="mostrarModalLogin()" style="margin-top:20px; width:200px;">Abrir Login</button>
+            </div>`;
+        return;
+    }
+
+    // Si ya está logueado, mostramos la sección correspondiente
+    if(vistaInicio) vistaInicio.style.display = "none";
+    if(vistaProductos) vistaProductos.style.display = "none";
+    contenedorSPA.style.display = "block";
+
+    if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
+    if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
+    
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function toggleFavorito(idProducto, evento) {
     if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
 
@@ -489,13 +489,6 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
-    
-function toggleFavorito(idProducto, evento) {
-    // ... (todo tu código anterior de agregar/quitar favoritos) ...
-
-    // Al final, añade esto:
-    actualizarContadorFavoritos();
-   }
   }
 }
 
@@ -755,34 +748,6 @@ function navegarAVerCarrito() {
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-function regresarALaTienda() {
-    // 1. Mostrar de nuevo el Logo Header y las vistas
-    const headerLogo = document.querySelector(".header-principal");
-    if(headerLogo) headerLogo.style.display = "block";
-
-    const vistaInicio = document.getElementById("vista-inicio");
-    if(vistaInicio) vistaInicio.style.display = "block";
-
-    // 2. Mostrar categorías y Mapa
-    const barraCat = document.getElementById("menu-categorias");
-    if(barraCat) barraCat.style.display = "block";
-
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "block";
-
-    // 3. Limpiar y ocultar el espacio SPA
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if(contenedorSPA) {
-        contenedorSPA.style.display = "none";
-        contenedorSPA.innerHTML = "";
-    }
-
-    // 4. Resetear URL y navegar al inicio
-    window.location.hash = "#/";
-    router();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
       
 function renderizarTablaCarrito(contenedor) {
     // Si no le pasas contenedor, que use el de por defecto
@@ -976,8 +941,6 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-
-const modalProducto = document.getElementById("modal-producto");
 
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
@@ -1259,49 +1222,6 @@ window.addEventListener("scroll", () => {
   } else {
     nav.classList.remove("scrolled");
   }
-});
-</script>
-
-<script>    
-const btnMenu = document.getElementById("icono-menu");
-const menu = document.getElementById("menu-categorias");
-const overlay = document.getElementById("menu-overlay");
-
-btnMenu.addEventListener("click", () => {
-  menu.classList.toggle("activo");
-  overlay.classList.toggle("activo");
-  document.body.classList.toggle("menu-abierto");
-});
-
-overlay.addEventListener("click", () => {
-  menu.classList.remove("activo");
-  overlay.classList.remove("activo");
-  document.body.classList.remove("menu-abierto");
-});
-
-
-// acordeón (solo uno abierto)
-document.querySelectorAll(".categoria").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const sub = btn.nextElementSibling;
-    const icon = btn.querySelector("i");
-
-    document.querySelectorAll(".subcategoria").forEach(s => {
-      if (s !== sub) s.style.maxHeight = null;
-    });
-
-    document.querySelectorAll(".categoria i").forEach(i => {
-      if (i !== icon) i.className = "fi fi-bs-angle-up";
-    });
-
-    if (sub.style.maxHeight) {
-      sub.style.maxHeight = null;
-      icon.className = "fi fi-bs-angle-up";
-    } else {
-      sub.style.maxHeight = sub.scrollHeight + "px";
-      icon.className = "fi fi-bs-angle-down";
-    }
-  });
 });
 </script>
     
@@ -1737,7 +1657,9 @@ function regresarALaTienda() {
     router();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
+         
+AuthSystem.iniciar();
+         
 </script>
       
 <div id="panel-lateral" class="panel-lateral">
@@ -1756,16 +1678,7 @@ function regresarALaTienda() {
 </div>  
   </div>
 </div>
-    
-     <script>
-document.getElementById("modalProducto").addEventListener("click", e=>{
-  if(e.target.id === "modalProducto"){
-    cerrarProducto();
-  }
-});
-
 AuthSystem.iniciar();
-</script>
     
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
