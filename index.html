@@ -525,6 +525,9 @@ function crearContenedorSPA() {
 // --- CARRITO LADO IZQUIERDO ---
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
+// Variable global (asegúrate de que agregarAlCarrito la use)
+let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
+
 function agregarAlCarrito(producto, variacion = null) {
     const item = {
         id: producto.id,
@@ -540,9 +543,6 @@ function agregarAlCarrito(producto, variacion = null) {
     actualizarContadorCarrito();
     renderizarCarrito();
 }
-
-    // Variable global (asegúrate de que agregarAlCarrito la use)
-    let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
 
 function actualizarContadorCarrito() {
     const contador = document.getElementById("contador-carrito");
