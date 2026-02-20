@@ -284,6 +284,8 @@ let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
 function mostrarModalLogin() {
     const modal = document.getElementById("modal-login-contenedor");
     if(modal) modal.style.display = "flex";
+
+renderMiCuenta();
 }
 
 function cerrarLogin() {
@@ -406,6 +408,135 @@ function renderizarPerfil(contenedor) {
         </div>`;
 }
 
+const AuthSystem = {
+  usuarioActual: null,
+
+  iniciar(){
+    const sesion = localStorage.getItem("sesionActiva");
+    if(sesion){
+      this.usuarioActual = JSON.parse(sesion);
+    }
+  },
+
+  guardarSesion(usuario){
+    this.usuarioActual = usuario;
+    localStorage.setItem("sesionActiva", JSON.stringify(usuario));
+  },
+
+  cerrarSesion(){
+    this.usuarioActual = null;
+    localStorage.removeItem("sesionActiva");
+    renderMiCuenta();
+  }
+};
+
+function renderMiCuenta(){
+
+  const contenedor = document.getElementById("modalContenidoCuenta");
+
+  if(AuthSystem.usuarioActual){
+    contenedor.innerHTML = `
+      <h2>Mi Perfil</h2>
+      <p><strong>Nombre:</strong> ${AuthSystem.usuarioActual.nombre}</p>
+      <p><strong>Email:</strong> ${AuthSystem.usuarioActual.email}</p>
+
+      <button class="btn-cerrar-sesion" onclick="AuthSystem.cerrarSesion()">
+        Cerrar sesión
+      </button>
+    `;
+    return;
+  }
+
+  mostrarLogin();
+}
+
+function mostrarLogin(){
+
+  const contenedor = document.getElementById("modalContenidoCuenta");
+
+  contenedor.innerHTML = `
+    <h2>Iniciar Sesión</h2>
+
+    <input type="email" id="loginEmail" placeholder="Correo">
+    <input type="password" id="loginPass" placeholder="Contraseña">
+
+    <button onclick="loginUsuario()">Entrar</button>
+
+    <p class="switch-form">
+      ¿No tienes cuenta?
+      <span onclick="mostrarRegistro()">Crear cuenta</span>
+    </p>
+  `;
+}
+
+function mostrarRegistro(){
+
+  const contenedor = document.getElementById("modalContenidoCuenta");
+
+  contenedor.innerHTML = `
+    <h2>Crear Cuenta</h2>
+
+    <input type="text" id="regNombre" placeholder="Nombre">
+    <input type="email" id="regEmail" placeholder="Correo">
+    <input type="password" id="regPass" placeholder="Contraseña">
+
+    <button onclick="registrarUsuario()">Registrarme</button>
+
+    <p class="switch-form">
+      ¿Ya tienes cuenta?
+      <span onclick="mostrarLogin()">Iniciar sesión</span>
+    </p>
+  `;
+}
+
+function registrarUsuario(){
+
+  const nombre = document.getElementById("regNombre").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const pass = document.getElementById("regPass").value.trim();
+
+  if(!nombre || !email || !pass){
+    alert("Completa todos los campos");
+    return;
+  }
+
+  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+  if(usuarios.find(u => u.email === email)){
+    alert("Este correo ya está registrado");
+    return;
+  }
+
+  const nuevoUsuario = { nombre, email, pass };
+
+  usuarios.push(nuevoUsuario);
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+  AuthSystem.guardarSesion(nuevoUsuario);
+
+  renderMiCuenta();
+}
+
+function loginUsuario(){
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
+
+  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+  const usuario = usuarios.find(u => u.email === email && u.pass === pass);
+
+  if(!usuario){
+    alert("Correo o contraseña incorrectos");
+    return;
+  }
+
+  AuthSystem.guardarSesion(usuario);
+  renderMiCuenta();
+}
+
+------------------------------------------------------------------------------
+      
 function toggleFavorito(idProducto, evento) {
     if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
 
@@ -1690,6 +1821,7 @@ function regresarALaTienda() {
     router();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
 </script>
       
 <div id="panel-lateral" class="panel-lateral">
@@ -1715,6 +1847,8 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
     cerrarProducto();
   }
 });
+
+AuthSystem.iniciar();
 </script>
     
 <!-- MODAL PRODUCTO -->
@@ -1730,6 +1864,8 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
     
 <div id="modal-login-contenedor" class="modal-login">
     <div class="login-card">
+        
+      <div id="modalContenidoCuenta"></div>  
         <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
          <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
         <p><b>MI CUENTA</b></p>
