@@ -850,6 +850,15 @@ function enviarPedidoWhatsApp(tracking) {
                     `*Rastreo:* ${tracking}\n` +
                     `--------------------------\n` +
                     `*CLIENTE:* ${nombre} ${apellido}\n...`; // (Resto del mensaje igual)
+                    `*TELÉFONO:* ${telefono}\n` +
+                    `*CIUDAD:* ${ciudad}\n` +
+                    `*DIRECCIÓN:* ${direccion}\n` +
+                    `--------------------------\n` +
+                    `*PRODUCTOS:*\n${listaProductos}\n` +
+                    `--------------------------\n` +
+                    `*TOTAL A PAGAR:* RD$ ${calcularSubtotal().toLocaleString()}\n` +
+                    `--------------------------\n` +
+                    `_Enviado desde el Checkout de la web._`;
 
     window.open(`https://wa.me/59891547599?text=${encodeURIComponent(mensaje)}`, '_blank');
 
