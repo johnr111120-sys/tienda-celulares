@@ -526,9 +526,10 @@ function crearContenedorSPA() {
 document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
 
 // Variable global (asegúrate de que agregarAlCarrito la use)
-let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-function agregarAlCarrito(producto, variacion = null) {
+function guardarCarrito(){
+   localStorage.setItem("carrito", JSON.stringify(carrito));
     const item = {
         id: producto.id,
         nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
