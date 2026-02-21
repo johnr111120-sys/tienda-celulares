@@ -2400,17 +2400,10 @@ body{
     border-bottom: 1px solid #222;
 }
 
-.auth-spa-seccion {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 20px;
-}
-
 /* EL ESCUDO DE INTERFAZ - MODAL FLOTANTE */
 .perfil-overlay-oscuro {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 0;
     width: 100px;
     height: 100vh;
@@ -2446,22 +2439,6 @@ body{
     cursor: pointer;
     text-align: center;
     transition: 0.3s;
-}
-
-.auth-input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    background: white;
-    border: 1px solid #444;
-    color: #222;
-    border-radius: 5px;
-    font-size: 13px;
-}
-
-.opcion-perfil-spa {
-    display: block; width: 100%; padding: 12px; background: none; border: none;
-    color: white; font-weight: bold; cursor: pointer; border-bottom: 1px solid #222;
 }
 
 .opcion-perfil-spa:hover { color: #1a1a1a; background: #007bff; }
