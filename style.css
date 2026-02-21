@@ -2404,3 +2404,50 @@ body{
     text-align: center;
     padding: 20px;
 }
+
+/* EL ESCUDO DE INTERFAZ - MODAL FLOTANTE */
+.perfil-overlay-oscuro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85); /* Oscurece el fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999; /* Por encima de todo */
+}
+
+.modal-flotante-perfil {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 15px;
+    width: 280px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+}
+
+.opcion-perfil-spa {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #222;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.opcion-perfil-spa:hover {
+    color: #007bff;
+    background: #1a1a1a;
+}
+
