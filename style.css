@@ -2451,3 +2451,25 @@ body{
     background: #1a1a1a;
 }
 
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.opcion-perfil-spa {
+    display: block; width: 100%; padding: 12px; background: none; border: none;
+    color: white; font-weight: bold; cursor: pointer; border-bottom: 1px solid #222;
+}
+
+.opcion-perfil-spa:hover { color: #007bff; background: #1a1a1a; }
+
+.btn-volver-atras {
+    background: #333; color: black; border: none; padding: 5px 15px;
+    border-radius: 5px; font-size: 10px; font-weight: bold; cursor: pointer;
+}
