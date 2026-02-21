@@ -2443,3 +2443,73 @@ body{
 
 .opcion-perfil-spa:hover { color: #1a1a1a; background: #007bff; }
 
+/* Estilos para el Formulario SPA de Registro */
+.auth-input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 5px;
+}
+
+.politicas-box {
+    background: #fff;
+    color: #333;
+    padding: 10px;
+    height: 120px;
+    overflow-y: scroll;
+    font-size: 11px;
+    margin-top: 10px;
+    border-radius: 5px;
+    line-height: 1.4;
+}
+
+.btn-listo-azul {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50px;
+    width: 100%;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Modal Perfil Flotante */
+.perfil-overlay {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil-modal-card {
+    background: #111;
+    border: 1px solid #333;
+    padding: 20px;
+    border-radius: 15px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.perfil-modal-card a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #222;
+}
+
+.perfil-modal-card a:hover {
+    color: #007bff;
+}
+
