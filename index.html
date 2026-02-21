@@ -1663,16 +1663,6 @@ function navegarAFinalizarCompra() {
     `;
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-// Después de renderizar el HTML en navegarAFinalizarCompra:
-const u = SistemaMoisesAuth.sesionActiva;
-if(u) {
-    document.getElementById('ch-nombre').value = u.nombre || '';
-    document.getElementById('ch-apellido').value = u.apellidos || '';
-    document.getElementById('ch-telefono').value = u.celular || '';
-    document.getElementById('ch-email').value = u.email || '';
-    document.getElementById('ch-ciudad').value = u.ciudad || '';
-    document.getElementById('ch-direccion').value = u.dir || '';
-}
 
 function registrarCompraEnPerfil(carritoActual, total) {
     // 1. Verificar si hay un usuario logueado
