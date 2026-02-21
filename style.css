@@ -2396,6 +2396,8 @@ body{
 
 .btn-volver-atras:hover {
     background: #444;
+    border: none;
+    border-bottom: 1px solid #222;
 }
 
 .auth-spa-seccion {
@@ -2410,7 +2412,7 @@ body{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100px;
     height: 100vh;
     background: rgba(0, 0, 0, 0.85); /* Oscurece el fondo */
     display: flex;
@@ -2446,11 +2448,6 @@ body{
     transition: 0.3s;
 }
 
-.opcion-perfil-spa:hover {
-    color: #007bff;
-    background: #1a1a1a;
-}
-
 .auth-input {
     width: 100%;
     padding: 10px;
@@ -2469,7 +2466,3 @@ body{
 
 .opcion-perfil-spa:hover { color: #1a1a1a; background: #007bff; }
 
-.btn-volver-atras {
-    background: #333; color: black; border: none; padding: 5px 15px;
-    border-radius: 5px; font-size: 10px; font-weight: bold; cursor: pointer;
-}
