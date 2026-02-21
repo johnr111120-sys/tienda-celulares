@@ -940,9 +940,6 @@ function abrirProducto(id) {
         buscador.blur(); // Cierra el teclado en móviles
     }
 
-    // --- AQUÍ CONECTAMOS EL RASTREO ---
-    guardarEnVistosRecientes(producto);
-    
     // ... (aquí sigue el resto de tu código para abrir el modal)
     const p = productos.find(prod => prod.id == id);
     if (!p) return;
