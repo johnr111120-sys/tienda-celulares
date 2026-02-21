@@ -1723,36 +1723,40 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
 </script>
 
     <script>
+// --- ESCUDO DE AUTENTICACIÓN MOISÉS CELULARES V3 ---
 const SistemaMoisesAuth = {
     usuariosDB: JSON.parse(localStorage.getItem('usuarios_registrados')) || [],
     sesionActiva: JSON.parse(localStorage.getItem('sesion_moises')) || null,
 
     init: function() {
-        this.renderLogin();
-        // Vincular el botón de perfil original
+        // Vinculamos el botón de perfil de tu HTML
         const btnPerfil = document.getElementById('btn-perfil');
         if(btnPerfil) {
-            btnPerfil.onclick = () => this.abrirInterfazCorrecta();
+            btnPerfil.onclick = (e) => {
+                e.preventDefault();
+                this.abrirInterfazCorrecta();
+            };
         }
     },
 
     abrirInterfazCorrecta: function() {
         if(this.sesionActiva) {
-            this.renderMenuPerfil();
+            this.renderMenuFlotante(); // Si hay sesión, el modal oscuro
         } else {
+            this.renderLogin(); // Si no, el formulario de siempre
             mostrarModalLogin();
         }
     },
 
-    // --- RENDERIZADO SPA ---
+    // --- FORMULARIOS DENTRO DE LOGIN-CARD ---
     renderLogin: function() {
-        const contenedor = document.getElementById('auth-card-container');
+        const contenedor = document.querySelector('.login-card');
         contenedor.innerHTML = `
             <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
             <img src="./images/Logo3Expand.png" class="login-logo" alt="Logo">
             <p><b>MI CUENTA</b></p>
-            <input type="text" id="login-email" placeholder="Correo electrónico">
-            <input type="password" id="login-pass" placeholder="Contraseña">
+            <input type="text" id="log-email" placeholder="Correo electrónico">
+            <input type="password" id="log-pass" placeholder="Contraseña">
             <div style="text-align:left; font-size:12px; color:#888; margin:10px 0;">
                 <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
             </div>
@@ -1765,41 +1769,39 @@ const SistemaMoisesAuth = {
     },
 
     renderRegistro: function() {
-        const contenedor = document.getElementById('auth-card-container');
-        contenedor.style.width = "90%";
-        contenedor.style.maxWidth = "500px";
+        const contenedor = document.querySelector('.login-card');
         contenedor.innerHTML = `
             <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
-            <h2 style="color:#007bff;">NUEVO USUARIO</h2>
-            <p style="color:#FF2C2C; font-size:10px;">* Requerido</p>
+            <h2 style="color:#007bff; margin-bottom:5px;">NUEVO USUARIO</h2>
+            <p style="color:#ff4757; font-size:11px; margin-bottom:15px;">* Requerido</p>
             
-            <div style="height: 450px; overflow-y: auto; padding-right:10px;">
-                <h3 style="color:black; border-bottom:1px solid #333; margin:15px 0;">Datos De Registro</h3>
-                <input type="text" id="reg-nombre" placeholder="* Nombre">
-                <input type="text" id="reg-apellidos" placeholder="* Apellidos">
-                <input type="text" id="reg-tel" placeholder="Teléfono">
-                <input type="text" id="reg-cel" placeholder="* Celular">
+            <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
+                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
+                <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
+                <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
+                <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
+                <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
                 
-                <select id="reg-pais" onchange="this.blur()" style="width:100%; padding:10px; margin:5px 0;">
-                    <option value="">* Seleccione País</option>
+                <select id="reg-pai" class="auth-input">
+                   <option value="">* Seleccione País</option>
                     <option value="República Dominicana">República Dominicana</option>
                     <option value="Estados Unidos">Estados Unidos</option>
                     <option value="Puerto Rico">Puerto Rico</option>
                 </select>
 
-                <input type="text" id="reg-ciudad" placeholder="* Ciudad">
-                <input type="text" id="reg-muni" placeholder="* Municipio">
-                <input type="text" id="reg-dir" placeholder="* Dirección">
+                <input type="text" id="reg-ciu" placeholder="* Ciudad" class="auth-input">
+                <input type="text" id="reg-mun" placeholder="* Municipio" class="auth-input">
+                <input type="text" id="reg-dir" placeholder="* Direccion" class="auth-input">
 
-                <h3 style="color:black; border-bottom:1px solid #333; margin:15px 0;">Datos de Usuario</h3>
-                <input type="email" id="reg-email" placeholder="* E-mail">
-                <input type="email" id="reg-email-conf" placeholder="* Confirmar E-mail">
-                <input type="password" id="reg-pass" placeholder="* Contraseña">
-                <input type="password" id="reg-pass-conf" placeholder="* Confirmar Contraseña">
+                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-top:15px; margin-bottom:10px;">Datos de usuario</p>
+                <input type="email" id="reg-ema" placeholder="* E-mail" class="auth-input">
+                <input type="email" id="reg-con-ema" placeholder="* Confirmar e-mail" class="auth-input">
+                <input type="password" id="reg-pas" placeholder="* Contraseña" class="auth-input">
+                <input type="password" id="reg-con-pas" placeholder="* Confirmar Contraseña" class="auth-input">
 
-                <p style="color:black; margin-top:10px;">Política de Privacidad</p>
-                <div class="auth-scroll-box">
-                    En este sitio web, respetamos su información personal  y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
+                <div class="politicas-box">
+                    <strong>Política de privacidad</strong><br>
+                    En este sitio web, respetamos su información personal y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
 Privacidad de los datos personales:
 Sus datos personales le corresponden solo a usted y este sitio web es responsable de no revelar ninguna clase de información que le pertenezca (como email, números de ip, etc.), salvo su expresa autorización o fuerzas de naturaleza mayor de tipo legal que lo involucren, como hackeos o suplantaciones.
 Responsabilidad de las opiniones vertidas:
@@ -1815,155 +1817,93 @@ El uso de cookies y su dirección IP, tomados por este sitio, se realiza solo co
 Modificaciones a nuestras Políticas de Privacidad:
 El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
                 </div>
-                <div style="color:black; font-size:12px; margin:10px 0;">
-                    <input type="checkbox" id="reg-politicas" style="width:auto;"> He leído y acepto las políticas.
-                </div>
+                <label style="color:#888; font-size:12px; display:flex; align-items:center; gap:5px; margin-top:10px;">
+                    <input type="checkbox" id="reg-chk"> He leído y acepto las politicas.
+                </label>
             </div>
-            <button class="btn-auth-listo" onclick="SistemaMoisesAuth.ejecutarRegistro()">Listo</button>
-            <button onclick="SistemaMoisesAuth.renderLogin()" style="background:none; border:none; color:white; margin-top:10px; cursor:pointer;">Volver al Login</button>
+            
+            <button onclick="SistemaMoisesAuth.ejecutarRegistro()" class="btn-listo-azul">Listo</button>
+            <button onclick="SistemaMoisesAuth.renderLogin()" style="background:none; border:none; color:#888; font-size:12px; margin-top:10px; cursor:pointer;">Volver</button>
         `;
     },
 
     ejecutarRegistro: function() {
-        const data = {
-            nombre: document.getElementById('reg-nombre').value,
-            apellidos: document.getElementById('reg-apellidos').value,
+        const email = document.getElementById('reg-ema').value;
+        const pass = document.getElementById('reg-pas').value;
+
+        if(!email || !pass || !document.getElementById('reg-chk').checked) {
+            return alert("Por favor complete los campos obligatorios y acepte las políticas.");
+        }
+
+        const nuevoUsuario = {
+            nombre: document.getElementById('reg-nom').value,
+            apellidos: document.getElementById('reg-ape').value,
             celular: document.getElementById('reg-cel').value,
-            pais: document.getElementById('reg-pais').value,
-            email: document.getElementById('reg-email').value,
-            pass: document.getElementById('reg-pass').value,
+            pais: document.getElementById('reg-pai').value,
+            email: email,
+            pass: pass,
             ultimoIngreso: new Date().toLocaleString()
         };
 
-        if(!data.nombre || !data.email || !data.pass) return alert("Por favor complete los campos marcados con *");
-        if(data.email !== document.getElementById('reg-email-conf').value) return alert("Los correos no coinciden");
-        if(!document.getElementById('reg-politicas').checked) return alert("Debe aceptar las políticas");
-
-        this.usuariosDB.push(data);
+        this.usuariosDB.push(nuevoUsuario);
         localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        alert("¡Registro exitoso!");
+        alert("¡Registro exitoso! Ya puedes iniciar sesión.");
         this.renderLogin();
     },
 
     intentarLogin: function() {
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-pass').value;
+        const email = document.getElementById('log-email').value;
+        const pass = document.getElementById('log-pass').value;
         const user = this.usuariosDB.find(u => u.email === email && u.pass === pass);
 
         if(user) {
             this.sesionActiva = user;
-            user.ultimoIngreso = new Date().toLocaleString();
-            localStorage.setItem('sesion_moises', JSON.stringify(user));
+            if(document.getElementById('recuerdame').checked) {
+                localStorage.setItem('sesion_moises', JSON.stringify(user));
+            }
             cerrarLogin();
-            alert("Bienvenido " + user.nombre);
+            alert("Hola " + user.nombre);
+            location.reload(); // Recargamos para que el icono cambie
         } else {
-            alert("Credenciales incorrectas");
+            alert("Credenciales incorrectas.");
         }
     },
 
-// 1. EL MENÚ FLOTANTE (Lo que se abre al dar clic al icono si está logueado)
-SistemaMoisesAuth.renderMenuPerfil = function() {
-    // Crear el overlay que oscurece el fondo
-    const overlay = document.createElement('div');
-    overlay.id = "perfil-overlay-global";
-    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:200000; display:flex; align-items:center; justify-content:center;";
-    
-    // Al hacer clic fuera del card, se cierra
-    overlay.onclick = (e) => { if(e.target.id === "perfil-overlay-global") overlay.remove(); };
+    // --- EL MODAL FLOTANTE (LOGUEADO) ---
+    renderMenuFlotante: function() {
+        const overlay = document.createElement('div');
+        overlay.id = "overlay-perfil";
+        overlay.className = "perfil-overlay"; // Estilo que ya tienes en CSS
+        overlay.onclick = (e) => { if(e.target.id === "overlay-perfil") overlay.remove(); };
 
-    overlay.innerHTML = `
-        <div class="perfil-modal-card" style="background:#111; border:1px solid #333; padding:25px; border-radius:15px; width:280px; text-align:center; position:relative;">
-            <button onclick="document.getElementById('perfil-overlay-global').remove()" style="position:absolute; right:15px; top:10px; background:none; border:none; color:#888; cursor:pointer; font-size:18px;">✕</button>
-            <div class="auth-avatar" style="background:#007bff; width:60px; height:60px; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; color:white; font-size:24px; font-weight:bold;">
-                ${this.sesionActiva.nombre.charAt(0).toUpperCase()}
-            </div>
-            <p style="color:white; margin-bottom:20px; font-weight:bold;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
-            
-            <nav style="display:flex; flex-direction:column; gap:10px;">
-                <button class="btn-menu-perfil" onclick="SistemaMoisesAuth.irASeccion('compras')">Mis compras</button>
-                <button class="btn-menu-perfil" onclick="SistemaMoisesAuth.irASeccion('datos')">Mis datos</button>
-                <button class="btn-menu-perfil" onclick="SistemaMoisesAuth.irASeccion('favoritos')">Mis Favoritos</button>
-                <button class="btn-menu-perfil" style="color:#ff4757; border-top:1px solid #222; margin-top:10px;" onclick="SistemaMoisesAuth.confirmarCerrarSesion()">Cerrar sesión</button>
-            </nav>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-};
-
-// 2. NAVEGACIÓN SPA A LAS SECCIONES
-SistemaMoisesAuth.irASeccion = function(seccion) {
-    // Cerramos el modal flotante
-    const overlay = document.getElementById('perfil-overlay-global');
-    if(overlay) overlay.remove();
-    
-    // Llamamos a tu función de navegación SPA original
-    navegarSPA('perfil'); 
-    
-    const contenedor = document.getElementById('vista-spa-cliente');
-    const user = this.sesionActiva;
-
-    if(seccion === 'compras') {
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
-                <h2 style="color:#007bff; margin:20px 0;">Mis Compras</h2>
-                <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
-                <div id="vistas-recientes-contenedor"></div>
+        overlay.innerHTML = `
+            <div class="perfil-modal-card">
+                <p style="color:#007bff; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
+                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</a>
+                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</a>
+                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</a>
+                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.confirmarSalida()" style="color:#ff4757; border-top:1px solid #333; padding-top:10px;">Cerrar sesión</a>
             </div>
         `;
-    } 
-    else if(seccion === 'datos') {
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irASeccion('compras')">← VOLVER ATRAS</button>
-                <h2 style="color:#007bff; margin:20px 0;">Mis Datos</h2>
-                <div class="auth-avatar" style="width:100px; height:100px; font-size:40px; margin-bottom:10px;">${user.nombre.charAt(0)}</div>
-                <h3 style="color:white;">HOLA, ${user.nombre}</h3>
-                <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
-                <p style="font-size:12px; color:#888; margin-bottom:20px;">Ultimo ingreso: ${user.ultimoIngreso || 'Hoy'}</p>
-                
-                <div style="text-align:left; background:#111; padding:20px; border-radius:10px; margin-bottom:20px;">
-                    <p><b>Nombre:</b> ${user.nombre}</p>
-                    <p><b>Apellidos:</b> ${user.apellidos}</p>
-                    <p><b>Celular:</b> ${user.celular}</p>
-                    <p><b>País:</b> ${user.pais}</p>
-                </div>
-                
-                <h3 style="color:#007bff;">Contraseña</h3>
-                <input type="password" placeholder="Contraseña actual" class="auth-input">
-                <input type="password" placeholder="Nueva Contraseña" class="auth-input">
-                <button class="btn-auth-listo" style="margin-top:10px;">Modificar</button>
-            </div>
-        `;
-    }
-    else if(seccion === 'favoritos') {
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irASeccion('datos')">← VOLVER ATRAS</button>
-                <h2 style="color:#007bff; margin:20px 0;">Mis guardados y favoritos</h2>
-                <p style="color:#888;">0 agregados</p>
-            </div>
-        `;
+        document.body.appendChild(overlay);
+    },
+
+    confirmarSalida: function() {
+        if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
+            localStorage.removeItem('sesion_moises');
+            location.reload();
+        }
+    },
+
+    irA: function(seccion) {
+        document.getElementById('overlay-perfil').remove();
+        // Aquí llamas a tu función SPA para mostrar las vistas
+        console.log("Navegando a " + seccion);
+        navegarSPA('perfil'); // Por ejemplo
     }
 };
 
-// 3. MODAL DE CONFIRMACIÓN DE CIERRE
-SistemaMoisesAuth.confirmarCerrarSesion = function() {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:300000; display:flex; align-items:center; justify-content:center;";
-    overlay.innerHTML = `
-        <div style="background:#1a1a1a; padding:30px; border-radius:15px; text-align:center; border:1px solid #333;">
-            <p style="color:white; font-weight:bold; margin-bottom:25px;">¿CONFIRMA CERRAR SESIÓN?</p>
-            <div style="display:flex; gap:15px; justify-content:center;">
-                <button onclick="localStorage.removeItem('sesion_moises'); location.reload();" style="background:#007bff; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer; font-weight:bold;">SI</button>
-                <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background:#333; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">NO</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(overlay);
-};
-        
-// Inicializar el escudo sin tocar nada más
+// Iniciar al cargar
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
       
@@ -1979,7 +1919,7 @@ document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </div>
     
 <div id="modal-login-contenedor" class="modal-login">
-    <div class="login-card" id="auth-card-container">
+    <div class="login-card">
         <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
          <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
         <p><b>MI CUENTA</b></p>
