@@ -1769,17 +1769,18 @@ const SistemaMoisesAuth = {
         const contenedor = document.querySelector('.login-card');
         contenedor.innerHTML = `
             <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
-            <h2 style="color:#007bff; margin-bottom:5px; font-size:18px;">NUEVO USUARIO</h2>
-            <p style="color:##FF2C2C; font-size:10px; margin-bottom:10px;">* Requerido</p>
+            <h2 style="color:#007bff; margin-bottom:5px;">NUEVO USUARIO</h2>
+            <p style="color:#ff4757; font-size:11px; margin-bottom:15px;">* Requerido</p>
             
-            <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left;">
-                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px; font-size:13px;">Datos De Registro</p>
+            <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
+                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
                 <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
                 <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
                 <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
                 <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
+                
                 <select id="reg-pai" class="auth-input">
-                    <option value="">* Pais</option>
+                   <option value="">* Seleccione País</option>
                     <option value="República Dominicana">República Dominicana</option>
                     <option value="Estados Unidos">Estados Unidos</option>
                     <option value="Puerto Rico">Puerto Rico</option>
@@ -1794,7 +1795,7 @@ const SistemaMoisesAuth = {
                 <input type="password" id="reg-pas" placeholder="* Contraseña" class="auth-input">
                 <input type="password" id="reg-con-pas" placeholder="* Confirmar Contraseña" class="auth-input">
 
-                <div class="politicas-box" style="background:#fff; color:#333; padding:10px; height:100px; overflow-y:scroll; font-size:10px; margin-top:10px;">
+                 <div class="politicas-box">
                     <strong>Política de privacidad</strong><br>
                    En este sitio web, respetamos su información personal y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
 Privacidad de los datos personales:
@@ -1812,11 +1813,13 @@ El uso de cookies y su dirección IP, tomados por este sitio, se realiza solo co
 Modificaciones a nuestras Políticas de Privacidad:
 El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
                 </div>
-                <label style="color:#888; font-size:11px; display:flex; align-items:center; gap:5px; margin-top:10px;">
+                <label style="color:#888; font-size:12px; display:flex; align-items:center; gap:5px; margin-top:10px;">
                     <input type="checkbox" id="reg-chk"> He leído y acepto las politicas.
                 </label>
             </div>
-            <button onclick="SistemaMoisesAuth.ejecutarRegistro()" class="btn-auth-listo" style="background:#007bff; color:white; border:none; padding:10px; border-radius:20px; width:100%; margin-top:10px; cursor:pointer; font-weight:bold;">Listo</button>
+            
+          <button onclick="SistemaMoisesAuth.ejecutarRegistro()" class="btn-listo-azul">Listo</button>
+          <button onclick="SistemaMoisesAuth.renderLogin()" style="background:none; border:none; color:#888; font-size:12px; margin-top:10px; cursor:pointer;">Volver</button>
         `;
     },
 
