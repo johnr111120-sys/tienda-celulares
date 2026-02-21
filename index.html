@@ -67,8 +67,7 @@
         </div>
     </div>
 </div>
-
-<div id="vista-spa-cliente" style="display:none; background: #000; min-height: 100vh; width: 100%; position: relative; z-index: 100;"></div>
+      
 <!-- OVERLAY -->
 <div id="menu-overlay" onclick="toggleMenuProductos()"></div>
 
@@ -1888,100 +1887,57 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     },
 
     // --- VISTAS SPA ---
- // --- DENTRO DEL OBJETO SistemaMoisesAuth ---
+    irA: function(seccion) {
+        document.getElementById('overlay-moises-perfil').remove();
+        navegarSPA('perfil'); // Cambia a la vista SPA
+        const contenedor = document.getElementById('vista-spa-cliente');
+        const u = this.sesionActiva;
 
-SistemaMoisesAuth.irA = function(seccion) {
-    // 1. Cerramos el modal flotante inmediatamente
-    const overlay = document.getElementById('overlay-moises-perfil');
-    if(overlay) overlay.remove();
-
-    // 2. Localizamos los contenedores de la tienda para ocultarlos
-    // (Ajusta estos IDs según tu HTML original para que la tienda "desaparezca")
-    const seccionesTienda = ['contenedor-productos', 'slider-principal', 'categorias-bar']; 
-    seccionesTienda.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.style.display = 'none';
-    });
-
-    // 3. Activamos el contenedor SPA de perfil
-    const contenedorSPA = document.getElementById('vista-spa-cliente');
-    contenedorSPA.style.display = 'block';
-    contenedorSPA.scrollIntoView({ behavior: 'smooth' });
-
-    // 4. Renderizamos según la sección elegida
-    const u = this.sesionActiva;
-    
-    if(seccion === 'compras') {
-        contenedorSPA.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:20px 0; font-size:28px;">Mis Compras</h2>
-                <div style="background:rgba(255,255,255,0.05); padding:40px; border-radius:15px; border:1px dashed #333;">
-                    <i class="fas fa-shopping-bag" style="font-size:50px; color:#333; margin-bottom:15px;"></i>
+        if(seccion === 'compras') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
                     <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
-                </div>
-                ${this.renderVistasRecientes()}
-            </div>`;
-    } 
-    else if(seccion === 'datos') {
-        contenedorSPA.innerHTML = `
-            <div class="auth-spa-seccion" style="max-width:800px; margin:auto; text-align:center;">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                
-                <div style="margin-top:30px;">
-                    <div style="background:#007bff; width:100px; height:100px; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; color:white; font-size:40px; font-weight:bold; box-shadow: 0 0 20px rgba(0,123,255,0.4);">
-                        ${u.nombre.charAt(0).toUpperCase()}
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        } else if(seccion === 'datos') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irA('compras')">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
+                    <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
+                    <h3 style="color:white;">HOLA, ${u.nombre}</h3>
+                    <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
+                    <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
+                    <div style="text-align:left; background:#111; padding:15px; border-radius:10px; margin:20px 0; font-size:13px; color:white;">
+                        <p><b>Nombre:</b> ${u.nombre}</p><p><b>Apellidos:</b> ${u.apellidos}</p>
+                        <p><b>Celular:</b> ${u.celular}</p><p><b>Ciudad:</b> ${u.ciudad}</p>
                     </div>
-                    <h2 style="color:white; margin-bottom:5px;">HOLA, ${u.nombre.toUpperCase()}</h2>
-                    <p style="color:#007bff; font-weight:bold; font-size:18px;">¡¡Gracias por preferirnos!!</p>
-                    <p style="color:#666; font-size:12px; margin-top:5px;">Último ingreso: ${u.ultimoIngreso || 'Recién'}</p>
-                </div>
+                    <h3 style="color:#007bff;">Contraseña</h3>
+                    <input type="password" placeholder="Contraseña actual" class="auth-input">
+                    <input type="password" placeholder="Nueva Contraseña" class="auth-input">
+                    <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        } else if(seccion === 'favoritos') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irA('datos')">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
+                    <p style="color:#888;">0 agregados</p>
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        }
+    },
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:40px; text-align:left;">
-                    <div style="background:#111; padding:20px; border-radius:15px; border:1px solid #222;">
-                        <h3 style="color:#007bff; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:15px;">Datos de registro</h3>
-                        <p style="color:white; margin:8px 0;"><b>Nombre:</b> ${u.nombre} ${u.apellidos}</p>
-                        <p style="color:white; margin:8px 0;"><b>Celular:</b> ${u.celular}</p>
-                        <p style="color:white; margin:8px 0;"><b>País:</b> ${u.pais}</p>
-                        <p style="color:white; margin:8px 0;"><b>Ciudad:</b> ${u.ciudad}, ${u.muni}</p>
-                        <p style="color:white; margin:8px 0;"><b>Dirección:</b> ${u.dir}</p>
-                    </div>
-
-                    <div style="background:#111; padding:20px; border-radius:15px; border:1px solid #222;">
-                        <h3 style="color:#007bff; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:15px;">Seguridad</h3>
-                        <label style="color:#888; font-size:12px;">E-mail</label>
-                        <input type="text" value="${u.email}" class="auth-input" readonly style="opacity:0.6;">
-                        
-                        <h3 style="color:#007bff; margin-top:20px; margin-bottom:10px;">Cambiar Contraseña</h3>
-                        <input type="password" id="new-pass" placeholder="Nueva Contraseña" class="auth-input">
-                        <input type="password" id="confirm-new-pass" placeholder="Repetir Contraseña" class="auth-input">
-                        <button class="btn-auth-listo" onclick="alert('Contraseña actualizada')" style="margin-top:15px; background:#007bff;">Modificar</button>
-                    </div>
-                </div>
-                ${this.renderVistasRecientes()}
-            </div>`;
+    renderVistasRecientes: function() {
+        return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
+                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
+                    <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content:center;">
+                        </div>
+                </div>`;
     }
-    else if(seccion === 'favoritos') {
-        contenedorSPA.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:20px 0;">Mis guardados y favoritos</h2>
-                <p style="color:#888; padding:50px;">0 agregados actualmente.</p>
-                ${this.renderVistasRecientes()}
-            </div>`;
-    }
-};
-
-SistemaMoisesAuth.renderVistasRecientes = function() {
-    // Aquí puedes integrar tu lógica de productos vistos
-    return `
-        <div style="margin-top:60px; border-top:1px solid #222; padding-top:30px;">
-            <p style="color:#555; font-size:14px; letter-spacing:2px; margin-bottom:20px;">VISTO RECIENTEMENTE</p>
-            <div id="vistos-recientes-contenedor" style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-                <p style="color:#333; font-style:italic;">No hay productos para mostrar.</p>
-            </div>
-        </div>
-    `;
 };
 
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
