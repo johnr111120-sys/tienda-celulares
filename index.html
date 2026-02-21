@@ -1861,16 +1861,108 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         }
     },
 
-renderMenuPerfil: function() {
-        // Aquí se crearía el modal flotante que oscurece el fondo (SPA)
-        // Por razones de espacio, incluyo la lógica de cerrar sesión:
-        if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
-            localStorage.removeItem('sesion_moises');
-            location.reload();
-        }
+// 1. EL MENÚ FLOTANTE (Lo que se abre al dar clic al icono si está logueado)
+SistemaMoisesAuth.renderMenuPerfil = function() {
+    // Crear el overlay que oscurece el fondo
+    const overlay = document.createElement('div');
+    overlay.id = "perfil-overlay-global";
+    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:200000; display:flex; align-items:center; justify-content:center;";
+    
+    // Al hacer clic fuera del card, se cierra
+    overlay.onclick = (e) => { if(e.target.id === "perfil-overlay-global") overlay.remove(); };
+
+    overlay.innerHTML = `
+        <div class="perfil-modal-card" style="background:#111; border:1px solid #333; padding:25px; border-radius:15px; width:280px; text-align:center; position:relative;">
+            <button onclick="document.getElementById('perfil-overlay-global').remove()" style="position:absolute; right:15px; top:10px; background:none; border:none; color:#888; cursor:pointer; font-size:18px;">✕</button>
+            <div class="auth-avatar" style="background:#007bff; width:60px; height:60px; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; color:white; font-size:24px; font-weight:bold;">
+                ${this.sesionActiva.nombre.charAt(0).toUpperCase()}
+            </div>
+            <p style="color:white; margin-bottom:20px; font-weight:bold;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
+            
+            <nav style="display:flex; flex-direction:column; gap:10px;">
+                <button class="btn-menu-perfil" onclick="SistemaMoisesAuth.irASeccion('compras')">Mis compras</button>
+                <button class="btn-menu-perfil" onclick="SistemaMoisesAuth.irASeccion('datos')">Mis datos</button>
+                <button class="btn-menu-perfil" onclick="SistemaMoisesAuth.irASeccion('favoritos')">Mis Favoritos</button>
+                <button class="btn-menu-perfil" style="color:#ff4757; border-top:1px solid #222; margin-top:10px;" onclick="SistemaMoisesAuth.confirmarCerrarSesion()">Cerrar sesión</button>
+            </nav>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+};
+
+// 2. NAVEGACIÓN SPA A LAS SECCIONES
+SistemaMoisesAuth.irASeccion = function(seccion) {
+    // Cerramos el modal flotante
+    const overlay = document.getElementById('perfil-overlay-global');
+    if(overlay) overlay.remove();
+    
+    // Llamamos a tu función de navegación SPA original
+    navegarSPA('perfil'); 
+    
+    const contenedor = document.getElementById('vista-spa-cliente');
+    const user = this.sesionActiva;
+
+    if(seccion === 'compras') {
+        contenedor.innerHTML = `
+            <div class="auth-spa-seccion">
+                <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
+                <h2 style="color:#007bff; margin:20px 0;">Mis Compras</h2>
+                <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
+                <div id="vistas-recientes-contenedor"></div>
+            </div>
+        `;
+    } 
+    else if(seccion === 'datos') {
+        contenedor.innerHTML = `
+            <div class="auth-spa-seccion">
+                <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irASeccion('compras')">← VOLVER ATRAS</button>
+                <h2 style="color:#007bff; margin:20px 0;">Mis Datos</h2>
+                <div class="auth-avatar" style="width:100px; height:100px; font-size:40px; margin-bottom:10px;">${user.nombre.charAt(0)}</div>
+                <h3 style="color:white;">HOLA, ${user.nombre}</h3>
+                <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
+                <p style="font-size:12px; color:#888; margin-bottom:20px;">Ultimo ingreso: ${user.ultimoIngreso || 'Hoy'}</p>
+                
+                <div style="text-align:left; background:#111; padding:20px; border-radius:10px; margin-bottom:20px;">
+                    <p><b>Nombre:</b> ${user.nombre}</p>
+                    <p><b>Apellidos:</b> ${user.apellidos}</p>
+                    <p><b>Celular:</b> ${user.celular}</p>
+                    <p><b>País:</b> ${user.pais}</p>
+                </div>
+                
+                <h3 style="color:#007bff;">Contraseña</h3>
+                <input type="password" placeholder="Contraseña actual" class="auth-input">
+                <input type="password" placeholder="Nueva Contraseña" class="auth-input">
+                <button class="btn-auth-listo" style="margin-top:10px;">Modificar</button>
+            </div>
+        `;
+    }
+    else if(seccion === 'favoritos') {
+        contenedor.innerHTML = `
+            <div class="auth-spa-seccion">
+                <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irASeccion('datos')">← VOLVER ATRAS</button>
+                <h2 style="color:#007bff; margin:20px 0;">Mis guardados y favoritos</h2>
+                <p style="color:#888;">0 agregados</p>
+            </div>
+        `;
     }
 };
 
+// 3. MODAL DE CONFIRMACIÓN DE CIERRE
+SistemaMoisesAuth.confirmarCerrarSesion = function() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:300000; display:flex; align-items:center; justify-content:center;";
+    overlay.innerHTML = `
+        <div style="background:#1a1a1a; padding:30px; border-radius:15px; text-align:center; border:1px solid #333;">
+            <p style="color:white; font-weight:bold; margin-bottom:25px;">¿CONFIRMA CERRAR SESIÓN?</p>
+            <div style="display:flex; gap:15px; justify-content:center;">
+                <button onclick="localStorage.removeItem('sesion_moises'); location.reload();" style="background:#007bff; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer; font-weight:bold;">SI</button>
+                <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background:#333; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">NO</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+};
+        
 // Inicializar el escudo sin tocar nada más
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
