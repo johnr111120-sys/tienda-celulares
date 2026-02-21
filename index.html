@@ -834,6 +834,7 @@ function enviarPedidoWhatsApp(tracking) {
         // Opcional: Guardar en localStorage para que no se borre al recargar
         localStorage.setItem("datos_usuario_moises", JSON.stringify(datosUsuario));
     }
+    // ------------------------------------------------
 
     // Preparar y enviar a WhatsApp (tu código anterior)
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
@@ -869,6 +870,13 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
 
+function crearContenedorSPA() {
+    const div = document.createElement("div");
+    div.id = "vista-spa-cliente";
+    // Insertar antes del footer
+    document.querySelector("footer").before(div);
+    return div;
+}
 </script> 
 
   <script>
@@ -1663,15 +1671,7 @@ function navegarAFinalizarCompra() {
     `;
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-         
-function crearContenedorSPA() {
-    const div = document.createElement("div");
-    div.id = "vista-spa-cliente";
-    // Insertar antes del footer
-    document.querySelector("footer").before(div);
-    return div;
-}
-         
+
 function regresarALaTienda() {
     // 1. Mostrar de nuevo la tienda
     document.getElementById("vista-inicio").style.display = "block";
@@ -1902,14 +1902,14 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     const modalLogin = document.getElementById('modal-login-contenedor');
     if(modalLogin) modalLogin.style.display = 'none';
         
-       if(seccion === 'compras') {
+        if(seccion === 'compras') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
                     <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
                     <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
                 </div>`;
-       } else if(seccion === 'datos') {
+        } else if(seccion === 'datos') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
                     <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
