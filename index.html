@@ -1729,25 +1729,79 @@ const SistemaMoisesAuth = {
     sesionActiva: JSON.parse(localStorage.getItem('sesion_moises')) || null,
 
     init: function() {
-        // Vinculamos el botón de perfil de tu HTML
         const btnPerfil = document.getElementById('btn-perfil');
         if(btnPerfil) {
             btnPerfil.onclick = (e) => {
                 e.preventDefault();
-                this.abrirInterfazCorrecta();
+                this.abrirInterfaz();
             };
         }
     },
 
-    abrirInterfazCorrecta: function() {
+    abrirInterfaz: function() {
         if(this.sesionActiva) {
-            this.renderMenuFlotante(); // Si hay sesión, el modal oscuro
+            this.renderMenuFlotante(); // Abre el modal oscuro
         } else {
-            this.renderLogin(); // Si no, el formulario de siempre
+            this.renderLogin(); // Abre tu login-card de siempre
             mostrarModalLogin();
         }
     },
 
+    renderMenuFlotante: function() {
+        // 1. Crear el fondo oscuro
+        const overlay = document.createElement('div');
+        overlay.className = 'perfil-overlay-oscuro';
+        overlay.id = 'overlay-moises-auth';
+        
+        // 2. Crear la tarjeta del modal
+        overlay.innerHTML = `
+            <div class="modal-flotante-perfil">
+                <button onclick="document.getElementById('overlay-moises-auth').remove()" style="position:absolute; right:15px; top:10px; background:none; border:none; color:#888; cursor:pointer; font-size:18px;">✕</button>
+                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:10px auto; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:20px;">
+                    ${this.sesionActiva.nombre.charAt(0).toUpperCase()}
+                </div>
+                <p style="color:white; margin-bottom:15px; font-size:14px;">¡Hola, ${this.sesionActiva.nombre}!</p>
+                
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
+                <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #333; margin-top:10px;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
+            </div>
+        `;
+
+        // Cerrar si hace clic en el fondo negro
+        overlay.onclick = (e) => {
+            if(e.target.id === 'overlay-moises-auth') overlay.remove();
+        };
+
+        document.body.appendChild(overlay);
+    },
+
+    irA: function(seccion) {
+        // 1. Quitar el modal flotante
+        const overlay = document.getElementById('overlay-moises-auth');
+        if(overlay) overlay.remove();
+
+        // 2. Activar tu vista SPA (perfil)
+        navegarSPA('perfil');
+
+        // 3. Renderizar el contenido específico (Lo haremos en el siguiente paso)
+        console.log("Cargando sección SPA: " + seccion);
+    },
+
+    confirmarCerrar: function() {
+        const overlay = document.getElementById('overlay-moises-auth');
+        overlay.innerHTML = `
+            <div class="modal-flotante-perfil">
+                <p style="color:white; font-weight:bold; margin-bottom:20px;">¿CONFIRMA CERRAR SESIÓN?</p>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-comprar" style="flex:1;" onclick="localStorage.removeItem('sesion_moises'); location.reload();">SI</button>
+                    <button class="btn-comprar" style="flex:1; background:#444;" onclick="SistemaMoisesAuth.renderMenuFlotante(); document.getElementById('overlay-moises-auth').remove();">NO</button>
+                </div>
+            </div>
+        `;
+    },
+    
     // --- FORMULARIOS DENTRO DE LOGIN-CARD ---
     renderLogin: function() {
         const contenedor = document.querySelector('.login-card');
@@ -1768,6 +1822,24 @@ const SistemaMoisesAuth = {
         `;
     },
 
+    intentarLogin: function() {
+        const email = document.getElementById('log-email').value;
+        const pass = document.getElementById('log-pass').value;
+        const user = this.usuariosDB.find(u => u.email === email && u.pass === pass);
+
+        if(user) {
+            this.sesionActiva = user;
+            if(document.getElementById('recuerdame').checked) {
+                localStorage.setItem('sesion_moises', JSON.stringify(user));
+            }
+            cerrarLogin();
+            alert("Hola " + user.nombre);
+            location.reload(); // Recargamos para que el icono cambie
+        } else {
+            alert("Usuario o contraseña incorrectos");
+        }
+    },
+    
     renderRegistro: function() {
         const contenedor = document.querySelector('.login-card');
         contenedor.innerHTML = `
@@ -1849,24 +1921,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
         alert("¡Registro exitoso! Ya puedes iniciar sesión.");
         this.renderLogin();
-    },
-
-    intentarLogin: function() {
-        const email = document.getElementById('log-email').value;
-        const pass = document.getElementById('log-pass').value;
-        const user = this.usuariosDB.find(u => u.email === email && u.pass === pass);
-
-        if(user) {
-            this.sesionActiva = user;
-            if(document.getElementById('recuerdame').checked) {
-                localStorage.setItem('sesion_moises', JSON.stringify(user));
-            }
-            cerrarLogin();
-            alert("Hola " + user.nombre);
-            location.reload(); // Recargamos para que el icono cambie
-        } else {
-            alert("Credenciales incorrectas.");
-        }
     },
 
     // --- EL MODAL FLOTANTE (LOGUEADO) ---
