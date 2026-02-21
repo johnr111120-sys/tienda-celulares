@@ -257,6 +257,9 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
+// Variables Globales faltantes para evitar el error de consola
+let favoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
+let vistasRecientes = JSON.parse(localStorage.getItem('vistas_recientes')) || [];
 let usuarioLogueado = false;
 // Intentar cargar datos guardados o usar los de prueba si no hay nada
 let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
@@ -1858,18 +1861,50 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         }
     },
 
-    renderMenuPerfil: function() {
-        // Aquí se crearía el modal flotante que oscurece el fondo (SPA)
-        // Por razones de espacio, incluyo la lógica de cerrar sesión:
-        if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
-            localStorage.removeItem('sesion_moises');
-            location.reload();
-        }
+renderMenuPerfil: function() {
+        // Modal flotante que oscurece el fondo
+        const modal = document.createElement('div');
+        modal.id = "perfil-flotante-overlay";
+        modal.className = "perfil-overlay";
+        modal.onclick = (e) => { if(e.target.id === "perfil-flotante-overlay") modal.remove(); };
+        
+        modal.innerHTML = `
+            <div class="perfil-modal-card">
+                <a href="javascript:void(0)" onclick="AuthMoises.abrirSeccion('compras')">Mis compras</a>
+                <a href="javascript:void(0)" onclick="AuthMoises.abrirSeccion('datos')">Mis datos</a>
+                <a href="javascript:void(0)" onclick="AuthMoises.abrirSeccion('favoritos')">Mis Favoritos</a>
+                <a href="javascript:void(0)" onclick="AuthMoises.confirmarCerrar()">Cerrar sesión</a>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+
+    confirmarCerrar: function() {
+        const confirmar = document.createElement('div');
+        confirmar.className = "perfil-overlay";
+        confirmar.innerHTML = `
+            <div class="login-card" style="height:auto; padding:30px;">
+                <p style="color:white; margin-bottom:20px;">¿CONFIRMA CERRAR SESIÓN?</p>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-listo-azul" onclick="localStorage.removeItem('sesion_activa_moises'); location.reload();">SI</button>
+                    <button class="btn-listo-azul" style="background:#555;" onclick="this.parentElement.parentElement.parentElement.remove()">NO</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(confirmar);
     }
 };
 
-// Inicializar el escudo sin tocar nada más
-document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
+// Re-vincular el botón de perfil original para que use el escudo
+document.addEventListener('DOMContentLoaded', () => {
+    const btnP = document.getElementById('btn-perfil');
+    if(btnP) {
+        btnP.onclick = () => {
+            if(AuthMoises.sesion) AuthMoises.renderMenuPerfil();
+            else mostrarModalLogin();
+        };
+    }
+});
 </script>
       
 <!-- MODAL PRODUCTO -->
