@@ -1670,8 +1670,7 @@ function navegarAFinalizarCompra() {
         </div>
     `;
     window.scrollTo({ top: 0, behavior: "smooth" });
-}
-// Después de renderizar el HTML en navegarAFinalizarCompra:
+    // Después de renderizar el HTML en navegarAFinalizarCompra:
 const u = SistemaMoisesAuth.sesionActiva;
 if(u) {
     document.getElementById('ch-nombre').value = u.nombre || '';
@@ -1680,6 +1679,7 @@ if(u) {
     document.getElementById('ch-email').value = u.email || '';
     document.getElementById('ch-ciudad').value = u.ciudad || '';
     document.getElementById('ch-direccion').value = u.dir || '';
+  }
 }
          
 function regresarALaTienda() {
