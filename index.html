@@ -1908,7 +1908,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
                     <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
-                    ${this.renderVistasRecientes()}
                 </div>`;
         } else if(seccion === 'datos') {
             contenedor.innerHTML = `
@@ -1927,7 +1926,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <input type="password" placeholder="Contraseña actual" class="auth-input">
                     <input type="password" placeholder="Nueva Contraseña" class="auth-input">
                     <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
-                    ${this.renderVistasRecientes()}
                 </div>`;
         } else if(seccion === 'favoritos') {
             contenedor.innerHTML = `
@@ -1935,19 +1933,9 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
                     <p style="color:#888;">0 agregados</p>
-                    ${this.renderVistasRecientes()}
                 </div>`;
         }
     },
-
-    renderVistasRecientes: function() {
-      return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
-                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
-                    <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content:center;">
-                        </div>
-                </div>`;
-    }
-};
 
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
