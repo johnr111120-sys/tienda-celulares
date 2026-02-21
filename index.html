@@ -47,13 +47,6 @@
         <span id="contador-carrito" class="badge-carrito">0</span>
     </div>
 </button>
-      
-<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
-    <div style="position: relative; display: inline-block;">
-        <i class="fas fa-heart"></i>
-        <span id="contador-favoritos" class="badge-favoritos">0</span>
-    </div>
-</button>
 </nav>   
  </header>
 
@@ -264,7 +257,6 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
-let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
 let usuarioLogueado = false;
 // Intentar cargar datos guardados o usar los de prueba si no hay nada
 let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
@@ -370,7 +362,6 @@ function navegarSPA(seccion) {
     contenedorSPA.style.display = "block";
 
     if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
-    if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
