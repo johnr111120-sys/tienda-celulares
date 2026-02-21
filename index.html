@@ -1676,7 +1676,6 @@ const u = SistemaMoisesAuth.sesionActiva;
 if(u) {
     document.getElementById('ch-nombre').value = u.nombre || '';
     document.getElementById('ch-apellido').value = u.apellidos || '';
-    document.getElementById('ch-documento').value = u.documento || '';
     document.getElementById('ch-telefono').value = u.celular || '';
     document.getElementById('ch-email').value = u.email || '';
     document.getElementById('ch-ciudad').value = u.ciudad || '';
@@ -1914,15 +1913,50 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     const modalLogin = document.getElementById('modal-login-contenedor');
     if(modalLogin) modalLogin.style.display = 'none';
         
-        if(seccion === 'compras') {
-            contenedor.innerHTML = `
-                <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
-                    <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
-                    <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
-                    ${this.renderVistasRecientes()}
-                </div>`;
-        } else if(seccion === 'datos') {
+        if (seccion === 'compras') {
+    const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
+    // Filtramos solo las compras que pertenecen al usuario actual
+    const misCompras = todasLasCompras.filter(c => c.usuarioEmail === u.email);
+
+    let htmlCompras = '';
+
+    if (misCompras.length === 0) {
+        htmlCompras = `
+            <div style="background:rgba(255,255,255,0.05); padding:40px; border-radius:15px; border:1px dashed #333;">
+                <p style="color:#888;">Aún no tienes órdenes de compra efectuadas.</p>
+                <button onclick="location.reload()" class="btn-comprar" style="margin-top:15px;">Ir a comprar ahora</button>
+            </div>`;
+    } else {
+        misCompras.forEach(compra => {
+            htmlCompras += `
+                <div style="background:#111; border:1px solid #222; border-radius:10px; padding:15px; margin-bottom:15px; text-align:left;">
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:10px;">
+                        <span style="color:#007bff; font-weight:bold;">Orden: ${compra.idOrden}</span>
+                        <span style="color:#555; font-size:12px;">${compra.fecha}</span>
+                    </div>
+                    ${compra.productos.map(p => `
+                        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;">
+                            <span style="color:white;">${p.cantidad}x ${p.nombre}</span>
+                            <span style="color:#888;">RD$ ${(p.precio * p.cantidad).toLocaleString()}</span>
+                        </div>
+                    `).join('')}
+                    <div style="margin-top:10px; text-align:right; font-weight:bold; color:#007bff; font-size:16px;">
+                        TOTAL: RD$ ${compra.total.toLocaleString()}
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    contenedorSPA.innerHTML = `
+        <div class="auth-spa-seccion" style="max-width:600px; margin:auto;">
+            <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
+            <h2 style="color:white; margin:25px 0;">HISTORIAL DE COMPRAS</h2>
+            ${htmlCompras}
+            ${this.renderVistasRecientes()}
+        </div>`;
+}
+     else if(seccion === 'datos') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
                     <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
