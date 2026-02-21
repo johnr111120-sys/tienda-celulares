@@ -2525,3 +2525,18 @@ body{
     background: #007bff;
     color: white;
 }
+
+.card-visto-reciente:hover {
+    border-color: #007bff !important;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+}
+
+.auth-spa-seccion {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
