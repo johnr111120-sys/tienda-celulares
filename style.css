@@ -2455,9 +2455,9 @@ body{
     width: 100%;
     padding: 10px;
     margin: 5px 0;
-    background: #222;
+    background: white;
     border: 1px solid #444;
-    color: white;
+    color: #222;
     border-radius: 5px;
     font-size: 13px;
 }
@@ -2467,7 +2467,7 @@ body{
     color: white; font-weight: bold; cursor: pointer; border-bottom: 1px solid #222;
 }
 
-.opcion-perfil-spa:hover { color: #007bff; background: #1a1a1a; }
+.opcion-perfil-spa:hover { color: #1a1a1a; background: #007bff; }
 
 .btn-volver-atras {
     background: #333; color: black; border: none; padding: 5px 15px;
