@@ -2364,3 +2364,43 @@ body{
 }
 .auth-spa-seccion { color: white; padding: 20px; }
 .auth-avatar { width: 80px; height: 80px; border-radius: 50%; background: #007bff; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+
+.btn-menu-perfil {
+    background: none;
+    border: none;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.btn-menu-perfil:hover {
+    background: #222;
+    color: #007bff;
+}
+
+.btn-volver-atras {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-volver-atras:hover {
+    background: #444;
+}
+
+.auth-spa-seccion {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
