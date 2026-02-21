@@ -1893,6 +1893,10 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         const contenedor = document.getElementById('vista-spa-cliente');
         const u = this.sesionActiva;
 
+     // 1. CERRAR TODO LO QUE ESTÉ ABIERTO (Modales y Overlays)
+    const overlayFlotante = document.getElementById('overlay-moises-perfil');
+    if(overlayFlotante) overlayFlotante.remove();
+        
     // ESTO ES LO QUE TE ESTÁ PASANDO: El modal login se queda abierto o se activa. 
     // Lo cerramos a la fuerza:
     const modalLogin = document.getElementById('modal-login-contenedor');
@@ -1909,7 +1913,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         } else if(seccion === 'datos') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irA('compras')">← VOLVER ATRAS</button>
+                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
                     <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
                     <h3 style="color:white;">HOLA, ${u.nombre}</h3>
@@ -1928,7 +1932,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         } else if(seccion === 'favoritos') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irA('datos')">← VOLVER ATRAS</button>
+                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
                     <p style="color:#888;">0 agregados</p>
                     ${this.renderVistasRecientes()}
