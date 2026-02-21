@@ -1893,6 +1893,11 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         const contenedor = document.getElementById('vista-spa-cliente');
         const u = this.sesionActiva;
 
+    // ESTO ES LO QUE TE ESTÁ PASANDO: El modal login se queda abierto o se activa. 
+    // Lo cerramos a la fuerza:
+    const modalLogin = document.getElementById('modal-login-contenedor');
+    if(modalLogin) modalLogin.style.display = 'none';
+        
         if(seccion === 'compras') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
