@@ -2410,7 +2410,7 @@ body{
 /* EL ESCUDO DE INTERFAZ - MODAL FLOTANTE */
 .perfil-overlay-oscuro {
     position: fixed;
-    top: 0;
+    top: 20px;
     left: 0;
     width: 100px;
     height: 100vh;
