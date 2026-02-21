@@ -1869,33 +1869,10 @@ renderMenuPerfil: function() {
             location.reload();
         }
     }
-
-    confirmarCerrar: function() {
-        const confirmar = document.createElement('div');
-        confirmar.className = "perfil-overlay";
-        confirmar.innerHTML = `
-            <div class="login-card" style="height:auto; padding:30px;">
-                <p style="color:white; margin-bottom:20px;">¿CONFIRMA CERRAR SESIÓN?</p>
-                <div style="display:flex; gap:10px;">
-                    <button class="btn-listo-azul" onclick="localStorage.removeItem('sesion_activa_moises'); location.reload();">SI</button>
-                    <button class="btn-listo-azul" style="background:#555;" onclick="this.parentElement.parentElement.parentElement.remove()">NO</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(confirmar);
-    }
 };
 
-// Re-vincular el botón de perfil original para que use el escudo
-document.addEventListener('DOMContentLoaded', () => {
-    const btnP = document.getElementById('btn-perfil');
-    if(btnP) {
-        btnP.onclick = () => {
-            if(AuthMoises.sesion) AuthMoises.renderMenuPerfil();
-            else mostrarModalLogin();
-        };
-    }
-});
+// Inicializar el escudo sin tocar nada más
+document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
       
 <!-- MODAL PRODUCTO -->
