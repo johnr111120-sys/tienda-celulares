@@ -1944,30 +1944,12 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     },
 
     renderVistasRecientes: function() {
-       const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
-    
-    if (vistos.length === 0) return ''; // Si no ha visto nada, no mostramos la sección
-
-    let htmlVistos = `
-        <div style="margin-top:60px; border-top:1px solid #222; padding-top:40px; width:100%;">
-            <p style="color:#007bff; font-size:12px; letter-spacing:3px; margin-bottom:25px; text-align:center; font-weight:bold;">
-                VISTO RECIENTEMENTE
-            </p>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; max-width:900px; margin:0 auto;">
-    `;
-
-    vistos.forEach(prod => {
-        htmlVistos += `
-            <div class="card-visto-reciente" onclick="location.reload()" style="background:#111; border:1px solid #222; padding:15px; border-radius:12px; text-align:center; cursor:pointer; transition:0.3s;">
-                <img src="${prod.imagen}" style="width:80px; height:80px; object-fit:contain; margin-bottom:10px;">
-                <p style="color:white; font-size:13px; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${prod.nombre}</p>
-                <p style="color:#007bff; font-size:14px; margin-top:5px;">RD$ ${prod.precio.toLocaleString()}</p>
-            </div>
-        `;
-    });
-
-    htmlVistos += `</div></div>`;
-    return htmlVistos;
+      return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
+                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
+                    <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content:center;">
+                        </div>
+                </div>`;
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
