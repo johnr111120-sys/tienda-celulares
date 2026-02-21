@@ -1745,7 +1745,7 @@ const SistemaMoisesAuth = {
     renderLogin: function() {
         const contenedor = document.getElementById('auth-card-container');
         contenedor.innerHTML = `
-            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:white;">✕</button>
+            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
             <img src="./images/Logo3Expand.png" class="login-logo" alt="Logo">
             <p><b>MI CUENTA</b></p>
             <input type="text" id="login-email" placeholder="Correo electrónico">
@@ -1768,10 +1768,10 @@ const SistemaMoisesAuth = {
         contenedor.innerHTML = `
             <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:white;">✕</button>
             <h2 style="color:#007bff;">NUEVO USUARIO</h2>
-            <p style="color:#888; font-size:10px;">* Requerido</p>
+            <p style="color:#FF2C2C; font-size:10px;">* Requerido</p>
             
             <div style="height: 450px; overflow-y: auto; padding-right:10px;">
-                <h3 style="color:white; border-bottom:1px solid #333; margin:15px 0;">Datos De Registro</h3>
+                <h3 style="color:black; border-bottom:1px solid #333; margin:15px 0;">Datos De Registro</h3>
                 <input type="text" id="reg-nombre" placeholder="* Nombre">
                 <input type="text" id="reg-apellidos" placeholder="* Apellidos">
                 <input type="text" id="reg-tel" placeholder="Teléfono">
@@ -1788,13 +1788,13 @@ const SistemaMoisesAuth = {
                 <input type="text" id="reg-muni" placeholder="* Municipio">
                 <input type="text" id="reg-dir" placeholder="* Dirección">
 
-                <h3 style="color:white; border-bottom:1px solid #333; margin:15px 0;">Datos de Usuario</h3>
+                <h3 style="color:black; border-bottom:1px solid #333; margin:15px 0;">Datos de Usuario</h3>
                 <input type="email" id="reg-email" placeholder="* E-mail">
                 <input type="email" id="reg-email-conf" placeholder="* Confirmar E-mail">
                 <input type="password" id="reg-pass" placeholder="* Contraseña">
                 <input type="password" id="reg-pass-conf" placeholder="* Confirmar Contraseña">
 
-                <p style="color:white; margin-top:10px;">Política de Privacidad</p>
+                <p style="color:black; margin-top:10px;">Política de Privacidad</p>
                 <div class="auth-scroll-box">
                     En este sitio web, respetamos su información personal  y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
 Privacidad de los datos personales:
@@ -1812,7 +1812,7 @@ El uso de cookies y su dirección IP, tomados por este sitio, se realiza solo co
 Modificaciones a nuestras Políticas de Privacidad:
 El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
                 </div>
-                <div style="color:white; font-size:12px; margin:10px 0;">
+                <div style="color:black; font-size:12px; margin:10px 0;">
                     <input type="checkbox" id="reg-politicas" style="width:auto;"> He leído y acepto las políticas.
                 </div>
             </div>
