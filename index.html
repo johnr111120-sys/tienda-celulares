@@ -1905,7 +1905,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         if(seccion === 'compras') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
+                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
                     <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
                     ${this.renderVistasRecientes()}
@@ -1913,7 +1913,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         } else if(seccion === 'datos') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
+                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
                     <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
                     <h3 style="color:white;">HOLA, ${u.nombre}</h3>
@@ -1932,7 +1932,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         } else if(seccion === 'favoritos') {
             contenedor.innerHTML = `
                 <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
+                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
                     <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
                     <p style="color:#888;">0 agregados</p>
                     ${this.renderVistasRecientes()}
