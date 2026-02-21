@@ -2337,33 +2337,74 @@ body{
     font-family: system-ui, -apple-system, Arial, sans-serif;
 }
 
-/* Escudo de Estilos Auth */
-.auth-scroll-box {
-    height: 150px;
-    overflow-y: scroll;
-    background: #f9f9f9;
+/* Estilos para el Formulario SPA de Registro */
+.auth-input {
+    width: 100%;
     padding: 10px;
-    font-size: 11px;
-    color: #333;
-    border: 1px solid #ddd;
-    text-align: left;
-    margin: 10px 0;
+    margin: 5px 0;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 5px;
 }
-.auth-input-group { margin-bottom: 10px; text-align: left; }
-.auth-input-group label { display: block; font-size: 12px; font-weight: bold; color: white; }
-.auth-required { color: #ff4757; }
-.btn-auth-listo {
+
+.politicas-box {
+    background: #fff;
+    color: #333;
+    padding: 10px;
+    height: 120px;
+    overflow-y: scroll;
+    font-size: 11px;
+    margin-top: 10px;
+    border-radius: 5px;
+    line-height: 1.4;
+}
+
+.btn-listo-azul {
     background: #007bff;
     color: white;
     border: none;
-    padding: 10px 30px;
+    padding: 12px;
     border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
     width: 100%;
-    background-color: #ED2100; 
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #007BFF;
     transition: background .2s ease;
 }
-.auth-spa-seccion { color: white; padding: 20px; }
-.auth-avatar { width: 80px; height: 80px; border-radius: 50%; background: #007bff; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
 
+/* Modal Perfil Flotante */
+.perfil-overlay {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil-modal-card {
+    background: #111;
+    border: 1px solid #333;
+    padding: 20px;
+    border-radius: 15px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.perfil-modal-card a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #222;
+}
+
+.perfil-modal-card a:hover {
+    color: #007bff;
+}
