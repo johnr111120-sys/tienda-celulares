@@ -1961,6 +1961,18 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
 
+
+<!-- MODAL PRODUCTO -->
+<div id="modalProducto" class="modal-producto">
+  <div class="modal-contenido" id="modalContenido"></div>
+</div>
+
+<div id="carrito-izquierdo" class="carrito-lateral">
+    <button class="cerrar-carrito-x" onclick="toggleCarritoIzquierdo()">✕</button>
+    <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
+    <div id="carrito-contenido-izq"></div>
+</div>
+
 <div id="modal-login-contenedor" class="modal-login">
     <div class="login-card">
         <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
@@ -1978,17 +1990,6 @@ document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
         </p>
     </div>
 </div>
-
-<!-- MODAL PRODUCTO -->
-<div id="modalProducto" class="modal-producto">
-  <div class="modal-contenido" id="modalContenido"></div>
-</div>
-
-<div id="carrito-izquierdo" class="carrito-lateral">
-    <button class="cerrar-carrito-x" onclick="toggleCarritoIzquierdo()">✕</button>
-    <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
-    <div id="carrito-contenido-izq"></div>
-</div>
-    
+      
   </body>
 </html>
