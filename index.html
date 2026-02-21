@@ -834,9 +834,7 @@ function enviarPedidoWhatsApp(tracking) {
         // Opcional: Guardar en localStorage para que no se borre al recargar
         localStorage.setItem("datos_usuario_moises", JSON.stringify(datosUsuario));
     }
-    // ------------------------------------------------
-    registrarCompraEnPerfil(carrito, subtotal, trackingNum); 
-    // -------------------------------------------------
+
     // Preparar y enviar a WhatsApp (tu código anterior)
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
     
