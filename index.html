@@ -871,29 +871,6 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
 
-function registrarCompraEnPerfil(carritoActual, total) {
-    // 1. Verificar si hay un usuario logueado
-    const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
-    if (!sesion) return; // Si no está logueado, no guardamos nada
-
-    // 2. Obtener el historial global de compras o crear uno nuevo
-    let historialCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-
-    // 3. Crear el objeto de la nueva orden
-    const nuevaOrden = {
-        usuarioEmail: sesion.email,
-        fecha: new Date().toLocaleString(),
-        productos: carritoActual, // Guardamos copia de lo que compró
-        idOrden: "MOI-" + Math.floor(Math.random() * 1000000),
-        rastreo: traking,
-        total: total,
-    };
-
-    // 4. Guardar
-    historialCompras.unshift(nuevaOrden); // La más reciente arriba
-    localStorage.setItem('db_compras_moises', JSON.stringify(historialCompras));
-}
-    
 </script> 
 
   <script>
