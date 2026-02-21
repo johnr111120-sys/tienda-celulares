@@ -1663,28 +1663,6 @@ function navegarAFinalizarCompra() {
     `;
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-function registrarCompraEnPerfil(carritoActual, total) {
-    // 1. Verificar si hay un usuario logueado
-    const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
-    if (!sesion) return; // Si no está logueado, no guardamos nada
-
-    // 2. Obtener el historial global de compras o crear uno nuevo
-    let historialCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-
-    // 3. Crear el objeto de la nueva orden
-    const nuevaOrden = {
-        usuarioEmail: sesion.email,
-        fecha: new Date().toLocaleString(),
-        productos: carritoActual, // Guardamos copia de lo que compró
-        total: total,
-        idOrden: "MOI-" + Math.floor(Math.random() * 1000000)
-    };
-
-    // 4. Guardar
-    historialCompras.unshift(nuevaOrden); // La más reciente arriba
-    localStorage.setItem('db_compras_moises', JSON.stringify(historialCompras));
-}
          
 function crearContenedorSPA() {
     const div = document.createElement("div");
