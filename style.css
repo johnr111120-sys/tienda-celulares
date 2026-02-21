@@ -2448,9 +2448,9 @@ body{
     width: 100%;
     padding: 10px;
     margin: 5px 0;
-    background: #222;
+    background: white;
     border: 1px solid #444;
-    color: white;
+    color: #222;
     border-radius: 5px;
 }
 
