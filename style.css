@@ -2361,7 +2361,7 @@ body{
 }
 
 .btn-listo-azul {
-    background: #007bff;
+    background-color: #007bff; /* Tu azul original */
     color: white;
     border: none;
     padding: 12px;
@@ -2370,8 +2370,12 @@ body{
     margin-top: 15px;
     font-weight: bold;
     cursor: pointer;
-    background: #007BFF;
     transition: background .2s ease;
+}
+
+.btn-listo-azul:hover {
+    background-color: #ED2100; /* Un rojo un poco más oscuro al pasar el mouse */
+    transform: scale(1.02);
 }
 
 /* Modal Perfil Flotante */
