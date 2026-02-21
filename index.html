@@ -929,22 +929,7 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-// Función para guardar en el historial (Ponla cerca de tus funciones de productos)
-function guardarEnVistosRecientes(producto) {
-    let vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
-    
-    // Evitar duplicados: Si ya está, lo quitamos para ponerlo de primero
-    vistos = vistos.filter(p => p.id !== producto.id);
-    
-    // Añadir al inicio del arreglo
-    vistos.unshift(producto);
-    
-    // Solo guardar los últimos 4 para que no se vea desordenado
-    if (vistos.length > 4) vistos.pop();
-    
-    localStorage.setItem('vistos_recientes_moises', JSON.stringify(vistos));
-}
-    
+
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
 function abrirProducto(id) {
