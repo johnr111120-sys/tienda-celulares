@@ -810,9 +810,9 @@ function enviarPedidoWhatsApp(tracking) {
     const direccion = document.getElementById("ch-direccion").value.trim();
 
     // CAPTURAR MÉTODO DE ENVÍO
-    const radioEnvio = document.querySelector('input[name="envio"]:checked');
-    const costoEnvio = parseInt(radioEnvio.value);
-    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio (RD$ 50)" : "Retiro en el local (Gratis)";
+    const costoEnvio = parseInt(document.querySelector('input[name="envio"]:checked').value);
+    const metodoTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en local";
+    const totalConEnvio = calcularSubtotal() + costoEnvio;
     
     if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
         alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
@@ -848,11 +848,11 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
-                    `*ENVÍO:* ${metodoEnvioTexto}\n` + // <-- NUEVA LÍNEA
+                    `*ENVÍO:* ${metodoTexto} (RD$ ${costoEnvio})\n` + // <-- NUEVA LÍNEA
                     `--------------------------\n` +
                     `*NOTA DEL PEDIDO:* ${notaTexto}\n` +   
                     `--------------------------\n` +
-                    `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
+                    `*TOTAL A PAGAR:* RD$ ${totalConEnvio.toLocaleString()}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
@@ -1677,10 +1677,17 @@ function navegarAFinalizarCompra() {
                         </div>
                         
                         <div class="resumen-pedido">
-                            <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
-                            <div class="resumen-fila"><span>Envío</span> <span>A calcular</span></div>
-                            <div class="resumen-fila total"><span>Total</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                        <div class="resumen-fila">
+                            <span>Subtotal</span> 
+                            <span>RD$ ${subtotal.toLocaleString()}</span>
                         </div>
+                        <div class="resumen-fila">
+                            <span>Envío</span> 
+                            <span id="resumen-envio-texto">RD$ 50</span> </div>
+                        <div class="resumen-fila total">
+                            <span>Total</span> 
+                            <span id="resumen-total-texto">RD$ ${(subtotal + 50).toLocaleString()}</span> </div>
+                    </div>
 
                 <div class="metodo-envio-container" style="margin-bottom: 20px; text-align: left;">
                   <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Envío</p>
@@ -2256,16 +2263,25 @@ document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 
 <script>
 function actualizarResumenFactura() {
-    const costoEnvio = parseInt(document.querySelector('input[name="envio"]:checked').value);
-    const subtotal = calcularSubtotal(); // Tu función actual
+    // 1. Verificamos cuál radio está seleccionado
+    const radioSeleccionado = document.querySelector('input[name="envio"]:checked');
+    if (!radioSeleccionado) return;
+
+    const costoEnvio = parseInt(radioSeleccionado.value);
+    const subtotal = calcularSubtotal();
     const totalFinal = subtotal + costoEnvio;
 
-    // Actualizamos los textos en la pantalla de pago
-    const elEnvio = document.getElementById("resumen-envio-texto");
-    const elTotal = document.getElementById("resumen-total-texto");
+    // 2. Buscamos los elementos por su ID para cambiar el texto
+    const txtEnvio = document.getElementById("resumen-envio-texto");
+    const txtTotal = document.getElementById("resumen-total-texto");
 
-    if(elEnvio) elEnvio.innerText = costoEnvio > 0 ? `RD$ ${costoEnvio}` : "Gratis";
-    if(elTotal) elTotal.innerText = `RD$ ${totalFinal.toLocaleString()}`;
+    if (txtEnvio) {
+        txtEnvio.innerText = costoEnvio > 0 ? `RD$ ${costoEnvio}` : "Gratis";
+    }
+    
+    if (txtTotal) {
+        txtTotal.innerText = `RD$ ${totalFinal.toLocaleString()}`;
+    }
 }
     
 </script>
