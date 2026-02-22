@@ -1986,20 +1986,20 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                 <input type="text" id="edit-cel" value="${u.celular}" class="auth-input-edit">
 
                 <label class="label-auth">País</label>
-                <div class="pais-selector-container">
-                    <input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" class="auth-input-edit">
-                    <select id="edit-pai" size="5" class="auth-input-edit" style="height:100px; margin-top:5px;">
-                        <option value="República Dominicana" ${u.pais === 'República Dominicana' ? 'selected' : ''}>República Dominicana</option>
-                        <option value="Estados Unidos" ${u.pais === 'Estados Unidos' ? 'selected' : ''}>Estados Unidos</option>
-                        <option value="México" ${u.pais === 'México' ? 'selected' : ''}>México</option>
-                        <option value="España" ${u.pais === 'España' ? 'selected' : ''}>España</option>
-                        <option value="Colombia" ${u.pais === 'Colombia' ? 'selected' : ''}>Colombia</option>
-                        <option value="Venezuela" ${u.pais === 'Venezuela' ? 'selected' : ''}>Venezuela</option>
-                        <option value="Argentina" ${u.pais === 'Argentina' ? 'selected' : ''}>Argentina</option>
-                        <option value="Chile" ${u.pais === 'Chile' ? 'selected' : ''}>Chile</option>
-                        <option value="Ecuador" ${u.pais === 'Ecuador' ? 'selected' : ''}>Ecuador</option>
-                        <option value="Perú" ${u.pais === 'Perú' ? 'selected' : ''}>Perú</option>
-                        </select>
+<input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" class="auth-input-edit" style="margin-bottom:2px; border-bottom:none; border-radius:8px 8px 0 0;">
+<select id="edit-pai" size="5" class="auth-input-edit" 
+    style="border-radius:0 0 8px 8px; cursor:pointer; background:#222;" 
+    onclick="this.focus()"
+    onchange="document.getElementById('search-pais').value = this.value">
+    <option value="República Dominicana" ${u.pais === 'República Dominicana' ? 'selected' : ''}>República Dominicana</option>
+    <option value="Estados Unidos" ${u.pais === 'Estados Unidos' ? 'selected' : ''}>Estados Unidos</option>
+    <option value="España" ${u.pais === 'España' ? 'selected' : ''}>España</option>
+    <option value="México" ${u.pais === 'México' ? 'selected' : ''}>México</option>
+    <option value="Colombia" ${u.pais === 'Colombia' ? 'selected' : ''}>Colombia</option>
+    <option value="Puerto Rico" ${u.pais === 'Puerto Rico' ? 'selected' : ''}>Puerto Rico</option>
+    <option value="Venezuela" ${u.pais === 'Venezuela' ? 'selected' : ''}>Venezuela</option>
+    <option value="Panamá" ${u.pais === 'Panamá' ? 'selected' : ''}>Panamá</option>
+</select>
                 </div>
 
                  <label class="label-auth">Ciudad</label>
@@ -2059,28 +2059,48 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
 },
 
     // --- FUNCIONES INTERNAS DEL OBJETO ---
-    filtrarPaises: function() {
-        let input = document.getElementById('search-pais').value.toLowerCase();
-        let select = document.getElementById('edit-pai');
-        let options = select.options;
-        for (let i = 0; i < options.length; i++) {
-            let txtValue = options[i].text.toLowerCase();
-            options[i].style.display = txtValue.includes(input) ? "" : "none";
+   filtrarPaises: function() {
+    let input = document.getElementById('search-pais').value.toLowerCase();
+    let select = document.getElementById('edit-pai');
+    let options = select.options;
+    let tieneResultados = false;
+
+    for (let i = 0; i < options.length; i++) {
+        let txtValue = options[i].text.toLowerCase();
+        if (txtValue.includes(input)) {
+            options[i].style.display = "";
+            if(!tieneResultados) { // Selecciona automáticamente el primero que coincida
+                options[i].selected = true;
+                tieneResultados = true;
+            }
+        } else {
+            options[i].style.display = "none";
         }
-    },
+    }
+},
 
     guardarCambiosDatos: function() {
-        const u = this.sesionActiva;
-        u.nombre = document.getElementById('edit-nom').value;
-        u.apellidos = document.getElementById('edit-ape').value;
-        u.pais = document.getElementById('edit-pai').value;
+    const u = this.sesionActiva;
+    const selectPais = document.getElementById('edit-pai');
+    
+    // Capturamos los valores de los inputs
+    u.nombre = document.getElementById('edit-nom').value;
+    u.apellidos = document.getElementById('edit-ape').value;
+    
+    // Capturamos el país (si no hay nada seleccionado, dejamos el que ya tenía)
+    if (selectPais.value) {
+        u.pais = selectPais.value;
+    }
 
-        // Actualizar base de datos
-        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        localStorage.setItem('sesion_moises', JSON.stringify(u));
-        alert("Datos guardados.");
-    },
+    // Actualizar base de datos local
+    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+    localStorage.setItem('sesion_moises', JSON.stringify(u));
+
+    // Feedback visual
+    alert("¡Datos actualizados con éxito!");
+    this.irA('datos'); // Recarga la sección de datos sin refrescar toda la página
+},
 
     cambiarPassword: function() {
         const p1 = document.getElementById('pass-nueva').value;
