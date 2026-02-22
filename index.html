@@ -824,8 +824,8 @@ function enviarPedidoWhatsApp(tracking) {
 
    // --- MENSAJE WHATSAPP ---
     let listaProductos = carritoLimpio.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
-    let notaTexto = "Sin notas";
-    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
+   const campoNota = document.getElementById("ch-notas");
+   let notaTexto = (campoNota && campoNota.value.trim() !== "") ? campoNota.value.trim() : "Sin notas especiales";
     if(inputNota && inputNota.value.trim() !== "") {
         notaTexto = inputNota.value.trim();
     }
@@ -841,7 +841,7 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
-                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +        
+                    `*NOTA DEL PEDIDO:* ${notaTexto}\n`     
                     `--------------------------\n` +
                     `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
                     `--------------------------\n` +
@@ -1952,7 +1952,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <p style="color:#007bff; font-weight:bold; margin-top:10px;">Total: RD$ ${compra.total.toLocaleString()}</p>
                     <div style="display:flex; gap:10px; margin-top:15px;">
                         <button onclick="SistemaMoisesAuth.verFactura('${compra.idOrden}')" style="flex:1; padding:8px; background:#222; color:white; border:1px solid #444; border-radius:5px; cursor:pointer; font-size:12px;">Ver Factura</button>
-                        <button onclick="SistemaMoisesAuth.repetirPedido(${compra.productos[0].id})" style="flex:1; padding:8px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; font-size:12px;">Repetir Pedido</button>
+                        <button onclick="abrirProducto(${compra.productos[0].id})" style="flex:1; padding:8px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; font-size:12px;">Repetir Pedido</button>
                     </div>
                 </div>
             `).join('');
@@ -2148,12 +2148,12 @@ verFactura: function(idOrden) {
     `).join('');
     
     contenedor.innerHTML = `
-        <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
-            <div style="max-width: 500px; margin: 0 auto;">
-               <button onclick="regresarALaTienda()" 
-              style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-             <i class="fas fa-arrow-left"></i> VOLVER A MIS COMPRAS
-            </button>
+           <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
+             <div style="max-width: 500px; margin: 0 auto;">
+              <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
+                style="background:#333; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; margin-bottom:20px; font-weight:bold; width:100%;">
+              <i class="fas fa-bars"></i> VOLVER AL MENÚ
+             </button>
 
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                     
@@ -2177,7 +2177,23 @@ verFactura: function(idOrden) {
                             </tr>
                         </thead>
                         <tbody>
-                            ${filasProductos}
+                      let filasHtml = "";
+                  compra.productos.forEach(p => {
+                   // Forzamos la conversión a número puro
+                       let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
+                       let pCant = parseInt(p.cantidad) || 1;
+                       let sub = pPrecio * pCant;
+
+                       filasHtml += `
+                         <tr>
+                         <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px;">
+                         ${pCant}x ${p.nombre}
+                         </td>
+                         <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">
+                          RD$ ${sub.toLocaleString()}
+                          </td>
+                             </tr>`;
+                              });
                         </tbody>
                     </table>
 
