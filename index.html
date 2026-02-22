@@ -2078,15 +2078,23 @@ renderVistasRecientes: function() {
     }
 };
 
-filtrarPaises: function() {
-    let input = document.getElementById('search-pais').value.toLowerCase();
-    let select = document.getElementById('edit-pai');
-    let options = select.options;
+guardarCambiosDatos: function() {
+    const u = this.sesionActiva;
+    u.nombre = document.getElementById('edit-nom').value;
+    u.apellidos = document.getElementById('edit-ape').value;
+    u.celular = document.getElementById('edit-cel').value;
+    u.pais = document.getElementById('edit-pai').value;
+    u.ciudad = document.getElementById('edit-ciu').value;
 
-    for (let i = 0; i < options.length; i++) {
-        let txtValue = options[i].text.toLowerCase();
-        options[i].style.display = txtValue.includes(input) ? "" : "none";
-    }
+    // Actualizar en el array global de usuarios
+    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+    
+    // Guardar en LocalStorage
+    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+    localStorage.setItem('sesion_moises', JSON.stringify(u));
+
+    alert("¡Datos actualizados correctamente!");
+    location.reload();
 }
         
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
