@@ -2020,7 +2020,19 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     }
 },
 
-    renderVistasRecientes: function() {
+renderVistasRecientes: function() {
+    const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
+    let htmlVistos = '';
+    
+    if(vistos.length > 0) {
+        htmlVistos = vistos.map(p => `
+            <div style="background:#111; border:1px solid #222; padding:10px; border-radius:8px; width:120px; flex-shrink:0;">
+                <img src="${p.imagen}" style="width:100%; height:60px; object-fit:contain;">
+                <p style="color:white; font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.nombre}</p>
+            </div>
+        `).join('');
+    }
+    
       return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
                     <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
                     <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content;">
