@@ -2144,25 +2144,26 @@ verFactura: function(idOrden) {
         let sub = (pPrecio || 0) * pCant;
 
         filasHtml += `
+         const filasProductos = compra.productos.map(p => `
             <tr>
                 <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-size:12px;">
                     <span style="font-weight:bold;">${pCant}x</span> ${p.nombre}
                 </td>
                 <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right; font-size:12px;">
-                    RD$ ${sub.toLocaleString()}
+                    RD$ ${(p.precio * p.cantidad).toLocaleString()}
                 </td>
             </tr>`;
-    });
+        }
+   `).join('');
     
     // --- RENDERIZADO DEL HTML ---
     contenedor.innerHTML = `
-        <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
+         <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
             <div style="max-width: 500px; margin: 0 auto;">
-                
-                <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
+                 <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
                         style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-                    <i class="fas fa-arrow-left"></i> VOLVER AL MENÚ
-                </button>
+             <i class="fas fa-arrow-left"></i> VOLVER A MIS COMPRAS
+            </button>
 
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                     
@@ -2186,7 +2187,8 @@ verFactura: function(idOrden) {
                             </tr>
                         </thead>
                         <tbody>
-                            ${filasHtml} </tbody>
+                            ${filasProductos}
+                        </tbody>
                     </table>
 
                     <div style="margin-top: 20px; text-align: right;">
