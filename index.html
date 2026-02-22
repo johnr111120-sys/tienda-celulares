@@ -2076,7 +2076,6 @@ renderVistasRecientes: function() {
                     <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
                     <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content;">
                 </div>`;
-    }
 },
 
     // --- NUEVAS FUNCIONES DE EDICIÓN (Dentro del objeto) ---
@@ -2087,7 +2086,6 @@ renderVistasRecientes: function() {
         for (let i = 0; i < options.length; i++) {
             let txtValue = options[i].text.toLowerCase();
             options[i].style.display = txtValue.includes(input) ? "" : "none";
-        }
     },
 
     guardarCambiosDatos: function() {
