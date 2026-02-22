@@ -2135,24 +2135,17 @@ verFactura: function(idOrden) {
 
     const contenedor = document.getElementById('vista-spa-cliente');
     
-    // Generar filas de productos
-   const filasProductos = compra.productos.map(p => {
-    // Limpiamos el precio: eliminamos "RD$", comas y espacios, y lo convertimos a número
-    const precioLimpio = Number(String(p.precio).replace(/[^0-9.-]+/g, ""));
-    const subtotalProducto = precioLimpio * p.cantidad;
-
-    return `
-        <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
-                <span style="font-weight:bold;">${p.cantidad}x</span> ${p.nombre}
-            </td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right;">
-                RD$ ${subtotalProducto.toLocaleString()}
-            </td>
-        </tr>
-    `;
-}).join('');
-
+  // Cálculo seguro de filas
+    let filasHtml = "";
+    compra.productos.forEach(p => {
+        const precio = Number(p.precio) || 0;
+        filasHtml += `
+            <tr>
+                <td style="padding:10px 0; border-bottom:1px solid #eee;">${p.cantidad}x ${p.nombre}</td>
+                <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right;">RD$ ${(precio * p.cantidad).toLocaleString()}</td>
+            </tr>`;
+    });
+    
     contenedor.innerHTML = `
         <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
             <div style="max-width: 500px; margin: 0 auto;">
@@ -2190,7 +2183,7 @@ verFactura: function(idOrden) {
                     <div style="margin-top: 20px; text-align: right;">
                         <p style="font-size:14px; margin:0;">SUBTOTAL: RD$ ${compra.total.toLocaleString()}</p>
                         <p style="font-size:14px; margin:5px 0;">ENVÍO: <span style="font-size:11px; color:#888;">(A calcular)</span></p>
-                        <h3 style="font-size:20px; margin-top:10px; color:#000;">TOTAL: RD$ ${compra.total.toLocaleString()}</h3>
+                        <h3 style="font-size:20px; margin-top:10px; color:#000;">TOTAL: RD$ ${Number(compra.total).toLocaleString()}</h3>
                     </div>
 
                     <div style="margin-top: 30px; text-align: center; border-top: 2px dashed #ccc; padding-top: 20px;">
