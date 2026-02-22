@@ -824,8 +824,8 @@ function enviarPedidoWhatsApp(tracking) {
 
    // --- MENSAJE WHATSAPP ---
     let listaProductos = carritoLimpio.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
-   const campoNota = document.getElementById("ch-notas");
-   let notaTexto = (campoNota && campoNota.value.trim() !== "") ? campoNota.value.trim() : "Sin notas especiales";
+    let notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
+    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
     if(inputNota && inputNota.value.trim() !== "") {
         notaTexto = inputNota.value.trim();
     }
