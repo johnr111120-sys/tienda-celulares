@@ -2076,8 +2076,19 @@ renderVistasRecientes: function() {
                     <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content;">
                 </div>`;
     }
-};
+},
 
+filtrarPaises: function() {
+    let input = document.getElementById('search-pais').value.toLowerCase();
+    let select = document.getElementById('edit-pai');
+    let options = select.options;
+
+    for (let i = 0; i < options.length; i++) {
+        let txtValue = options[i].text.toLowerCase();
+        options[i].style.display = txtValue.includes(input) ? "" : "none";
+    }
+}
+        
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
 
