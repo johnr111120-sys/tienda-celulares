@@ -1221,7 +1221,8 @@ setInterval(() => {
 
   siguiente.classList.remove("salida");
   siguiente.classList.add("activa");
-}, 4000); // ⏱ cambia cada 4 segundos
+},
+
 </script>
 
 <script>
@@ -1973,16 +1974,59 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <h3 style="color:white;">HOLA, ${u.nombre}</h3>
                     <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
                     <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
-                    <div style="text-align:left; background:#111; padding:15px; border-radius:10px; margin:20px 0; font-size:13px; color:white;">
-                        <p><b>Nombre:</b> ${u.nombre}</p><p><b>Apellidos:</b> ${u.apellidos}</p>
-                        <p><b>Celular:</b> ${u.celular}</p><p><b>Ciudad:</b> ${u.ciudad}</p>
-                        <p><b>Direccion:</b> ${u.direccion}</p><p><b>Correo:</b> ${u.correo}</p>
-                        <p><b>Documento:</b> ${u.documento}</p>
-                    </div>
-                    <h3 style="color:#007bff;">Contraseña</h3>
-                    <input type="password" placeholder="Contraseña actual" class="auth-input">
-                    <input type="password" placeholder="Nueva Contraseña" class="auth-input">
-                    <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
+                   <div style="max-width:500px; margin:0 auto; text-align:left; background:#111; padding:20px; border-radius:15px; border:1px solid #222;">
+                <p style="color:#007bff; font-weight:bold; margin-bottom:15px; border-bottom:1px solid #222;">Información Personal</p>
+                
+                <label class="label-auth">Nombre</label>
+                <input type="text" id="edit-nom" value="${u.nombre}" class="auth-input-edit">
+                
+                <label class="label-auth">Apellidos</label>
+                <input type="text" id="edit-ape" value="${u.apellidos}" class="auth-input-edit">
+                
+                <label class="label-auth">Celular</label>
+                <input type="text" id="edit-cel" value="${u.celular}" class="auth-input-edit">
+
+                <label class="label-auth">País</label>
+                <div class="pais-selector-container">
+                    <input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" class="auth-input-edit">
+                    <select id="edit-pai" size="5" class="auth-input-edit" style="height:100px; margin-top:5px;">
+                        <option value="República Dominicana" ${u.pais === 'República Dominicana' ? 'selected' : ''}>República Dominicana</option>
+                        <option value="Estados Unidos" ${u.pais === 'Estados Unidos' ? 'selected' : ''}>Estados Unidos</option>
+                        <option value="México" ${u.pais === 'México' ? 'selected' : ''}>México</option>
+                        <option value="España" ${u.pais === 'España' ? 'selected' : ''}>España</option>
+                        <option value="Colombia" ${u.pais === 'Colombia' ? 'selected' : ''}>Colombia</option>
+                        <option value="Venezuela" ${u.pais === 'Venezuela' ? 'selected' : ''}>Venezuela</option>
+                        <option value="Argentina" ${u.pais === 'Argentina' ? 'selected' : ''}>Argentina</option>
+                        <option value="Chile" ${u.pais === 'Chile' ? 'selected' : ''}>Chile</option>
+                        <option value="Ecuador" ${u.pais === 'Ecuador' ? 'selected' : ''}>Ecuador</option>
+                        <option value="Perú" ${u.pais === 'Perú' ? 'selected' : ''}>Perú</option>
+                        </select>
+                </div>
+
+                 <label class="label-auth">Ciudad</label>
+                <input type="text" id="edit-ciu" value="${u.ciudad}" class="auth-input-edit">
+                
+                <label class="label-auth">Direccion</label>
+                <input type="text" id="edit-dir" value="${u.direccion}" class="auth-input-edit">
+                
+                <label class="label-auth">Correo</label>
+                <input type="text" id="edit-cor" value="${u.correo}" class="auth-input-edit">
+
+                 <label class="label-auth">Documento</label>
+                <input type="text" id="edit-doc" value="${u.documento}" class="auth-input-edit">
+
+                 <button onclick="SistemaMoisesAuth.guardarCambiosDatos()" class="btn-auth-listo" style="margin-top:10px; background:#28a745;">Guardar Cambios</button>
+
+                  <p style="color:#007bff; font-weight:bold; margin-top:30px; margin-bottom:15px; border-bottom:1px solid #222;">Seguridad</p>
+                
+                <label class="label-auth">Nueva Contraseña</label>
+                <input type="password" id="pass-nueva" placeholder="Escribir nueva contraseña" class="auth-input-edit">
+                
+                <label class="label-auth">Confirmar Contraseña</label>
+                <input type="password" id="pass-confirm" placeholder="Repetir nueva contraseña" class="auth-input-edit">
+                
+                <button onclick="SistemaMoisesAuth.cambiarPassword()" class="btn-auth-listo" style="margin-top:10px; background:#dc3545;">Modificar Contraseña</button>
+                 </div>
                     ${this.renderVistasRecientes()}
                 </div>`;
         
@@ -2034,9 +2078,9 @@ renderVistasRecientes: function() {
                 </div>`;
     }
 };
-
-document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
-</script>
+        
+document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());}
+    </script>
 
 
 <!-- MODAL PRODUCTO -->
