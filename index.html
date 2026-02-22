@@ -2135,38 +2135,47 @@ verFactura: function(idOrden) {
 
     const contenedor = document.getElementById('vista-spa-cliente');
     
-   // Generar filas de productos
-    const filasProductos = compra.productos.map(p => `
-        <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
-                <span style="font-weight:bold;">${p.cantidad}x ${p.nombre}
-            </td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right;">
-                RD$ ${(p.precio * p.cantidad).toLocaleString()}
-            </td>
-        </tr>
-    `).join('');
+    // --- AQUÍ COLOCAS LA CORRECCIÓN PARA EVITAR EL NaN ---
+    let filasHtml = "";
+    compra.productos.forEach(p => {
+        // Forzamos la conversión a número puro eliminando letras o símbolos
+        let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
+        let pCant = parseInt(p.cantidad) || 1;
+        let sub = (pPrecio || 0) * pCant;
+
+        filasHtml += `
+            <tr>
+                <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-size:12px;">
+                    <span style="font-weight:bold;">${pCant}x</span> ${p.nombre}
+                </td>
+                <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right; font-size:12px;">
+                    RD$ ${sub.toLocaleString()}
+                </td>
+            </tr>`;
+    });
     
+    // --- RENDERIZADO DEL HTML ---
     contenedor.innerHTML = `
-           <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
-             <div style="max-width: 500px; margin: 0 auto;">
-              <button onclick="SistemaMoisesAuth.renderMenuFlotante()"
-                style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-              <i class="fas fa-arrow-left"></i> VOLVER AL MENÚ
-             </button>
+        <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
+            <div style="max-width: 500px; margin: 0 auto;">
+                
+                <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
+                        style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
+                    <i class="fas fa-arrow-left"></i> VOLVER AL MENÚ
+                </button>
 
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                     
                     <div style="text-align:center; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-bottom: 20px;">
                         <h2 style="margin:0; color:#000;">MOISÉS CELULARES</h2>
-                        <p style="font-size:12px; margin:5px 0;">Tienda Online y Fisica de Celulares, Accesorios y Reparaciones</p>
+                        <p style="font-size:12px; margin:5px 0;">Tienda Online y Física de Celulares, Accesorios y Reparaciones</p>
                         <p style="font-size:11px; color:#666;">República Dominicana</p>
                     </div>
 
                     <div style="font-size:13px; margin-bottom: 20px;">
                         <p><b>No. Factura:</b> ${compra.idOrden}</p>
                         <p><b>Fecha:</b> ${compra.fecha}</p>
-                        <p><b>Cliente:</b> ${this.sesionActiva.nombre} ${this.sesionActiva.apellidos}</p>
+                        <p><b>Cliente:</b> ${this.sesionActiva.nombre} ${this.sesionActiva.apellidos || ''}</p>
                     </div>
 
                     <table style="width:100%; border-collapse: collapse; font-size:13px;">
@@ -2177,12 +2186,11 @@ verFactura: function(idOrden) {
                             </tr>
                         </thead>
                         <tbody>
-                       ${filasProductos}
-                        </tbody>
+                            ${filasHtml} </tbody>
                     </table>
 
                     <div style="margin-top: 20px; text-align: right;">
-                        <p style="font-size:14px; margin:0;">SUBTOTAL: RD$ ${compra.total.toLocaleString()}</p>
+                        <p style="font-size:14px; margin:0;">SUBTOTAL: RD$ ${Number(compra.total).toLocaleString()}</p>
                         <p style="font-size:14px; margin:5px 0;">ENVÍO: <span style="font-size:11px; color:#888;">(A calcular)</span></p>
                         <h3 style="font-size:20px; margin-top:10px; color:#000;">TOTAL: RD$ ${Number(compra.total).toLocaleString()}</h3>
                     </div>
@@ -2203,7 +2211,7 @@ verFactura: function(idOrden) {
         </div>
     `;
     window.scrollTo(0,0);
-},
+}
     renderVistasRecientes: function() {
         const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
         let htmlVistos = vistos.map(p => `
