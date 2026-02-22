@@ -844,6 +844,8 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
+                    `*NOTA DEL PEDIDO:* ${notasDelPedido()}\n` +        
+                    `--------------------------\n` +
                     `*TOTAL A PAGAR:* RD$ ${calcularSubtotal().toLocaleString()}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
@@ -1647,9 +1649,9 @@ function navegarAFinalizarCompra() {
                         <div class="form-grid">
                             <input type="text" id="ch-nombre" placeholder="Nombre *">
                             <input type="text" id="ch-apellido" placeholder="Apellido *">
-                            <input type="text" id="ch-cedula" placeholder="Documento Identidad">
+                            <input type="text" id="ch-cedula" placeholder="Documento Identidad *">
                             <input type="text" id="ch-telefono" placeholder="Teléfono *">
-                            <input type="email" id="ch-email" placeholder="Email *">
+                            <input type="text" id="ch-correo" placeholder="Correo *">
                             <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
                             <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
                             <textarea id="ch-notas" placeholder="Notas del pedido (opcional)" rows="2"></textarea>
@@ -1985,21 +1987,26 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                 <label class="label-auth">Celular</label>
                 <input type="text" id="edit-cel" value="${u.celular}" class="auth-input-edit">
 
-                <label class="label-auth">País</label>
-<input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" class="auth-input-edit" style="margin-bottom:2px; border-bottom:none; border-radius:8px 8px 0 0;">
-<select id="edit-pai" size="5" class="auth-input-edit" 
-    style="border-radius:0 0 8px 8px; cursor:pointer; background:#222;" 
-    onclick="this.focus()"
-    onchange="document.getElementById('search-pais').value = this.value">
-    <option value="República Dominicana" ${u.pais === 'República Dominicana' ? 'selected' : ''}>República Dominicana</option>
-    <option value="Estados Unidos" ${u.pais === 'Estados Unidos' ? 'selected' : ''}>Estados Unidos</option>
-    <option value="España" ${u.pais === 'España' ? 'selected' : ''}>España</option>
-    <option value="México" ${u.pais === 'México' ? 'selected' : ''}>México</option>
-    <option value="Colombia" ${u.pais === 'Colombia' ? 'selected' : ''}>Colombia</option>
-    <option value="Puerto Rico" ${u.pais === 'Puerto Rico' ? 'selected' : ''}>Puerto Rico</option>
-    <option value="Venezuela" ${u.pais === 'Venezuela' ? 'selected' : ''}>Venezuela</option>
-    <option value="Panamá" ${u.pais === 'Panamá' ? 'selected' : ''}>Panamá</option>
-</select>
+               <label class="label-auth">País</label>
+<div style="position:relative;">
+    <div id="pais-actual-display" onclick="document.getElementById('dropdown-paises').style.display='block'" 
+         style="background:#1a1a1a; padding:12px; border:1px solid #333; border-radius:8px; color:white; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+        <span>${u.pais || 'Seleccionar país'}</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+    
+    <div id="dropdown-paises" style="display:none; position:absolute; top:100%; left:0; width:100%; background:#111; border:1px solid #333; z-index:1000; border-radius:8px; margin-top:5px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
+        <input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" 
+               style="width:100%; padding:10px; background:#222; border:none; border-bottom:1px solid #333; color:white; outline:none;">
+        <div id="lista-paises-scroll" style="max-height:150px; overflow-y:auto;">
+            ${['República Dominicana', 'Estados Unidos', 'España', 'México', 'Colombia', 'Venezuela', 'Argentina', 'Chile', 'Ecuador', 'Perú'].map(p => `
+                <div class="opcion-pais" onclick="SistemaMoisesAuth.seleccionarPais('${p}')" 
+                     style="padding:10px; color:white; cursor:pointer; border-bottom:1px solid #222;">${p}</div>
+            `).join('')}
+        </div>
+    </div>
+</div>
+<input type="hidden" id="edit-pai" value="${u.pais || ''}">
                 </div>
 
                  <label class="label-auth">Ciudad</label>
@@ -2058,48 +2065,55 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     }
 },
 
+    seleccionarPais: function(pais) {
+    document.getElementById('edit-pai').value = pais;
+    document.getElementById('pais-actual-display').querySelector('span').innerText = pais;
+    document.getElementById('dropdown-paises').style.display = 'none';
+},
+    
     // --- FUNCIONES INTERNAS DEL OBJETO ---
-   filtrarPaises: function() {
+  filtrarPaises: function() {
     let input = document.getElementById('search-pais').value.toLowerCase();
-    let select = document.getElementById('edit-pai');
-    let options = select.options;
-    let tieneResultados = false;
-
-    for (let i = 0; i < options.length; i++) {
-        let txtValue = options[i].text.toLowerCase();
-        if (txtValue.includes(input)) {
-            options[i].style.display = "";
-            if(!tieneResultados) { // Selecciona automáticamente el primero que coincida
-                options[i].selected = true;
-                tieneResultados = true;
-            }
-        } else {
-            options[i].style.display = "none";
-        }
-    }
+    let opciones = document.querySelectorAll('.opcion-pais');
+    opciones.forEach(opc => {
+        opc.style.display = opc.innerText.toLowerCase().includes(input) ? "block" : "none";
+    });
 },
 
-    guardarCambiosDatos: function() {
-    const u = this.sesionActiva;
-    const selectPais = document.getElementById('edit-pai');
-    
-    // Capturamos los valores de los inputs
+   guardarCambiosDatos: function() {
+    // 1. Obtener la sesión actual desde el objeto para editarla
+    let u = this.sesionActiva;
+
+    // 2. Capturar los nuevos valores de los inputs
     u.nombre = document.getElementById('edit-nom').value;
     u.apellidos = document.getElementById('edit-ape').value;
-    
-    // Capturamos el país (si no hay nada seleccionado, dejamos el que ya tenía)
-    if (selectPais.value) {
-        u.pais = selectPais.value;
-    }
+    u.celular = document.getElementById('edit-cel').value;
+    u.pais = document.getElementById('edit-pai').value;
+    u.ciudad = document.getElementById('edit-ciu').value;
+    u.dir = document.getElementById('edit-dir').value; // Asegúrate de que el ID coincida con tu HTML
+    u.correo = document.getElementById('edit-cor').value;
+    u.documento = document.getElementById('edit-doc').value;
 
-    // Actualizar base de datos local
-    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+    // 3. ACTUALIZAR LA BASE DE DATOS GLOBAL (Lo más importante)
+    let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios_registrados')) || [];
+    
+    // Reemplazamos el usuario viejo por el nuevo en la lista completa
+    this.usuariosDB = usuariosGuardados.map(user => {
+        if (user.email === u.email) {
+            return u; // Este es el usuario con datos nuevos
+        }
+        return user;
+    });
+
+    // 4. GUARDAR TODO DE VUELTA AL LOCALSTORAGE
     localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
     localStorage.setItem('sesion_moises', JSON.stringify(u));
+    
+    // 5. Actualizar la sesión en tiempo real sin recargar si es posible
+    this.sesionActiva = u;
 
-    // Feedback visual
-    alert("¡Datos actualizados con éxito!");
-    this.irA('datos'); // Recarga la sección de datos sin refrescar toda la página
+    alert("¡Datos guardados permanentemente!");
+    location.reload(); // Ahora sí, al recargar, leerá los datos nuevos
 },
 
     cambiarPassword: function() {
