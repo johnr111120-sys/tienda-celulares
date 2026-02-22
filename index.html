@@ -1677,17 +1677,10 @@ function navegarAFinalizarCompra() {
                         </div>
                         
                         <div class="resumen-pedido">
-                        <div class="resumen-fila">
-                            <span>Subtotal</span> 
-                            <span>RD$ ${subtotal.toLocaleString()}</span>
+                        <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                        <div class="resumen-fila"><span>Envío</span> <span id="resumen-envio-texto">RD$ 50</span></div>
+                        <div class="resumen-fila total"><span>Total</span> <span id="resumen-total-texto">RD$ ${(subtotal + 50).toLocaleString()}</span></div>
                         </div>
-                        <div class="resumen-fila">
-                            <span>Envío</span> 
-                            <span id="resumen-envio-texto">RD$ 50</span> </div>
-                        <div class="resumen-fila total">
-                            <span>Total</span> 
-                            <span id="resumen-total-texto">RD$ ${(subtotal + 50).toLocaleString()}</span> </div>
-                    </div>
 
                 <div class="metodo-envio-container" style="margin-bottom: 20px; text-align: left;">
                   <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Envío</p>
