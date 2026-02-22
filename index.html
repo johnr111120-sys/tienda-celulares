@@ -420,17 +420,7 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
-
-function toggleFavorito(idProducto) {
-    let favs = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
-    const producto = productos.find(p => p.id === idProducto);
-    
-    if(favs.some(p => p.id === idProducto)) {
-        favs = favs.filter(p => p.id !== idProducto); // Quitar
-    } else {
-        favs.push(producto); // Agregar
-    }
-    localStorage.setItem('favoritos_moises', JSON.stringify(favs));
+  }
 }
     
 function actualizarContadorFavoritos() {
