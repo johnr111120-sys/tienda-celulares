@@ -801,6 +801,7 @@ function generarNumeroRastreo() {
 }
       
 function enviarPedidoWhatsApp(tracking) {
+    // 1. Obtener valores del formulario
     const nombre = document.getElementById("ch-nombre").value.trim();
     const apellido = document.getElementById("ch-apellido").value.trim();
     const telefono = document.getElementById("ch-telefono").value.trim();
@@ -808,34 +809,42 @@ function enviarPedidoWhatsApp(tracking) {
     const direccion = document.getElementById("ch-direccion").value.trim();
 
     if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
-        alert("⚠️ Complete los campos obligatorios.");
+        alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
         return;
     }
 
-    // --- LIMPIEZA DE DATOS PARA EL HISTORIAL ---
-    // Esto asegura que el precio sea SIEMPRE un número antes de guardarse
-    const carritoLimpio = carrito.map(p => ({
-        ...p,
-        precio: Number(String(p.precio).replace(/[^0-9.]+/g, "")) // Quita RD$, comas, etc.
-    }));
+    // 2. Definir el total correctamente (Calculándolo en el momento)
+    const totalVenta = calcularSubtotal(); 
 
-    const totalVenta = carritoLimpio.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
-
-    // Registrar en el historial
+    // --- GUARDAR EN EL HISTORIAL (REGISTRO AUTOMÁTICO) ---
+    // Usamos 'tracking' que es el parámetro que recibe la función
     if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carritoLimpio, totalVenta, tracking);
+        registrarCompraEnPerfil(carrito, totalVenta, tracking);
     }
 
-    // --- MENSAJE WHATSAPP ---
-    let listaProductos = carritoLimpio.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
-    let notaTexto = "Sin notas";
-    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
-    if(inputNota && inputNota.value.trim() !== "") {
-        notaTexto = inputNota.value.trim();
-    }
+    // 3. Preparar lista de productos para el mensaje
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
+    
+    // 4. Obtener nota (si existe la función)
+    const notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
 
-    const mensaje = `*📦 NUEVO PEDIDO*\n*Rastreo:* ${tracking}\n*CLIENTE:* ${nombre} ${apellido}\n*PRODUCTOS:*\n${listaProductos}\n*DIRECCIÓN:*\n${direccion}\n*NOTA:* ${notaTexto}\n*TOTAL:* RD$ ${totalVenta.toLocaleString()}`_Enviado desde el Checkout de la web._;
-  
+    // 5. Crear el mensaje para WhatsApp
+    const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
+                    `*Rastreo:* ${tracking}\n` +
+                    `--------------------------\n` +
+                    `*CLIENTE:* ${nombre} ${apellido}\n` +
+                    `*TELÉFONO:* ${telefono}\n` +
+                    `*CIUDAD:* ${ciudad}\n` +
+                    `*DIRECCIÓN:* ${direccion}\n` +
+                    `--------------------------\n` +
+                    `*PRODUCTOS:*\n${listaProductos}\n` +
+                    `--------------------------\n` +
+                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +        
+                    `--------------------------\n` +
+                    `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
+                    `--------------------------\n` +
+                    `_Enviado desde el Checkout de la web._`;
+
     // 6. Enviar a WhatsApp
     const numWhatsApp = "59891547599"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
@@ -2124,24 +2133,31 @@ verFactura: function(idOrden) {
 
     const contenedor = document.getElementById('vista-spa-cliente');
     
-    // Cálculo seguro de filas
-    let filasHtml = "";
-    compra.productos.forEach(p => {
-        const precio = Number(p.precio) || 0;
-        filasHtml += `
-            <tr>
-                <td style="padding:10px 0; border-bottom:1px solid #eee;">${p.cantidad}x ${p.nombre}</td>
-                <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right;">RD$ ${(precio * p.cantidad).toLocaleString()}</td>
-            </tr>`;
-    });
+    // Generar filas de productos
+   const filasProductos = compra.productos.map(p => {
+    // Limpiamos el precio: eliminamos "RD$", comas y espacios, y lo convertimos a número
+    const precioLimpio = Number(String(p.precio).replace(/[^0-9.-]+/g, ""));
+    const subtotalProducto = precioLimpio * p.cantidad;
+
+    return `
+        <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                <span style="font-weight:bold;">${p.cantidad}x</span> ${p.nombre}
+            </td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right;">
+                RD$ ${subtotalProducto.toLocaleString()}
+            </td>
+        </tr>
+    `;
+}).join('');
 
     contenedor.innerHTML = `
-        <div style="background:#f9f9f9; min-height:100vh; padding:20px; color:#333;">
-            <div style="max-width:500px; margin:0 auto;">
-                <button onclick="window.SistemaMoisesAuth.irA('compras')" 
-                        style="background:#333; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; margin-bottom:20px; font-weight:bold;">
-                    ← VOLVER A MIS COMPRAS
-                </button>
+        <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
+            <div style="max-width: 500px; margin: 0 auto;">
+               <button onclick="SistemaMoisesAuth.irA('compras')" 
+              style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
+             <i class="fas fa-arrow-left"></i> VOLVER A MIS COMPRAS
+            </button>
 
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                     
