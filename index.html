@@ -1973,16 +1973,59 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <h3 style="color:white;">HOLA, ${u.nombre}</h3>
                     <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
                     <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
-                    <div style="text-align:left; background:#111; padding:15px; border-radius:10px; margin:20px 0; font-size:13px; color:white;">
-                        <p><b>Nombre:</b> ${u.nombre}</p><p><b>Apellidos:</b> ${u.apellidos}</p>
-                        <p><b>Celular:</b> ${u.celular}</p><p><b>Ciudad:</b> ${u.ciudad}</p>
-                        <p><b>Direccion:</b> ${u.direccion}</p><p><b>Correo:</b> ${u.correo}</p>
-                        <p><b>Documento:</b> ${u.documento}</p>
-                    </div>
-                    <h3 style="color:#007bff;">Contraseña</h3>
-                    <input type="password" placeholder="Contraseña actual" class="auth-input">
-                    <input type="password" placeholder="Nueva Contraseña" class="auth-input">
-                    <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
+                   <div style="max-width:500px; margin:0 auto; text-align:left; background:#111; padding:20px; border-radius:15px; border:1px solid #222;">
+                <p style="color:#007bff; font-weight:bold; margin-bottom:15px; border-bottom:1px solid #222;">Información Personal</p>
+                
+                <label class="label-auth">Nombre</label>
+                <input type="text" id="edit-nom" value="${u.nombre}" class="auth-input-edit">
+                
+                <label class="label-auth">Apellidos</label>
+                <input type="text" id="edit-ape" value="${u.apellidos}" class="auth-input-edit">
+                
+                <label class="label-auth">Celular</label>
+                <input type="text" id="edit-cel" value="${u.celular}" class="auth-input-edit">
+
+                <label class="label-auth">País</label>
+                <div class="pais-selector-container">
+                    <input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" class="auth-input-edit">
+                    <select id="edit-pai" size="5" class="auth-input-edit" style="height:100px; margin-top:5px;">
+                        <option value="República Dominicana" ${u.pais === 'República Dominicana' ? 'selected' : ''}>República Dominicana</option>
+                        <option value="Estados Unidos" ${u.pais === 'Estados Unidos' ? 'selected' : ''}>Estados Unidos</option>
+                        <option value="México" ${u.pais === 'México' ? 'selected' : ''}>México</option>
+                        <option value="España" ${u.pais === 'España' ? 'selected' : ''}>España</option>
+                        <option value="Colombia" ${u.pais === 'Colombia' ? 'selected' : ''}>Colombia</option>
+                        <option value="Venezuela" ${u.pais === 'Venezuela' ? 'selected' : ''}>Venezuela</option>
+                        <option value="Argentina" ${u.pais === 'Argentina' ? 'selected' : ''}>Argentina</option>
+                        <option value="Chile" ${u.pais === 'Chile' ? 'selected' : ''}>Chile</option>
+                        <option value="Ecuador" ${u.pais === 'Ecuador' ? 'selected' : ''}>Ecuador</option>
+                        <option value="Perú" ${u.pais === 'Perú' ? 'selected' : ''}>Perú</option>
+                        </select>
+                </div>
+
+                 <label class="label-auth">Ciudad</label>
+                <input type="text" id="edit-ciu" value="${u.ciudad}" class="auth-input-edit">
+                
+                <label class="label-auth">Direccion</label>
+                <input type="text" id="edit-dir" value="${u.direccion}" class="auth-input-edit">
+                
+                <label class="label-auth">Correo</label>
+                <input type="text" id="edit-cor" value="${u.correo}" class="auth-input-edit">
+
+                 <label class="label-auth">Documento</label>
+                <input type="text" id="edit-doc" value="${u.documento}" class="auth-input-edit">
+
+                 <button onclick="SistemaMoisesAuth.guardarCambiosDatos()" class="btn-auth-listo" style="margin-top:10px; background:#28a745;">Guardar Cambios</button>
+
+                  <p style="color:#007bff; font-weight:bold; margin-top:30px; margin-bottom:15px; border-bottom:1px solid #222;">Seguridad</p>
+                
+                <label class="label-auth">Nueva Contraseña</label>
+                <input type="password" id="pass-nueva" placeholder="Escribir nueva contraseña" class="auth-input-edit">
+                
+                <label class="label-auth">Confirmar Contraseña</label>
+                <input type="password" id="pass-confirm" placeholder="Repetir nueva contraseña" class="auth-input-edit">
+                
+                <button onclick="SistemaMoisesAuth.cambiarPassword()" class="btn-auth-listo" style="margin-top:10px; background:#dc3545;">Modificar Contraseña</button>
+                 </div>
                     ${this.renderVistasRecientes()}
                 </div>`;
         
@@ -2035,6 +2078,57 @@ renderVistasRecientes: function() {
     }
 };
 
+// --- FUNCIONES DE EDICIÓN ---
+
+filtrarPaises: function() {
+    let input = document.getElementById('search-pais').value.toLowerCase();
+    let select = document.getElementById('edit-pai');
+    let options = select.options;
+
+    for (let i = 0; i < options.length; i++) {
+        let txtValue = options[i].text.toLowerCase();
+        options[i].style.display = txtValue.includes(input) ? "" : "none";
+    }
+},
+
+guardarCambiosDatos: function() {
+    const u = this.sesionActiva;
+    u.nombre = document.getElementById('edit-nom').value;
+    u.apellidos = document.getElementById('edit-ape').value;
+    u.celular = document.getElementById('edit-cel').value;
+    u.pais = document.getElementById('edit-pai').value;
+    u.ciudad = document.getElementById('edit-ciu').value;
+
+    // Actualizar en el array global de usuarios
+    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+    
+    // Guardar en LocalStorage
+    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+    localStorage.setItem('sesion_moises', JSON.stringify(u));
+
+    alert("¡Datos actualizados correctamente!");
+    location.reload();
+},
+
+cambiarPassword: function() {
+    const pass1 = document.getElementById('pass-nueva').value;
+    const pass2 = document.getElementById('pass-confirm').value;
+
+    if (pass1.length < 4) return alert("La contraseña es muy corta.");
+    if (pass1 !== pass2) return alert("Las contraseñas no coinciden.");
+
+    const u = this.sesionActiva;
+    u.pass = pass1;
+
+    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+    localStorage.setItem('sesion_moises', JSON.stringify(u));
+
+    alert("Contraseña modificada con éxito.");
+    document.getElementById('pass-nueva').value = "";
+    document.getElementById('pass-confirm').value = "";
+}
+    
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
 
