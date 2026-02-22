@@ -1221,7 +1221,8 @@ setInterval(() => {
 
   siguiente.classList.remove("salida");
   siguiente.classList.add("activa");
-}, 4000); // ⏱ cambia cada 4 segundos
+},
+
 </script>
 
 <script>
@@ -2076,29 +2077,24 @@ renderVistasRecientes: function() {
                     <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content;">
                 </div>`;
     }
-},
-
-guardarCambiosDatos: function() {
-    const u = this.sesionActiva;
-    u.nombre = document.getElementById('edit-nom').value;
-    u.apellidos = document.getElementById('edit-ape').value;
-    u.celular = document.getElementById('edit-cel').value;
-    u.pais = document.getElementById('edit-pai').value;
-    u.ciudad = document.getElementById('edit-ciu').value;
-
-    // Actualizar en el array global de usuarios
-    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-    
-    // Guardar en LocalStorage
-    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-    localStorage.setItem('sesion_moises', JSON.stringify(u));
-
-    alert("¡Datos actualizados correctamente!");
-    location.reload();
 };
         
-document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
-</script>
+document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());}
+
+// --- FUNCIONES DE EDICIÓN ---
+
+filtrarPaises: function() {
+    let input = document.getElementById('search-pais').value.toLowerCase();
+    let select = document.getElementById('edit-pai');
+    let options = select.options;
+
+    for (let i = 0; i < options.length; i++) {
+        let txtValue = options[i].text.toLowerCase();
+        options[i].style.display = txtValue.includes(input) ? "" : "none";
+    }
+};  
+    
+    </script>
 
 
 <!-- MODAL PRODUCTO -->
