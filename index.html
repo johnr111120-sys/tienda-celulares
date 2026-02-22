@@ -2064,6 +2064,68 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
             </div>`;
     }
 },
+    
+    seleccionarPais: function(pais) {
+    document.getElementById('edit-pai').value = pais;
+    document.getElementById('pais-actual-display').querySelector('span').innerText = pais;
+    document.getElementById('dropdown-paises').style.display = 'none';
+},
+    
+    // --- FUNCIONES INTERNAS DEL OBJETO ---
+  filtrarPaises: function() {
+    let input = document.getElementById('search-pais').value.toLowerCase();
+    let opciones = document.querySelectorAll('.opcion-pais');
+    opciones.forEach(opc => {
+        opc.style.display = opc.innerText.toLowerCase().includes(input) ? "block" : "none";
+    });
+},
+
+   guardarCambiosDatos: function() {
+    // 1. Obtener la sesión actual desde el objeto para editarla
+    let u = this.sesionActiva;
+
+    // 2. Capturar los nuevos valores de los inputs
+    u.nombre = document.getElementById('edit-nom').value;
+    u.apellidos = document.getElementById('edit-ape').value;
+    u.celular = document.getElementById('edit-cel').value;
+    u.pais = document.getElementById('edit-pai').value;
+    u.ciudad = document.getElementById('edit-ciu').value;
+    u.direccion = document.getElementById('edit-dir').value; // Asegúrate de que el ID coincida con tu HTML
+    u.correo = document.getElementById('edit-cor').value;
+    u.documento = document.getElementById('edit-doc').value;
+
+    // 3. ACTUALIZAR LA BASE DE DATOS GLOBAL (Lo más importante)
+    let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios_registrados')) || [];
+    
+    // Reemplazamos el usuario viejo por el nuevo en la lista completa
+    this.usuariosDB = usuariosGuardados.map(user => {
+        if (user.email === u.email) {
+            return u; // Este es el usuario con datos nuevos
+        }
+        return user;
+    });
+
+    // 4. GUARDAR TODO DE VUELTA AL LOCALSTORAGE
+    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+    localStorage.setItem('sesion_moises', JSON.stringify(u));
+    
+    // 5. Actualizar la sesión en tiempo real sin recargar si es posible
+    this.sesionActiva = u;
+
+    alert("¡Datos guardados permanentemente!");
+    location.reload(); // Ahora sí, al recargar, leerá los datos nuevos
+},
+
+    cambiarPassword: function() {
+        const p1 = document.getElementById('pass-nueva').value;
+        if(p1.length < 4) return alert("Contraseña muy corta");
+        const u = this.sesionActiva;
+        u.pass = p1;
+        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+        localStorage.setItem('sesion_moises', JSON.stringify(u));
+        alert("Contraseña actualizada.");
+    },
 
 verFactura: function(idOrden) {
     const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
@@ -2141,70 +2203,7 @@ verFactura: function(idOrden) {
         </div>
     `;
     window.scrollTo(0,0);
-}
-    
-    seleccionarPais: function(pais) {
-    document.getElementById('edit-pai').value = pais;
-    document.getElementById('pais-actual-display').querySelector('span').innerText = pais;
-    document.getElementById('dropdown-paises').style.display = 'none';
 },
-    
-    // --- FUNCIONES INTERNAS DEL OBJETO ---
-  filtrarPaises: function() {
-    let input = document.getElementById('search-pais').value.toLowerCase();
-    let opciones = document.querySelectorAll('.opcion-pais');
-    opciones.forEach(opc => {
-        opc.style.display = opc.innerText.toLowerCase().includes(input) ? "block" : "none";
-    });
-},
-
-   guardarCambiosDatos: function() {
-    // 1. Obtener la sesión actual desde el objeto para editarla
-    let u = this.sesionActiva;
-
-    // 2. Capturar los nuevos valores de los inputs
-    u.nombre = document.getElementById('edit-nom').value;
-    u.apellidos = document.getElementById('edit-ape').value;
-    u.celular = document.getElementById('edit-cel').value;
-    u.pais = document.getElementById('edit-pai').value;
-    u.ciudad = document.getElementById('edit-ciu').value;
-    u.direccion = document.getElementById('edit-dir').value; // Asegúrate de que el ID coincida con tu HTML
-    u.correo = document.getElementById('edit-cor').value;
-    u.documento = document.getElementById('edit-doc').value;
-
-    // 3. ACTUALIZAR LA BASE DE DATOS GLOBAL (Lo más importante)
-    let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios_registrados')) || [];
-    
-    // Reemplazamos el usuario viejo por el nuevo en la lista completa
-    this.usuariosDB = usuariosGuardados.map(user => {
-        if (user.email === u.email) {
-            return u; // Este es el usuario con datos nuevos
-        }
-        return user;
-    });
-
-    // 4. GUARDAR TODO DE VUELTA AL LOCALSTORAGE
-    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-    localStorage.setItem('sesion_moises', JSON.stringify(u));
-    
-    // 5. Actualizar la sesión en tiempo real sin recargar si es posible
-    this.sesionActiva = u;
-
-    alert("¡Datos guardados permanentemente!");
-    location.reload(); // Ahora sí, al recargar, leerá los datos nuevos
-},
-
-    cambiarPassword: function() {
-        const p1 = document.getElementById('pass-nueva').value;
-        if(p1.length < 4) return alert("Contraseña muy corta");
-        const u = this.sesionActiva;
-        u.pass = p1;
-        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        localStorage.setItem('sesion_moises', JSON.stringify(u));
-        alert("Contraseña actualizada.");
-    },
-
     renderVistasRecientes: function() {
         const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
         let htmlVistos = vistos.map(p => `
