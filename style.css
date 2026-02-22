@@ -2588,3 +2588,16 @@ body{
     border-radius: 10px;
 }
 
+@media print {
+    .btn-volver-atras, button, .header-principal, .nav-principal {
+        display: none !important;
+    }
+    body {
+        background: white !important;
+    }
+    #ticket-factura {
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+}
