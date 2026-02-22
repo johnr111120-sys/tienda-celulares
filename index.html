@@ -421,16 +421,13 @@ function toggleFavorito(idProducto, evento) {
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
     
-function toggleFavorito(idProducto) {
-    let favs = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
-    const producto = productos.find(p => p.id === idProducto);
-    
-    if(favs.some(p => p.id === idProducto)) {
-        favs = favs.filter(p => p.id !== idProducto); // Quitar
-    } else {
-        favs.push(producto); // Agregar
-    }
-    localStorage.setItem('favoritos_moises', JSON.stringify(favs));
+function toggleFavorito(idProducto, evento) {
+    // ... (todo tu código anterior de agregar/quitar favoritos) ...
+
+    // Al final, añade esto:
+    actualizarContadorFavoritos();
+   }
+  }
 }
 
 function actualizarContadorFavoritos() {
@@ -1923,21 +1920,23 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         }
     },
 
-   // --- VISTAS SPA MEJORADAS ---
-irA: function(seccion) {
-    // 1. Cerramos cualquier modal u overlay abierto
-    const overlay = document.getElementById('overlay-moises-perfil');
-    if(overlay) overlay.remove();
-    
+    // --- VISTAS SPA ---
+    irA: function(seccion) {
+        document.getElementById('overlay-moises-perfil').remove();
+        navegarSPA('perfil'); // Cambia a la vista SPA
+        const contenedor = document.getElementById('vista-spa-cliente');
+        const u = this.sesionActiva;
+
+     // 1. CERRAR TODO LO QUE ESTÉ ABIERTO (Modales y Overlays)
+    const overlayFlotante = document.getElementById('overlay-moises-perfil');
+    if(overlayFlotante) overlayFlotante.remove();
+        
+    // ESTO ES LO QUE TE ESTÁ PASANDO: El modal login se queda abierto o se activa. 
+    // Lo cerramos a la fuerza:
     const modalLogin = document.getElementById('modal-login-contenedor');
     if(modalLogin) modalLogin.style.display = 'none';
-
-    navegarSPA('perfil'); // Cambia a la vista SPA
-    const contenedor = document.getElementById('vista-spa-cliente');
-    contenedor.style.display = 'block';
-    const u = this.sesionActiva;
-
-    // --- LÓGICA DE COMPRAS ---
+        
+       // --- LÓGICA DE COMPRAS ---
     if(seccion === 'compras') {
         const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
         const misCompras = todasLasCompras.filter(c => c.usuarioEmail === u.email);
@@ -1971,99 +1970,46 @@ irA: function(seccion) {
                 ${contenidoCompras}
                 ${this.renderVistasRecientes()}
             </div>`;
-
-    // --- LÓGICA DE DATOS ---
-    } else if(seccion === 'datos') {
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
-                <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
-                <h3 style="color:white;">HOLA, ${u.nombre}</h3>
-                <div style="text-align:left; background:#111; padding:15px; border-radius:10px; margin:20px 0; font-size:13px; color:white;">
-                    <p><b>Nombre:</b> ${u.nombre} ${u.apellidos}</p>
-                    <p><b>Celular:</b> ${u.celular}</p>
-                    <p><b>Ciudad:</b> ${u.ciudad}</p>
-                </div>
-                <h3 style="color:#007bff;">Seguridad</h3>
-                <input type="password" id="pass-actual" placeholder="Contraseña actual" class="auth-input">
-                <input type="password" id="pass-nueva" placeholder="Nueva Contraseña" class="auth-input">
-                <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
-                ${this.renderVistasRecientes()}
-            </div>`;
-
-    // --- LÓGICA DE FAVORITOS ---
-    } else if(seccion === 'favoritos') {
-        const misFavoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
         
-        let contenidoFavs = `<p style="color:#888;">0 agregados</p>`;
-
-        if(misFavoritos.length > 0) {
-            contenidoFavs = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                ${misFavoritos.map(p => `
-                    <div style="background:#111; border:1px solid #222; padding:10px; border-radius:10px; text-align:center;">
-                        <img src="${p.imagen}" style="width:100%; height:100px; object-fit:contain;">
-                        <p style="color:white; font-size:12px; height:30px; overflow:hidden; margin-top:5px;">${p.nombre}</p>
-                        <p style="color:#007bff; font-weight:bold;">RD$ ${p.precio.toLocaleString()}</p>
-                        <button onclick="agregarAlCarritoDesdeFav(${p.id})" style="background:#007bff; color:white; border:none; width:100%; padding:5px; border-radius:5px; margin-top:5px; font-size:11px; cursor:pointer;">Comprar</button>
+        } else if(seccion === 'datos') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
+                    <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
+                    <h3 style="color:white;">HOLA, ${u.nombre}</h3>
+                    <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
+                    <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
+                    <div style="text-align:left; background:#111; padding:15px; border-radius:10px; margin:20px 0; font-size:13px; color:white;">
+                        <p><b>Nombre:</b> ${u.nombre}</p><p><b>Apellidos:</b> ${u.apellidos}</p>
+                        <p><b>Celular:</b> ${u.celular}</p><p><b>Ciudad:</b> ${u.ciudad}</p>
                     </div>
-                `).join('')}
-            </div>`;
+                    <h3 style="color:#007bff;">Contraseña</h3>
+                    <input type="password" placeholder="Contraseña actual" class="auth-input">
+                    <input type="password" placeholder="Nueva Contraseña" class="auth-input">
+                    <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        } else if(seccion === 'favoritos') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
+                    <p style="color:#888;">0 agregados</p>
+                    ${this.renderVistasRecientes()}
+                </div>`;
         }
+    },
 
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:15px 0;">Mis Favoritos</h2>
-                ${contenidoFavs}
-                ${this.renderVistasRecientes()}
-            </div>`;
+    renderVistasRecientes: function() {
+      return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
+                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
+                    <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content:center;">
+                        </div>
+                </div>`;
     }
-},
+};
 
-// --- FUNCIONES DE APOYO PARA LAS VISTAS ---
-verFactura: function(idOrden) {
-    const contenedor = document.getElementById('vista-spa-cliente');
-    contenedor.innerHTML = `
-        <div class="auth-spa-seccion" style="background:white; color:black; min-height:100vh; padding:20px;">
-            <button onclick="SistemaMoisesAuth.irA('compras')" style="background:#333; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer;">← Volver</button>
-            <div id="area-factura" style="margin-top:20px; border:2px solid #000; padding:20px;">
-                <h1>FACTURA DE COMPRA</h1>
-                <p>Orden: ${idOrden}</p>
-                <hr>
-                <p>Aquí puedes diseñar el estilo de tu factura...</p>
-            </div>
-        </div>
-    `;
-},
-
-repetirPedido: function(idProducto) {
-    // Cerramos el SPA y cargamos el producto en la tienda
-    location.reload(); 
-    // Nota: Aquí podrías añadir lógica para que al recargar se abra automáticamente el producto
-},
-
-renderVistasRecientes: function() {
-    const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
-    let htmlVistos = '';
-    
-    if(vistos.length > 0) {
-        htmlVistos = vistos.map(p => `
-            <div style="background:#111; border:1px solid #222; padding:10px; border-radius:8px; width:120px; flex-shrink:0;">
-                <img src="${p.imagen}" style="width:100%; height:60px; object-fit:contain;">
-                <p style="color:white; font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.nombre}</p>
-            </div>
-        `).join('');
-    }
-
-    return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
-                <p style="color:#666; font-size:12px; margin-bottom:10px; text-align:center;">VISTO RECIENTEMENTE</p>
-                <div id="vistos-recientes-fila" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:10px;">
-                    ${htmlVistos || '<p style="color:#444; font-size:11px; width:100%; text-align:center;">No hay vistos recientes</p>'}
-                </div>
-            </div>`;
-}
-    
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
 
