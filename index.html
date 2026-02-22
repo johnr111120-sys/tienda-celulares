@@ -1990,16 +1990,35 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                     <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
                     ${this.renderVistasRecientes()}
                 </div>`;
-        } else if(seccion === 'favoritos') {
-            contenedor.innerHTML = `
-                <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
-                    <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
-                    <p style="color:#888;">0 agregados</p>
-                    ${this.renderVistasRecientes()}
-                </div>`;
+        
+      // --- LÓGICA DE FAVORITOS ---
+    } else if(seccion === 'favoritos') {
+        const misFavoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
+        
+        let contenidoFavs = `<p style="color:#888;">0 agregados</p>`;
+
+        if(misFavoritos.length > 0) {
+            contenidoFavs = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                ${misFavoritos.map(p => `
+                    <div style="background:#111; border:1px solid #222; padding:10px; border-radius:10px; text-align:center;">
+                        <img src="${p.imagen}" style="width:100%; height:100px; object-fit:contain;">
+                        <p style="color:white; font-size:12px; height:30px; overflow:hidden; margin-top:5px;">${p.nombre}</p>
+                        <p style="color:#007bff; font-weight:bold;">RD$ ${p.precio.toLocaleString()}</p>
+                        <button onclick="agregarAlCarritoDesdeFav(${p.id})" style="background:#007bff; color:white; border:none; width:100%; padding:5px; border-radius:5px; margin-top:5px; font-size:11px; cursor:pointer;">Comprar</button>
+                    </div>
+                `).join('')}
+            </div>`;
         }
-    },
+
+        contenedor.innerHTML = `
+            <div class="auth-spa-seccion">
+                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
+                <h2 style="color:#007bff; margin:15px 0;">Mis Favoritos</h2>
+                ${contenidoFavs}
+                ${this.renderVistasRecientes()}
+            </div>`;
+    }
+},
 
     renderVistasRecientes: function() {
       return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
