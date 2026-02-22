@@ -2029,22 +2029,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     }
 };
 
-// --- FUNCIONES DE APOYO PARA LAS VISTAS ---
-verFactura: function(idOrden) {
-    const contenedor = document.getElementById('vista-spa-cliente');
-    contenedor.innerHTML = `
-        <div class="auth-spa-seccion" style="background:white; color:black; min-height:100vh; padding:20px;">
-            <button onclick="SistemaMoisesAuth.irA('compras')" style="background:#333; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer;">← Volver</button>
-            <div id="area-factura" style="margin-top:20px; border:2px solid #000; padding:20px;">
-                <h1>FACTURA DE COMPRA</h1>
-                <p>Orden: ${idOrden}</p>
-                <hr>
-                <p>Aquí puedes diseñar el estilo de tu factura...</p>
-            </div>
-        </div>
-    `;
-},
- 
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
 
