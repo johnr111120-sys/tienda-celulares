@@ -2081,60 +2081,6 @@ renderVistasRecientes: function() {
         
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());}
     </script>
-
- <script>
-// --- FUNCIONES DE EDICIÓN ---
-
-filtrarPaises: function() {
-    let input = document.getElementById('search-pais').value.toLowerCase();
-    let select = document.getElementById('edit-pai');
-    let options = select.options;
-
-    for (let i = 0; i < options.length; i++) {
-        let txtValue = options[i].text.toLowerCase();
-        options[i].style.display = txtValue.includes(input) ? "" : "none";
-    }
-},
-
-guardarCambiosDatos: function() {
-    const u = this.sesionActiva;
-    u.nombre = document.getElementById('edit-nom').value;
-    u.apellidos = document.getElementById('edit-ape').value;
-    u.celular = document.getElementById('edit-cel').value;
-    u.pais = document.getElementById('edit-pai').value;
-    u.ciudad = document.getElementById('edit-ciu').value;
-
-    // Actualizar en el array global de usuarios
-    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-    
-    // Guardar en LocalStorage
-    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-    localStorage.setItem('sesion_moises', JSON.stringify(u));
-
-    alert("¡Datos actualizados correctamente!");
-    location.reload();
-},
-
-cambiarPassword: function() {
-    const pass1 = document.getElementById('pass-nueva').value;
-    const pass2 = document.getElementById('pass-confirm').value;
-
-    if (pass1.length < 4) return alert("La contraseña es muy corta.");
-    if (pass1 !== pass2) return alert("Las contraseñas no coinciden.");
-
-    const u = this.sesionActiva;
-    u.pass = pass1;
-
-    this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-    localStorage.setItem('sesion_moises', JSON.stringify(u));
-
-    alert("Contraseña modificada con éxito.");
-    document.getElementById('pass-nueva').value = "";
-    document.getElementById('pass-confirm').value = "";
-}
-
-    </script>
       
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
