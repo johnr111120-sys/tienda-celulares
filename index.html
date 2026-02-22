@@ -2134,24 +2134,30 @@ verFactura: function(idOrden) {
     const contenedor = document.getElementById('vista-spa-cliente');
     
     // Generar filas de productos
-    const filasProductos = compra.productos.map(p => `
+   const filasProductos = compra.productos.map(p => {
+    // Limpiamos el precio: eliminamos "RD$", comas y espacios, y lo convertimos a número
+    const precioLimpio = Number(String(p.precio).replace(/[^0-9.-]+/g, ""));
+    const subtotalProducto = precioLimpio * p.cantidad;
+
+    return `
         <tr>
             <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
                 <span style="font-weight:bold;">${p.cantidad}x</span> ${p.nombre}
             </td>
             <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right;">
-                RD$ ${(p.precio * p.cantidad).toLocaleString()}
+                RD$ ${subtotalProducto.toLocaleString()}
             </td>
         </tr>
-    `).join('');
+    `;
+}).join('');
 
     contenedor.innerHTML = `
         <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
             <div style="max-width: 500px; margin: 0 auto;">
-                <button onclick="regresarALaTienda()" 
-                        style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px;">
-                    ← VOLVER AL HISTORIAL
-                </button>
+               <button onclick="SistemaMoisesAuth.irA('compras')" 
+              style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
+             <i class="fas fa-arrow-left"></i> VOLVER A MIS COMPRAS
+            </button>
 
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                     
