@@ -813,17 +813,13 @@ function enviarPedidoWhatsApp(tracking) {
         return;
     }
 
-    // 2. Definir el total correctamente (Calculándolo en el momento)
-    const totalVenta = calcularSubtotal(); 
-
-    // --- GUARDAR EN EL HISTORIAL (REGISTRO AUTOMÁTICO) ---
-    // Usamos 'tracking' que es el parámetro que recibe la función
-    if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carrito, totalVenta, tracking);
-    }
+    // 2. Definir el total y limpiar lista de productos
+    const totalVenta = calcularSubtotal();
+    // CORRECCIÓN: Usamos 'carrito' en lugar de 'carritoLimpio'
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
 
    // --- MENSAJE WHATSAPP ---
-    let listaProductos = carritoLimpio.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
     let notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
     const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
     if(inputNota && inputNota.value.trim() !== "") {
@@ -841,7 +837,7 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
-                    `*NOTA DEL PEDIDO:* ${notaTexto}\n`     
+                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +   
                     `--------------------------\n` +
                     `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
                     `--------------------------\n` +
@@ -850,6 +846,11 @@ function enviarPedidoWhatsApp(tracking) {
     // 6. Enviar a WhatsApp
     const numWhatsApp = "59891547599"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    // 5. Registro y Finalización
+    if (typeof registrarCompraEnPerfil === "function") {
+        registrarCompraEnPerfil(carrito, totalVenta, tracking);
+    }
     
     // Abrimos WhatsApp
     window.open(url, '_blank');
