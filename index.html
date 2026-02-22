@@ -2148,7 +2148,7 @@ verFactura: function(idOrden) {
     contenedor.innerHTML = `
         <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
             <div style="max-width: 500px; margin: 0 auto;">
-                <button onclick="SistemaMoisesAuth.irA('compras')" 
+                <button onclick="SistemaMoisesAuth.irA('miscompras')" 
                         style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px;">
                     ← VOLVER AL HISTORIAL
                 </button>
@@ -2156,8 +2156,8 @@ verFactura: function(idOrden) {
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                     
                     <div style="text-align:center; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-bottom: 20px;">
-                        <h2 style="margin:0; color:#000;">MOISÉS IPHONE</h2>
-                        <p style="font-size:12px; margin:5px 0;">Tienda Online de Celulares y Accesorios</p>
+                        <h2 style="margin:0; color:#000;">MOISÉS CELULARES</h2>
+                        <p style="font-size:12px; margin:5px 0;">Tienda Online y Fisica de Celulares, Accesorios y Reparaciones</p>
                         <p style="font-size:11px; color:#666;">República Dominicana</p>
                     </div>
 
@@ -2180,7 +2180,7 @@ verFactura: function(idOrden) {
                     </table>
 
                     <div style="margin-top: 20px; text-align: right;">
-                        <p style="font-size:14px; margin:0;">SUBTOTAL: RD$ ${compra.total.toLocaleString()}</p>
+                        <p style="font-size:14px; margin:0;">SUBTOTAL: <span RD$ ${subtotal.toLocaleString()}</span></p>
                         <p style="font-size:14px; margin:5px 0;">ENVÍO: <span style="font-size:11px; color:#888;">(A calcular)</span></p>
                         <h3 style="font-size:20px; margin-top:10px; color:#000;">TOTAL: RD$ ${compra.total.toLocaleString()}</h3>
                     </div>
