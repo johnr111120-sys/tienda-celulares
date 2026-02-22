@@ -822,11 +822,13 @@ function enviarPedidoWhatsApp(tracking) {
         registrarCompraEnPerfil(carrito, totalVenta, tracking);
     }
 
-  // 3. Preparar lista de productos para el mensaje
-    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
-    
-    // 4. Obtener nota (si existe la función)
-    const notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
+   // --- MENSAJE WHATSAPP ---
+    let listaProductos = carritoLimpio.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
+    let notaTexto = "Sin notas";
+    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
+    if(inputNota && inputNota.value.trim() !== "") {
+        notaTexto = inputNota.value.trim();
+    }
 
     // 5. Crear el mensaje para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
@@ -845,7 +847,7 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
-   // 6. Enviar a WhatsApp
+    // 6. Enviar a WhatsApp
     const numWhatsApp = "59891547599"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     
@@ -2148,9 +2150,9 @@ verFactura: function(idOrden) {
     contenedor.innerHTML = `
         <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
             <div style="max-width: 500px; margin: 0 auto;">
-               <button onclick=" onclick="location.hash='#/" 
+               <button onclick="regresarALaTienda()" 
               style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-             <i class="fas fa-arrow-left"></i> VOLVER A INICIO
+             <i class="fas fa-arrow-left"></i> VOLVER A MIS COMPRAS
             </button>
 
                 <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
