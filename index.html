@@ -822,11 +822,13 @@ function enviarPedidoWhatsApp(tracking) {
         registrarCompraEnPerfil(carrito, totalVenta, tracking);
     }
 
-    // 3. Preparar lista de productos para el mensaje
-    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
-    
-    // 4. Obtener nota (si existe la función)
-    const notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
+   // --- MENSAJE WHATSAPP ---
+    let listaProductos = carritoLimpio.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
+    let notaTexto = "Sin notas";
+    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
+    if(inputNota && inputNota.value.trim() !== "") {
+        notaTexto = inputNota.value.trim();
+    }
 
     // 5. Crear el mensaje para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
@@ -1652,7 +1654,7 @@ function navegarAFinalizarCompra() {
                             <input type="text" id="ch-correo" placeholder="Correo *">
                             <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
                             <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
-                            <textarea id="ch-notas" placeholder="Notas del pedido (opcional)" rows="2"></textarea>
+                            <textarea id="ch-notas" placeholder="Instrucciones especiales..."></textarea>
                         </div>
                     </div>
                 </div>
