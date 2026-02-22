@@ -2077,8 +2077,53 @@ renderVistasRecientes: function() {
                     <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content;">
                 </div>`;
     }
+},
+
+    // --- NUEVAS FUNCIONES DE EDICIÓN (Dentro del objeto) ---
+    filtrarPaises: function() {
+        let input = document.getElementById('search-pais').value.toLowerCase();
+        let select = document.getElementById('edit-pai');
+        let options = select.options;
+        for (let i = 0; i < options.length; i++) {
+            let txtValue = options[i].text.toLowerCase();
+            options[i].style.display = txtValue.includes(input) ? "" : "none";
+        }
+    },
+
+    guardarCambiosDatos: function() {
+        const u = this.sesionActiva;
+        u.nombre = document.getElementById('edit-nom').value;
+        u.apellidos = document.getElementById('edit-ape').value;
+        u.pais = document.getElementById('edit-pai').value;
+
+        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+        localStorage.setItem('sesion_moises', JSON.stringify(u));
+        alert("¡Datos actualizados!");
+    },
+
+    cambiarPassword: function() {
+        const pass1 = document.getElementById('pass-nueva').value;
+        const pass2 = document.getElementById('pass-confirm').value;
+        if (pass1 !== pass2 || pass1.length < 4) return alert("Error en contraseña");
+
+        const u = this.sesionActiva;
+        u.pass = pass1;
+        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
+        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+        localStorage.setItem('sesion_moises', JSON.stringify(u));
+        alert("Contraseña cambiada");
+    },
+
+    confirmarCerrar: function() {
+        if(confirm("¿Cerrar sesión?")) {
+            localStorage.removeItem('sesion_moises');
+            location.reload();
+        }
+    }
 };
 
+// Iniciar al cargar
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
 
