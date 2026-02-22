@@ -2540,3 +2540,36 @@ body{
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+.label-auth {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.auth-input-edit {
+    width: 100%;
+    padding: 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.auth-input-edit:focus {
+    border-color: #007bff;
+    background: #222;
+}
+
+.pais-selector-container {
+    background: #1a1a1a;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
