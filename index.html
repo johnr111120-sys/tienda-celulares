@@ -1697,13 +1697,13 @@ function navegarAFinalizarCompra() {
                              <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Pago</p>
                             
                             <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                            <input type="radio" checked> 
+                            <input type="radio" onchange="actualizarResumenFactura()" checked> 
                              <span style="color: white; margin-center: 10px;</span>
                             <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
                              </label>
                              
                              <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                             <input type="radio">
+                             <input type="radio" onchange="actualizarResumenFactura()">
                               <span style="color: white; margin-center: 10px;</span>
                             <label><input type="radio" name="pago"> Transferencia Bancaria</label>
                           </label>
