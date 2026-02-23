@@ -1699,19 +1699,19 @@ function navegarAFinalizarCompra() {
                          <h4 style="color:white; margin-bottom:10px;">Método de Pago</h4>
                              <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Pago</p>
                             
-                            <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
+                            <label onclick="toggleInfoBancaria(false)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333; transition: 0.3s;">
                             <input type="radio" name="pago" checked> 
                              <span style="color: white; margin-center: 10px;</span>
                             <input type="radio" name="pago" value="efectivo" onclick="toggleInfoBancaria(false)" checked> Efectivo contra entrega
                              </label>
                              
-                             <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
+                             <label onclick="toggleInfoBancaria(true)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333; transition: 0.3s;">
                              <input type="radio" name="pago">
                               <span style="color: white; margin-center: 10px;</span>
                            <input type="radio" name="pago" value="transferencia" onclick="toggleInfoBancaria(true)"> Transferencia Bancaria
                           </label>
 
-                        <div id="info-bancaria" style="display:none; background:#1a1a1a; border:1px solid #007bff; padding:15px; border-radius:8px; margin-top:10px; font-size:13px; color:#ddd; line-height:1.5;">
+                        <div id="info-bancaria" style="display:none; background:#1a1a1a; border:1px solid #007bff; padding:15px; border-radius:8px; margin-top:10px; font-size:13px; color:#ddd; line-height:1.5; animation: fadeIn 0.4s;">
                         <i class="fas fa-info-circle" style="color:#007bff; margin-right:5px;"></i>
                          Realiza tu pago directamente en nuestra cuenta bancaria. Por favor, usa el número de <b>Rastreo del pedido</b> como referencia de pago. Tu pedido no se procesará hasta que se haya recibido el importe en nuestra cuenta.
                        </div>
@@ -2304,10 +2304,20 @@ function actualizarResumenFactura() {
 <script>
 function toggleInfoBancaria(mostrar) {
     const cuadroInfo = document.getElementById('info-bancaria');
+    
+    // Mostramos u ocultamos el cuadro
     if (cuadroInfo) {
         cuadroInfo.style.display = mostrar ? 'block' : 'none';
     }
+
+    // Buscamos el radio button dentro del label clickeado y nos aseguramos de que se marque
+    const radioTransferencia = document.querySelector('input[value="transferencia"]');
+    const radioEfectivo = document.querySelector('input[value="efectivo"]');
+    
+    if (mostrar && radioTransferencia) radioTransferencia.checked = true;
+    if (!mostrar && radioEfectivo) radioEfectivo.checked = true;
 }
+    
 </script>
       
 <!-- MODAL PRODUCTO -->
