@@ -1824,10 +1824,10 @@ const SistemaMoisesAuth = {
             
             <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
                 <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
-                <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
-                <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
-                <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
-                <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
+                <input type="text" id="reg-nombre" placeholder="* Nombre" class="auth-input">
+                <input type="text" id="reg-apellidos" placeholder="* Apellidos" class="auth-input">
+                <input type="text" id="reg-email" placeholder=" Correo electronico" class="auth-input">
+                <input type="text" id="reg-pass" placeholder="* Contraseña" class="auth-input">
                 
                 <select id="reg-pai" class="auth-input">
                    <option value="">* Seleccione País</option>
@@ -1874,41 +1874,38 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         `;
     },
 
-    ejecutarRegistro: function() {
-       const nombre = document.querySelector('#auth-card-container input[placeholder="Nombre"]').value.trim();
-    const apellidos = document.querySelector('#auth-card-container input[placeholder="Apellidos"]').value.trim();
-    const email = document.querySelector('#auth-card-container input[placeholder="Correo electrónico"]').value.trim();
-    const pass = document.querySelector('#auth-card-container input[placeholder="Contraseña"]').value.trim();
-    
-    // CORRECCIÓN AQUÍ: Usamos un selector más flexible o verificamos que exista
+   const nombre = document.getElementById('reg-nombre')?.value.trim();
+    const apellidos = document.getElementById('reg-apellidos')?.value.trim();
+    const email = document.getElementById('reg-email')?.value.trim();
+    const pass = document.getElementById('reg-pass')?.value.trim();
     const checkPoliticas = document.getElementById('politicas-check');
 
+    // Validamos que los campos existan antes de seguir
     if (!nombre || !apellidos || !email || !pass) {
-        alert("Por favor, completa todos los campos.");
+        alert("⚠️ Por favor, completa todos los campos.");
         return;
     }
 
     if (!checkPoliticas || !checkPoliticas.checked) {
-        alert("Debes aceptar las políticas de privacidad.");
+        alert("⚠️ Debes aceptar las políticas de privacidad.");
         return;
     }
-        const nuevoUser = {
-            nombre: document.getElementById('reg-nom').value,
-            apellidos: document.getElementById('reg-ape').value,
-            celular: document.getElementById('reg-cel').value,
-            pais: document.getElementById('reg-pai').value,
-            ciudad: document.getElementById('reg-ciu').value,
-            muni: document.getElementById('reg-mun').value,
-            dir: document.getElementById('reg-dir').value,
-            email: document.getElementById('reg-ema').value,
-            pass: pass,
-            fechaRegistro: new Date().toLocaleString()
-        };
-        this.usuariosDB.push(nuevoUser);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        alert("¡Registro exitoso!");
-        this.renderLogin();
-    },
+
+    // Guardar en la "base de datos" local
+    const db = JSON.parse(localStorage.getItem('db_usuarios_moises')) || [];
+    
+    if (db.find(u => u.email === email)) {
+        alert("❌ Este correo ya está registrado.");
+        return;
+    }
+
+    const nuevoUsuario = { nombre, apellidos, email, pass };
+    db.push(nuevoUsuario);
+    localStorage.setItem('db_usuarios_moises', JSON.stringify(db));
+
+    alert("✅ ¡Registro exitoso! Ahora puedes iniciar sesión.");
+    this.renderLogin(); // Volvemos al login para que entre
+}
 
     intentarLogin: function() {
         const email = document.getElementById('log-email').value;
