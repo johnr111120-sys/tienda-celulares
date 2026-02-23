@@ -823,6 +823,9 @@ function enviarPedidoWhatsApp(tracking) {
     if (typeof registrarCompraEnPerfil === "function") {
         registrarCompraEnPerfil(carrito, totalVenta, tracking);
     }
+
+    const metodoPago = document.querySelector('input[name="pago"]:checked').value;
+   const pagoTexto = metodoPago === 'efectivo' ? "Efectivo contra entrega" : "Transferencia Bancaria";
     
    // --- MENSAJE WHATSAPP ---
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
