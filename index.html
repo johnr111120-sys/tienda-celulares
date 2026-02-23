@@ -872,8 +872,7 @@ function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, cost
         fecha: new Date().toLocaleString(),
         productos: [...carritoActual],
         total: totalConEnvio,
-        envio: costoEnvio, // <--- GUARDAMOS EL COSTO AQUÍ
-        estado: "Pendiente" // <-- ASEGÚRATE DE QUE ESTO ESTÉ AQUÍ
+        envio: costoEnvio // <--- GUARDAMOS EL COSTO AQUÍ
     };
 
     todasLasCompras.unshift(nuevaCompra);
@@ -1824,10 +1823,10 @@ const SistemaMoisesAuth = {
             
             <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
                 <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
-                <input type="text" id="reg-nombre" placeholder="* Nombre" class="auth-input">
-                <input type="text" id="reg-apellidos" placeholder="* Apellidos" class="auth-input">
-                <input type="text" id="reg-email" placeholder=" Correo electronico" class="auth-input">
-                <input type="text" id="reg-pass" placeholder="* Contraseña" class="auth-input">
+                <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
+                <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
+                <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
+                <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
                 
                 <select id="reg-pai" class="auth-input">
                    <option value="">* Seleccione País</option>
@@ -1865,7 +1864,7 @@ Modificaciones a nuestras Políticas de Privacidad:
 El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
                 </div>
                <div style="color:black; font-size:12px; margin:10px 0;">
-                    <input type="checkbox" id="politicas-check" style="width:auto;"> He leído y acepto las políticas.
+                    <input type="checkbox" id="reg-politicas" style="width:auto;"> He leído y acepto las políticas.
                 </div>
             </div>
             
@@ -1874,38 +1873,29 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         `;
     },
 
-   const nombre = document.getElementById('reg-nombre')?.value.trim();
-    const apellidos = document.getElementById('reg-apellidos')?.value.trim();
-    const email = document.getElementById('reg-email')?.value.trim();
-    const pass = document.getElementById('reg-pass')?.value.trim();
-    const checkPoliticas = document.getElementById('politicas-check');
+    ejecutarRegistro: function() {
+        const pass = document.getElementById('reg-pas').value;
+        const passConf = document.getElementById('reg-con-pas').value;
+        if(pass !== passConf) return alert("Las contraseñas no coinciden");
+        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
 
-    // Validamos que los campos existan antes de seguir
-    if (!nombre || !apellidos || !email || !pass) {
-        alert("⚠️ Por favor, completa todos los campos.");
-        return;
-    }
-
-    if (!checkPoliticas || !checkPoliticas.checked) {
-        alert("⚠️ Debes aceptar las políticas de privacidad.");
-        return;
-    }
-
-    // Guardar en la "base de datos" local
-    const db = JSON.parse(localStorage.getItem('db_usuarios_moises')) || [];
-    
-    if (db.find(u => u.email === email)) {
-        alert("❌ Este correo ya está registrado.");
-        return;
-    }
-
-    const nuevoUsuario = { nombre, apellidos, email, pass };
-    db.push(nuevoUsuario);
-    localStorage.setItem('db_usuarios_moises', JSON.stringify(db));
-
-    alert("✅ ¡Registro exitoso! Ahora puedes iniciar sesión.");
-    this.renderLogin(); // Volvemos al login para que entre
-}
+        const nuevoUser = {
+            nombre: document.getElementById('reg-nom').value,
+            apellidos: document.getElementById('reg-ape').value,
+            celular: document.getElementById('reg-cel').value,
+            pais: document.getElementById('reg-pai').value,
+            ciudad: document.getElementById('reg-ciu').value,
+            muni: document.getElementById('reg-mun').value,
+            dir: document.getElementById('reg-dir').value,
+            email: document.getElementById('reg-ema').value,
+            pass: pass,
+            fechaRegistro: new Date().toLocaleString()
+        };
+        this.usuariosDB.push(nuevoUser);
+        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+        alert("¡Registro exitoso!");
+        this.renderLogin();
+    },
 
     intentarLogin: function() {
         const email = document.getElementById('log-email').value;
@@ -1976,11 +1966,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     // Lo cerramos a la fuerza:
     const modalLogin = document.getElementById('modal-login-contenedor');
     if(modalLogin) modalLogin.style.display = 'none';
-
-
-    else if (seccion === 'admin') {
-      this.renderPanelAdmin();
-}
         
        // --- LÓGICA DE COMPRAS ---
     if(seccion === 'compras') {
@@ -2178,74 +2163,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         alert("Contraseña actualizada.");
     },
 
-renderPanelAdmin: function(filtroRastreo = "") {
-        const contenedor = document.getElementById('vista-spa-cliente');
-        let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-
-        // Lógica del Buscador
-        if (filtroRastreo) {
-            todasLasCompras = todasLasCompras.filter(c => 
-                c.idOrden.toLowerCase().includes(filtroRastreo.toLowerCase())
-            );
-        }
-
-        let htmlPedidos = "";
-        todasLasCompras.forEach((compra) => {
-            const colorEstado = compra.estado === "Enviado" ? "#2ecc71" : (compra.estado === "Cancelado" ? "#e74c3c" : "#f1c40f");
-            htmlPedidos += `
-                <div style="background:#1a1a1a; border:1px solid #333; padding:15px; border-radius:10px; margin-bottom:15px;">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div>
-                            <span style="background:${colorEstado}; color:white; padding:3px 8px; border-radius:5px; font-size:10px; font-weight:bold;">${(compra.estado || 'PENDIENTE').toUpperCase()}</span>
-                            <p style="color:white; font-weight:bold; margin-top:5px; margin-bottom:0;">${compra.idOrden}</p>
-                            <small style="color:#666;">${compra.fecha}</small>
-                        </div>
-                        <div style="text-align:right;">
-                            <p style="color:#007bff; font-weight:bold; margin:0;">RD$ ${compra.total.toLocaleString()}</p>
-                            <small style="color:#888;">${compra.usuarioEmail}</small>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:5px; margin-top:10px; border-top:1px solid #222; padding-top:10px;">
-                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Enviado')" style="flex:1; background:#2ecc71; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Enviado</button>
-                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Cancelado')" style="flex:1; background:#e74c3c; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Cancelado</button>
-                    </div>
-                </div>`;
-        });
-
-        contenedor.innerHTML = `
-            <div style="padding:20px; background:#000; min-height:100vh; color:white;">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-                    <button onclick="SistemaMoisesAuth.renderMenuFlotante()" style="background:none; border:none; color:#007bff; font-size:20px; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
-                    <h2 style="margin:0;">Panel Admin</h2>
-                </div>
-
-                <div style="margin-bottom:20px;">
-                    <input type="text" id="busqueda-admin" placeholder="Buscar por No. de Rastreo..." 
-                           value="${filtroRastreo}"
-                           style="width:100%; padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
-                    <button oninput="SistemaMoisesAuth.renderPanelAdmin(document.getElementById('busqueda-admin').value)"
-                            style="width:100%; margin-top:10px; padding:10px; background:#007bff; color:white; border:none; border-radius:8px; font-weight:bold;">
-                        BUSCAR PEDIDO
-                    </button>
-                </div>
-
-                ${htmlPedidos || '<p style="text-align:center; color:#666;">No se encontraron pedidos.</p>'}
-            </div>
-        `;
-        window.scrollTo(0,0);
-    }, // NO OLVIDES ESTA COMA
-
-cambiarEstadoPedido: function(idOrden, nuevoEstado) {
-        let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-        const index = todasLasCompras.findIndex(c => c.idOrden === idOrden);
-        if (index !== -1) {
-            todasLasCompras[index].estado = nuevoEstado;
-            localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
-            alert("Estado actualizado!");
-            this.renderPanelAdmin(document.getElementById('busqueda-admin')?.value || "");
-        }
-    },
-    
 verFactura: function(idOrden) {
         const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
         const compra = todasLasCompras.find(c => c.idOrden === idOrden);
