@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,13 +45,6 @@
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
         <span id="contador-carrito" class="badge-carrito">0</span>
-    </div>
-</button>
-      
-<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
-    <div style="position: relative; display: inline-block;">
-        <i class="fas fa-heart"></i>
-        <span id="contador-favoritos" class="badge-favoritos">0</span>
     </div>
 </button>
 </nav>   
@@ -265,7 +257,9 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
-let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
+// Variables Globales faltantes para evitar el error de consola
+let favoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
+let vistasRecientes = JSON.parse(localStorage.getItem('vistas_recientes')) || [];
 let usuarioLogueado = false;
 // Intentar cargar datos guardados o usar los de prueba si no hay nada
 let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
@@ -371,7 +365,6 @@ function navegarSPA(seccion) {
     contenedorSPA.style.display = "block";
 
     if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
-    if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -936,8 +929,6 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
-
-const modalProducto = document.getElementById("modal-producto");
 
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
@@ -1730,7 +1721,229 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
   }
 });
 </script>
-    
+
+    <script>
+// --- ESCUDO DE AUTENTICACIÓN MOISÉS CELULARES V3 ---
+const SistemaMoisesAuth = {
+    usuariosDB: JSON.parse(localStorage.getItem('usuarios_registrados')) || [],
+    sesionActiva: JSON.parse(localStorage.getItem('sesion_moises')) || null,
+
+    init: function() {
+        const btnPerfil = document.getElementById('btn-perfil');
+        if(btnPerfil) {
+            btnPerfil.onclick = (e) => { e.preventDefault(); this.abrirInterfaz(); };
+        }
+        // Si hay sesión recordada, actualizar el icono
+        if(this.sesionActiva) {
+            if(btnPerfil) btnPerfil.innerHTML = '<i class="fas fa-user-check" style="color:#007bff;"></i>';
+        }
+    },
+
+    abrirInterfaz: function() {
+        if(this.sesionActiva) this.renderMenuFlotante();
+        else { this.renderLogin(); mostrarModalLogin(); }
+    },
+
+    // --- LOGIN ---
+    renderLogin: function() {
+        const contenedor = document.querySelector('.login-card');
+        contenedor.innerHTML = `
+            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
+            <img src="./images/Logo3Expand.png" class="login-logo" alt="Logo">
+            <p style="color:white; margin-bottom:10px;"><b>MI CUENTA</b></p>
+            <input type="text" id="log-email" placeholder="Correo electrónico">
+            <input type="password" id="log-pass" placeholder="Contraseña">
+            <div style="text-align:left; font-size:12px; color:#888; margin:10px 0;">
+                <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
+            </div>
+            <button class="btn-comprar" style="width:100%" onclick="SistemaMoisesAuth.intentarLogin()">INGRESAR</button>
+            <div style="margin-top:15px; font-size:12px;">
+                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.renderRegistro()" style="color:#007bff; display:block; margin-bottom:5px;">¿No tienes cuenta? Crea una aquí</a>
+                <a href="javascript:void(0)" style="color:#888;">¿Olvidaste tu contraseña?</a>
+            </div>
+        `;
+    },
+
+    // --- REGISTRO COMPLETO ---
+    renderRegistro: function() {
+        const contenedor = document.querySelector('.login-card');
+        contenedor.innerHTML = `
+            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
+            <h2 style="color:#007bff; margin-bottom:5px;">NUEVO USUARIO</h2>
+            <p style="color:#ff4757; font-size:11px; margin-bottom:15px;">* Requerido</p>
+            
+            <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
+                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
+                <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
+                <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
+                <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
+                <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
+                
+                <select id="reg-pai" class="auth-input">
+                   <option value="">* Seleccione País</option>
+                    <option value="República Dominicana">República Dominicana</option>
+                    <option value="Estados Unidos">Estados Unidos</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                </select>
+                <input type="text" id="reg-ciu" placeholder="* Ciudad" class="auth-input">
+                <input type="text" id="reg-mun" placeholder="* Municipio" class="auth-input">
+                <input type="text" id="reg-dir" placeholder="* Direccion" class="auth-input">
+
+                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-top:15px; margin-bottom:10px; font-size:13px;">Datos de usuario</p>
+                <input type="email" id="reg-ema" placeholder="* E-mail" class="auth-input">
+                <input type="email" id="reg-con-ema" placeholder="* Confirmar e-mail" class="auth-input">
+                <input type="password" id="reg-pas" placeholder="* Contraseña" class="auth-input">
+                <input type="password" id="reg-con-pas" placeholder="* Confirmar Contraseña" class="auth-input">
+
+                <p style="color:#007bff; margin-top:10px;">Política de Privacidad</p>
+                <div class="auth-scroll-box">
+                    <strong>Política de privacidad</strong><br>
+                   En este sitio web, respetamos su información personal y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
+Privacidad de los datos personales:
+Sus datos personales le corresponden solo a usted y este sitio web es responsable de no revelar ninguna clase de información que le pertenezca (como email, números de ip, etc.), salvo su expresa autorización o fuerzas de naturaleza mayor de tipo legal que lo involucren, como hackeos o suplantaciones.
+Responsabilidad de las opiniones vertidas:
+Las publicaciones a modo de artículos (también llamados posts) son responsabilidad del autor del blog. Los comentarios, vertidos por los visitantes, son responsabilidad de ellos mismos y en caso alguno viole las reglas mínimas de respeto a los demás y a las buenas costumbres, éstos serían borrados por el editor del blog, sin esperar su consentimiento.
+Seguridad de su información personal:
+Este sitio web se hace responsable de velar por su seguridad, por la privacidad de su información y por el respeto a sus datos, de acuerdo con las limitaciones que la actual Internet nos provee, siendo conscientes que no estamos excluídos de sufrir algún ataque por parte de crackers o usuarios malintencionados que ejerzan la delincuencia informática.
+Obtención de su información:
+Todos sus datos personales consignados en este sitio son suministrados por usted mismo, haciendo uso entero de su libertad. La información aquí almacenada sólo comprende datos básicos ingresados mediante formularios de contacto, comentarios u otros similares.
+Uso de la información:
+Al proporcionarnos sus datos personales, estando de acuerdo con la Política de Privacidad aquí consignada, nos autoriza para el siguiente uso de su información: a) para el fin mismo por lo cual se ha suministrado; b) para considerarlo dentro de nuestras estadísticas de tráfico, incrementando así nuestra oferta publicitaria y de mercado; c) para orientar mejor los servicios aquí ofrecidos y valorarlos a su criterio, y d) para enviar e-mails con nuestros boletines, responder inquietudes o comentarios, y mantener informado a nuestros usuarios.
+Uso de los cookies:
+El uso de cookies y su dirección IP, tomados por este sitio, se realiza solo con la finalidad de mantenerles un sitio de acuerdo a sus preferencias locales (tales como navegador web usado, sistema operativo, ISP, etc.). Las “cookies” permiten entregar un contenido ajustado a los intereses y necesidades de nuestros usuarios/visitantes. También podrían usarse cookies de Terceros que estén presentes en este Weblog, como anunciantes o publicidad del mismo, con el único fin de proveer informaciones adicionales o relevantes a la Navegación del Usuario en este Sitio Web.
+Modificaciones a nuestras Políticas de Privacidad:
+El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
+                </div>
+               <div style="color:black; font-size:12px; margin:10px 0;">
+                    <input type="checkbox" id="reg-politicas" style="width:auto;"> He leído y acepto las políticas.
+                </div>
+            </div>
+            
+          <button onclick="SistemaMoisesAuth.ejecutarRegistro()" class="btn-listo-azul">Listo</button>
+          <button onclick="SistemaMoisesAuth.renderLogin()" style="background:none; border:none; color:#888; font-size:12px; margin-top:10px; cursor:pointer;">Volver</button>
+        `;
+    },
+
+    ejecutarRegistro: function() {
+        const pass = document.getElementById('reg-pas').value;
+        const passConf = document.getElementById('reg-con-pas').value;
+        if(pass !== passConf) return alert("Las contraseñas no coinciden");
+        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
+
+        const nuevoUser = {
+            nombre: document.getElementById('reg-nom').value,
+            apellidos: document.getElementById('reg-ape').value,
+            celular: document.getElementById('reg-cel').value,
+            pais: document.getElementById('reg-pai').value,
+            ciudad: document.getElementById('reg-ciu').value,
+            muni: document.getElementById('reg-mun').value,
+            dir: document.getElementById('reg-dir').value,
+            email: document.getElementById('reg-ema').value,
+            pass: pass,
+            fechaRegistro: new Date().toLocaleString()
+        };
+        this.usuariosDB.push(nuevoUser);
+        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+        alert("¡Registro exitoso!");
+        this.renderLogin();
+    },
+
+    intentarLogin: function() {
+        const email = document.getElementById('log-email').value;
+        const pass = document.getElementById('log-pass').value;
+        const user = this.usuariosDB.find(u => u.email === email && u.pass === pass);
+        if(user) {
+            this.sesionActiva = user;
+            user.ultimoIngreso = new Date().toLocaleString();
+            localStorage.setItem('sesion_moises', JSON.stringify(user));
+            location.reload();
+        } else alert("Datos incorrectos");
+    },
+
+    // --- MODAL FLOTANTE OSCURO ---
+    renderMenuFlotante: function() {
+        const overlay = document.createElement('div');
+        overlay.id = 'overlay-moises-perfil';
+        overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
+        overlay.innerHTML = `
+            <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
+                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
+                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
+                <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
+            </div>
+        `;
+        overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
+        document.body.appendChild(overlay);
+    },
+
+    confirmarCerrar: function() {
+        if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
+            localStorage.removeItem('sesion_moises');
+            location.reload();
+        }
+    },
+
+    // --- VISTAS SPA ---
+    irA: function(seccion) {
+        document.getElementById('overlay-moises-perfil').remove();
+        navegarSPA('perfil'); // Cambia a la vista SPA
+        const contenedor = document.getElementById('vista-spa-cliente');
+        const u = this.sesionActiva;
+
+        if(seccion === 'compras') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="navegarSPA('inicio')">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
+                    <p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        } else if(seccion === 'datos') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irA('compras')">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
+                    <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
+                    <h3 style="color:white;">HOLA, ${u.nombre}</h3>
+                    <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
+                    <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
+                    <div style="text-align:left; background:#111; padding:15px; border-radius:10px; margin:20px 0; font-size:13px; color:white;">
+                        <p><b>Nombre:</b> ${u.nombre}</p><p><b>Apellidos:</b> ${u.apellidos}</p>
+                        <p><b>Celular:</b> ${u.celular}</p><p><b>Ciudad:</b> ${u.ciudad}</p>
+                    </div>
+                    <h3 style="color:#007bff;">Contraseña</h3>
+                    <input type="password" placeholder="Contraseña actual" class="auth-input">
+                    <input type="password" placeholder="Nueva Contraseña" class="auth-input">
+                    <button class="btn-auth-listo" style="background:#007bff; border:none; padding:10px; border-radius:20px; width:100%; color:white; font-weight:bold; margin-top:10px;">Modificar</button>
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        } else if(seccion === 'favoritos') {
+            contenedor.innerHTML = `
+                <div class="auth-spa-seccion">
+                    <button class="btn-volver-atras" onclick="SistemaMoisesAuth.irA('datos')">← VOLVER ATRAS</button>
+                    <h2 style="color:#007bff; margin:15px 0;">Mis guardados y favoritos</h2>
+                    <p style="color:#888;">0 agregados</p>
+                    ${this.renderVistasRecientes()}
+                </div>`;
+        }
+    },
+
+    renderVistasRecientes: function() {
+        return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
+                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
+                    <div id="vistos-recientes-fila" style="display:flex; gap:10px; justify-content:center;">
+                        </div>
+                </div>`;
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
+</script>
+
+
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
   <div class="modal-contenido" id="modalContenido"></div>
@@ -1741,9 +1954,9 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
     <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
     <div id="carrito-contenido-izq"></div>
 </div>
-    
+
 <div id="modal-login-contenedor" class="modal-login">
-    <div class="login-card">
+    <div class="login-card" id="auth-card-container">
         <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
          <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
         <p><b>MI CUENTA</b></p>
@@ -1759,6 +1972,6 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
         </p>
     </div>
 </div>
-    
+      
   </body>
 </html>
