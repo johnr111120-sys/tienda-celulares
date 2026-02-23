@@ -1875,11 +1875,23 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     },
 
     ejecutarRegistro: function() {
-        const pass = document.getElementById('reg-pas').value;
-        const passConf = document.getElementById('reg-con-pas').value;
-        if(pass !== passConf) return alert("Las contraseñas no coinciden");
-        if(!document.getElementById('politicas.check').checked) return alert("Debe aceptar las políticas");
+       const nombre = document.querySelector('#auth-card-container input[placeholder="Nombre"]').value.trim();
+    const apellidos = document.querySelector('#auth-card-container input[placeholder="Apellidos"]').value.trim();
+    const email = document.querySelector('#auth-card-container input[placeholder="Correo electrónico"]').value.trim();
+    const pass = document.querySelector('#auth-card-container input[placeholder="Contraseña"]').value.trim();
     
+    // CORRECCIÓN AQUÍ: Usamos un selector más flexible o verificamos que exista
+    const checkPoliticas = document.getElementById('politicas-check');
+
+    if (!nombre || !apellidos || !email || !pass) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    if (!checkPoliticas || !checkPoliticas.checked) {
+        alert("Debes aceptar las políticas de privacidad.");
+        return;
+    }
         const nuevoUser = {
             nombre: document.getElementById('reg-nom').value,
             apellidos: document.getElementById('reg-ape').value,
