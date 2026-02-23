@@ -1693,8 +1693,10 @@ function navegarAFinalizarCompra() {
 
                         <div class="metodo-pago">
                             <h4>Método de Pago</h4>
+                            <label style="display: block; background: #222; padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #333;">
                             <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
                             <label><input type="radio" name="pago"> Transferencia Bancaria</label>
+                          </label>
                         </div>
 
                         <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
