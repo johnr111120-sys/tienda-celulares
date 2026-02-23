@@ -1878,7 +1878,10 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         const pass = document.getElementById('reg-pas').value;
         const passConf = document.getElementById('reg-con-pas').value;
         if(pass !== passConf) return alert("Las contraseñas no coinciden");
-        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
+       if (!checkPoliticas || !checkPoliticas.checked) {
+        alert("Debes aceptar las políticas de privacidad.");
+        return;
+    }
     
         const nuevoUser = {
             nombre: document.getElementById('reg-nom').value,
