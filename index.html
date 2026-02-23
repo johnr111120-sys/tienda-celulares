@@ -872,7 +872,8 @@ function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, cost
         fecha: new Date().toLocaleString(),
         productos: [...carritoActual],
         total: totalConEnvio,
-        envio: costoEnvio // <--- GUARDAMOS EL COSTO AQUÍ
+        envio: costoEnvio, // <--- GUARDAMOS EL COSTO AQUÍ
+        estado: "Pendiente" // <--- NUEVO: Todo pedido empieza como pendiente
     };
 
     todasLasCompras.unshift(nuevaCompra);
@@ -951,6 +952,7 @@ function abrirProducto(id) {
 
     // ... (aquí sigue el resto de tu código para abrir el modal)
     const p = productos.find(prod => prod.id == id);
+    const estaAgotado = p.stock <= 0;
     if (!p) return;
 
     // Valores por defecto al abrir
@@ -962,6 +964,18 @@ function abrirProducto(id) {
     const modal = document.getElementById("modalProducto");
     const contenedor = document.getElementById("modalContenido");
 
+   contenedor.innerHTML = `
+    ...
+    <div class="contenedor-accion-fija">
+        <button class="${estaAgotado ? 'btn-agotado' : 'btn-comprar-ahora'}" 
+                onclick="${estaAgotado ? '' : `añadirAlCarritoDesdeDetalle('${p.nombre}')`}"
+                ${estaAgotado ? 'disabled' : ''}
+                style="${estaAgotado ? 'background:#888; cursor:not-allowed;' : ''}">
+            ${estaAgotado ? 'AGOTADO' : 'COMPRAR AHORA'}
+        </button>
+    </div>
+`;
+    
     // Valores iniciales por defecto
     precioActual = p.precio;
     modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
@@ -1959,6 +1973,14 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         let contenidoCompras = `<p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
                                 <button onclick="location.reload()" class="btn-comprar" style="margin-top:10px;">Ir a la tienda</button>`;
 
+        // Dentro del mapeo de tus compras, añade este pequeño badge:
+     const colorEstado = compra.estado === "Enviado" ? "#2ecc71" : (compra.estado === "Cancelado" ? "#e74c3c" : "#f1c40f");
+
+      // Ejemplo de cómo ponerlo en el HTML de la lista:
+      `<div style="background:${colorEstado}; color:white; padding:2px 8px; border-radius:10px; font-size:10px; display:inline-block; margin-bottom:5px;">
+      ${compra.estado.toUpperCase()}
+    </div>`
+        
         if(misCompras.length > 0) {
             contenidoCompras = misCompras.map(compra => `
                 <div class="card-historial-compra" style="background:#111; border:1px solid #222; padding:15px; border-radius:12px; margin-bottom:15px; text-align:left;">
@@ -2301,6 +2323,14 @@ function toggleInfoBancaria(mostrar) {
     if (radio) radio.checked = true;
 }
     
+</script>
+
+    <script>  
+function exportarDatos() {
+    const datos = localStorage.getItem('db_compras_moises');
+    console.log("Copia este texto y guárdalo:", datos);
+    alert("Datos exportados a la consola (F12).");
+}
 </script>
       
 <!-- MODAL PRODUCTO -->
