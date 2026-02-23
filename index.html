@@ -817,6 +817,8 @@ function enviarPedidoWhatsApp(tracking) {
    const costoEnvio = parseInt(document.querySelector('input[name="envio"]:checked').value);
     const metodoTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en local";
     const totalConEnvio = calcularSubtotal() + costoEnvio;
+    const metodoPago = document.querySelector('input[name="pago"]:checked').value;
+    const pagoTexto = metodoPago === 'efectivo' ? "Efectivo contra entrega" : "Transferencia Bancaria";
     
     // --- GUARDAR EN EL HISTORIAL (REGISTRO AUTOMÁTICO) ---
     // Usamos 'tracking' que es el parámetro que recibe la función
@@ -848,6 +850,7 @@ function enviarPedidoWhatsApp(tracking) {
                     `*NOTA DEL PEDIDO:* ${notaTexto}\n` +   
                     `--------------------------\n` +
                     `*TOTAL A PAGAR:* RD$ ${totalConEnvio.toLocaleString()}\n` +
+                    `*MÉTODO DE PAGO:* ${pagoTexto}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
@@ -1660,8 +1663,7 @@ function navegarAFinalizarCompra() {
                             <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
                             <textarea id="ch-notas" placeholder="Instrucciones especiales..."></textarea>
                         </div>
-                           <label><input type="radio" name="pago" checked> ¿Enviar a una dirección diferente?</label><br>
-                    </div>
+                    </div>                        
                 </div>
 
                 <div class="checkout-col">
@@ -1693,22 +1695,25 @@ function navegarAFinalizarCompra() {
                    </label>
                    </div>
 
-                        <div class="metodo-pago" style="margin-bottom: 20px; text-align: center;">
-                            <h4>Método de Pago</h4>
+                        <div class="metodo-pago" style="margin-top:20px; text-align:center; border-top:1px solid #333; padding-top:15px;">
+                         <h4 style="color:white; margin-bottom:10px;">Método de Pago</h4>
                              <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Pago</p>
                             
                             <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                            <input type="radio" name="pago" checked>
                              <span style="color: white; margin-center: 10px;</span>
-                            <label><input name="pago"> Efectivo contra entrega</label><br>
+                            <input type="radio" name="pago" value="efectivo" onclick="toggleInfoBancaria(false)" checked> Efectivo contra entrega
                              </label>
                              
                              <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                             <input type="radio" name="pago">
                               <span style="color: white; margin-center: 10px;</span>
-                            <label><input name="pago"> Transferencia bancaria</label>
+                           <input type="radio" name="pago" value="transferencia" onclick="toggleInfoBancaria(true)"> Transferencia Bancaria
                           </label>
-                        </div>
+
+                        <div id="info-bancaria" style="display:none; background:#1a1a1a; border:1px solid #007bff; padding:15px; border-radius:8px; margin-top:10px; font-size:13px; color:#ddd; line-height:1.5;">
+                        <i class="fas fa-info-circle" style="color:#007bff; margin-right:5px;"></i>
+                         Realiza tu pago directamente en nuestra cuenta bancaria. Por favor, usa el número de <b>Rastreo del pedido</b> como referencia de pago. Tu pedido no se procesará hasta que se haya recibido el importe en nuestra cuenta.
+                       </div>
+                    </div>
 
                         <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
                             FINALIZAR LA COMPRA
@@ -2193,10 +2198,17 @@ verFactura: function(idOrden) {
             <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
                 <div style="max-width: 500px; margin: 0 auto;">
                     
+                   <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
-                            style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-                        <i class="fas fa-arrow-left"></i> VOLVER AL MENÚ
+                      style="flex: 1; background:#333; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:5px;">
+                      <i class="fas fa-bars"></i> VOLVER AL MENÚ
                     </button>
+    
+                    <button onclick="regresarALaTienda()" 
+                     style="flex: 1; background:#ff4757; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:5px;">
+                     <i class="fas fa-times"></i> CERRAR FACTURA
+                    </button>
+                   </div>
 
                     <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                         <div style="text-align:center; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-bottom: 20px;">
@@ -2285,6 +2297,15 @@ function actualizarResumenFactura() {
     }
 }
     
+</script>
+
+<script>
+function toggleInfoBancaria(mostrar) {
+    const cuadroInfo = document.getElementById('info-bancaria');
+    if (cuadroInfo) {
+        cuadroInfo.style.display = mostrar ? 'block' : 'none';
+    }
+}
 </script>
       
 <!-- MODAL PRODUCTO -->
