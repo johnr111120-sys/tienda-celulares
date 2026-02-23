@@ -7,6 +7,7 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 12000,
+    "STOCK": 10,
     "imagen": "images/iphone11.jpg",
     "modelos": [
       { "nombre": "64GB", "precio": 12000 },
@@ -28,6 +29,7 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 19000,
+    "STOCK": 10,
     "imagen": "images/iphone14promax.jpg",
     "modelos": [
       { "nombre": "128GB", "precio": 19000 },
@@ -49,6 +51,7 @@
     "categoria": "Celulares",
     "subcategoria": "Iphone",
     "precio": 50000,
+    "STOCK": 10,
     "imagen": "images/iphone17promax.jpg",
     "modelos": [
       { "nombre": "256GB", "precio": 50000 },
@@ -68,6 +71,7 @@
     "categoria": "Celulares",
     "subcategoria": "Samsung",
     "precio": 8000,
+    "STOCK": 10,
     "imagen": "images/cell9.jpg"
   },
   {
@@ -88,6 +92,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
+    "STOCK": 20,
     "imagen": "images/accesorios9.jpg",
     "modelos": [
       { "nombre": "11 Pro Max", "precio": 500 },
@@ -112,6 +117,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
+    "STOCK": 20,
     "imagen": "images/accesorios19.jpg",
     "modelos": [
       { "nombre": "Iphone 6", "precio": 300 },
@@ -134,6 +140,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Covers",
     "precio": 500,
+    "STOCK": 20,
     "imagen": "images/accesorios6.jpg",
     "modelos": [
       { "nombre": "Iphone 7", "precio": 300 },
@@ -158,6 +165,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Audifonos",
     "precio": 1500,
+    "STOCK": 10,
     "imagen": "images/accesorios13.jpg"
   },
   {
@@ -168,6 +176,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Smartwatch",
     "precio": 3500,
+    "STOCK": 10,
     "imagen": "images/accesorios14.jpg",
     "colores": [
     { "nombre": "Plateado", "codigo":"#E0E0E0","imagen":"images/appleserie3plateado.jpg"},
@@ -183,6 +192,7 @@
     "categoria": "Accesorios",
     "subcategoria": "Usb",
     "precio": 500,
+    "STOCK": 30,
     "imagen": "images/accesorios1.jpg",
     "modelos": [
       { "nombre": "25GB", "precio": 250 },
@@ -199,6 +209,7 @@
     "categoria": "Tablets",
     "subcategoria": "Ipad",
     "precio": 18000,
+    "STOCK": 5,
     "imagen": "images/tablet2.jpg"
   },
   {
@@ -209,6 +220,7 @@
     "categoria": "Tablets",
     "subcategoria": "Android",
     "precio": 8000,
+    "STOCK": 5,
     "imagen": "images/tablet1.jpg"
   }
 ]
