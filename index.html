@@ -801,40 +801,28 @@ function generarNumeroRastreo() {
 }
       
 function enviarPedidoWhatsApp(tracking) {
-    // 1. Obtener valores del formulario
+    // ... (tus capturas de nombre, apellido, etc.)
     const nombre = document.getElementById("ch-nombre").value.trim();
     const apellido = document.getElementById("ch-apellido").value.trim();
     const telefono = document.getElementById("ch-telefono").value.trim();
     const ciudad = document.getElementById("ch-ciudad").value.trim();
     const direccion = document.getElementById("ch-direccion").value.trim();
 
-    if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
-        alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
-        return;
-    }
-
-    // 2. Capturar Método de Envío y Pago
+    // CAPTURA CORRECTA DE ENVÍO Y PAGO
     const radioEnvio = document.querySelector('input[name="envio"]:checked');
     const costoEnvio = radioEnvio ? parseInt(radioEnvio.value) : 0;
     const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en el local";
 
+    // CORRECCIÓN AQUÍ: Capturamos el método de pago por el radio seleccionado
     const radioPago = document.querySelector('input[name="pago"]:checked');
     const metodoPagoTexto = (radioPago && radioPago.value === "transferencia") ? "Transferencia Bancaria" : "Efectivo contra entrega";
 
-    // 3. Calcular Totales correctamente
-    const subtotalVenta = calcularSubtotal(); 
-    const totalFinal = subtotalVenta + costoEnvio; // <--- AQUÍ SE DEFINE totalVenta
+    const subtotalVenta = calcularSubtotal();
+    const totalFinal = subtotalVenta + costoEnvio;
 
-    // 4. Preparar lista de productos
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
-    
-    let notaTexto = "Sin notas";
-    const inputNota = document.getElementById("ch-notas");
-    if(inputNota && inputNota.value.trim() !== "") {
-        notaTexto = inputNota.value.trim();
-    }
+    let notaTexto = document.getElementById("ch-notas")?.value.trim() || "Sin notas";
 
-    // 5. Crear el mensaje para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
                     `*Rastreo:* ${tracking}\n` +
                     `--------------------------\n` +
@@ -854,15 +842,13 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
-    // 6. Registro en el historial y Envío
+   // IMPORTANTE: Guardamos el costo de envío en el objeto de la compra para la factura
     if (typeof registrarCompraEnPerfil === "function") {
         registrarCompraEnPerfil(carrito, totalFinal, tracking, costoEnvio);
     }
 
-    const numWhatsApp = "18292017321"; 
-    const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-    
-    window.open(url, '_blank');
+    const numWhatsApp = "18292017321";
+    window.open(`https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
     
     // 7. Limpieza
     carrito = [];
@@ -2174,30 +2160,27 @@ verFactura: function(idOrden) {
         const contenedor = document.getElementById('vista-spa-cliente');
         
         // --- Lógica de limpieza para evitar NaN ---
-        let filasHtml = "";
-        if (compra.productos && Array.isArray(compra.productos)) {
-            compra.productos.forEach(p => {
-                let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
-                let pCant = parseInt(p.cantidad) || 1;
-                let sub = (pPrecio || 0) * pCant;
-
-                filasHtml += `
-                    <tr>
-                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-size:12px;">
-                            <span style="font-weight:bold;">${pCant}x</span> ${p.nombre}
-                        </td>
-                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right; font-size:12px;">
-                            RD$ ${sub.toLocaleString()}
-                        </td>
-                    </tr>`;
-            });
-        }
+       let filasHtml = "";
+    compra.productos.forEach(p => {
+        let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
+        filasHtml += `
+            <tr>
+                <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px;">1x ${p.nombre}</td>
+                <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">RD$ ${pPrecio.toLocaleString()}</td>
+            </tr>`;
+    });
 
          // --- NUEVA LÓGICA PARA LA FILA DE ENVÍO ---
     // Calculamos si hubo envío restando el subtotal de productos al total guardado
     const subtotalProductos = compra.productos.reduce((acc, p) => acc + (parseFloat(String(p.precio).replace(/[^0-9.]/g, '')) * p.cantidad), 0);
     const montoEnvio = compra.total - subtotalProductos;
     const textoEnvio = montoEnvio > 0 ? `RD$ ${montoEnvio.toLocaleString()}` : "Gratis";
+
+    filasHtml += `
+        <tr>
+            <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px; color: #666;"><i>Envío / Entrega</i></td>
+            <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">${textoEnvio}</td>
+        </tr>`;
     
         contenedor.innerHTML = `
             <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
