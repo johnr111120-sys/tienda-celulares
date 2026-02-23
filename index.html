@@ -1925,40 +1925,22 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
 
     // --- MODAL FLOTANTE OSCURO ---
     renderMenuFlotante: function() {
-    const contenedor = document.getElementById('vista-spa-cliente');
-    if (!contenedor) return;
-
-    // Verificamos si hay sesión, si no, ponemos datos genéricos
-    const nombreUsuario = this.sesionActiva ? this.sesionActiva.nombre : "Usuario";
-    const inicial = nombreUsuario.charAt(0).toUpperCase();
-
-    contenedor.innerHTML = `
-        <div class="perfil-spa-contenedor" style="background:#000; min-height:100vh; padding:20px; color:white; font-family:sans-serif;">
-            <div style="text-align:center; margin-bottom:30px;">
-                <div style="width:80px; height:80px; background:#333; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:30px; border:2px solid #007bff;">
-                    ${inicial}
-                </div>
-                <h2 style="margin:0;">Hola, ${nombreUsuario}</h2>
-                <p style="color:#888; font-size:14px;">Bienvenido a tu panel de control</p>
+        const overlay = document.createElement('div');
+        overlay.id = 'overlay-moises-perfil';
+        overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
+        overlay.innerHTML = `
+            <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
+                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
+                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva ? this.sesionActiva.nombre : 'Invitado'}</p>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
+                <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
             </div>
-
-            <div style="display:grid; gap:15px; max-width:400px; margin:0 auto;">
-                <button onclick="regresarALaTienda()" class="opcion-perfil-spa" style="background:#222; color:white; border:none; padding:15px; border-radius:10px; text-align:left; cursor:pointer;">
-                    <i class="fas fa-shopping-bag" style="color:#007bff; margin-right:10px;"></i> Volver a la Tienda
-                </button>
-
-                <button onclick="SistemaMoisesAuth.irA('compras')" class="opcion-perfil-spa" style="background:#222; color:white; border:none; padding:15px; border-radius:10px; text-align:left; cursor:pointer;">
-                    <i class="fas fa-history" style="color:#007bff; margin-right:10px;"></i> Mis Compras
-                </button>
-
-                <button onclick="SistemaMoisesAuth.cerrarSesion()" class="opcion-perfil-spa" style="background:#222; color:#ff4757; border:none; padding:15px; border-radius:10px; text-align:left; cursor:pointer; margin-top:20px;">
-                    <i class="fas fa-sign-out-alt" style="margin-right:10px;"></i> Cerrar Sesión
-                </button>
-            </div>
-        </div>
-    `;
-},
-
+        `;
+        overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
+        document.body.appendChild(overlay);
+    },
     confirmarCerrar: function() {
         if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
             localStorage.removeItem('sesion_moises');
