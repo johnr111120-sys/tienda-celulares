@@ -1879,19 +1879,7 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         const passConf = document.getElementById('reg-con-pas').value;
         if(pass !== passConf) return alert("Las contraseñas no coinciden");
         if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
-        
-        if (!nombre || !apellidos || !email || !pass) {
-        alert("Por favor, completa todos los campos.");
-        return;
-    }
-        if(pass !== passConf) {
-        alert("Las contraseñas no coinciden");
-        return;
-    }
-        if(!document.getElementById('reg-chk').checked) {
-        alert("Debe aceptar las políticas");
-        return;
-    }
+    
         const nuevoUser = {
             nombre: document.getElementById('reg-nom').value,
             apellidos: document.getElementById('reg-ape').value,
