@@ -816,14 +816,14 @@ function enviarPedidoWhatsApp(tracking) {
     // 2. Capturar Método de Envío y Pago
     const radioEnvio = document.querySelector('input[name="envio"]:checked');
     const costoEnvio = radioEnvio ? parseInt(radioEnvio.value) : 0;
-    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio (RD$ 50)" : "Retiro en el local (Gratis)";
+    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en el local";
 
     const radioPago = document.querySelector('input[name="pago"]:checked');
     const metodoPagoTexto = (radioPago && radioPago.value === "transferencia") ? "Transferencia Bancaria" : "Efectivo contra entrega";
 
     // 3. Calcular Totales correctamente
     const subtotalVenta = calcularSubtotal(); 
-    const totalVenta = subtotalVenta + costoEnvio; // <--- AQUÍ SE DEFINE totalVenta
+    const totalFinal = subtotalVenta + costoEnvio; // <--- AQUÍ SE DEFINE totalVenta
 
     // 4. Preparar lista de productos
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
@@ -856,7 +856,7 @@ function enviarPedidoWhatsApp(tracking) {
 
     // 6. Registro en el historial y Envío
     if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carrito, totalVenta, tracking);
+        registrarCompraEnPerfil(carrito, totalFinal, tracking, costoEnvio);
     }
 
     const numWhatsApp = "18292017321"; 
@@ -874,7 +874,7 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
       
-function registrarCompraEnPerfil(carritoActual, total, trackingNum) {
+function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum) {
     const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
     if (!sesion) return;
 
@@ -885,7 +885,7 @@ function registrarCompraEnPerfil(carritoActual, total, trackingNum) {
         idOrden: trackingNum,
         fecha: new Date().toLocaleString(),
         productos: [...carritoActual],
-        total: total
+        total: totalConEnvio // Guardamos el total final que ya incluye los 50 o 0
     };
 
     todasLasCompras.unshift(nuevaCompra);
@@ -2192,7 +2192,13 @@ verFactura: function(idOrden) {
                     </tr>`;
             });
         }
-        
+
+         // --- NUEVA LÓGICA PARA LA FILA DE ENVÍO ---
+    // Calculamos si hubo envío restando el subtotal de productos al total guardado
+    const subtotalProductos = compra.productos.reduce((acc, p) => acc + (parseFloat(String(p.precio).replace(/[^0-9.]/g, '')) * p.cantidad), 0);
+    const montoEnvio = compra.total - subtotalProductos;
+    const textoEnvio = montoEnvio > 0 ? `RD$ ${montoEnvio.toLocaleString()}` : "Gratis";
+    
         contenedor.innerHTML = `
             <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
                 <div style="max-width: 500px; margin: 0 auto;">
