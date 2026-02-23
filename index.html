@@ -1910,22 +1910,53 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     },
 
     // --- MODAL FLOTANTE OSCURO ---
-    renderMenuFlotante: function() {
-        const overlay = document.createElement('div');
-        overlay.id = 'overlay-moises-perfil';
-        overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
-        overlay.innerHTML = `
-            <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
-                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
-                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
-                <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
+   renderMenuFlotante: function() {
+        // 1. Intentamos obtener la sesión si por alguna razón this.sesionActiva falló
+        if (!this.sesionActiva) {
+            this.sesionActiva = JSON.parse(localStorage.getItem('sesion_moises'));
+        }
+
+        const contenedor = document.getElementById('vista-spa-cliente');
+        if (!contenedor) return;
+
+        // 2. Definimos datos por defecto para evitar el "undefined"
+        const usuario = this.sesionActiva || { nombre: "Invitado", apellidos: "" };
+        const nombreMostrar = usuario.nombre || "Invitado";
+        const inicial = nombreMostrar.charAt(0).toUpperCase();
+
+        contenedor.innerHTML = `
+            <div class="perfil-spa-contenedor" style="background:#000; min-height:100vh; padding:20px; color:white; font-family:sans-serif;">
+                
+                <div style="text-align:center; margin-bottom:30px; padding-top:20px;">
+                    <div style="width:70px; height:70px; background:#222; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:28px; border:2px solid #007bff; color:#007bff; font-weight:bold;">
+                        ${inicial}
+                    </div>
+                    <h2 style="margin:0; font-size:20px;">Hola, ${nombreMostrar}</h2>
+                    <p style="color:#666; font-size:13px; margin-top:5px;">Gestiona tus pedidos y cuenta</p>
+                </div>
+
+                <div style="display:grid; gap:12px; max-width:400px; margin:0 auto;">
+                    <button onclick="regresarALaTienda()" style="background:#111; color:white; border:1px solid #333; padding:15px; border-radius:12px; text-align:left; cursor:pointer; display:flex; align-items:center; gap:12px;">
+                        <i class="fas fa-store" style="color:#007bff;"></i> Volver a la Tienda
+                    </button>
+
+                    <button onclick="SistemaMoisesAuth.irA('compras')" style="background:#111; color:white; border:1px solid #333; padding:15px; border-radius:12px; text-align:left; cursor:pointer; display:flex; align-items:center; gap:12px;">
+                        <i class="fas fa-shopping-bag" style="color:#007bff;"></i> Mis Compras
+                    </button>
+
+                    ${usuario.email === 'johnr111120@gmail.com' ? `
+                        <button onclick="SistemaMoisesAuth.irA('admin')" style="background:#111; color:#f1c40f; border:1px solid #333; padding:15px; border-radius:12px; text-align:left; cursor:pointer; display:flex; align-items:center; gap:12px;">
+                            <i class="fas fa-user-shield"></i> Panel Administrador
+                        </button>
+                    ` : ''}
+
+                    <button onclick="SistemaMoisesAuth.cerrarSesion()" style="background:none; color:#ff4757; border:none; padding:15px; border-radius:12px; text-align:center; cursor:pointer; font-weight:bold; margin-top:20px;">
+                        <i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN
+                    </button>
+                </div>
             </div>
         `;
-        overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
-        document.body.appendChild(overlay);
+        window.scrollTo(0,0);
     },
 
     confirmarCerrar: function() {
