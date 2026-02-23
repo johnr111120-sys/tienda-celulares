@@ -872,7 +872,8 @@ function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, cost
         fecha: new Date().toLocaleString(),
         productos: [...carritoActual],
         total: totalConEnvio,
-        envio: costoEnvio // <--- GUARDAMOS EL COSTO AQUÍ
+        envio: costoEnvio, // <--- GUARDAMOS EL COSTO AQUÍ
+        estado: "Pendiente" // <-- ASEGÚRATE DE QUE ESTO ESTÉ AQUÍ
     };
 
     todasLasCompras.unshift(nuevaCompra);
@@ -1966,6 +1967,12 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     // Lo cerramos a la fuerza:
     const modalLogin = document.getElementById('modal-login-contenedor');
     if(modalLogin) modalLogin.style.display = 'none';
+
+    else if (pagina === 'admin') {
+      this.renderPanelAdmin();
+}
+
+
         
        // --- LÓGICA DE COMPRAS ---
     if(seccion === 'compras') {
@@ -2163,6 +2170,75 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         alert("Contraseña actualizada.");
     },
 
+renderPanelAdmin: function(filtroRastreo = "") {
+        const contenedor = document.getElementById('vista-spa-cliente');
+        let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
+
+        // Lógica del Buscador
+        if (filtroRastreo) {
+            todasLasCompras = todasLasCompras.filter(c => 
+                c.idOrden.toLowerCase().includes(filtroRastreo.toLowerCase())
+            );
+        }
+
+        let htmlPedidos = "";
+        todasLasCompras.forEach((compra) => {
+            const colorEstado = compra.estado === "Enviado" ? "#2ecc71" : (compra.estado === "Cancelado" ? "#e74c3c" : "#f1c40f");
+            htmlPedidos += `
+                <div style="background:#1a1a1a; border:1px solid #333; padding:15px; border-radius:10px; margin-bottom:15px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <span style="background:${colorEstado}; color:white; padding:3px 8px; border-radius:5px; font-size:10px; font-weight:bold;">${(compra.estado || 'PENDIENTE').toUpperCase()}</span>
+                            <p style="color:white; font-weight:bold; margin-top:5px; margin-bottom:0;">${compra.idOrden}</p>
+                            <small style="color:#666;">${compra.fecha}</small>
+                        </div>
+                        <div style="text-align:right;">
+                            <p style="color:#007bff; font-weight:bold; margin:0;">RD$ ${compra.total.toLocaleString()}</p>
+                            <small style="color:#888;">${compra.usuarioEmail}</small>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:5px; margin-top:10px; border-top:1px solid #222; padding-top:10px;">
+                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Enviado')" style="flex:1; background:#2ecc71; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Enviado</button>
+                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Cancelado')" style="flex:1; background:#e74c3c; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Cancelado</button>
+                    </div>
+                </div>`;
+        });
+
+        contenedor.innerHTML = `
+            <div style="padding:20px; background:#000; min-height:100vh; color:white;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+                    <button onclick="SistemaMoisesAuth.renderMenuFlotante()" style="background:none; border:none; color:#007bff; font-size:20px; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+                    <h2 style="margin:0;">Panel Admin</h2>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <input type="text" id="busqueda-admin" placeholder="Buscar por No. de Rastreo..." 
+                           value="${filtroRastreo}"
+                           style="width:100%; padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
+                    <button oninput="SistemaMoisesAuth.renderPanelAdmin(document.getElementById('busqueda-admin').value)"
+                            style="width:100%; margin-top:10px; padding:10px; background:#007bff; color:white; border:none; border-radius:8px; font-weight:bold;">
+                        BUSCAR PEDIDO
+                    </button>
+                </div>
+
+                ${htmlPedidos || '<p style="text-align:center; color:#666;">No se encontraron pedidos.</p>'}
+            </div>
+        `;
+        window.scrollTo(0,0);
+    }, // NO OLVIDES ESTA COMA
+
+cambiarEstadoPedido: function(idOrden, nuevoEstado) {
+        let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
+        const index = todasLasCompras.findIndex(c => c.idOrden === idOrden);
+        if (index !== -1) {
+            todasLasCompras[index].estado = nuevoEstado;
+            localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
+            alert("Estado actualizado!");
+            this.renderPanelAdmin(document.getElementById('busqueda-admin')?.value || "");
+        }
+    },
+
+    
 verFactura: function(idOrden) {
         const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
         const compra = todasLasCompras.find(c => c.idOrden === idOrden);
