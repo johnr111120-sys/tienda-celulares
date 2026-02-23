@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,6 +46,13 @@
     <div style="position: relative; display: inline-block;">
         <i class="fas fa-shopping-cart"></i>
         <span id="contador-carrito" class="badge-carrito">0</span>
+    </div>
+</button>
+      
+<button id="btn-favoritos-nav" class="nav-icon" onclick="navegarSPA('favoritos')">
+    <div style="position: relative; display: inline-block;">
+        <i class="fas fa-heart"></i>
+        <span id="contador-favoritos" class="badge-favoritos">0</span>
     </div>
 </button>
 </nav>   
@@ -257,9 +265,7 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
-// Variables Globales faltantes para evitar el error de consola
-let favoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
-let vistasRecientes = JSON.parse(localStorage.getItem('vistas_recientes')) || [];
+let favoritos = JSON.parse(localStorage.getItem("mis_favoritos")) || [];
 let usuarioLogueado = false;
 // Intentar cargar datos guardados o usar los de prueba si no hay nada
 let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
@@ -365,6 +371,7 @@ function navegarSPA(seccion) {
     contenedorSPA.style.display = "block";
 
     if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
+    if (seccion === 'favoritos') renderizarFavoritos(contenedorSPA);
     
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -420,9 +427,16 @@ function toggleFavorito(idProducto, evento) {
     // Si estamos en la vista de favoritos, refrescarla de inmediato
     if (document.getElementById("vista-spa-cliente").style.display === "block") {
         renderizarFavoritos(document.getElementById("vista-spa-cliente"));
+    
+function toggleFavorito(idProducto, evento) {
+    // ... (todo tu código anterior de agregar/quitar favoritos) ...
+
+    // Al final, añade esto:
+    actualizarContadorFavoritos();
+   }
   }
 }
-    
+
 function actualizarContadorFavoritos() {
     const contador = document.getElementById("contador-favoritos");
     if (!contador) return;
@@ -801,7 +815,6 @@ function generarNumeroRastreo() {
 }
       
 function enviarPedidoWhatsApp(tracking) {
-    // 1. Obtener valores del formulario
     const nombre = document.getElementById("ch-nombre").value.trim();
     const apellido = document.getElementById("ch-apellido").value.trim();
     const telefono = document.getElementById("ch-telefono").value.trim();
@@ -813,22 +826,27 @@ function enviarPedidoWhatsApp(tracking) {
         return;
     }
 
-    // 2. Definir el total correctamente (Calculándolo en el momento)
-    const totalVenta = calcularSubtotal(); 
-
-    // --- GUARDAR EN EL HISTORIAL (REGISTRO AUTOMÁTICO) ---
-    // Usamos 'tracking' que es el parámetro que recibe la función
-    if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carrito, totalVenta, tracking);
+    // --- NUEVO: GUARDAR EN EL HISTORIAL DEL PERFIL ---
+    if (usuarioLogueado) {
+        const nuevoPedido = {
+            id: tracking, // Usamos el número de rastreo como ID de pedido
+            fecha: new Date().toLocaleDateString(), // Fecha de hoy
+            total: calcularSubtotal().toLocaleString(),
+            estado: "Pendiente" // Estado inicial
+        };
+        
+        // Lo agregamos al principio de la lista
+        datosUsuario.historial.unshift(nuevoPedido);
+        
+        // Opcional: Guardar en localStorage para que no se borre al recargar
+        localStorage.setItem("datos_usuario_moises", JSON.stringify(datosUsuario));
     }
+    // ------------------------------------------------
 
-    // 3. Preparar lista de productos para el mensaje
+    // Preparar y enviar a WhatsApp (tu código anterior)
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${parseInt(p.precio).toLocaleString()})`).join('\n');
     
-    // 4. Obtener nota (si existe la función)
-    const notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
-
-    // 5. Crear el mensaje para WhatsApp
+    // 4. Creamos el mensaje profesional para WhatsApp
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
                     `*Rastreo:* ${tracking}\n` +
                     `--------------------------\n` +
@@ -839,53 +857,26 @@ function enviarPedidoWhatsApp(tracking) {
                     `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
-                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +        
-                    `--------------------------\n` +
-                    `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
+                    `*TOTAL A PAGAR:* RD$ ${calcularSubtotal().toLocaleString()}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
-    // 6. Enviar a WhatsApp
+   // 5. Abrimos WhatsApp en una nueva pestaña
     const numWhatsApp = "59891547599"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-    
-    // Abrimos WhatsApp
     window.open(url, '_blank');
     
-    // 7. Limpieza y Finalización
+    // Limpieza
     carrito = [];
     localStorage.removeItem("carrito_compras");
-    if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
-    if (typeof renderizarCarrito === "function") renderizarCarrito();
+    actualizarContadorCarrito();
+    renderizarCarrito();
     
     alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
-    
-    // Mandar a la sección de compras para que vea su factura de una vez
-    if (SistemaMoisesAuth.sesionActiva) {
-        SistemaMoisesAuth.irA('compras');
-    } else {
-        location.reload();
-    }
+    window.location.hash = "#/";
+    location.reload();
 }
-      
-function registrarCompraEnPerfil(carritoActual, total, trackingNum) {
-    const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
-    if (!sesion) return;
 
-    let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-
-    const nuevaCompra = {
-        usuarioEmail: sesion.email,
-        idOrden: trackingNum,
-        fecha: new Date().toLocaleString(),
-        productos: [...carritoActual],
-        total: total
-    };
-
-    todasLasCompras.unshift(nuevaCompra);
-    localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
-}
-      
 function crearContenedorSPA() {
     const div = document.createElement("div");
     div.id = "vista-spa-cliente";
@@ -945,6 +936,8 @@ imgModal.addEventListener("click", e=>{
 </script>
 
 <script>
+
+const modalProducto = document.getElementById("modal-producto");
 
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
@@ -1647,9 +1640,9 @@ function navegarAFinalizarCompra() {
                         <div class="form-grid">
                             <input type="text" id="ch-nombre" placeholder="Nombre *">
                             <input type="text" id="ch-apellido" placeholder="Apellido *">
-                            <input type="text" id="ch-cedula" placeholder="Documento Identidad *">
+                            <input type="text" id="ch-cedula" placeholder="Documento Identidad">
                             <input type="text" id="ch-telefono" placeholder="Teléfono *">
-                            <input type="text" id="ch-correo" placeholder="Correo *">
+                            <input type="email" id="ch-email" placeholder="Email *">
                             <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
                             <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
                             <textarea id="ch-notas" placeholder="Notas del pedido (opcional)" rows="2"></textarea>
@@ -1686,19 +1679,8 @@ function navegarAFinalizarCompra() {
         </div>
     `;
     window.scrollTo({ top: 0, behavior: "smooth" });
-    // Después de renderizar el HTML en navegarAFinalizarCompra:
-const u = SistemaMoisesAuth.sesionActiva;
-if(u) {
-    document.getElementById('ch-nombre').value = u.nombre || '';
-    document.getElementById('ch-apellido').value = u.apellidos || '';
-    document.getElementById('ch-documento').value = u.documento || '';
-    document.getElementById('ch-telefono').value = u.celular || '';
-    document.getElementById('ch-email').value = u.email || '';
-    document.getElementById('ch-ciudad').value = u.ciudad || '';
-    document.getElementById('ch-direccion').value = u.dir || '';
-  }
 }
-         
+
 function regresarALaTienda() {
     // 1. Mostrar de nuevo la tienda
     document.getElementById("vista-inicio").style.display = "block";
@@ -1748,485 +1730,7 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
   }
 });
 </script>
-
-    <script>
-// --- ESCUDO DE AUTENTICACIÓN MOISÉS CELULARES V3 ---
-const SistemaMoisesAuth = {
-    usuariosDB: JSON.parse(localStorage.getItem('usuarios_registrados')) || [],
-    sesionActiva: JSON.parse(localStorage.getItem('sesion_moises')) || null,
-
-    init: function() {
-        const btnPerfil = document.getElementById('btn-perfil');
-        if(btnPerfil) {
-            btnPerfil.onclick = (e) => { e.preventDefault(); this.abrirInterfaz(); };
-        }
-        // Si hay sesión recordada, actualizar el icono
-        if(this.sesionActiva) {
-            if(btnPerfil) btnPerfil.innerHTML = '<i class="fas fa-user-check" style="color:#007bff;"></i>';
-        }
-    },
-
-    abrirInterfaz: function() {
-        if(this.sesionActiva) this.renderMenuFlotante();
-        else { this.renderLogin(); mostrarModalLogin(); }
-    },
-
-    // --- LOGIN ---
-    renderLogin: function() {
-        const contenedor = document.querySelector('.login-card');
-        contenedor.innerHTML = `
-            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
-            <img src="./images/Logo3Expand.png" class="login-logo" alt="Logo">
-            <p style="color:white; margin-bottom:10px;"><b>MI CUENTA</b></p>
-            <input type="text" id="log-email" placeholder="Correo electrónico">
-            <input type="password" id="log-pass" placeholder="Contraseña">
-            <div style="text-align:left; font-size:12px; color:#888; margin:10px 0;">
-                <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
-            </div>
-            <button class="btn-comprar" style="width:100%" onclick="SistemaMoisesAuth.intentarLogin()">INGRESAR</button>
-            <div style="margin-top:15px; font-size:12px;">
-                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.renderRegistro()" style="color:#007bff; display:block; margin-bottom:5px;">¿No tienes cuenta? Crea una aquí</a>
-                <a href="javascript:void(0)" style="color:#888;">¿Olvidaste tu contraseña?</a>
-            </div>
-        `;
-    },
-
-    // --- REGISTRO COMPLETO ---
-    renderRegistro: function() {
-        const contenedor = document.querySelector('.login-card');
-        contenedor.innerHTML = `
-            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
-            <h2 style="color:#007bff; margin-bottom:5px;">NUEVO USUARIO</h2>
-            <p style="color:#ff4757; font-size:11px; margin-bottom:15px;">* Requerido</p>
-            
-            <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
-                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
-                <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
-                <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
-                <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
-                <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
-                
-                <select id="reg-pai" class="auth-input">
-                   <option value="">* Seleccione País</option>
-                    <option value="República Dominicana">República Dominicana</option>
-                    <option value="Estados Unidos">Estados Unidos</option>
-                    <option value="Puerto Rico">Puerto Rico</option>
-                </select>
-                <input type="text" id="reg-ciu" placeholder="* Ciudad" class="auth-input">
-                <input type="text" id="reg-mun" placeholder="* Municipio" class="auth-input">
-                <input type="text" id="reg-dir" placeholder="* Direccion" class="auth-input">
-
-                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-top:15px; margin-bottom:10px; font-size:13px;">Datos de usuario</p>
-                <input type="email" id="reg-ema" placeholder="* E-mail" class="auth-input">
-                <input type="email" id="reg-con-ema" placeholder="* Confirmar e-mail" class="auth-input">
-                <input type="password" id="reg-pas" placeholder="* Contraseña" class="auth-input">
-                <input type="password" id="reg-con-pas" placeholder="* Confirmar Contraseña" class="auth-input">
-
-                <p style="color:#007bff; margin-top:10px;">Política de Privacidad</p>
-                <div class="auth-scroll-box">
-                    <strong>Política de privacidad</strong><br>
-                   En este sitio web, respetamos su información personal y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
-Privacidad de los datos personales:
-Sus datos personales le corresponden solo a usted y este sitio web es responsable de no revelar ninguna clase de información que le pertenezca (como email, números de ip, etc.), salvo su expresa autorización o fuerzas de naturaleza mayor de tipo legal que lo involucren, como hackeos o suplantaciones.
-Responsabilidad de las opiniones vertidas:
-Las publicaciones a modo de artículos (también llamados posts) son responsabilidad del autor del blog. Los comentarios, vertidos por los visitantes, son responsabilidad de ellos mismos y en caso alguno viole las reglas mínimas de respeto a los demás y a las buenas costumbres, éstos serían borrados por el editor del blog, sin esperar su consentimiento.
-Seguridad de su información personal:
-Este sitio web se hace responsable de velar por su seguridad, por la privacidad de su información y por el respeto a sus datos, de acuerdo con las limitaciones que la actual Internet nos provee, siendo conscientes que no estamos excluídos de sufrir algún ataque por parte de crackers o usuarios malintencionados que ejerzan la delincuencia informática.
-Obtención de su información:
-Todos sus datos personales consignados en este sitio son suministrados por usted mismo, haciendo uso entero de su libertad. La información aquí almacenada sólo comprende datos básicos ingresados mediante formularios de contacto, comentarios u otros similares.
-Uso de la información:
-Al proporcionarnos sus datos personales, estando de acuerdo con la Política de Privacidad aquí consignada, nos autoriza para el siguiente uso de su información: a) para el fin mismo por lo cual se ha suministrado; b) para considerarlo dentro de nuestras estadísticas de tráfico, incrementando así nuestra oferta publicitaria y de mercado; c) para orientar mejor los servicios aquí ofrecidos y valorarlos a su criterio, y d) para enviar e-mails con nuestros boletines, responder inquietudes o comentarios, y mantener informado a nuestros usuarios.
-Uso de los cookies:
-El uso de cookies y su dirección IP, tomados por este sitio, se realiza solo con la finalidad de mantenerles un sitio de acuerdo a sus preferencias locales (tales como navegador web usado, sistema operativo, ISP, etc.). Las “cookies” permiten entregar un contenido ajustado a los intereses y necesidades de nuestros usuarios/visitantes. También podrían usarse cookies de Terceros que estén presentes en este Weblog, como anunciantes o publicidad del mismo, con el único fin de proveer informaciones adicionales o relevantes a la Navegación del Usuario en este Sitio Web.
-Modificaciones a nuestras Políticas de Privacidad:
-El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
-                </div>
-               <div style="color:black; font-size:12px; margin:10px 0;">
-                    <input type="checkbox" id="reg-politicas" style="width:auto;"> He leído y acepto las políticas.
-                </div>
-            </div>
-            
-          <button onclick="SistemaMoisesAuth.ejecutarRegistro()" class="btn-listo-azul">Listo</button>
-          <button onclick="SistemaMoisesAuth.renderLogin()" style="background:none; border:none; color:#888; font-size:12px; margin-top:10px; cursor:pointer;">Volver</button>
-        `;
-    },
-
-    ejecutarRegistro: function() {
-        const pass = document.getElementById('reg-pas').value;
-        const passConf = document.getElementById('reg-con-pas').value;
-        if(pass !== passConf) return alert("Las contraseñas no coinciden");
-        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
-
-        const nuevoUser = {
-            nombre: document.getElementById('reg-nom').value,
-            apellidos: document.getElementById('reg-ape').value,
-            celular: document.getElementById('reg-cel').value,
-            pais: document.getElementById('reg-pai').value,
-            ciudad: document.getElementById('reg-ciu').value,
-            muni: document.getElementById('reg-mun').value,
-            dir: document.getElementById('reg-dir').value,
-            email: document.getElementById('reg-ema').value,
-            pass: pass,
-            fechaRegistro: new Date().toLocaleString()
-        };
-        this.usuariosDB.push(nuevoUser);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        alert("¡Registro exitoso!");
-        this.renderLogin();
-    },
-
-    intentarLogin: function() {
-        const email = document.getElementById('log-email').value;
-        const pass = document.getElementById('log-pass').value;
-        const user = this.usuariosDB.find(u => u.email === email && u.pass === pass);
-        if(user) {
-            this.sesionActiva = user;
-            user.ultimoIngreso = new Date().toLocaleString();
-            localStorage.setItem('sesion_moises', JSON.stringify(user));
-            location.reload();
-        } else alert("Datos incorrectos");
-    },
-
-    // --- MODAL FLOTANTE OSCURO ---
-    renderMenuFlotante: function() {
-        const overlay = document.createElement('div');
-        overlay.id = 'overlay-moises-perfil';
-        overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
-        overlay.innerHTML = `
-            <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
-                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
-                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
-                <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
-            </div>
-        `;
-        overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
-        document.body.appendChild(overlay);
-    },
-
-    confirmarCerrar: function() {
-        if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
-            localStorage.removeItem('sesion_moises');
-            location.reload();
-        }
-    },
-
-    // --- VISTAS SPA ---
-    irA: function(seccion) {
-        document.getElementById('overlay-moises-perfil').remove();
-        navegarSPA('perfil'); // Cambia a la vista SPA
-        const contenedor = document.getElementById('vista-spa-cliente');
-        const u = this.sesionActiva;
-
-     // 1. CERRAR TODO LO QUE ESTÉ ABIERTO (Modales y Overlays)
-    const overlayFlotante = document.getElementById('overlay-moises-perfil');
-    if(overlayFlotante) overlayFlotante.remove();
-        
-    // ESTO ES LO QUE TE ESTÁ PASANDO: El modal login se queda abierto o se activa. 
-    // Lo cerramos a la fuerza:
-    const modalLogin = document.getElementById('modal-login-contenedor');
-    if(modalLogin) modalLogin.style.display = 'none';
-        
-       // --- LÓGICA DE COMPRAS ---
-    if(seccion === 'compras') {
-        const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-        const misCompras = todasLasCompras.filter(c => c.usuarioEmail === u.email);
-
-        let contenidoCompras = `<p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
-                                <button onclick="location.reload()" class="btn-comprar" style="margin-top:10px;">Ir a la tienda</button>`;
-
-        if(misCompras.length > 0) {
-            contenidoCompras = misCompras.map(compra => `
-                <div class="card-historial-compra" style="background:#111; border:1px solid #222; padding:15px; border-radius:12px; margin-bottom:15px; text-align:left;">
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:10px;">
-                        <span style="color:#007bff; font-weight:bold;">ID: ${compra.idOrden}</span>
-                        <span style="color:#555; font-size:12px;">${compra.fecha}</span>
-                    </div>
-                    <div style="color:white; font-size:13px;">
-                        ${compra.productos.map(p => `• ${p.cantidad}x ${p.nombre}`).join('<br>')}
-                    </div>
-                    <p style="color:#007bff; font-weight:bold; margin-top:10px;">Total: RD$ ${compra.total.toLocaleString()}</p>
-                    <div style="display:flex; gap:10px; margin-top:15px;">
-                        <button onclick="SistemaMoisesAuth.verFactura('${compra.idOrden}')" style="flex:1; padding:8px; background:#222; color:white; border:1px solid #444; border-radius:5px; cursor:pointer; font-size:12px;">Ver Factura</button>
-                        <button onclick="SistemaMoisesAuth.repetirPedido(${compra.productos[0].id})" style="flex:1; padding:8px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; font-size:12px;">Repetir Pedido</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
-                ${contenidoCompras}
-                ${this.renderVistasRecientes()}
-            </div>`;
-        
-        } else if(seccion === 'datos') {
-            contenedor.innerHTML = `
-                <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
-                    <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
-                    <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
-                    <h3 style="color:white;">HOLA, ${u.nombre}</h3>
-                    <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
-                    <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
-                   <div style="max-width:500px; margin:0 auto; text-align:left; background:#111; padding:20px; border-radius:15px; border:1px solid #222;">
-                <p style="color:#007bff; font-weight:bold; margin-bottom:15px; border-bottom:1px solid #222;">Información Personal</p>
-                
-                <label class="label-auth">Nombre</label>
-                <input type="text" id="edit-nom" value="${u.nombre}" class="auth-input-edit">
-                
-                <label class="label-auth">Apellidos</label>
-                <input type="text" id="edit-ape" value="${u.apellidos}" class="auth-input-edit">
-                
-                <label class="label-auth">Celular</label>
-                <input type="text" id="edit-cel" value="${u.celular}" class="auth-input-edit">
-
-               <label class="label-auth">País</label>
-<div style="position:relative;">
-    <div id="pais-actual-display" onclick="document.getElementById('dropdown-paises').style.display='block'" 
-         style="background:#1a1a1a; padding:12px; border:1px solid #333; border-radius:8px; color:white; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-        <span>${u.pais || 'Seleccionar país'}</span>
-        <i class="fas fa-chevron-down"></i>
-    </div>
     
-    <div id="dropdown-paises" style="display:none; position:absolute; top:100%; left:0; width:100%; background:#111; border:1px solid #333; z-index:1000; border-radius:8px; margin-top:5px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-        <input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" 
-               style="width:100%; padding:10px; background:#222; border:none; border-bottom:1px solid #333; color:white; outline:none;">
-        <div id="lista-paises-scroll" style="max-height:150px; overflow-y:auto;">
-            ${['República Dominicana', 'Estados Unidos', 'España', 'México', 'Colombia', 'Venezuela', 'Argentina', 'Chile', 'Ecuador', 'Perú'].map(p => `
-                <div class="opcion-pais" onclick="SistemaMoisesAuth.seleccionarPais('${p}')" 
-                     style="padding:10px; color:white; cursor:pointer; border-bottom:1px solid #222;">${p}</div>
-            `).join('')}
-        </div>
-    </div>
-</div>
-<input type="hidden" id="edit-pai" value="${u.pais || ''}">
-                </div>
-
-                 <label class="label-auth">Ciudad</label>
-                <input type="text" id="edit-ciu" value="${u.ciudad}" class="auth-input-edit">
-                
-                <label class="label-auth">Direccion</label>
-                <input type="text" id="edit-dir" value="${u.direccion}" class="auth-input-edit">
-                
-                <label class="label-auth">Correo</label>
-                <input type="text" id="edit-cor" value="${u.correo}" class="auth-input-edit">
-
-                 <label class="label-auth">Documento</label>
-                <input type="text" id="edit-doc" value="${u.documento}" class="auth-input-edit">
-
-                 <button onclick="SistemaMoisesAuth.guardarCambiosDatos()" class="btn-auth-listo" style="margin-top:10px; background:#28a745;">Guardar Cambios</button>
-
-                  <p style="color:#007bff; font-weight:bold; margin-top:30px; margin-bottom:15px; border-bottom:1px solid #222;">Seguridad</p>
-                
-                <label class="label-auth">Nueva Contraseña</label>
-                <input type="password" id="pass-nueva" placeholder="Escribir nueva contraseña" class="auth-input-edit">
-                
-                <label class="label-auth">Confirmar Contraseña</label>
-                <input type="password" id="pass-confirm" placeholder="Repetir nueva contraseña" class="auth-input-edit">
-                
-                <button onclick="SistemaMoisesAuth.cambiarPassword()" class="btn-auth-listo" style="margin-top:10px; background:#dc3545;">Modificar Contraseña</button>
-                 </div>
-                    ${this.renderVistasRecientes()}
-                </div>`;
-        
-      // --- LÓGICA DE FAVORITOS ---
-    } else if(seccion === 'favoritos') {
-        const misFavoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
-        
-        let contenidoFavs = `<p style="color:#888;">0 agregados</p>`;
-
-        if(misFavoritos.length > 0) {
-            contenidoFavs = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                ${misFavoritos.map(p => `
-                    <div style="background:#111; border:1px solid #222; padding:10px; border-radius:10px; text-align:center;">
-                        <img src="${p.imagen}" style="width:100%; height:100px; object-fit:contain;">
-                        <p style="color:white; font-size:12px; height:30px; overflow:hidden; margin-top:5px;">${p.nombre}</p>
-                        <p style="color:#007bff; font-weight:bold;">RD$ ${p.precio.toLocaleString()}</p>
-                        <button onclick="agregarAlCarritoDesdeFav(${p.id})" style="background:#007bff; color:white; border:none; width:100%; padding:5px; border-radius:5px; margin-top:5px; font-size:11px; cursor:pointer;">Comprar</button>
-                    </div>
-                `).join('')}
-            </div>`;
-        }
-
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:15px 0;">Mis Favoritos</h2>
-                ${contenidoFavs}
-                ${this.renderVistasRecientes()}
-            </div>`;
-    }
-},
-    
-    seleccionarPais: function(pais) {
-    document.getElementById('edit-pai').value = pais;
-    document.getElementById('pais-actual-display').querySelector('span').innerText = pais;
-    document.getElementById('dropdown-paises').style.display = 'none';
-},
-    
-    // --- FUNCIONES INTERNAS DEL OBJETO ---
-  filtrarPaises: function() {
-    let input = document.getElementById('search-pais').value.toLowerCase();
-    let opciones = document.querySelectorAll('.opcion-pais');
-    opciones.forEach(opc => {
-        opc.style.display = opc.innerText.toLowerCase().includes(input) ? "block" : "none";
-    });
-},
-
-   guardarCambiosDatos: function() {
-    // 1. Obtener la sesión actual desde el objeto para editarla
-    let u = this.sesionActiva;
-
-    // 2. Capturar los nuevos valores de los inputs
-    u.nombre = document.getElementById('edit-nom').value;
-    u.apellidos = document.getElementById('edit-ape').value;
-    u.celular = document.getElementById('edit-cel').value;
-    u.pais = document.getElementById('edit-pai').value;
-    u.ciudad = document.getElementById('edit-ciu').value;
-    u.direccion = document.getElementById('edit-dir').value; // Asegúrate de que el ID coincida con tu HTML
-    u.correo = document.getElementById('edit-cor').value;
-    u.documento = document.getElementById('edit-doc').value;
-
-    // 3. ACTUALIZAR LA BASE DE DATOS GLOBAL (Lo más importante)
-    let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios_registrados')) || [];
-    
-    // Reemplazamos el usuario viejo por el nuevo en la lista completa
-    this.usuariosDB = usuariosGuardados.map(user => {
-        if (user.email === u.email) {
-            return u; // Este es el usuario con datos nuevos
-        }
-        return user;
-    });
-
-    // 4. GUARDAR TODO DE VUELTA AL LOCALSTORAGE
-    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-    localStorage.setItem('sesion_moises', JSON.stringify(u));
-    
-    // 5. Actualizar la sesión en tiempo real sin recargar si es posible
-    this.sesionActiva = u;
-
-    alert("¡Datos guardados permanentemente!");
-    location.reload(); // Ahora sí, al recargar, leerá los datos nuevos
-},
-
-    cambiarPassword: function() {
-        const p1 = document.getElementById('pass-nueva').value;
-        if(p1.length < 4) return alert("Contraseña muy corta");
-        const u = this.sesionActiva;
-        u.pass = p1;
-        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        localStorage.setItem('sesion_moises', JSON.stringify(u));
-        alert("Contraseña actualizada.");
-    },
-
-verFactura: function(idOrden) {
-    const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-    const compra = todasLasCompras.find(c => c.idOrden === idOrden);
-
-    if (!compra) return alert("Factura no encontrada");
-
-    const contenedor = document.getElementById('vista-spa-cliente');
-    
-    // Generar filas de productos
-   const filasProductos = compra.productos.map(p => {
-    // Limpiamos el precio: eliminamos "RD$", comas y espacios, y lo convertimos a número
-    const precioLimpio = Number(String(p.precio).replace(/[^0-9.-]+/g, ""));
-    const subtotalProducto = precioLimpio * p.cantidad;
-
-    return `
-        <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
-                <span style="font-weight:bold;">${p.cantidad}x</span> ${p.nombre}
-            </td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right;">
-                RD$ ${subtotalProducto.toLocaleString()}
-            </td>
-        </tr>
-    `;
-}).join('');
-
-    contenedor.innerHTML = `
-        <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
-            <div style="max-width: 500px; margin: 0 auto;">
-               <button onclick="SistemaMoisesAuth.irA('compras')" 
-              style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-             <i class="fas fa-arrow-left"></i> VOLVER A MIS COMPRAS
-            </button>
-
-                <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
-                    
-                    <div style="text-align:center; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-bottom: 20px;">
-                        <h2 style="margin:0; color:#000;">MOISÉS CELULARES</h2>
-                        <p style="font-size:12px; margin:5px 0;">Tienda Online y Fisica de Celulares, Accesorios y Reparaciones</p>
-                        <p style="font-size:11px; color:#666;">República Dominicana</p>
-                    </div>
-
-                    <div style="font-size:13px; margin-bottom: 20px;">
-                        <p><b>No. Factura:</b> ${compra.idOrden}</p>
-                        <p><b>Fecha:</b> ${compra.fecha}</p>
-                        <p><b>Cliente:</b> ${this.sesionActiva.nombre} ${this.sesionActiva.apellidos}</p>
-                    </div>
-
-                    <table style="width:100%; border-collapse: collapse; font-size:13px;">
-                        <thead>
-                            <tr style="border-bottom: 1px solid #000;">
-                                <th style="text-align:left; padding-bottom:5px;">DESCRIPCIÓN</th>
-                                <th style="text-align:right; padding-bottom:5px;">SUBTOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${filasProductos}
-                        </tbody>
-                    </table>
-
-                    <div style="margin-top: 20px; text-align: right;">
-                        <p style="font-size:14px; margin:0;">SUBTOTAL: RD$ ${compra.total.toLocaleString()}</p>
-                        <p style="font-size:14px; margin:5px 0;">ENVÍO: <span style="font-size:11px; color:#888;">(A calcular)</span></p>
-                        <h3 style="font-size:20px; margin-top:10px; color:#000;">TOTAL: RD$ ${compra.total.toLocaleString()}</h3>
-                    </div>
-
-                    <div style="margin-top: 30px; text-align: center; border-top: 2px dashed #ccc; padding-top: 20px;">
-                        <p style="font-size:12px;">¡Gracias por tu compra!</p>
-                        <p style="font-size:10px; color:#888;">Este es un comprobante digital de pedido.</p>
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${compra.idOrden}" 
-                             style="width:80px; margin-top:15px; opacity:0.7;">
-                    </div>
-                </div>
-
-                <button onclick="window.print()" 
-                        style="width:100%; margin-top:20px; padding:15px; background:#007bff; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
-                    <i class="fas fa-print"></i> DESCARGAR O IMPRIMIR
-                </button>
-            </div>
-        </div>
-    `;
-    window.scrollTo(0,0);
-},
-    renderVistasRecientes: function() {
-        const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
-        let htmlVistos = vistos.map(p => `
-            <div style="background:#111; border:1px solid #222; padding:10px; border-radius:8px; width:120px; flex-shrink:0;">
-                <img src="${p.imagen}" style="width:100%; height:60px; object-fit:contain;">
-                <p style="color:white; font-size:10px;">${p.nombre}</p>
-            </div>`).join('');
-        
-        return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
-                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
-                    <div style="display:flex; gap:10px; overflow-x:auto;">${htmlVistos}</div>
-                </div>`;
-    }
-}; // AQUÍ CIERRA EL OBJETO
-
-document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
-</script>
-
-
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
   <div class="modal-contenido" id="modalContenido"></div>
@@ -2237,9 +1741,9 @@ document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
     <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
     <div id="carrito-contenido-izq"></div>
 </div>
-
+    
 <div id="modal-login-contenedor" class="modal-login">
-    <div class="login-card" id="auth-card-container">
+    <div class="login-card">
         <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
          <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
         <p><b>MI CUENTA</b></p>
@@ -2255,6 +1759,6 @@ document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
         </p>
     </div>
 </div>
-      
+    
   </body>
 </html>
