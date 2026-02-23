@@ -1967,6 +1967,11 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     // Lo cerramos a la fuerza:
     const modalLogin = document.getElementById('modal-login-contenedor');
     if(modalLogin) modalLogin.style.display = 'none';
+
+
+    else if (seccion === 'admin') {
+      this.renderPanelAdmin();
+}
         
        // --- LÓGICA DE COMPRAS ---
     if(seccion === 'compras') {
@@ -2163,10 +2168,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         localStorage.setItem('sesion_moises', JSON.stringify(u));
         alert("Contraseña actualizada.");
     },
-
-    else if (seccion === 'admin') {
-      this.renderPanelAdmin();
-}
 
 renderPanelAdmin: function(filtroRastreo = "") {
         const contenedor = document.getElementById('vista-spa-cliente');
