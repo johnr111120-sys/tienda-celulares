@@ -811,6 +811,7 @@ function enviarPedidoWhatsApp(tracking) {
     // CAPTURA CORRECTA DE ENVÍO Y PAGO
     const radioEnvio = document.querySelector('input[name="envio"]:checked');
     const costoEnvio = radioEnvio ? parseInt(radioEnvio.value) : 0;
+    const totalFinal = calcularSubtotal() + costoEnvio;
     const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en el local";
 
     // CORRECCIÓN AQUÍ: Capturamos el método de pago por el radio seleccionado
@@ -860,7 +861,7 @@ function enviarPedidoWhatsApp(tracking) {
     location.reload();
 }
       
-function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum) {
+function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, costoEnvio) {
     const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
     if (!sesion) return;
 
@@ -871,7 +872,8 @@ function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum) {
         idOrden: trackingNum,
         fecha: new Date().toLocaleString(),
         productos: [...carritoActual],
-        total: totalConEnvio // Guardamos el total final que ya incluye los 50 o 0
+        total: totalConEnvio,
+        envio: costoEnvio // <--- GUARDAMOS EL COSTO AQUÍ
     };
 
     todasLasCompras.unshift(nuevaCompra);
@@ -1685,13 +1687,13 @@ function navegarAFinalizarCompra() {
                             <label onclick="toggleInfoBancaria(false)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333; transition: 0.3s;">
                             <input type="radio" name="pago" checked> 
                              <span style="color: white; margin-center: 10px;</span>
-                            <input type="radio" name="pago" value="efectivo" onclick="toggleInfoBancaria(false)" checked> Efectivo contra entrega
+                            <input type="radio" name="pago" value="efectivo" onclick="toggleInfoBancaria(false)" checked> Efectivo
                              </label>
                              
                              <label onclick="toggleInfoBancaria(true)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333; transition: 0.3s;">
                              <input type="radio" name="pago">
                               <span style="color: white; margin-center: 10px;</span>
-                           <input type="radio" name="pago" value="transferencia" onclick="toggleInfoBancaria(true)"> Transferencia Bancaria
+                           <input type="radio" name="pago" value="transferencia" onclick="toggleInfoBancaria(true)"> Transferencia
                           </label>
 
                         <div id="info-bancaria" style="display:none; background:#1a1a1a; border:1px solid #007bff; padding:15px; border-radius:8px; margin-top:10px; font-size:13px; color:#ddd; line-height:1.5; animation: fadeIn 0.4s;">
@@ -2170,17 +2172,19 @@ verFactura: function(idOrden) {
             </tr>`;
     });
 
-         // --- NUEVA LÓGICA PARA LA FILA DE ENVÍO ---
-    // Calculamos si hubo envío restando el subtotal de productos al total guardado
-    const subtotalProductos = compra.productos.reduce((acc, p) => acc + (parseFloat(String(p.precio).replace(/[^0-9.]/g, '')) * p.cantidad), 0);
-    const montoEnvio = compra.total - subtotalProductos;
-    const textoEnvio = montoEnvio > 0 ? `RD$ ${montoEnvio.toLocaleString()}` : "Gratis";
+     // --- DENTRO DE verFactura ---
+const montoEnvio = compra.envio || 0; // Lee el valor que guardamos
+const textoEnvio = montoEnvio > 0 ? `RD$ ${montoEnvio.toLocaleString()}` : "Gratis";
 
-    filasHtml += `
-        <tr>
-            <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px; color: #666;"><i>Envío / Entrega</i></td>
-            <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">${textoEnvio}</td>
-        </tr>`;
+filasHtml += `
+    <tr>
+        <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px; color: #666;">
+            <i class="fas fa-truck" style="margin-right:5px;"></i> Envio / Entrega
+        </td>
+        <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">
+            ${textoEnvio}
+        </td>
+    </tr>`;
     
         contenedor.innerHTML = `
             <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
