@@ -807,30 +807,29 @@ function enviarPedidoWhatsApp(tracking) {
     const telefono = document.getElementById("ch-telefono").value.trim();
     const ciudad = document.getElementById("ch-ciudad").value.trim();
     const direccion = document.getElementById("ch-direccion").value.trim();
-    
+
     if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
         alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
         return;
     }
 
-    // 2. Definir el total correctamente (Calculándolo en el momento)
-   const costoEnvio = parseInt(document.querySelector('input[name="envio"]:checked').value);
-    const metodoTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en local";
-    const totalConEnvio = calcularSubtotal() + costoEnvio;
-    
-    // --- GUARDAR EN EL HISTORIAL (REGISTRO AUTOMÁTICO) ---
-    // Usamos 'tracking' que es el parámetro que recibe la función
-    if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carrito, totalVenta, tracking);
-    }
+    // 2. Capturar Método de Envío y Pago
+    const radioEnvio = document.querySelector('input[name="envio"]:checked');
+    const costoEnvio = radioEnvio ? parseInt(radioEnvio.value) : 0;
+    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio (RD$ 50)" : "Retiro en el local (Gratis)";
 
-    const metodoPago = document.querySelector('input[name="pago"]:checked').value;
-   const pagoTexto = metodoPago === 'efectivo' ? "Efectivo contra entrega" : "Transferencia Bancaria";
+    const radioPago = document.querySelector('input[name="pago"]:checked');
+    const metodoPagoTexto = (radioPago && radioPago.value === "transferencia") ? "Transferencia Bancaria" : "Efectivo contra entrega";
+
+    // 3. Calcular Totales correctamente
+    const subtotalVenta = calcularSubtotal(); 
+    const totalVenta = subtotalVenta + costoEnvio; // <--- AQUÍ SE DEFINE totalVenta
+
+    // 4. Preparar lista de productos
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
     
-   // --- MENSAJE WHATSAPP ---
-    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
-    let notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
-    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
+    let notaTexto = "Sin notas";
+    const inputNota = document.getElementById("ch-notas");
     if(inputNota && inputNota.value.trim() !== "") {
         notaTexto = inputNota.value.trim();
     }
@@ -844,38 +843,35 @@ function enviarPedidoWhatsApp(tracking) {
                     `*CIUDAD:* ${ciudad}\n` +
                     `*DIRECCIÓN:* ${direccion}\n` +
                     `--------------------------\n` +
+                    `*ENVÍO:* ${metodoEnvioTexto}\n` +
+                    `*METODO DE PAGO:* ${metodoPagoTexto}\n` +
+                    `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
-                    `*ENVÍO:* ${metodoTexto} (RD$ ${costoEnvio})\n` + // <-- NUEVA LÍNEA
+                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +
                     `--------------------------\n` +
-                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +   
-                    `--------------------------\n` +
-                    `*TOTAL A PAGAR:* RD$ ${totalConEnvio.toLocaleString()}\n` +
-                    `*MÉTODO DE PAGO:* ${pagoTexto}\n` +
+                    `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
-    // 6. Enviar a WhatsApp
-    const numWhatsApp = "59891547599"; 
+    // 6. Registro en el historial y Envío
+    if (typeof registrarCompraEnPerfil === "function") {
+        registrarCompraEnPerfil(carrito, totalVenta, tracking);
+    }
+
+    const numWhatsApp = "18292017321"; 
     const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
     
-    // Abrimos WhatsApp
     window.open(url, '_blank');
     
-    // 7. Limpieza y Finalización
+    // 7. Limpieza
     carrito = [];
     localStorage.removeItem("carrito_compras");
     if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
     if (typeof renderizarCarrito === "function") renderizarCarrito();
     
     alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
-    
-    // Mandar a la sección de compras para que vea su factura de una vez
-    if (SistemaMoisesAuth.sesionActiva) {
-        SistemaMoisesAuth.irA('compras');
-    } else {
-        location.reload();
-    }
+    location.reload();
 }
       
 function registrarCompraEnPerfil(carritoActual, total, trackingNum) {
