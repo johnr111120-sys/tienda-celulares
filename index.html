@@ -1682,19 +1682,24 @@ function navegarAFinalizarCompra() {
     
                       <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
                       <input type="radio" name="envio" value="50" onchange="actualizarResumenFactura()" checked> 
-                        <span style="color: white; margin-left: 10px;">Envío a domicilio (RD$ 50)</span>
+                        <span style="color: white; margin-center: 10px;">Envío a domicilio (RD$ 50)</span>
                     </label>
 
                        <label style="display: block; background: #222; padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #333;">
                      <input type="radio" name="envio" value="0" onchange="actualizarResumenFactura()"> 
-                    <span style="color: white; margin-left: 10px;">Retiro en el local (Gratis)</span>
+                    <span style="color: white; margin-center: 10px;">Retiro en el local (Gratis)</span>
                    </label>
                    </div>
 
                         <div class="metodo-pago">
                             <h4>Método de Pago</h4>
                             <label style="display: block; background: #222; padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #333;">
+                             <span style="color: white; margin-center: 10px;</span>
                             <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
+                             </label>
+                             
+                             <label style="display: block; background: #222; padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #333;">
+                              <span style="color: white; margin-center: 10px;</span>
                             <label><input type="radio" name="pago"> Transferencia Bancaria</label>
                           </label>
                         </div>
