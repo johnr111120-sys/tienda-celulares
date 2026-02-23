@@ -2252,31 +2252,6 @@ verFactura: function(idOrden) {
 
 document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 </script>
-
-<script>
-function actualizarResumenFactura() {
-    // 1. Verificamos cuál radio está seleccionado
-    const radioSeleccionado = document.querySelector('input[name="envio"]:checked');
-    if (!radioSeleccionado) return;
-
-    const costoEnvio = parseInt(radioSeleccionado.value);
-    const subtotal = calcularSubtotal();
-    const totalFinal = subtotal + costoEnvio;
-
-    // 2. Buscamos los elementos por su ID para cambiar el texto
-    const txtEnvio = document.getElementById("resumen-envio-texto");
-    const txtTotal = document.getElementById("resumen-total-texto");
-
-    if (txtEnvio) {
-        txtEnvio.innerText = costoEnvio > 0 ? `RD$ ${costoEnvio}` : "Gratis";
-    }
-    
-    if (txtTotal) {
-        txtTotal.innerText = `RD$ ${totalFinal.toLocaleString()}`;
-    }
-}
-    
-</script>
       
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
