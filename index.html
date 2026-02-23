@@ -819,7 +819,6 @@ function enviarPedidoWhatsApp(tracking) {
     const metodoPagoTexto = (radioPago && radioPago.value === "transferencia") ? "Transferencia Bancaria" : "Efectivo contra entrega";
 
     const subtotalVenta = calcularSubtotal();
-    const totalFinal = subtotalVenta + costoEnvio;
 
     let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
     let notaTexto = document.getElementById("ch-notas")?.value.trim() || "Sin notas";
