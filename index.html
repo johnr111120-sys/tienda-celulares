@@ -6,6 +6,9 @@
     <title>Mi Negocio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
 </head>
 
 <body class="inicio">
@@ -254,6 +257,30 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
+  authDomain: "moises-celulares.firebaseapp.com",
+  databaseURL: "https://moises-celulares-default-rtdb.firebaseio.com/", // <--- IMPORTANTE
+  projectId: "moises-celulares",
+  storageBucket: "moises-celulares.firebasestorage.app",
+  messagingSenderId: "392580256106",
+  appId: "1:392580256106:web:e31ae4c958effb4eb91513",
+  measurementId: "G-D363YQ1LVN"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+      
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
@@ -801,42 +828,28 @@ function generarNumeroRastreo() {
 }
       
 function enviarPedidoWhatsApp(tracking) {
-    // 1. Obtener valores del formulario
+    // ... (tus capturas de nombre, apellido, etc.)
     const nombre = document.getElementById("ch-nombre").value.trim();
     const apellido = document.getElementById("ch-apellido").value.trim();
     const telefono = document.getElementById("ch-telefono").value.trim();
     const ciudad = document.getElementById("ch-ciudad").value.trim();
     const direccion = document.getElementById("ch-direccion").value.trim();
 
-    // CAPTURAR MÉTODO DE ENVÍO
+    // CAPTURA CORRECTA DE ENVÍO Y PAGO
     const radioEnvio = document.querySelector('input[name="envio"]:checked');
-    const costoEnvio = parseInt(radioEnvio.value);
-    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio (RD$ 50)" : "Retiro en el local (Gratis)";
-    
-    if(!nombre || !apellido || !telefono || !ciudad || !direccion) {
-        alert("⚠️ Por favor, complete todos los campos obligatorios (*) antes de finalizar.");
-        return;
-    }
+    const costoEnvio = radioEnvio ? parseInt(radioEnvio.value) : 0;
+    const totalFinal = calcularSubtotal() + costoEnvio;
+    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en el local";
 
-    // 2. Definir el total correctamente (Calculándolo en el momento)
-   const subtotal = calcularSubtotal();
-    const totalConEnvio = subtotal + costoEnvio;
-    
-    // --- GUARDAR EN EL HISTORIAL (REGISTRO AUTOMÁTICO) ---
-    // Usamos 'tracking' que es el parámetro que recibe la función
-    if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carrito, totalVenta, tracking);
-    }
+    // CORRECCIÓN AQUÍ: Capturamos el método de pago por el radio seleccionado
+    const radioPago = document.querySelector('input[name="pago"]:checked');
+    const metodoPagoTexto = (radioPago && radioPago.value === "transferencia") ? "Transferencia Bancaria" : "Efectivo contra entrega";
 
-   // --- MENSAJE WHATSAPP ---
-    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${p.precio.toLocaleString()})`).join('\n');
-    let notaTexto = (typeof notasDelPedido === "function") ? notasDelPedido() : "Sin notas";
-    const inputNota = document.getElementById("ch-notas"); // Asegúrate que el ID del textarea sea este
-    if(inputNota && inputNota.value.trim() !== "") {
-        notaTexto = inputNota.value.trim();
-    }
+    const subtotalVenta = calcularSubtotal();
 
-    // 5. Crear el mensaje para WhatsApp
+    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
+    let notaTexto = document.getElementById("ch-notas")?.value.trim() || "Sin notas";
+
     const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
                     `*Rastreo:* ${tracking}\n` +
                     `--------------------------\n` +
@@ -845,55 +858,54 @@ function enviarPedidoWhatsApp(tracking) {
                     `*CIUDAD:* ${ciudad}\n` +
                     `*DIRECCIÓN:* ${direccion}\n` +
                     `--------------------------\n` +
+                    `*ENVÍO:* ${metodoEnvioTexto}\n` +
+                    `*METODO DE PAGO:* ${metodoPagoTexto}\n` +
+                    `--------------------------\n` +
                     `*PRODUCTOS:*\n${listaProductos}\n` +
                     `--------------------------\n` +
-                    `*ENVÍO:* ${metodoEnvioTexto}\n` + // <-- NUEVA LÍNEA
+                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +
                     `--------------------------\n` +
-                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +   
-                    `--------------------------\n` +
-                    `*TOTAL A PAGAR:* RD$ ${totalVenta.toLocaleString()}\n` +
+                    `*TOTAL A PAGAR:* RD$ ${totalFinal.toLocaleString()}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
 
-    // 6. Enviar a WhatsApp
-    const numWhatsApp = "59891547599"; 
-    const url = `https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+   // IMPORTANTE: Guardamos el costo de envío en el objeto de la compra para la factura
+    if (typeof registrarCompraEnPerfil === "function") {
+        registrarCompraEnPerfil(carrito, totalFinal, tracking, costoEnvio);
+    }
+
+    const numWhatsApp = "18292017321";
+    window.open(`https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
     
-    // Abrimos WhatsApp
-    window.open(url, '_blank');
-    
-    // 7. Limpieza y Finalización
+    // 7. Limpieza
     carrito = [];
     localStorage.removeItem("carrito_compras");
     if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
     if (typeof renderizarCarrito === "function") renderizarCarrito();
     
     alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
-    
-    // Mandar a la sección de compras para que vea su factura de una vez
-    if (SistemaMoisesAuth.sesionActiva) {
-        SistemaMoisesAuth.irA('compras');
-    } else {
-        location.reload();
-    }
+    location.reload();
 }
       
-function registrarCompraEnPerfil(carritoActual, total, trackingNum) {
-    const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
-    if (!sesion) return;
-
-    let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
+function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, costoEnvio) {
+    const user = auth.currentUser; // Obtenemos el usuario de Firebase
+    if (!user) return;
 
     const nuevaCompra = {
-        usuarioEmail: sesion.email,
+        usuarioEmail: user.email,
+        uid: user.uid,
         idOrden: trackingNum,
         fecha: new Date().toLocaleString(),
-        productos: [...carritoActual],
-        total: total
+        productos: carritoActual,
+        total: totalConEnvio,
+        envio: costoEnvio,
+        estado: "Pendiente"
     };
 
-    todasLasCompras.unshift(nuevaCompra);
-    localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
+    // Guardar en la rama 'pedidos' de Firebase
+    db.ref('pedidos/' + trackingNum).set(nuevaCompra)
+        .then(() => console.log("Pedido guardado en Firebase"))
+        .catch(err => console.error("Error al guardar pedido:", err));
 }
       
 function crearContenedorSPA() {
@@ -1664,7 +1676,7 @@ function navegarAFinalizarCompra() {
                             <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
                             <textarea id="ch-notas" placeholder="Instrucciones especiales..."></textarea>
                         </div>
-                    </div>
+                    </div>                        
                 </div>
 
                 <div class="checkout-col">
@@ -1676,30 +1688,45 @@ function navegarAFinalizarCompra() {
                         </div>
                         
                         <div class="resumen-pedido">
-                            <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
-                            <div class="resumen-fila"><span>Envío</span> <span>A calcular</span></div>
-                            <div class="resumen-fila total"><span>Total</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                        <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
+                        <div class="resumen-fila"><span>Envío</span> <span id="resumen-envio-texto">RD$ 50</span></div>
+                        <div class="resumen-fila total"><span>Total</span> <span id="resumen-total-texto">RD$ ${(subtotal + 50).toLocaleString()}</span></div>
                         </div>
 
-                <div class="metodo-envio-container" style="margin-bottom: 20px; text-align: left;">
+                <div class="metodo-envio-container" style="margin-bottom: 20px; text-align: center;">
+                <h4>Método de Envio</h4>
                   <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Envío</p>
     
                       <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
                       <input type="radio" name="envio" value="50" onchange="actualizarResumenFactura()" checked> 
-                        <span style="color: white; margin-left: 10px;">Envío a domicilio (RD$ 50)</span>
+                        <span style="color: white; margin-center: 10px;">Envío a domicilio (RD$ 50)</span>
                     </label>
 
                        <label style="display: block; background: #222; padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #333;">
                      <input type="radio" name="envio" value="0" onchange="actualizarResumenFactura()"> 
-                    <span style="color: white; margin-left: 10px;">Retiro en el local (Gratis)</span>
+                    <span style="color: white; margin-center: 10px;">Retiro en el local (Gratis)</span>
                    </label>
                    </div>
 
-                        <div class="metodo-pago">
-                            <h4>Método de Pago</h4>
-                            <label><input type="radio" name="pago" checked> Efectivo contra entrega</label><br>
-                            <label><input type="radio" name="pago"> Transferencia Bancaria</label>
-                        </div>
+                        <div class="metodo-pago" style="margin-top:20px; text-align:center; border-top:1px solid #333; padding-top:15px;">
+                         <h4>Método de Pago</h4>
+                             <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Pago</p>
+                            
+                           <label onclick="toggleInfoBancaria(false)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
+                          <input type="radio" name="pago" value="efectivo" checked> 
+                        <span style="color: white; margin-left: 10px;">Efectivo contra entrega</span>
+                    </label>
+
+                         <label onclick="toggleInfoBancaria(true)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
+                        <input type="radio" name="pago" value="transferencia"> 
+                       <span style="color: white; margin-left: 10px;">Transferencia Bancaria</span>
+                     </label>
+
+                        <div id="info-bancaria" style="display:none; background:#1a1a1a; border:1px solid #007bff; padding:15px; border-radius:8px; margin-top:10px; font-size:13px; color:#ddd; line-height:1.5; animation: fadeIn 0.4s;">
+                        <i class="fas fa-info-circle" style="color:#007bff; margin-right:5px;"></i>
+                         Realiza tu pago directamente en nuestra cuenta bancaria. Por favor, usa el número de <b>Rastreo del pedido</b> como referencia de pago. Tu pedido no se procesará hasta que se haya recibido el importe en nuestra cuenta.
+                       </div>
+                    </div>
 
                         <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
                             FINALIZAR LA COMPRA
@@ -1875,29 +1902,37 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         `;
     },
 
-    ejecutarRegistro: function() {
-        const pass = document.getElementById('reg-pas').value;
-        const passConf = document.getElementById('reg-con-pas').value;
-        if(pass !== passConf) return alert("Las contraseñas no coinciden");
-        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
+   ejecutarRegistro: function() {
+    const nombre = document.getElementById('reg-nombre')?.value.trim();
+    const apellidos = document.getElementById('reg-apellidos')?.value.trim();
+    const email = document.getElementById('reg-email')?.value.trim();
+    const pass = document.getElementById('reg-pass')?.value.trim();
+    const checkPoliticas = document.getElementById('politicas-check');
 
-        const nuevoUser = {
-            nombre: document.getElementById('reg-nom').value,
-            apellidos: document.getElementById('reg-ape').value,
-            celular: document.getElementById('reg-cel').value,
-            pais: document.getElementById('reg-pai').value,
-            ciudad: document.getElementById('reg-ciu').value,
-            muni: document.getElementById('reg-mun').value,
-            dir: document.getElementById('reg-dir').value,
-            email: document.getElementById('reg-ema').value,
-            pass: pass,
-            fechaRegistro: new Date().toLocaleString()
-        };
-        this.usuariosDB.push(nuevoUser);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        alert("¡Registro exitoso!");
-        this.renderLogin();
-    },
+    if (!nombre || !apellidos || !email || !pass || !checkPoliticas.checked) {
+        alert("Por favor completa todos los campos y acepta las políticas.");
+        return;
+    }
+
+    // REGISTRO EN FIREBASE AUTH
+    auth.createUserWithEmailAndPassword(email, pass)
+        .then((userCredential) => {
+            // Guardar datos adicionales (nombre/apellido) en la Database
+            const uid = userCredential.user.uid;
+            db.ref('usuarios/' + uid).set({
+                nombre: nombre,
+                apellidos: apellidos,
+                email: email,
+                rol: email === 'moises@gmail.com' ? 'admin' : 'cliente'
+            });
+
+            alert("✅ Registro exitoso en la nube.");
+            this.renderLogin();
+        })
+        .catch((error) => {
+            alert("Error: " + error.message);
+        });
+}
 
     intentarLogin: function() {
         const email = document.getElementById('log-email').value;
@@ -1912,20 +1947,36 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
     },
 
     // --- MODAL FLOTANTE OSCURO ---
-    renderMenuFlotante: function() {
+   renderMenuFlotante: function() {
         const overlay = document.createElement('div');
         overlay.id = 'overlay-moises-perfil';
         overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
+        
+        // Verificamos si es administrador (cambia el correo por el tuyo)
+        const esAdmin = this.sesionActiva && this.sesionActiva.email === 'johnr111120@gmail.com';
+        const nombreUsuario = this.sesionActiva ? this.sesionActiva.nombre : "Invitado";
+        const inicial = nombreUsuario.charAt(0).toUpperCase();
+
         overlay.innerHTML = `
             <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
-                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
-                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
+                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">
+                    ${inicial}
+                </div>
+                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${nombreUsuario.toUpperCase()}</p>
+                
+                ${esAdmin ? `
+                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('admin')" style="background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: bold; border: none; margin-bottom: 10px;">
+                    <i class="fas fa-user-shield"></i> PANEL ADMIN
+                </button>
+                ` : ''}
+
                 <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
                 <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
                 <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
                 <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
             </div>
         `;
+        
         overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
         document.body.appendChild(overlay);
     },
@@ -1987,6 +2038,10 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                 ${contenidoCompras}
                 ${this.renderVistasRecientes()}
             </div>`;
+
+  else if (pagina === 'admin') {
+      this.renderPanelAdmin();
+}
         
         } else if(seccion === 'datos') {
             contenedor.innerHTML = `
@@ -2149,6 +2204,79 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         alert("Contraseña actualizada.");
     },
 
+renderPanelAdmin: function(filtroRastreo = "") {
+    const contenedor = document.getElementById('vista-spa-cliente');
+    
+    // Escuchar cambios en la base de datos de Firebase
+    db.ref('pedidos').on('value', (snapshot) => {
+        const pedidosData = snapshot.val();
+        let todasLasCompras = pedidosData ? Object.values(pedidosData) : [];
+        
+        // Lógica del Buscador
+        if (filtroRastreo) {
+            todasLasCompras = todasLasCompras.filter(c => 
+                c.idOrden.toLowerCase().includes(filtroRastreo.toLowerCase())
+            );
+        }
+
+        let htmlPedidos = "";
+        todasLasCompras.forEach((compra) => {
+            const colorEstado = compra.estado === "Enviado" ? "#2ecc71" : (compra.estado === "Cancelado" ? "#e74c3c" : "#f1c40f");
+            htmlPedidos += `
+                <div style="background:#1a1a1a; border:1px solid #333; padding:15px; border-radius:10px; margin-bottom:15px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <span style="background:${colorEstado}; color:white; padding:3px 8px; border-radius:5px; font-size:10px; font-weight:bold;">${(compra.estado || 'PENDIENTE').toUpperCase()}</span>
+                            <p style="color:white; font-weight:bold; margin-top:5px; margin-bottom:0;">${compra.idOrden}</p>
+                            <small style="color:#666;">${compra.fecha}</small>
+                        </div>
+                        <div style="text-align:right;">
+                            <p style="color:#007bff; font-weight:bold; margin:0;">RD$ ${compra.total.toLocaleString()}</p>
+                            <small style="color:#888;">${compra.usuarioEmail}</small>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:5px; margin-top:10px; border-top:1px solid #222; padding-top:10px;">
+                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Enviado')" style="flex:1; background:#2ecc71; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Enviado</button>
+                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Cancelado')" style="flex:1; background:#e74c3c; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Cancelado</button>
+                    </div>
+                </div>`;
+        });
+
+        contenedor.innerHTML = `
+            <div style="padding:20px; background:#000; min-height:100vh; color:white;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+                    <button onclick="SistemaMoisesAuth.renderMenuFlotante()" style="background:none; border:none; color:#007bff; font-size:20px; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+                    <h2 style="margin:0;">Panel Admin</h2>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <input type="text" id="busqueda-admin" placeholder="Buscar por No. de Rastreo..." 
+                           value="${filtroRastreo}"
+                           style="width:100%; padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
+                    <button oninput="SistemaMoisesAuth.renderPanelAdmin(document.getElementById('busqueda-admin').value)"
+                            style="width:100%; margin-top:10px; padding:10px; background:#007bff; color:white; border:none; border-radius:8px; font-weight:bold;">
+                        BUSCAR PEDIDO
+                    </button>
+                </div>
+
+                ${htmlPedidos || '<p style="text-align:center; color:#666;">No se encontraron pedidos.</p>'}
+            </div>
+        `;
+        window.scrollTo(0,0);
+    }, // NO OLVIDES ESTA COMA
+
+cambiarEstadoPedido: function(idOrden, nuevoEstado) {
+        let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
+        const index = todasLasCompras.findIndex(c => c.idOrden === idOrden);
+        if (index !== -1) {
+            todasLasCompras[index].estado = nuevoEstado;
+            localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
+            alert("Estado actualizado!");
+            this.renderPanelAdmin(document.getElementById('busqueda-admin')?.value || "");
+        }
+    },
+
+        
 verFactura: function(idOrden) {
         const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
         const compra = todasLasCompras.find(c => c.idOrden === idOrden);
@@ -2161,33 +2289,45 @@ verFactura: function(idOrden) {
         const contenedor = document.getElementById('vista-spa-cliente');
         
         // --- Lógica de limpieza para evitar NaN ---
-        let filasHtml = "";
-        if (compra.productos && Array.isArray(compra.productos)) {
-            compra.productos.forEach(p => {
-                let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
-                let pCant = parseInt(p.cantidad) || 1;
-                let sub = (pPrecio || 0) * pCant;
+       let filasHtml = "";
+    compra.productos.forEach(p => {
+        let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
+        filasHtml += `
+            <tr>
+                <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px;">1x ${p.nombre}</td>
+                <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">RD$ ${pPrecio.toLocaleString()}</td>
+            </tr>`;
+    });
 
-                filasHtml += `
-                    <tr>
-                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-size:12px;">
-                            <span style="font-weight:bold;">${pCant}x</span> ${p.nombre}
-                        </td>
-                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; text-align: right; font-size:12px;">
-                            RD$ ${sub.toLocaleString()}
-                        </td>
-                    </tr>`;
-            });
-        }
-        
+     // --- DENTRO DE verFactura ---
+const montoEnvio = compra.envio || 0; // Lee el valor que guardamos
+const textoEnvio = montoEnvio > 0 ? `RD$ ${montoEnvio.toLocaleString()}` : "Gratis";
+
+filasHtml += `
+    <tr>
+        <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px; color: #666;">
+            <i class="fas fa-truck" style="margin-right:5px;"></i> Envio / Entrega
+        </td>
+        <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">
+            ${textoEnvio}
+        </td>
+    </tr>`;
+    
         contenedor.innerHTML = `
             <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
                 <div style="max-width: 500px; margin: 0 auto;">
                     
+                   <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
-                            style="background:none; border:none; color:#555; cursor:pointer; font-weight:bold; margin-bottom:15px; display:flex; align-items:center; gap:5px;">
-                        <i class="fas fa-arrow-left"></i> VOLVER AL MENÚ
+                      style="flex: 1; background:#333; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:5px;">
+                      <i class="fas fa-bars"></i> VOLVER AL MENÚ
                     </button>
+    
+                    <button onclick="regresarALaTienda()" 
+                     style="flex: 1; background:#ff4757; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:5px;">
+                     <i class="fas fa-times"></i> CERRAR FACTURA
+                    </button>
+                   </div>
 
                     <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
                         <div style="text-align:center; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-bottom: 20px;">
@@ -2255,16 +2395,40 @@ document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
 
 <script>
 function actualizarResumenFactura() {
-    const costoEnvio = parseInt(document.querySelector('input[name="envio"]:checked').value);
-    const subtotal = calcularSubtotal(); // Tu función actual
+    // 1. Verificamos cuál radio está seleccionado
+    const radioSeleccionado = document.querySelector('input[name="envio"]:checked');
+    if (!radioSeleccionado) return;
+
+    const costoEnvio = parseInt(radioSeleccionado.value);
+    const subtotal = calcularSubtotal();
     const totalFinal = subtotal + costoEnvio;
 
-    // Actualizamos los textos en la pantalla de pago
-    const elEnvio = document.getElementById("resumen-envio-texto");
-    const elTotal = document.getElementById("resumen-total-texto");
+    // 2. Buscamos los elementos por su ID para cambiar el texto
+    const txtEnvio = document.getElementById("resumen-envio-texto");
+    const txtTotal = document.getElementById("resumen-total-texto");
 
-    if(elEnvio) elEnvio.innerText = costoEnvio > 0 ? `RD$ ${costoEnvio}` : "Gratis";
-    if(elTotal) elTotal.innerText = `RD$ ${totalFinal.toLocaleString()}`;
+    if (txtEnvio) {
+        txtEnvio.innerText = costoEnvio > 0 ? `RD$ ${costoEnvio}` : "Gratis";
+    }
+    
+    if (txtTotal) {
+        txtTotal.innerText = `RD$ ${totalFinal.toLocaleString()}`;
+    }
+}
+    
+</script>
+
+<script>
+function toggleInfoBancaria(mostrar) {
+    const cuadroInfo = document.getElementById('info-bancaria');
+    if (cuadroInfo) {
+        cuadroInfo.style.display = mostrar ? 'block' : 'none';
+    }
+    
+    // Forzamos a que el radio button se seleccione al tocar el cuadro
+    const valor = mostrar ? "transferencia" : "efectivo";
+    const radio = document.querySelector(`input[name="pago"][value="${valor}"]`);
+    if (radio) radio.checked = true;
 }
     
 </script>
