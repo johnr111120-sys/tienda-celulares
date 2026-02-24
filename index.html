@@ -6,9 +6,6 @@
     <title>Mi Negocio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
 </head>
 
 <body class="inicio">
@@ -257,29 +254,6 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
-  authDomain: "moises-celulares.firebaseapp.com",
-  projectId: "moises-celulares",
-  storageBucket: "moises-celulares.firebasestorage.app",
-  messagingSenderId: "392580256106",
-  appId: "1:392580256106:web:e31ae4c958effb4eb91513",
-  measurementId: "G-D363YQ1LVN"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-      
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
@@ -887,24 +861,22 @@ function enviarPedidoWhatsApp(tracking) {
 }
       
 function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, costoEnvio) {
-    const user = auth.currentUser; // Obtenemos el usuario de Firebase
-    if (!user) return;
+    const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
+    if (!sesion) return;
+
+    let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
 
     const nuevaCompra = {
-        usuarioEmail: user.email,
-        uid: user.uid,
+        usuarioEmail: sesion.email,
         idOrden: trackingNum,
         fecha: new Date().toLocaleString(),
-        productos: carritoActual,
+        productos: [...carritoActual],
         total: totalConEnvio,
-        envio: costoEnvio,
-        estado: "Pendiente"
+        envio: costoEnvio // <--- GUARDAMOS EL COSTO AQUÍ
     };
 
-    // Guardar en la rama 'pedidos' de Firebase
-    db.ref('pedidos/' + trackingNum).set(nuevaCompra)
-        .then(() => console.log("Pedido guardado en Firebase"))
-        .catch(err => console.error("Error al guardar pedido:", err));
+    todasLasCompras.unshift(nuevaCompra);
+    localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
 }
       
 function crearContenedorSPA() {
@@ -1901,37 +1873,29 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         `;
     },
 
-   ejecutarRegistro: function() {
-    const nombre = document.getElementById('reg-nombre')?.value.trim();
-    const apellidos = document.getElementById('reg-apellidos')?.value.trim();
-    const email = document.getElementById('reg-email')?.value.trim();
-    const pass = document.getElementById('reg-pass')?.value.trim();
-    const checkPoliticas = document.getElementById('politicas-check');
+    ejecutarRegistro: function() {
+        const pass = document.getElementById('reg-pas').value;
+        const passConf = document.getElementById('reg-con-pas').value;
+        if(pass !== passConf) return alert("Las contraseñas no coinciden");
+        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
 
-    if (!nombre || !apellidos || !email || !pass || !checkPoliticas.checked) {
-        alert("Por favor completa todos los campos y acepta las políticas.");
-        return;
-    }
-
-    // REGISTRO EN FIREBASE AUTH
-    auth.createUserWithEmailAndPassword(email, pass)
-        .then((userCredential) => {
-            // Guardar datos adicionales (nombre/apellido) en la Database
-            const uid = userCredential.user.uid;
-            db.ref('usuarios/' + uid).set({
-                nombre: nombre,
-                apellidos: apellidos,
-                email: email,
-                rol: email === 'moises@gmail.com' ? 'admin' : 'cliente'
-            });
-
-            alert("✅ Registro exitoso en la nube.");
-            this.renderLogin();
-        })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
-}
+        const nuevoUser = {
+            nombre: document.getElementById('reg-nom').value,
+            apellidos: document.getElementById('reg-ape').value,
+            celular: document.getElementById('reg-cel').value,
+            pais: document.getElementById('reg-pai').value,
+            ciudad: document.getElementById('reg-ciu').value,
+            muni: document.getElementById('reg-mun').value,
+            dir: document.getElementById('reg-dir').value,
+            email: document.getElementById('reg-ema').value,
+            pass: pass,
+            fechaRegistro: new Date().toLocaleString()
+        };
+        this.usuariosDB.push(nuevoUser);
+        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
+        alert("¡Registro exitoso!");
+        this.renderLogin();
+    },
 
     intentarLogin: function() {
         const email = document.getElementById('log-email').value;
@@ -2037,10 +2001,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
                 ${contenidoCompras}
                 ${this.renderVistasRecientes()}
             </div>`;
-
-  else if (pagina === 'admin') {
-      this.renderPanelAdmin();
-}
         
         } else if(seccion === 'datos') {
             contenedor.innerHTML = `
@@ -2203,79 +2163,6 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
         alert("Contraseña actualizada.");
     },
 
-renderPanelAdmin: function(filtroRastreo = "") {
-    const contenedor = document.getElementById('vista-spa-cliente');
-    
-    // Escuchar cambios en la base de datos de Firebase
-    db.ref('pedidos').on('value', (snapshot) => {
-        const pedidosData = snapshot.val();
-        let todasLasCompras = pedidosData ? Object.values(pedidosData) : [];
-        
-        // Lógica del Buscador
-        if (filtroRastreo) {
-            todasLasCompras = todasLasCompras.filter(c => 
-                c.idOrden.toLowerCase().includes(filtroRastreo.toLowerCase())
-            );
-        }
-
-        let htmlPedidos = "";
-        todasLasCompras.forEach((compra) => {
-            const colorEstado = compra.estado === "Enviado" ? "#2ecc71" : (compra.estado === "Cancelado" ? "#e74c3c" : "#f1c40f");
-            htmlPedidos += `
-                <div style="background:#1a1a1a; border:1px solid #333; padding:15px; border-radius:10px; margin-bottom:15px;">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div>
-                            <span style="background:${colorEstado}; color:white; padding:3px 8px; border-radius:5px; font-size:10px; font-weight:bold;">${(compra.estado || 'PENDIENTE').toUpperCase()}</span>
-                            <p style="color:white; font-weight:bold; margin-top:5px; margin-bottom:0;">${compra.idOrden}</p>
-                            <small style="color:#666;">${compra.fecha}</small>
-                        </div>
-                        <div style="text-align:right;">
-                            <p style="color:#007bff; font-weight:bold; margin:0;">RD$ ${compra.total.toLocaleString()}</p>
-                            <small style="color:#888;">${compra.usuarioEmail}</small>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:5px; margin-top:10px; border-top:1px solid #222; padding-top:10px;">
-                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Enviado')" style="flex:1; background:#2ecc71; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Enviado</button>
-                        <button onclick="SistemaMoisesAuth.cambiarEstadoPedido('${compra.idOrden}', 'Cancelado')" style="flex:1; background:#e74c3c; color:white; border:none; padding:8px; border-radius:5px; font-size:10px; cursor:pointer;">Cancelado</button>
-                    </div>
-                </div>`;
-        });
-
-        contenedor.innerHTML = `
-            <div style="padding:20px; background:#000; min-height:100vh; color:white;">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-                    <button onclick="SistemaMoisesAuth.renderMenuFlotante()" style="background:none; border:none; color:#007bff; font-size:20px; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
-                    <h2 style="margin:0;">Panel Admin</h2>
-                </div>
-
-                <div style="margin-bottom:20px;">
-                    <input type="text" id="busqueda-admin" placeholder="Buscar por No. de Rastreo..." 
-                           value="${filtroRastreo}"
-                           style="width:100%; padding:12px; border-radius:8px; border:1px solid #333; background:#111; color:white;">
-                    <button oninput="SistemaMoisesAuth.renderPanelAdmin(document.getElementById('busqueda-admin').value)"
-                            style="width:100%; margin-top:10px; padding:10px; background:#007bff; color:white; border:none; border-radius:8px; font-weight:bold;">
-                        BUSCAR PEDIDO
-                    </button>
-                </div>
-
-                ${htmlPedidos || '<p style="text-align:center; color:#666;">No se encontraron pedidos.</p>'}
-            </div>
-        `;
-        window.scrollTo(0,0);
-    }, // NO OLVIDES ESTA COMA
-
-cambiarEstadoPedido: function(idOrden, nuevoEstado) {
-        let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-        const index = todasLasCompras.findIndex(c => c.idOrden === idOrden);
-        if (index !== -1) {
-            todasLasCompras[index].estado = nuevoEstado;
-            localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
-            alert("Estado actualizado!");
-            this.renderPanelAdmin(document.getElementById('busqueda-admin')?.value || "");
-        }
-    },
-
-        
 verFactura: function(idOrden) {
         const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
         const compra = todasLasCompras.find(c => c.idOrden === idOrden);
