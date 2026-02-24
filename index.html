@@ -4,11 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Mi Negocio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body class="inicio">
@@ -257,13 +257,6 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
@@ -638,11 +631,10 @@ function mostrarNotificacion(mensaje) {
 function navegarAVerCarrito() {
     // Cerramos el carrito lateral de forma segura
     if (typeof toggleCarritoIzquierdo === 'function') {
-        const carritoLat = document.getElementById("carrito-izquierdo");
-        if (carritoLat && carritoLat.classList.contains("activo")) {
-            toggleCarritoIzquierdo();
-        }
-    }
+        const carritoLateral = document.getElementById('carrito-izquierdo');
+    if(carritoLateral) carritoLateral.classList.toggle('active');
+    renderizarCarritoIzquierdo();
+}
 
     const vistaInicio = document.getElementById("vista-inicio");
     const vistaProductos = document.getElementById("vista-productos");
@@ -1818,9 +1810,9 @@ const SistemaMoisesAuth = {
     },
 
     abrirInterfaz: function() {
-        if(this.sesionActiva) this.renderMenuFlotante();
-        else { this.renderLogin(); mostrarModalLogin(); }
-    },
+        const modal = document.getElementById('modal-login-contenedor');
+    if(modal) modal.style.display = 'flex';
+}
 
     // --- LOGIN ---
     renderLogin: function() {
