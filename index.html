@@ -4,11 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Mi Negocio</title>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
 </head>
 
 <body class="inicio">
@@ -259,20 +259,21 @@ referrerpolicy="no-referrer-when-downgrade">
   <script>
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
-  authDomain: "moises-celulares.firebaseapp.com",
-  databaseURL: "https://moises-celulares-default-rtdb.firebaseio.com/", // <--- IMPORTANTE
-  projectId: "moises-celulares",
-  storageBucket: "moises-celulares.firebasestorage.app",
-  messagingSenderId: "392580256106",
-  appId: "1:392580256106:web:e31ae4c958effb4eb91513",
-  measurementId: "G-D363YQ1LVN"
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_PROYECTO.firebaseapp.com",
+    databaseURL: "https://TU_PROYECTO.firebaseio.com",
+    projectId: "TU_PROYECTO",
+    storageBucket: "TU_PROYECTO.appspot.com",
+    messagingSenderId: "...",
+    appId: "..."
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Inicialización segura
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.database();
+const auth = firebase.auth();
       
 /* ===============================
    ESTADO GLOBAL Y DATOS
@@ -788,11 +789,11 @@ window.addEventListener("load", () => {
 });
 
 function toggleCarritoIzquierdo() {
-    try {
-        const carrito = document.getElementById("carrito-izquierdo");
-        if (!carrito) return; // Si no hay carrito, no hace nada y no rompe
-
-        carrito.classList.toggle("activo");
+    const carritoLateral = document.getElementById('carrito-izquierdo');
+    if (carritoLateral) {
+        carritoLateral.classList.toggle('active');
+        renderizarCarritoIzquierdo();
+    }
 
         // Lógica de WhatsApp protegida
         const btnWhatsapp = document.querySelector(".btn-whatsapp") || 
