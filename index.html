@@ -257,18 +257,7 @@ referrerpolicy="no-referrer-when-downgrade">
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
-// Variables Globales faltantes para evitar el error de consola
-let productos = JSON.parse(localStorage.getItem("productos"));
-
-if(!productos){
-   fetch("productos.json")
-   .then(res => res.json())
-   .then(data => {
-      productos = data;
-      localStorage.setItem("productos", JSON.stringify(productos));
-   });
-}
-      
+// Variables Globales faltantes para evitar el error de consola      
 let favoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
 let vistasRecientes = JSON.parse(localStorage.getItem('vistas_recientes')) || [];
 let usuarioLogueado = false;
@@ -1292,20 +1281,19 @@ let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
 let imagenSeleccionada = ""; // Nueva variable para la foto
+let productos = JSON.parse(localStorage.getItem("productos"));
 
-/* ===============================
-   CARGAR JSON
-=================================*/
-
-fetch("productos.json")
-  .then(res => res.json())
-  .then(data => {
-    productos = data;
-    console.log("✅ Productos cargados");
-    router(); // ejecutar router cuando ya cargó el JSON
-  })
-
-
+if (productos && productos.length > 0) {
+   iniciarTienda();   // usa los productos guardados
+} else {
+   fetch("productos.json")
+   .then(res => res.json())
+   .then(data => {
+      productos = data;
+      localStorage.setItem("productos", JSON.stringify(productos));
+      iniciarTienda();   // 👈 IMPORTANTE
+   });
+}
 /* ===============================
    NAVEGACIÓN SPA
 =================================*/
