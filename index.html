@@ -270,7 +270,17 @@ let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
         { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
     ]
 };
+let productos = JSON.parse(localStorage.getItem("productos"));
 
+if(!productos){
+   fetch("productos.json")
+   .then(res => res.json())
+   .then(data => {
+      productos = data;
+      localStorage.setItem("productos", JSON.stringify(productos));
+   });
+}
+      
 /* ===============================
    LÓGICA DE LOGIN
 =================================*/
