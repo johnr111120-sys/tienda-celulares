@@ -1911,23 +1911,19 @@ El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o 
 
     // --- MODAL FLOTANTE OSCURO ---
    renderMenuFlotante: function() {
-        const overlay = document.createElement('div');
+       const overlay = document.createElement('div');
         overlay.id = 'overlay-moises-perfil';
         overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
         overlay.innerHTML = `
             <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
-                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">
-                    ${inicial}
-                </div>
-                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${nombreUsuario.toUpperCase()}</p>
-
+                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
+                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
                 <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
                 <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
                 <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
                 <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
             </div>
         `;
-        
         overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
         document.body.appendChild(overlay);
     },
