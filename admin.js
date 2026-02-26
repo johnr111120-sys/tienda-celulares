@@ -73,33 +73,25 @@ function cargarPedidos(){
    }
 
    pedidos.slice().reverse().forEach(p => {
-
-       let productosHTML = "";
-
-   if(p.productos && p.productos.length > 0){
-      p.productos.forEach(prod => {
-         productosHTML += `
-            <div style="margin-left:10px; font-size:14px;">
-               • ${prod.nombre} - $${prod.precio}
-            </div>
-         `;
-      });
-   }
       cont.innerHTML += `
-         <div class="pedido-card">
-            <strong>Pedido #${p.id}</strong><br>
-            Fecha: ${p.fecha}<br>
-            Total: $${(p.total ?? 0)}<br>
-            Estado:
-            <select onchange="cambiarEstado(${p.id}, this.value)">
-               <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
-               <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
-               <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
-            </select>
-         </div>
-      `;
-   });
-
+      <div class="pedido-card">
+         <strong>Pedido #${p.id}</strong><br>
+         Fecha: ${p.fecha}<br>
+         Total: $${(p.total ?? 0)}<br>
+         <br>
+         <strong>Productos:</strong>
+         ${productosHTML}
+         <br>
+         Estado:
+         <select onchange="cambiarEstado(${p.id}, this.value)">
+            <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
+            <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
+            <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
+         </select>
+      </div>
+   `;
+  });
+}
 
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
