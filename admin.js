@@ -284,6 +284,14 @@ function crearGraficaVentas(){
       });
    }
 
+   const total = datos.reduce((a,b)=>a+b,0);
+const promedio = total / datos.length;
+
+const lineaPromedio = Array(datos.length).fill(promedio);
+
+const maxVenta = Math.max(...datos);
+const indicePico = datos.indexOf(maxVenta);
+   
    const ctx = document.getElementById("graficaVentas").getContext("2d");
 
    if(window.miGrafica){
@@ -308,8 +316,25 @@ function crearGraficaVentas(){
             pointBackgroundColor:"#007bff",
             pointRadius:5,
             pointHoverRadius:7,
+   pointBackgroundColor: datos.map(v => v === maxVenta ? "#ff0000" : "#007bff"),
+pointRadius: datos.map(v => v === maxVenta ? 8 : 5),
+         animations:{
+       y:{
+      from:0
+   }
+}
          }]
       },
+      
+      {
+   label:"Promedio",
+   data: lineaPromedio,
+   borderColor:"#ff9800",
+   borderDash:[6,6],
+   pointRadius:0,
+   tension:0.4
+}
+                                
       options:{
          responsive:true,
          plugins:{
@@ -324,6 +349,10 @@ function crearGraficaVentas(){
                grid:{display:false}
             }
          }
+         animation:{
+         duration:1200,
+         easing:"easeOutQuart"
+        }
       }
    });
 
@@ -379,6 +408,27 @@ function compararMeses(ventas){
 let tipoGrafica = "semana";
 
 
+function cambiarTema(){
+
+   const body = document.body;
+   const btn = document.getElementById("toggleTema");
+
+   body.classList.toggle("modo-oscuro");
+
+   if(body.classList.contains("modo-oscuro")){
+      btn.textContent = "🌜 Modo Oscuro";
+      btn.classList.remove("tema-claro");
+      btn.classList.add("tema-oscuro");
+      localStorage.setItem("tema","oscuro");
+   }else{
+      btn.textContent = "🌞 Modo Claro";
+      btn.classList.remove("tema-oscuro");
+      btn.classList.add("tema-claro");
+      localStorage.setItem("tema","claro");
+   }
+}
+
+
 // Auto refresh cada 5 segundos
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -393,4 +443,17 @@ document.addEventListener("DOMContentLoaded", () => {
    }
 
 });
+
+
+window.onload = function(){
+   const temaGuardado = localStorage.getItem("tema");
+   if(temaGuardado === "oscuro"){
+      document.body.classList.add("modo-oscuro");
+      const btn = document.getElementById("toggleTema");
+      btn.textContent = "🌜 Modo Oscuro";
+      btn.classList.remove("tema-claro");
+      btn.classList.add("tema-oscuro");
+   }
+}
+
 
