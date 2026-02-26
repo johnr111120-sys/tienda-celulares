@@ -141,24 +141,56 @@ cont.innerHTML += `
 
 
 function actualizarEstadisticas(){
+
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
-   const hoy = new Date().toLocaleDateString();
+   const hoy = new Date();
+   const hoyTexto = hoy.toLocaleDateString();
 
    let totalPedidos = pedidos.length;
    let pendientes = pedidos.filter(p => p.estado === "pendiente").length;
 
    let totalHoy = 0;
+   let totalGeneral = 0;
+   let ventasSemana = 0;
+
+   const hace7Dias = new Date();
+   hace7Dias.setDate(hoy.getDate() - 7);
 
    pedidos.forEach(p => {
-      if(p.fecha && p.fecha.includes(hoy)){
-         totalHoy += Number(p.total) || 0;
+
+      const total = Number(p.total) || 0;
+      totalGeneral += total;
+
+      if(p.fecha && p.fecha.includes(hoyTexto)){
+         totalHoy += total;
       }
+
+      if(p.fecha){
+         const fechaPedido = new Date(p.fecha);
+         if(fechaPedido >= hace7Dias){
+            ventasSemana += total;
+         }
+      }
+
    });
+
+   const promedio = totalPedidos > 0 ? totalGeneral / totalPedidos : 0;
 
    document.getElementById("totalPedidos").innerText = totalPedidos;
    document.getElementById("totalPendientes").innerText = pendientes;
    document.getElementById("totalHoy").innerText = totalHoy.toLocaleString();
+   document.getElementById("totalGeneral").innerText = totalGeneral.toLocaleString();
+   document.getElementById("promedioPedido").innerText = promedio.toFixed(0).toLocaleString();
+   document.getElementById("ventasSemana").innerText = ventasSemana.toLocaleString();
+
+   // 🔴 indicador rojo si hay pendientes
+   const alerta = document.getElementById("alertaPendientes");
+   if(pendientes > 0){
+      alerta.innerHTML = " 🔴";
+   }else{
+      alerta.innerHTML = "";
+   }
 }
 
 
@@ -200,4 +232,5 @@ function mostrarNotificacion(texto){
 // Auto refresh cada 5 segundos
 setInterval(() => {
    cargarPedidos();
+   actualizarEstadisticas();
 }, 5000);
