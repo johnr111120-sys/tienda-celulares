@@ -802,7 +802,7 @@ function guardarPedido(){
       id: Date.now(),
       fecha: new Date().toLocaleString(),
       productos: carrito,
-      total: carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0),
+     total: carrito.reduce((acc, prod) => acc + Number(prod.precio), 0),
       estado: "pendiente"
    };
 
