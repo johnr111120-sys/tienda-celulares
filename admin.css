@@ -22,18 +22,15 @@ body{
 }
 
 .estado-pendiente{
-   border-left: 6px solid #f1c40f;
-   background: #fffbea;
+   border-left:6px solid #ffc107;
 }
 
 .estado-enviado{
-   border-left: 6px solid #3498db;
-   background: #eef6ff;
+   border-left:6px solid #007bff;
 }
 
 .estado-entregado{
-   border-left: 6px solid #2ecc71;
-   background: #eafaf1;
+   border-left:6px solid #28a745;
 }
 
 .filtros-grafica{
