@@ -429,6 +429,18 @@ function cambiarTema(){
 }
 
 
+window.onload = function(){
+   const temaGuardado = localStorage.getItem("tema");
+   if(temaGuardado === "oscuro"){
+      document.body.classList.add("modo-oscuro");
+      const btn = document.getElementById("toggleTema");
+      btn.textContent = "🌜 Modo Oscuro";
+      btn.classList.remove("tema-claro");
+      btn.classList.add("tema-oscuro");
+   }
+}
+
+
 // Auto refresh cada 5 segundos
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -443,17 +455,5 @@ document.addEventListener("DOMContentLoaded", () => {
    }
 
 });
-
-
-window.onload = function(){
-   const temaGuardado = localStorage.getItem("tema");
-   if(temaGuardado === "oscuro"){
-      document.body.classList.add("modo-oscuro");
-      const btn = document.getElementById("toggleTema");
-      btn.textContent = "🌜 Modo Oscuro";
-      btn.classList.remove("tema-claro");
-      btn.classList.add("tema-oscuro");
-   }
-}
 
 
