@@ -157,7 +157,6 @@ body.modo-oscuro .pedido-card{
    letter-spacing:1px;
 }
 
-
 .notificacion{
    position:fixed;
    top:20px;
@@ -180,7 +179,6 @@ body.modo-oscuro .pedido-card{
    right:-350px;
 }
 
-
 .badge{
    background:red;
    color:white;
@@ -189,3 +187,50 @@ body.modo-oscuro .pedido-card{
    font-size:12px;
    margin-left:10px;
 }
+
+.toast{
+   position:fixed;
+   bottom:25px;
+   right:-400px;
+   background:#25D366;
+   color:white;
+   display:flex;
+   align-items:center;
+   gap:12px;
+   padding:14px 18px;
+   border-radius:12px;
+   box-shadow:0 10px 25px rgba(0,0,0,0.25);
+   transition:0.45s ease;
+   z-index:9999;
+   font-family:Arial;
+}
+
+.toast-icon{
+   font-size:22px;
+}
+
+.toast.mostrar{
+   right:25px;
+}
+
+@keyframes badgePop{
+   0%{ transform:scale(1); }
+   50%{ transform:scale(1.4); }
+   100%{ transform:scale(1); }
+}
+
+.badge.animar{
+   animation: badgePop 0.4s ease;
+}
+
+.control-volumen{
+   position:fixed;
+   bottom:10px;
+   left:15px;
+   background:white;
+   padding:8px 14px;
+   border-radius:8px;
+   box-shadow:0 4px 10px rgba(0,0,0,0.15);
+   font-size:13px;
+}
+
