@@ -794,6 +794,23 @@ function toggleCarritoIzquierdo() {
     }
 }
 
+function guardarPedido(){
+
+   let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   const pedido = {
+      id: Date.now(),
+      fecha: new Date().toLocaleString(),
+      productos: carrito,
+      total: carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0),
+      estado: "pendiente"
+   };
+
+   pedidos.push(pedido);
+
+   localStorage.setItem("pedidos", JSON.stringify(pedidos));
+}
+      
 // Función para generar un número de rastreo único (Ej: MC-2026-X892)
 function generarNumeroRastreo() {
     const random = Math.floor(1000 + Math.random() * 9000);
@@ -841,6 +858,7 @@ function enviarPedidoWhatsApp(tracking) {
                     `*TOTAL A PAGAR:* RD$ ${totalFinal.toLocaleString()}\n` +
                     `--------------------------\n` +
                     `_Enviado desde el Checkout de la web._`;
+                         guardarPedido();
 
    // IMPORTANTE: Guardamos el costo de envío en el objeto de la compra para la factura
     if (typeof registrarCompraEnPerfil === "function") {
