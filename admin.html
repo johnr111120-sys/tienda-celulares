@@ -19,12 +19,13 @@
 </div>
 
 <h2>Ventas</h2>
-  <div class="filtros-grafica">
+ <div class="filtros-grafica">
    <button onclick="cambiarGrafica('dia')">Ventas diarias</button>
-   <button onclick="cambiarGrafica('semana')">Ventas semanales</button>
+   <button onclick="cambiarGrafica('semana')" class="activo">Ventas semanales</button>
    <button onclick="cambiarGrafica('mes')">Ventas mensuales</button>
-   <button onclick="cambiarGrafica('año')">Ventas anual</button>
+   <button onclick="cambiarGrafica('anio')">Ventas anual</button>
 </div>
+  
 <canvas id="graficaVentas" height="100"></canvas>
 <p id="comparacionMes" style="margin-top:10px; font-weight:bold;"></p>
   
