@@ -36,3 +36,24 @@ body{
    background: #eafaf1;
 }
 
+.filtros-grafica{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.filtros-grafica button{
+  flex:1;
+  padding:10px;
+  border:none;
+  background:#111;
+  color:white;
+  cursor:pointer;
+  border-radius:6px;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+.filtros-grafica button:hover{
+  background:#444;
+}
