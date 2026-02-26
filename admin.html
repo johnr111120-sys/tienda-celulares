@@ -8,7 +8,11 @@
 <body>
 
 <h1>Panel Administración</h1>
-<button id="toggleTema" onclick="cambiarTema()" class="tema-claro">🌞 Modo Claro</button>
+  
+<div class="theme-switch" onclick="cambiarTema()" id="switchTema">
+   <div class="switch-circle"></div>
+   <span class="switch-text">DAY MODE</span>
+</div>
   
   <div id="estadisticas" style="display:flex; flex-wrap:wrap; gap:25px; margin-bottom:25px; font-size:14px;">
    <div><strong>Total Pedidos:</strong> <span id="totalPedidos">0</span></div>
