@@ -381,19 +381,23 @@ let tipoGrafica = "semana";
 function cambiarTema(){
 
    const body = document.body;
-   const btn = document.getElementById("toggleTema");
+   const sw = document.getElementById("switchTema");
+   const circle = sw.querySelector(".switch-circle");
+   const text = sw.querySelector(".switch-text");
 
    body.classList.toggle("modo-oscuro");
 
    if(body.classList.contains("modo-oscuro")){
-      btn.textContent = "🌜 Modo Oscuro";
-      btn.classList.remove("tema-claro");
-      btn.classList.add("tema-oscuro");
+      sw.classList.remove("claro");
+      sw.classList.add("oscuro");
+      circle.innerHTML = "🌙";
+      text.textContent = "NIGHT MODE";
       localStorage.setItem("tema","oscuro");
    }else{
-      btn.textContent = "🌞 Modo Claro";
-      btn.classList.remove("tema-oscuro");
-      btn.classList.add("tema-claro");
+      sw.classList.remove("oscuro");
+      sw.classList.add("claro");
+      circle.innerHTML = "☀️";
+      text.textContent = "DAY MODE";
       localStorage.setItem("tema","claro");
    }
 }
@@ -414,13 +418,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-window.onload = function(){
-   const temaGuardado = localStorage.getItem("tema");
-   if(temaGuardado === "oscuro"){
+
+window.addEventListener("load", ()=>{
+
+   const tema = localStorage.getItem("tema");
+   const sw = document.getElementById("switchTema");
+   const circle = sw.querySelector(".switch-circle");
+   const text = sw.querySelector(".switch-text");
+
+   if(tema === "oscuro"){
       document.body.classList.add("modo-oscuro");
-      const btn = document.getElementById("toggleTema");
-      btn.textContent = "🌜 Modo Oscuro";
-      btn.classList.remove("tema-claro");
-      btn.classList.add("tema-oscuro");
+      sw.classList.add("oscuro");
+      circle.innerHTML = "🌙";
+      text.textContent = "NIGHT MODE";
+   }else{
+      sw.classList.add("claro");
+      circle.innerHTML = "☀️";
+      text.textContent = "DAY MODE";
    }
-}
+});
+
+
