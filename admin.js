@@ -229,52 +229,60 @@ function mostrarNotificacion(texto){
    },3000);
 }
 
+
 function crearGraficaVentas(){
 
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   const ahora = new Date();
 
-   const datos = {};
-   const etiquetas = [];
+   let etiquetas = [];
+   let datos = [];
 
-   pedidos.forEach(p => {
-      if(!p.fecha) return;
+   if(tipoGrafica === "dia"){
+      etiquetas = Array.from({length:24}, (_,i)=> i+"h");
+      datos = Array(24).fill(0);
 
-     const partes = p.fecha.split(",");
-const fechaFormateada = partes[0].split("/");
-const fecha = new Date(
-   Number(fechaFormateada[2]),
-   Number(fechaFormateada[1]) - 1,
-   Number(fechaFormateada[0])
-);
-      
-     const total = parseFloat(p.total) || 0;
-      let clave;
-
-      if(tipoGrafica === "dia"){
-         clave = fecha.toLocaleDateString();
-      }
-
-      if(tipoGrafica === "semana"){
-         const semana = Math.ceil(fecha.getDate()/7);
-         clave = "Sem " + semana + " - " + (fecha.getMonth()+1);
-      }
-
-      if(tipoGrafica === "mes"){
-         clave = fecha.toLocaleString('default',{month:'short'});
-      }
-
-      if(tipoGrafica === "anio"){
-         clave = fecha.getFullYear();
-      }
-
-      datos[clave] = (datos[clave] || 0) + total;
-   });
-
-   for(let key in datos){
-      etiquetas.push(key);
+      pedidos.forEach(p=>{
+         const fecha = new Date(p.fecha);
+         if(fecha.toDateString() === ahora.toDateString()){
+            datos[fecha.getHours()] += p.total || 0;
+         }
+      });
    }
 
-   const valores = Object.values(datos);
+   if(tipoGrafica === "semana"){
+      etiquetas = ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+      datos = Array(7).fill(0);
+
+      pedidos.forEach(p=>{
+         const fecha = new Date(p.fecha);
+         const dia = (fecha.getDay()+6)%7;
+         datos[dia] += p.total || 0;
+      });
+   }
+
+   if(tipoGrafica === "mes"){
+      etiquetas = ["Sem1","Sem2","Sem3","Sem4","Sem5"];
+      datos = Array(5).fill(0);
+
+      pedidos.forEach(p=>{
+         const fecha = new Date(p.fecha);
+         if(fecha.getMonth() === ahora.getMonth()){
+            const semana = Math.floor(fecha.getDate()/7);
+            datos[semana] += p.total || 0;
+         }
+      });
+   }
+
+   if(tipoGrafica === "anio"){
+      etiquetas = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+      datos = Array(12).fill(0);
+
+      pedidos.forEach(p=>{
+         const fecha = new Date(p.fecha);
+         datos[fecha.getMonth()] += p.total || 0;
+      });
+   }
 
    const ctx = document.getElementById("graficaVentas").getContext("2d");
 
@@ -282,27 +290,41 @@ const fecha = new Date(
       window.miGrafica.destroy();
    }
 
-   window.miGrafica = new Chart(ctx, {
-      type: "bar",
-      data: {
+   const gradient = ctx.createLinearGradient(0,0,0,300);
+   gradient.addColorStop(0,"rgba(0,123,255,0.4)");
+   gradient.addColorStop(1,"rgba(0,123,255,0)");
+
+   window.miGrafica = new Chart(ctx,{
+      type:"line",
+      data:{
          labels: etiquetas,
-         datasets: [{
-            label: "Ventas",
-            data: valores,
-            borderWidth: 2,
-            borderRadius: 6
+         datasets:[{
+            label:"Ventas $",
+            data: datos,
+            tension:0.4,
+            fill:true,
+            backgroundColor: gradient,
+            borderColor:"#007bff",
+            pointBackgroundColor:"#007bff",
+            pointRadius:5,
+            pointHoverRadius:7,
          }]
       },
-     options: {
-   responsive:true,
-   animation:{
-      duration:800,
-      easing:'easeInOutQuart'
-   },
-   plugins:{
-      legend:{display:false}
-   }
-}
+      options:{
+         responsive:true,
+         plugins:{
+            legend:{display:false}
+         },
+         scales:{
+            y:{
+               beginAtZero:true,
+               grid:{color:"#eee"}
+            },
+            x:{
+               grid:{display:false}
+            }
+         }
+      }
    });
 
 }
