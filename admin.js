@@ -69,25 +69,24 @@ function cargarPedidos(){
       return;
    }
 
-   pedidos.slice().reverse().forEach(p => {
+  pedidos.slice().reverse().forEach(p => {
 
-      cont.innerHTML += `
-         <div class="pedido-card">
-            <strong>Pedido #${p.id}</strong><br>
-            Fecha: ${p.fecha}<br>
-            Total: $${p.total}<br>
-            Estado:
+   cont.innerHTML += `
+      <div class="pedido-card">
+         <strong>Pedido #${p.id}</strong><br>
+         Fecha: ${p.fecha}<br>
+         Total: $${(p.total ?? 0).toLocaleString()}<br>
+         Estado:
 
-            <select onchange="cambiarEstado(${p.id}, this.value)">
-               <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
-               <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
-               <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
-            </select>
-         </div>
-      `;
-   });
-}
-
+         <select onchange="cambiarEstado(${p.id}, this.value)">
+            <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
+            <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
+            <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
+         </select>
+      </div>
+   `;
+});
+  
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
