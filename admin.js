@@ -239,8 +239,14 @@ function crearGraficaVentas(){
    pedidos.forEach(p => {
       if(!p.fecha) return;
 
-      const fecha = new Date(p.fecha);
-      const total = Number(p.total) || 0;
+     const partes = p.fecha.split(",");
+const fechaFormateada = partes[0].split("/");
+const fecha = new Date(
+   fechaFormateada[2],          // año
+   fechaFormateada[1] - 1,      // mes
+   fechaFormateada[0]           // día
+);
+     const total = parseFloat(p.total) || 0;
       let clave;
 
       if(tipoGrafica === "dia"){
