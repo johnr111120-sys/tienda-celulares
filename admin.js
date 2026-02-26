@@ -72,16 +72,34 @@ function cargarPedidos(){
       return;
    }
 
-   pedidos.slice().reverse().forEach(p => {
-      cont.innerHTML += `
+  pedidos.slice().reverse().forEach(p => {
+
+   let productosHTML = "";
+
+   if (Array.isArray(p.productos)) {
+      p.productos.forEach(prod => {
+         const precio = Number(prod.precio) || 0;
+
+         productosHTML += `
+            <div style="margin-left:10px; font-size:14px;">
+               • ${prod.nombre} — $${precio.toLocaleString()}
+            </div>
+         `;
+      });
+   }
+
+   const totalSeguro = Number(p.total) || 0;
+
+   cont.innerHTML += `
       <div class="pedido-card">
          <strong>Pedido #${p.id}</strong><br>
          Fecha: ${p.fecha}<br>
-         Total: $${(p.total ?? 0)}<br>
-         <br>
+         Total: $${totalSeguro.toLocaleString()}<br><br>
+
          <strong>Productos:</strong>
          ${productosHTML}
-         <br>
+
+         <br><br>
          Estado:
          <select onchange="cambiarEstado(${p.id}, this.value)">
             <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
@@ -90,9 +108,9 @@ function cargarPedidos(){
          </select>
       </div>
    `;
-  });
-}
+});
 
+   
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
