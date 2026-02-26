@@ -60,25 +60,28 @@ cargarAdmin();
 function cargarPedidos(){
 
    const cont = document.getElementById("listaPedidos");
-   if(!cont) return;
-
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
    cont.innerHTML = "";
 
-   pedidos.reverse().forEach(p => {
+   if(pedidos.length === 0){
+      cont.innerHTML = "<p>No hay pedidos aún</p>";
+      return;
+   }
+
+   pedidos.slice().reverse().forEach(p => {
 
       cont.innerHTML += `
          <div class="pedido-card">
-            <b>Pedido #${p.id}</b><br>
-            ${p.fecha}<br>
+            <strong>Pedido #${p.id}</strong><br>
+            Fecha: ${p.fecha}<br>
             Total: $${p.total}<br>
-
             Estado:
+
             <select onchange="cambiarEstado(${p.id}, this.value)">
-               <option ${p.estado=="pendiente"?"selected":""}>pendiente</option>
-               <option ${p.estado=="enviado"?"selected":""}>enviado</option>
-               <option ${p.estado=="entregado"?"selected":""}>entregado</option>
+               <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
+               <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
+               <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
             </select>
          </div>
       `;
@@ -88,8 +91,10 @@ function cargarPedidos(){
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
-   const pedido = pedidos.find(p => p.id === id);
-   pedido.estado = estado;
+   const index = pedidos.findIndex(p => p.id == id);
+   if(index !== -1){
+      pedidos[index].estado = estado;
+   }
 
    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }
