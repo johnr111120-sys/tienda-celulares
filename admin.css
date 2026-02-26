@@ -14,7 +14,7 @@ body{
 }
 
 .pedido-card{
-  border:1px solid #ddd;
+  border:1px solid #007bff;
   padding:12px;
   margin-bottom:10px;
   background:white;
@@ -55,5 +55,5 @@ body{
 }
 
 .filtros-grafica button:hover{
-  background:#444;
+  background:#007bff;
 }
