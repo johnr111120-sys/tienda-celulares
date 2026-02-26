@@ -64,15 +64,25 @@ cargarAdmin();
 function cargarPedidos(){
    const cont = document.getElementById("listaPedidos");
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   const filtro = document.getElementById("filtroEstado").value;
 
    cont.innerHTML = "";
+
+   // contador pendientes
+   const pendientes = pedidos.filter(p => p.estado === "pendiente").length;
+   document.getElementById("contadorPendientes").innerHTML =
+      "Pedidos pendientes: " + pendientes;
 
    if(pedidos.length === 0){
       cont.innerHTML = "<p>No hay pedidos aún</p>";
       return;
    }
 
-   pedidos.slice().reverse().forEach(p => {
+  pedidos
+.filter(p => filtro === "todos" || p.estado === filtro)
+.slice()
+.reverse()
+.forEach(p => {
 
       let productosHTML = "";
 
