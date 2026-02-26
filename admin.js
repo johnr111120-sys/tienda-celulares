@@ -146,14 +146,16 @@ let ultimoPedidoID = Number(localStorage.getItem("ultimoPedidoID")) || 0;
 function detectarPedidosNuevos(){
 
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
    if(pedidos.length === 0) return;
 
    const masReciente = pedidos[pedidos.length - 1];
 
    if(masReciente.id > ultimoPedidoID){
-
-      mostrarNotificacion();
-      reproducirSonido();
+      const sonido = document.getElementById("sonidoPedido");
+      if(sonido){
+         sonido.play().catch(()=>{});
+      }
 
       ultimoPedidoID = masReciente.id;
       localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
@@ -167,14 +169,6 @@ function actualizarEstadisticas(){
 
    const hoy = new Date();
    const hoyTexto = hoy.toLocaleDateString();
-
-   const badge = document.getElementById("badgePedidos");
-const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
-
-if(badge){
-   badge.textContent = pendientes;
-   badge.style.display = pendientes > 0 ? "inline-block" : "none";
-}
 
    let totalPedidos = pedidos.length;
    let pendientes = pedidos.filter(p => p.estado === "pendiente").length;
@@ -238,17 +232,24 @@ console.log("Pedidos cargados");
 cargarPedidos();
 
 
-function mostrarNotificacion(){
-   const n = document.getElementById("notificacionFlotante");
-   if(!n) return;
+function mostrarNotificacion(texto){
+   const div = document.createElement("div");
+   div.innerText = texto;
+   div.style.position = "fixed";
+   div.style.top = "20px";
+   div.style.right = "20px";
+   div.style.background = "#FF2C2C";
+   div.style.color = "#000";
+   div.style.padding = "12px 20px";
+   div.style.borderRadius = "6px";
+   div.style.boxShadow = "0 5px 15px rgba(0,0,0,0.3)";
+   div.style.zIndex = "9999";
 
-   n.classList.remove("ocultar");
-   n.classList.add("mostrar");
+   document.body.appendChild(div);
 
    setTimeout(()=>{
-      n.classList.remove("mostrar");
-      n.classList.add("ocultar");
-   },4000);
+      div.remove();
+   },3000);
 }
 
 
@@ -432,14 +433,6 @@ function refrescarPanel(){
    detectarPedidosNuevos(); // ✅ aquí sí
 }
 
-
-function reproducirSonido(){
-   const sonido = document.getElementById("sonidoPedido");
-   if(sonido){
-      sonido.currentTime = 0;
-      sonido.play().catch(()=>{});
-   }
-}
 
 // Auto refresh cada 5 segundos
 document.addEventListener("DOMContentLoaded", () => {
