@@ -1,3 +1,5 @@
+let cantidadAnteriorPedidos = 0;
+
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
 function cargarAdmin(){
@@ -63,9 +65,17 @@ cargarAdmin();
 
 function cargarPedidos(){
    const cont = document.getElementById("listaPedidos");
-   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
    const filtro = document.getElementById("filtroEstado").value;
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   if(pedidos.length > cantidadAnteriorPedidos){
+   mostrarNotificacion("🛒 Nuevo pedido recibido");
 
+   const audio = document.getElementById("sonidoPedido");
+   if(audio) audio.play();
+}
+
+cantidadAnteriorPedidos = pedidos.length;
+   
    cont.innerHTML = "";
 
    // contador pendientes
@@ -101,8 +111,14 @@ function cargarPedidos(){
 
       const totalSeguro = Number(p.total) || 0;
 
-      cont.innerHTML += `
-         <div class="pedido-card">
+     let claseEstado = "";
+
+if(p.estado === "pendiente") claseEstado = "estado-pendiente";
+if(p.estado === "enviado") claseEstado = "estado-enviado";
+if(p.estado === "entregado") claseEstado = "estado-entregado";
+
+cont.innerHTML += `
+   <div class="pedido-card ${claseEstado}">
             <strong>Pedido #${p.id}</strong><br>
             Fecha: ${p.fecha}<br>
             Total: $${totalSeguro.toLocaleString()}<br><br>
@@ -135,3 +151,24 @@ function cambiarEstado(id, estado){
 
 console.log("Pedidos cargados");
 cargarPedidos();
+
+
+function mostrarNotificacion(texto){
+   const div = document.createElement("div");
+   div.innerText = texto;
+   div.style.position = "fixed";
+   div.style.top = "20px";
+   div.style.right = "20px";
+   div.style.background = "#000";
+   div.style.color = "#fff";
+   div.style.padding = "12px 20px";
+   div.style.borderRadius = "6px";
+   div.style.boxShadow = "0 5px 15px rgba(0,0,0,0.3)";
+   div.style.zIndex = "9999";
+
+   document.body.appendChild(div);
+
+   setTimeout(()=>{
+      div.remove();
+   },3000);
+}
