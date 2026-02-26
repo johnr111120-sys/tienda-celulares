@@ -375,8 +375,28 @@ function compararMeses(ventas){
    }
 }
 
-
 let tipoGrafica = "semana";
+
+
+function cambiarTema(){
+
+   const body = document.body;
+   const btn = document.getElementById("toggleTema");
+
+   body.classList.toggle("modo-oscuro");
+
+   if(body.classList.contains("modo-oscuro")){
+      btn.textContent = "🌜 Modo Oscuro";
+      btn.classList.remove("tema-claro");
+      btn.classList.add("tema-oscuro");
+      localStorage.setItem("tema","oscuro");
+   }else{
+      btn.textContent = "🌞 Modo Claro";
+      btn.classList.remove("tema-oscuro");
+      btn.classList.add("tema-claro");
+      localStorage.setItem("tema","claro");
+   }
+}
 
 
 // Auto refresh cada 5 segundos
@@ -393,3 +413,14 @@ document.addEventListener("DOMContentLoaded", () => {
    }
 
 });
+
+window.onload = function(){
+   const temaGuardado = localStorage.getItem("tema");
+   if(temaGuardado === "oscuro"){
+      document.body.classList.add("modo-oscuro");
+      const btn = document.getElementById("toggleTema");
+      btn.textContent = "🌜 Modo Oscuro";
+      btn.classList.remove("tema-claro");
+      btn.classList.add("tema-oscuro");
+   }
+}
