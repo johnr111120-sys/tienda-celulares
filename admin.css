@@ -76,3 +76,32 @@ body{
   box-shadow:0 4px 12px rgba(0,0,0,0.6);
 }
 
+body.modo-oscuro{
+   background:#111;
+   color:#fff;
+}
+
+body.modo-oscuro .pedido-card{
+   background:#1e1e1e;
+   border:1px solid #333;
+}
+
+#toggleTema{
+   padding:8px 15px;
+   border-radius:8px;
+   cursor:pointer;
+   border:2px solid #007bff;
+   font-weight:bold;
+   transition:0.3s;
+}
+
+.tema-claro{
+   background:white;
+   color:black;
+}
+
+.tema-oscuro{
+   background:black;
+   color:white;
+}
+
