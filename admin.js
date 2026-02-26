@@ -1,3 +1,4 @@
+
 let cantidadAnteriorPedidos = 0;
 
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
@@ -151,8 +152,8 @@ function detectarPedidosNuevos(){
 
    if(masReciente.id > ultimoPedidoID){
 
-       mostrarToast();
-       reproducirSonido();
+      mostrarNotificacion();
+      reproducirSonido();
 
       ultimoPedidoID = masReciente.id;
       localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
@@ -168,12 +169,12 @@ function actualizarEstadisticas(){
    const hoyTexto = hoy.toLocaleDateString();
 
    const badge = document.getElementById("badgePedidos");
+const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
 
-if(pendientes > 0){
-   badge.classList.add("animar");
-   setTimeout(()=> badge.classList.remove("animar"), 400);
+if(badge){
+   badge.textContent = pendientes;
+   badge.style.display = pendientes > 0 ? "inline-block" : "none";
 }
-
 
    let totalPedidos = pedidos.length;
    let pendientes = pedidos.filter(p => p.estado === "pendiente").length;
@@ -439,51 +440,6 @@ function reproducirSonido(){
       sonido.play().catch(()=>{});
    }
 }
-
-
-function mostrarToast(){
-   const t = document.getElementById("toastPedido");
-   if(!t) return;
-
-   t.classList.add("mostrar");
-
-   setTimeout(()=>{
-      t.classList.remove("mostrar");
-   }, 3500);
-}
-
-
-let audioHabilitado = false;
-
-document.addEventListener("click", () => {
-   audioHabilitado = true;
-}, { once:true });
-
-function reproducirSonido(){
-   if(!audioHabilitado) return;
-
-   const sonido = document.getElementById("sonidoPedido");
-   if(sonido){
-      sonido.volume = volumenActual;
-      sonido.currentTime = 0;
-      sonido.play().catch(()=>{});
-   }
-}
-
-
-let volumenActual = localStorage.getItem("volumenPanel") || 0.7;
-
-const control = document.getElementById("controlVolumen");
-
-if(control){
-   control.value = volumenActual;
-
-   control.addEventListener("input", e=>{
-      volumenActual = e.target.value;
-      localStorage.setItem("volumenPanel", volumenActual);
-   });
-}
-
 
 // Auto refresh cada 5 segundos
 document.addEventListener("DOMContentLoaded", () => {
