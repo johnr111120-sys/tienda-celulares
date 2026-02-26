@@ -20,3 +20,19 @@ body{
   background:white;
   border-radius:6px;
 }
+
+.estado-pendiente{
+   border-left: 6px solid #f1c40f;
+   background: #fffbea;
+}
+
+.estado-enviado{
+   border-left: 6px solid #3498db;
+   background: #eef6ff;
+}
+
+.estado-entregado{
+   border-left: 6px solid #2ecc71;
+   background: #eafaf1;
+}
+
