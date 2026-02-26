@@ -193,8 +193,6 @@ function actualizarEstadisticas(){
    }
 }
 
-crearGraficaVentas();
-
 
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
@@ -303,18 +301,16 @@ function crearGraficaVentas(){
 }
 
 
-function cambiarGrafica(tipo){
+function cambiarGrafica(tipo, boton){
 
    tipoGrafica = tipo;
 
-   // quitar clase activa de todos
+   // quitar activo a todos
    document.querySelectorAll(".filtros-grafica button")
       .forEach(btn => btn.classList.remove("activo"));
 
    // activar el clickeado
-   event.target.classList.add("activo");
-
-   crearGraficaVentas();
+   boton.classList.add("activo");
 }
 
 
@@ -358,10 +354,16 @@ function cambiarGrafica(tipo){
 
 // Auto refresh cada 5 segundos
 document.addEventListener("DOMContentLoaded", () => {
-setInterval(() => {
+
    cargarPedidos();
    actualizarEstadisticas();
-   crearGraficaVentas();
-}, 5000);
+
+   // activar botón semanal manualmente
+   const botonInicial = document.querySelector(".filtros-grafica button.activo");
+
+   if(botonInicial){
+      crearGraficaVentas();
+   }
+
 });
 
