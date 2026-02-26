@@ -19,14 +19,15 @@
 </div>
 
 <h2>Ventas</h2>
- <div class="filtros-grafica">
-   <button onclick="cambiarGrafica('dia')">Ventas diarias</button>
-   <button onclick="cambiarGrafica('semana')" class="activo">Ventas semanales</button>
-   <button onclick="cambiarGrafica('mes')">Ventas mensuales</button>
-   <button onclick="cambiarGrafica('anio')">Ventas anual</button>
+<div class="filtros-grafica">
+   <button onclick="cambiarGrafica('dia', this)">Ventas diarias</button>
+   <button onclick="cambiarGrafica('semana', this)" class="activo">Ventas semanales</button>
+   <button onclick="cambiarGrafica('mes', this)">Ventas mensuales</button>
+   <button onclick="cambiarGrafica('anio', this)">Ventas anual</button>
 </div>
-  
-<canvas id="graficaVentas" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="graficaVentas"></canvas>
 <p id="comparacionMes" style="margin-top:10px; font-weight:bold;"></p>
   
 <h3 id="contadorPendientes"></h3>
