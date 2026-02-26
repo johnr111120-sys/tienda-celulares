@@ -9,10 +9,13 @@
 
 <h1>Panel Administración</h1>
 
-  <div id="estadisticas" style="display:flex; gap:20px; margin-bottom:20px;">
+  <div id="estadisticas" style="display:flex; flex-wrap:wrap; gap:25px; margin-bottom:25px; font-size:14px;">
    <div><strong>Total Pedidos:</strong> <span id="totalPedidos">0</span></div>
-   <div><strong>Pendientes:</strong> <span id="totalPendientes">0</span></div>
+   <div><strong>Pendientes:</strong> <span id="totalPendientes">0</span> <span id="alertaPendientes"></span></div>
    <div><strong>Total Vendido Hoy:</strong> $<span id="totalHoy">0</span></div>
+   <div><strong>Total Vendido General:</strong> $<span id="totalGeneral">0</span></div>
+   <div><strong>Promedio por Pedido:</strong> $<span id="promedioPedido">0</span></div>
+   <div><strong>Últimos 7 días:</strong> $<span id="ventasSemana">0</span></div>
 </div>
   
 <h3 id="contadorPendientes"></h3>
