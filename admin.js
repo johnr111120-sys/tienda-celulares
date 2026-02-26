@@ -72,44 +72,45 @@ function cargarPedidos(){
       return;
    }
 
-  pedidos.slice().reverse().forEach(p => {
+   pedidos.slice().reverse().forEach(p => {
 
-   let productosHTML = "";
+      let productosHTML = "";
 
-   if (Array.isArray(p.productos)) {
-      p.productos.forEach(prod => {
-         const precio = Number(prod.precio) || 0;
+      if (Array.isArray(p.productos)) {
+         p.productos.forEach(prod => {
+            const nombre = prod.nombre || "Producto";
+            const precio = Number(prod.precio) || 0;
 
-         productosHTML += `
-            <div style="margin-left:10px; font-size:14px;">
-               • ${prod.nombre} — $${precio.toLocaleString()}
-            </div>
-         `;
-      });
-   }
+            productosHTML += `
+               <div style="margin-left:10px; font-size:14px;">
+                  • ${nombre} — $${precio.toLocaleString()}
+               </div>
+            `;
+         });
+      }
 
-   const totalSeguro = Number(p.total) || 0;
+      const totalSeguro = Number(p.total) || 0;
 
-   cont.innerHTML += `
-      <div class="pedido-card">
-         <strong>Pedido #${p.id}</strong><br>
-         Fecha: ${p.fecha}<br>
-         Total: $${totalSeguro.toLocaleString()}<br><br>
+      cont.innerHTML += `
+         <div class="pedido-card">
+            <strong>Pedido #${p.id}</strong><br>
+            Fecha: ${p.fecha}<br>
+            Total: $${totalSeguro.toLocaleString()}<br><br>
 
-         <strong>Productos:</strong>
-         ${productosHTML}
+            <strong>Productos:</strong>
+            ${productosHTML || "Sin productos"}
 
-         <br><br>
-         Estado:
-         <select onchange="cambiarEstado(${p.id}, this.value)">
-            <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
-            <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
-            <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
-         </select>
-      </div>
-   `;
-});
-
+            <br><br>
+            Estado:
+            <select onchange="cambiarEstado(${p.id}, this.value)">
+               <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
+               <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
+               <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
+            </select>
+         </div>
+      `;
+   });
+}
    
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
