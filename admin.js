@@ -184,10 +184,10 @@ function actualizarEstadisticas(){
    document.getElementById("promedioPedido").innerText = promedio.toFixed(0).toLocaleString();
    document.getElementById("ventasSemana").innerText = ventasSemana.toLocaleString();
 
-   // 🔴 indicador rojo si hay pendientes
+   //🛑 indicador rojo si hay pendientes
    const alerta = document.getElementById("alertaPendientes");
    if(pendientes > 0){
-      alerta.innerHTML = " 🔴";
+      alerta.innerHTML = " 🛑";
    }else{
       alerta.innerHTML = "";
    }
