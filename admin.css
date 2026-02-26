@@ -12,3 +12,10 @@ body{
   padding:10px;
   border:1px solid #ddd;
 }
+
+.pedido-card{
+  border:1px solid #ddd;
+  padding:10px;
+  margin:10px 0;
+  background:#fafafa;
+}
