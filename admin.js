@@ -297,6 +297,7 @@ function crearGraficaVentas(){
    });
 
 }
+crearGraficaVentas();
 
 
 function compararMeses(ventas){
