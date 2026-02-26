@@ -140,18 +140,6 @@ cont.innerHTML += `
 }
 detectarPedidosNuevos(pedidos);
 
-let ultimoPedidoID = localStorage.getItem("ultimoPedidoID") || 0;
-
-function detectarPedidosNuevos(pedidos){
-   const masReciente = pedidos[pedidos.length - 1];
-
-   if(masReciente && masReciente.id > ultimoPedidoID){
-      document.getElementById("sonidoPedido").play();
-      ultimoPedidoID = masReciente.id;
-      localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
-   }
-}
-
 
 function actualizarEstadisticas(){
 
