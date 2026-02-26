@@ -73,6 +73,6 @@ body{
 .filtros-grafica button.activo{
   background:#007bff;
   transform:scale(1.10);
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  box-shadow:0 4px 12px rgba(0,0,0,0.6);
 }
 
