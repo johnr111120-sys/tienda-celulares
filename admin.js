@@ -57,4 +57,43 @@ function guardar(){
 
 cargarAdmin();
 
+function cargarPedidos(){
+
+   const cont = document.getElementById("listaPedidos");
+   if(!cont) return;
+
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   cont.innerHTML = "";
+
+   pedidos.reverse().forEach(p => {
+
+      cont.innerHTML += `
+         <div class="pedido-card">
+            <b>Pedido #${p.id}</b><br>
+            ${p.fecha}<br>
+            Total: $${p.total}<br>
+
+            Estado:
+            <select onchange="cambiarEstado(${p.id}, this.value)">
+               <option ${p.estado=="pendiente"?"selected":""}>pendiente</option>
+               <option ${p.estado=="enviado"?"selected":""}>enviado</option>
+               <option ${p.estado=="entregado"?"selected":""}>entregado</option>
+            </select>
+         </div>
+      `;
+   });
+}
+
+function cambiarEstado(id, estado){
+   let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   const pedido = pedidos.find(p => p.id === id);
+   pedido.estado = estado;
+
+   localStorage.setItem("pedidos", JSON.stringify(pedidos));
+}
+
+cargarPedidos();
+
 </script> 
