@@ -75,6 +75,7 @@ function cargarPedidos(){
 }
 
 cantidadAnteriorPedidos = pedidos.length;
+   actualizarEstadisticas();
    
    cont.innerHTML = "";
 
@@ -137,7 +138,30 @@ cont.innerHTML += `
       `;
    });
 }
-   
+
+
+function actualizarEstadisticas(){
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   const hoy = new Date().toLocaleDateString();
+
+   let totalPedidos = pedidos.length;
+   let pendientes = pedidos.filter(p => p.estado === "pendiente").length;
+
+   let totalHoy = 0;
+
+   pedidos.forEach(p => {
+      if(p.fecha && p.fecha.includes(hoy)){
+         totalHoy += Number(p.total) || 0;
+      }
+   });
+
+   document.getElementById("totalPedidos").innerText = totalPedidos;
+   document.getElementById("totalPendientes").innerText = pendientes;
+   document.getElementById("totalHoy").innerText = totalHoy.toLocaleString();
+}
+
+
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
@@ -172,3 +196,8 @@ function mostrarNotificacion(texto){
       div.remove();
    },3000);
 }
+
+// Auto refresh cada 5 segundos
+setInterval(() => {
+   cargarPedidos();
+}, 5000);
