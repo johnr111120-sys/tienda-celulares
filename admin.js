@@ -193,6 +193,8 @@ function actualizarEstadisticas(){
    }
 }
 
+crearGraficaVentas();
+
 
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
@@ -229,8 +231,87 @@ function mostrarNotificacion(texto){
    },3000);
 }
 
+function crearGraficaVentas(){
+
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+   const ventasPorMes = new Array(12).fill(0);
+
+   pedidos.forEach(p => {
+      if(!p.fecha) return;
+
+      const fecha = new Date(p.fecha);
+      const mes = fecha.getMonth();
+      const total = Number(p.total) || 0;
+
+      ventasPorMes[mes] += total;
+   });
+
+   const ctx = document.getElementById("graficaVentas");
+
+   if(window.miGrafica){
+      window.miGrafica.destroy();
+   }
+
+   window.miGrafica = new Chart(ctx, {
+      type: "line",
+      data: {
+         labels: meses,
+         datasets: [{
+            label: "Ventas",
+            data: ventasPorMes,
+            borderWidth: 3,
+            tension: 0.3,
+            fill: true
+         }]
+      },
+      options: {
+         responsive: true,
+         plugins: {
+            legend: { display:false }
+         }
+      }
+   });
+
+   compararMeses(ventasPorMes);
+}
+
+function compararMeses(ventas){
+   const hoy = new Date();
+   const mesActual = hoy.getMonth();
+   const mesAnterior = mesActual === 0 ? 11 : mesActual - 1;
+
+   const actual = ventas[mesActual];
+   const anterior = ventas[mesAnterior];
+
+   const texto = document.getElementById("comparacionMes");
+
+   if(anterior === 0 && actual === 0){
+      texto.innerHTML = "Sin ventas registradas aún";
+      return;
+   }
+
+   const diferencia = actual - anterior;
+   const porcentaje = anterior ? ((diferencia / anterior) * 100).toFixed(1) : 100;
+
+   if(diferencia > 0){
+      texto.innerHTML = `📈 Ventas subieron ${porcentaje}% respecto al mes pasado`;
+      texto.style.color = "green";
+   } else if(diferencia < 0){
+      texto.innerHTML = `📉 Ventas bajaron ${Math.abs(porcentaje)}% respecto al mes pasado`;
+      texto.style.color = "red";
+   } else {
+      texto.innerHTML = "Ventas iguales al mes anterior";
+      texto.style.color = "black";
+   }
+}
+
 // Auto refresh cada 5 segundos
 setInterval(() => {
    cargarPedidos();
    actualizarEstadisticas();
+   crearGraficaVentas();
 }, 5000);
+
+
