@@ -140,13 +140,22 @@ cont.innerHTML += `
 }
 
 
-let ultimoPedidoID = localStorage.getItem("ultimoPedidoID") || 0;
+let ultimoPedidoID = Number(localStorage.getItem("ultimoPedidoID")) || 0;
 
-function detectarPedidosNuevos(pedidos){
+function detectarPedidosNuevos(){
+
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   if(pedidos.length === 0) return;
+
    const masReciente = pedidos[pedidos.length - 1];
 
-   if(masReciente && masReciente.id > ultimoPedidoID){
-      document.getElementById("sonidoPedido").play();
+   if(masReciente.id > ultimoPedidoID){
+      const sonido = document.getElementById("sonidoPedido");
+      if(sonido){
+         sonido.play().catch(()=>{});
+      }
+
       ultimoPedidoID = masReciente.id;
       localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
    }
@@ -420,6 +429,7 @@ function refrescarPanel(){
    cargarPedidos();
    actualizarEstadisticas();
    crearGraficaVentas();
+   detectarPedidosNuevos(); // ✅ aquí sí
 }
 
 
