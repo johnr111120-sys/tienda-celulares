@@ -94,6 +94,7 @@ function cambiarEstado(id, estado){
    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }
 
+console.log("Pedidos cargados");
 cargarPedidos();
 
 </script> 
