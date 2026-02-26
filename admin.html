@@ -8,6 +8,12 @@
 <body>
 
 <h1>Panel Administración</h1>
+
+  <div id="estadisticas" style="display:flex; gap:20px; margin-bottom:20px;">
+   <div><strong>Total Pedidos:</strong> <span id="totalPedidos">0</span></div>
+   <div><strong>Pendientes:</strong> <span id="totalPendientes">0</span></div>
+   <div><strong>Total Vendido Hoy:</strong> $<span id="totalHoy">0</span></div>
+</div>
   
 <h3 id="contadorPendientes"></h3>
 <select id="filtroEstado" onchange="cargarPedidos()">
