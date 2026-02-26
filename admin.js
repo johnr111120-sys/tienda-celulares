@@ -217,8 +217,8 @@ function mostrarNotificacion(texto){
    div.style.position = "fixed";
    div.style.top = "20px";
    div.style.right = "20px";
-   div.style.background = "#000";
-   div.style.color = "#fff";
+   div.style.background = "#FF2C2C";
+   div.style.color = "#000";
    div.style.padding = "12px 20px";
    div.style.borderRadius = "6px";
    div.style.boxShadow = "0 5px 15px rgba(0,0,0,0.3)";
@@ -258,7 +258,7 @@ function crearGraficaVentas(){
          clave = fecha.toLocaleString('default',{month:'short'});
       }
 
-      if(tipoGrafica === "año"){
+      if(tipoGrafica === "anio"){
          clave = fecha.getFullYear();
       }
 
@@ -288,16 +288,34 @@ function crearGraficaVentas(){
             borderRadius: 6
          }]
       },
-      options: {
-         responsive:true,
-         plugins:{
-            legend:{display:false}
-         }
-      }
+     options: {
+   responsive:true,
+   animation:{
+      duration:800,
+      easing:'easeInOutQuart'
+   },
+   plugins:{
+      legend:{display:false}
+   }
+}
    });
 
 }
-crearGraficaVentas();
+
+
+function cambiarGrafica(tipo){
+
+   tipoGrafica = tipo;
+
+   // quitar clase activa de todos
+   document.querySelectorAll(".filtros-grafica button")
+      .forEach(btn => btn.classList.remove("activo"));
+
+   // activar el clickeado
+   event.target.classList.add("activo");
+
+   crearGraficaVentas();
+}
 
 
 function compararMeses(ventas){
@@ -331,19 +349,19 @@ function compararMeses(ventas){
 }
 
 
-let tipoGrafica = "mes";
+let tipoGrafica = "semana";
 
 function cambiarGrafica(tipo){
    tipoGrafica = tipo;
-   crearGraficaVentas();
 }
 
 
 // Auto refresh cada 5 segundos
+document.addEventListener("DOMContentLoaded", () => {
 setInterval(() => {
    cargarPedidos();
    actualizarEstadisticas();
    crearGraficaVentas();
 }, 5000);
-
+});
 
