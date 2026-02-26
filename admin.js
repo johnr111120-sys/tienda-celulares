@@ -235,18 +235,41 @@ function crearGraficaVentas(){
 
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
-   const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-   const ventasPorMes = new Array(12).fill(0);
+   const datos = {};
+   const etiquetas = [];
 
    pedidos.forEach(p => {
       if(!p.fecha) return;
 
       const fecha = new Date(p.fecha);
-      const mes = fecha.getMonth();
       const total = Number(p.total) || 0;
+      let clave;
 
-      ventasPorMes[mes] += total;
+      if(tipoGrafica === "dia"){
+         clave = fecha.toLocaleDateString();
+      }
+
+      if(tipoGrafica === "semana"){
+         const semana = Math.ceil(fecha.getDate()/7);
+         clave = "Sem " + semana + " - " + (fecha.getMonth()+1);
+      }
+
+      if(tipoGrafica === "mes"){
+         clave = fecha.toLocaleString('default',{month:'short'});
+      }
+
+      if(tipoGrafica === "año"){
+         clave = fecha.getFullYear();
+      }
+
+      datos[clave] = (datos[clave] || 0) + total;
    });
+
+   for(let key in datos){
+      etiquetas.push(key);
+   }
+
+   const valores = Object.values(datos);
 
    const ctx = document.getElementById("graficaVentas");
 
@@ -255,27 +278,26 @@ function crearGraficaVentas(){
    }
 
    window.miGrafica = new Chart(ctx, {
-      type: "line",
+      type: "bar",
       data: {
-         labels: meses,
+         labels: etiquetas,
          datasets: [{
             label: "Ventas",
-            data: ventasPorMes,
-            borderWidth: 3,
-            tension: 0.3,
-            fill: true
+            data: valores,
+            borderWidth: 2,
+            borderRadius: 6
          }]
       },
       options: {
-         responsive: true,
-         plugins: {
-            legend: { display:false }
+         responsive:true,
+         plugins:{
+            legend:{display:false}
          }
       }
    });
 
-   compararMeses(ventasPorMes);
 }
+
 
 function compararMeses(ventas){
    const hoy = new Date();
@@ -306,6 +328,15 @@ function compararMeses(ventas){
       texto.style.color = "black";
    }
 }
+
+
+let tipoGrafica = "mes";
+
+function cambiarGrafica(tipo){
+   tipoGrafica = tipo;
+   crearGraficaVentas();
+}
+
 
 // Auto refresh cada 5 segundos
 setInterval(() => {
