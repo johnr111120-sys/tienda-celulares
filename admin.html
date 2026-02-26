@@ -8,7 +8,15 @@
 <body>
 
 <h1>Panel Administración</h1>
-
+  
+<h3 id="contadorPendientes"></h3>
+<select id="filtroEstado" onchange="cargarPedidos()">
+  <option value="todos">Todos</option>
+  <option value="pendiente">Pendientes</option>
+  <option value="enviado">Enviados</option>
+  <option value="entregado">Entregados</option>
+</select>
+  
 <h2>Pedidos</h2>
 <div id="listaPedidos"></div>
   
