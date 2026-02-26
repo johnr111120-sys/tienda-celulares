@@ -1,4 +1,3 @@
-  <script>
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
 function cargarAdmin(){
@@ -24,25 +23,22 @@ function cargarAdmin(){
       `;
    });
 }
-</script> 
 
-  <script>
+
 function editar(id,campo,valor){
    const p = productos.find(x=>x.id==id);
    p[campo] = valor;
    guardar();
 }
-</script> 
 
-  <script>
+
 function eliminar(id){
    productos = productos.filter(p=>p.id!=id);
    guardar();
    cargarAdmin();
 }
-</script> 
 
-  <script>
+
 function nuevoProducto(){
    const nuevo = {
       id: Date.now(),
@@ -56,19 +52,16 @@ function nuevoProducto(){
    guardar();
    cargarAdmin();
 }
-</script> 
 
-  <script>
+
 function guardar(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
 
 cargarAdmin();
-</script> 
 
-  <script>
+
 function cargarPedidos(){
-
    const cont = document.getElementById("listaPedidos");
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
@@ -79,26 +72,25 @@ function cargarPedidos(){
       return;
    }
 
-  pedidos.slice().reverse().forEach(p => {
+   pedidos.slice().reverse().forEach(p => {
+      cont.innerHTML += `
+         <div class="pedido-card">
+            <strong>Pedido #${p.id}</strong><br>
+            Fecha: ${p.fecha}<br>
+            Total: $${(p.total ?? 0)}<br>
+            Estado:
+            <select onchange="cambiarEstado(${p.id}, this.value)">
+               <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
+               <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
+               <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
+            </select>
+         </div>
+      `;
+   });
 
-   cont.innerHTML += `
-      <div class="pedido-card">
-         <strong>Pedido #${p.id}</strong><br>
-         Fecha: ${p.fecha}<br>
-         Total: $${(p.total ?? 0).toLocaleString()}<br>
-         Estado:
+}
 
-         <select onchange="cambiarEstado(${p.id}, this.value)">
-            <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
-            <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
-            <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
-         </select>
-      </div>
-   `;
-});
-</script> 
 
-  <script>
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
@@ -113,4 +105,3 @@ function cambiarEstado(id, estado){
 console.log("Pedidos cargados");
 cargarPedidos();
 
-</script> 
