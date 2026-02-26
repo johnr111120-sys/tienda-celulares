@@ -24,19 +24,25 @@ function cargarAdmin(){
       `;
    });
 }
+</script> 
 
+  <script>
 function editar(id,campo,valor){
    const p = productos.find(x=>x.id==id);
    p[campo] = valor;
    guardar();
 }
+</script> 
 
+  <script>
 function eliminar(id){
    productos = productos.filter(p=>p.id!=id);
    guardar();
    cargarAdmin();
 }
+</script> 
 
+  <script>
 function nuevoProducto(){
    const nuevo = {
       id: Date.now(),
@@ -50,13 +56,17 @@ function nuevoProducto(){
    guardar();
    cargarAdmin();
 }
+</script> 
 
+  <script>
 function guardar(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
 
 cargarAdmin();
+</script> 
 
+  <script>
 function cargarPedidos(){
 
    const cont = document.getElementById("listaPedidos");
@@ -86,7 +96,9 @@ function cargarPedidos(){
       </div>
    `;
 });
-  
+</script> 
+
+  <script>
 function cambiarEstado(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
