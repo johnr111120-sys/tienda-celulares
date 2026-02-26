@@ -156,3 +156,36 @@ body.modo-oscuro .pedido-card{
    text-align:center;
    letter-spacing:1px;
 }
+
+
+.notificacion{
+   position:fixed;
+   top:20px;
+   right:-350px;
+   background:#007bff;
+   color:white;
+   padding:15px 25px;
+   border-radius:10px;
+   box-shadow:0 8px 20px rgba(0,0,0,0.3);
+   font-weight:bold;
+   transition:0.5s ease;
+   z-index:9999;
+}
+
+.notificacion.mostrar{
+   right:20px;
+}
+
+.notificacion.ocultar{
+   right:-350px;
+}
+
+
+.badge{
+   background:red;
+   color:white;
+   padding:4px 10px;
+   border-radius:20px;
+   font-size:12px;
+   margin-left:10px;
+}
