@@ -242,10 +242,11 @@ function crearGraficaVentas(){
      const partes = p.fecha.split(",");
 const fechaFormateada = partes[0].split("/");
 const fecha = new Date(
-   fechaFormateada[2],          // año
-   fechaFormateada[1] - 1,      // mes
-   fechaFormateada[0]           // día
+   Number(fechaFormateada[2]),
+   Number(fechaFormateada[1]) - 1,
+   Number(fechaFormateada[0])
 );
+      
      const total = parseFloat(p.total) || 0;
       let clave;
 
@@ -311,12 +312,14 @@ function cambiarGrafica(tipo, boton){
 
    tipoGrafica = tipo;
 
-   // quitar activo a todos
+   // quitar activo
    document.querySelectorAll(".filtros-grafica button")
       .forEach(btn => btn.classList.remove("activo"));
 
-   // activar el clickeado
+   // activar botón clickeado
    boton.classList.add("activo");
+
+   crearGraficaVentas(); // 🔥 REDIBUJA
 }
 
 
@@ -352,10 +355,6 @@ function compararMeses(ventas){
 
 
 let tipoGrafica = "semana";
-
-function cambiarGrafica(tipo){
-   tipoGrafica = tipo;
-}
 
 
 // Auto refresh cada 5 segundos
