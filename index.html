@@ -1304,13 +1304,12 @@ let productos = JSON.parse(localStorage.getItem("productos"));
 if (productos && productos.length > 0) {
    iniciarTienda();   // usa los productos guardados
 } else {
-   fetch("productos.json")
-   .then(res => res.json())
-   .then(data => {
-      productos = data;
-      localStorage.setItem("productos", JSON.stringify(productos));
-      iniciarTienda();   // 👈 IMPORTANTE
-   });
+  fetch("productos.json")
+.then(res => res.json())
+.then(data => {
+   productos = data;
+   mostrarProductos(); // o la función que carga tus productos
+});
 }
 /* ===============================
    NAVEGACIÓN SPA
