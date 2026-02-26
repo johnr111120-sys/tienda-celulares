@@ -275,7 +275,7 @@ const fecha = new Date(
 
    const valores = Object.values(datos);
 
-   const ctx = document.getElementById("graficaVentas");
+   const ctx = document.getElementById("graficaVentas").getContext("2d");
 
    if(window.miGrafica){
       window.miGrafica.destroy();
