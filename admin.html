@@ -43,7 +43,7 @@
   <option value="entregado">Entregados</option>
 </select>
   
-<h2>Pedidos</h2>
+<h2>Pedidos <span id="badgePedidos" class="badge">0</span></h2>
 <div id="listaPedidos"></div>
   
 <button onclick="nuevoProducto()">➕ Nuevo Producto</button>
@@ -51,7 +51,11 @@
 <div id="listaAdmin"></div>
 
 <script src="admin.js"></script>
-<audio id="sonidoPedido" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3"></audio>
+<audio id="sonidoPedido" src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3"></audio>
+
+  <div id="notificacionFlotante" class="notificacion">
+   🛒 Nuevo pedido recibido
+</div>
   
 </body>
 </html>
