@@ -17,6 +17,10 @@
    <div><strong>Promedio por Pedido:</strong> $<span id="promedioPedido">0</span></div>
    <div><strong>Últimos 7 días:</strong> $<span id="ventasSemana">0</span></div>
 </div>
+
+<h2>Ventas mensuales</h2>
+<canvas id="graficaVentas" height="100"></canvas>
+<p id="comparacionMes" style="margin-top:10px; font-weight:bold;"></p>
   
 <h3 id="contadorPendientes"></h3>
 <select id="filtroEstado" onchange="cargarPedidos()">
@@ -33,6 +37,7 @@
 
 <div id="listaAdmin"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
 <script src="admin.js"></script>
 <audio id="sonidoPedido" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3"></audio>
   
