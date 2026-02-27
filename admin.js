@@ -168,14 +168,6 @@ function actualizarEstadisticas(){
    const hoy = new Date();
    const hoyTexto = hoy.toLocaleDateString();
 
-   const badge = document.getElementById("badgePedidos");
-const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
-
-if(badge){
-   badge.textContent = pendientes;
-   badge.style.display = pendientes > 0 ? "inline-block" : "none";
-}
-
    let totalPedidos = pedidos.length;
    let pendientes = pedidos.filter(p => p.estado === "pendiente").length;
 
@@ -203,6 +195,15 @@ if(badge){
       }
 
    });
+
+     const badge = document.getElementById("badgePedidos");
+const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
+
+if(badge){
+   badge.textContent = pendientes;
+   badge.style.display = pendientes > 0 ? "inline-block" : "none";
+}
+
 
    const promedio = totalPedidos > 0 ? totalGeneral / totalPedidos : 0;
 
