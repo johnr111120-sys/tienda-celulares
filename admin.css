@@ -211,7 +211,7 @@ body.modo-oscuro .pedido-card{
 }
 
 .toast.mostrar{
-   right:25px;
+   right:30px;
 }
 
 @keyframes badgePop{
@@ -227,7 +227,7 @@ body.modo-oscuro .pedido-card{
 .control-volumen{
    position:stiky;
    bottom:10px;
-   right:15px;
+   right:-400px;
    background:#2E3133;
    padding:8px 14px;
    border-radius:8px;
