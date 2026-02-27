@@ -677,13 +677,12 @@ font-size: 28px !important;
 }
 
 .reseña{
-  display: none;
   max-width: 1000px;
   margin: 20px auto;
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.85);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .reseña p{
@@ -695,11 +694,22 @@ font-size: 28px !important;
   color: #f5b301;
   font-weight: bold;
 }
+.carrusel{
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+}
 
-.reseñas,
-.reviews,
-.testimonios{
-  padding-bottom: 90px;
+.reseña{
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reseña.activa{
+  display: block;
 }
 
 .btn-google{
