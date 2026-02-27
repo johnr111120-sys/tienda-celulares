@@ -152,8 +152,8 @@ function detectarPedidosNuevos(){
    const masReciente = pedidos[pedidos.length - 1];
 
    if(masReciente.id > ultimoPedidoID){
-      mostrarNotificacion();
-      reproducirSonido();
+         mostrarToast();
+         reproducirSonido();
 
       ultimoPedidoID = masReciente.id;
       localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
@@ -421,6 +421,49 @@ function cambiarTema(){
       text.textContent = "DAY MODE";
       localStorage.setItem("tema","claro");
    }
+}
+
+
+let audioHabilitado = false;
+
+document.addEventListener("click", () => {
+   audioHabilitado = true;
+}, { once:true });
+
+function reproducirSonido(){
+   if(!audioHabilitado) return;
+
+   const sonido = document.getElementById("sonidoPedido");
+   if(sonido){
+      sonido.volume = volumenActual;
+      sonido.currentTime = 0;
+      sonido.play().catch(()=>{});
+   }
+}
+
+let volumenActual = localStorage.getItem("volumenPanel") || 0.7;
+
+const control = document.getElementById("controlVolumen");
+
+if(control){
+   control.value = volumenActual;
+
+   control.addEventListener("input", e=>{
+      volumenActual = e.target.value;
+      localStorage.setItem("volumenPanel", volumenActual);
+   });
+}
+
+
+function mostrarToast(){
+   const t = document.getElementById("toastPedido");
+   if(!t) return;
+
+   t.classList.add("mostrar");
+
+   setTimeout(()=>{
+      t.classList.remove("mostrar");
+   }, 3500);
 }
 
 
