@@ -219,6 +219,10 @@ if(badge){
    badge.textContent = pendientes;
    badge.style.display = pendientes > 0 ? "inline-block" : "none";
   }
+if(pendientes > 0){
+   badge.classList.add("animar");
+   setTimeout(()=> badge.classList.remove("animar"), 400);
+  }
 }
 
 
