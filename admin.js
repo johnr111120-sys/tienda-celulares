@@ -152,10 +152,8 @@ function detectarPedidosNuevos(){
    const masReciente = pedidos[pedidos.length - 1];
 
    if(masReciente.id > ultimoPedidoID){
-      const sonido = document.getElementById("sonidoPedido");
-      if(sonido){
-         sonido.play().catch(()=>{});
-      }
+      mostrarNotificacion();
+      reproducirSonido();
 
       ultimoPedidoID = masReciente.id;
       localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
