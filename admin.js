@@ -154,6 +154,8 @@ function detectarPedidosNuevos(){
    if(masReciente.id > ultimoPedidoID){
          mostrarToast();
          reproducirSonido();
+         animarBadge();
+         actualizarTituloNavegador();
 
       ultimoPedidoID = masReciente.id;
       localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
@@ -223,6 +225,19 @@ if(pendientes > 0){
    badge.classList.add("animar");
    setTimeout(()=> badge.classList.remove("animar"), 400);
   }
+   actualizarTituloNavegador();
+}
+
+
+function animarBadge(){
+   const badge = document.getElementById("badgePedidos");
+   if(!badge) return;
+
+   badge.classList.add("rebote");
+
+   setTimeout(()=>{
+      badge.classList.remove("rebote");
+   },600);
 }
 
 
@@ -468,6 +483,18 @@ function mostrarToast(){
    setTimeout(()=>{
       t.classList.remove("mostrar");
    }, 3500);
+}
+
+
+function actualizarTituloNavegador(){
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
+
+   if(pendientes > 0){
+      document.title = `(${pendientes}) Panel Administración`;
+   } else {
+      document.title = "Panel Administración";
+   }
 }
 
 
