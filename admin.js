@@ -541,5 +541,35 @@ window.addEventListener("load", ()=>{
       text.textContent = "DAY MODE";
    }
 });
-
 setInterval(refrescarPanel, 2000);
+
+// 🔔 Inicializar Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBXzbZY5CRIM6M5LmjSiX6qFXf9cdloUg0",
+  authDomain: "admin-moises-celulares.firebaseapp.com",
+  projectId: "admin-moises-celulares",
+  storageBucket: "admin-moises-celulares.firebasestorage.app",
+  messagingSenderId: "657071812173",
+  appId: "1:657071812173:web:2c5522afdbd29fbb607604"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const messaging = firebase.messaging();
+
+// Pedir permiso
+async function activarPush(){
+   const permiso = await Notification.requestPermission();
+
+   if(permiso === "granted"){
+      const token = await messaging.getToken({
+         vapidKey: "BIsl0LyqemGeFMHHmF2hHCvypoD5PrkRMzoRLi9jvDW7sKOTt-hIY45VP30-WdlyxXTopMd8YD-tMiYi9AaxI4I"
+      });
+
+      console.log("TOKEN DEL DISPOSITIVO:");
+      console.log(token);
+   }
+}
+
+activarPush();
+
