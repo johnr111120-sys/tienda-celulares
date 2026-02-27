@@ -230,24 +230,17 @@ console.log("Pedidos cargados");
 cargarPedidos();
 
 
-function mostrarNotificacion(texto){
-   const div = document.createElement("div");
-   div.innerText = texto;
-   div.style.position = "fixed";
-   div.style.top = "20px";
-   div.style.right = "20px";
-   div.style.background = "#FF2C2C";
-   div.style.color = "#000";
-   div.style.padding = "12px 20px";
-   div.style.borderRadius = "6px";
-   div.style.boxShadow = "0 5px 15px rgba(0,0,0,0.3)";
-   div.style.zIndex = "9999";
+function mostrarNotificacion(){
+   const n = document.getElementById("notificacionFlotante");
+   if(!n) return;
 
-   document.body.appendChild(div);
+   n.classList.remove("ocultar");
+   n.classList.add("mostrar");
 
    setTimeout(()=>{
-      div.remove();
-   },3000);
+      n.classList.remove("mostrar");
+      n.classList.add("ocultar");
+   },4000);
 }
 
 
