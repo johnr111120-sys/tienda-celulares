@@ -221,7 +221,7 @@ body.modo-oscuro .pedido-card{
 }
 
 .badge.animar{
-   animation: badgePop 0.4s ease;
+   animation: badgePop 5s ease;
 }
 
 .control-volumen{
