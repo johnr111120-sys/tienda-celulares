@@ -545,12 +545,12 @@ setInterval(refrescarPanel, 2000);
 
 // 🔔 Inicializar Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBXzbZY5CRIM6M5LmjSiX6qFXf9cdloUg0",
-  authDomain: "admin-moises-celulares.firebaseapp.com",
-  projectId: "admin-moises-celulares",
-  storageBucket: "admin-moises-celulares.firebasestorage.app",
-  messagingSenderId: "657071812173",
-  appId: "1:657071812173:web:2c5522afdbd29fbb607604"
+  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
+  authDomain: "moises-celulares.firebaseapp.com",
+  projectId: "moises-celulares",
+  storageBucket: "moises-celulares.firebasestorage.app",
+  messagingSenderId: "392580256106",
+  appId: "1:392580256106:web:e31ae4c958effb4eb91513",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -563,7 +563,7 @@ async function activarPush(){
 
    if(permiso === "granted"){
       const token = await messaging.getToken({
-         vapidKey: "BIsl0LyqemGeFMHHmF2hHCvypoD5PrkRMzoRLi9jvDW7sKOTt-hIY45VP30-WdlyxXTopMd8YD-tMiYi9AaxI4I"
+         vapidKey: "BMH2Vy65M0dCREZgmMCNKUfgWhLT3Ce-nnQEX3OfZ-iO45dDep87rds5_Tda2_Su8KVd0QPDNOGHDfGYUVcrrHk"
       });
 
       console.log("TOKEN DEL DISPOSITIVO:");
