@@ -212,6 +212,13 @@ function actualizarEstadisticas(){
    }else{
       alerta.innerHTML = "";
    }
+
+   const badge = document.getElementById("badgePedidos");
+
+if(badge){
+   badge.textContent = pendientes;
+   badge.style.display = pendientes > 0 ? "inline-block" : "none";
+  }
 }
 
 
