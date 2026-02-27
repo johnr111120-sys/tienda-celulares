@@ -77,6 +77,7 @@ function cargarPedidos(){
 
 cantidadAnteriorPedidos = pedidos.length;
    actualizarEstadisticas();
+   actualizarTituloNavegador();
    
    cont.innerHTML = "";
 
