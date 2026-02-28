@@ -1,26 +1,19 @@
 
+import { db } from "./firebase-db.js";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
 import { auth } from "./firebase-config.js";
 import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-onAuthStateChanged(auth, user=>{
-  if(!user){
-    window.location.href = "admin-login.html";
-  }
-});
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
-  authDomain: "moises-celulares.firebaseapp.com",
-  projectId: "moises-celulares",
-  appId: "1:392580256106:web:e31ae4c958effb4eb91513"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 // 🔐 PROTEGER PANEL
 onAuthStateChanged(auth, (user) => {
@@ -108,7 +101,6 @@ window.cargarPedidos = function(){
 
 cantidadAnteriorPedidos = pedidos.length;
    actualizarEstadisticas();
-   actualizarTituloNavegador();
    
    cont.innerHTML = "";
 
@@ -142,6 +134,7 @@ cantidadAnteriorPedidos = pedidos.length;
             `;
          });
       }
+
 
       const totalSeguro = Number(p.total) || 0;
 
@@ -257,7 +250,6 @@ if(pendientes > 0){
    badge.classList.add("animar");
    setTimeout(()=> badge.classList.remove("animar"), 400);
   }
-   actualizarTituloNavegador();
 }
 
 
@@ -283,9 +275,6 @@ window.cambiarEstado = function(id, estado){
 
    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }
-
-console.log("Pedidos cargados");
-cargarPedidos();
 
 
 window.mostrarNotificacion = function(){
@@ -584,20 +573,3 @@ if (logoutBtn) {
     });
   });
 }
-
-
-// Pedir permiso
-async window.activarPush = function(){
-   const permiso = await Notification.requestPermission();
-
-   if(permiso === "granted"){
-      const token = await messaging.getToken({
-         vapidKey: "BMH2Vy65M0dCREZgmMCNKUfgWhLT3Ce-nnQEX3OfZ-iO45dDep87rds5_Tda2_Su8KVd0QPDNOGHDfGYUVcrrHk"
-      });
-
-      console.log("TOKEN DEL DISPOSITIVO:");
-      console.log(token);
-   }
-}
-
-activarPush();
