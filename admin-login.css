@@ -60,6 +60,8 @@ button{
    font-weight:bold;
    cursor:pointer;
    transition:.3s;
+   align-items: center;
+   justify-content: center;
 }
 
 button:hover{
