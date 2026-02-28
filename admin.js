@@ -1,18 +1,6 @@
-import { auth } from "./firebase-config.js";
-import { db } from "./firebase-db.js";
 
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 function cargarPedidos(){
   db.collection("pedidos")
@@ -24,6 +12,21 @@ function cargarPedidos(){
       });
     });
 }
+
+import { db } from "./firebase-db.js";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+import { auth } from "./firebase-config.js";
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 
 // 🔐 PROTEGER PANEL
@@ -534,5 +537,3 @@ if (logoutBtn) {
     });
   });
 }
-
-
