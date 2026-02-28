@@ -577,7 +577,7 @@ if (logoutBtn) {
 
 
 // Pedir permiso
-window.activarPush = async function(){
+async window.activarPush = function(){
    const permiso = await Notification.requestPermission();
 
    if(permiso === "granted"){
