@@ -9,6 +9,10 @@ function cargarPedidos(){
       snapshot.forEach(doc=>{
         pedidos.push({id: doc.id, ...doc.data()});
       });
+      
+      mostrarPedidos(pedidos);
+      actualizarEstadisticas(pedidos);
+      crearGraficaVentas(pedidos);
     });
 }
 
@@ -116,12 +120,6 @@ window.cargarPedidos = function(){
     snapshot.forEach(doc => {
       pedidos.push({ id: doc.id, ...doc.data() });
     });
-
-    mostrarPedidos(pedidos);
-    actualizarEstadisticas(pedidos);
-    crearGraficaVentas(pedidos);
-
-  });
 }
 
 
