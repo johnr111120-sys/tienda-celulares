@@ -21,7 +21,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
-import { getAuth } from "./firebase-auth.js";
+import { auth } from "./firebase-config.js";
 import {
   onAuthStateChanged,
   signOut
