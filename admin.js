@@ -2,25 +2,11 @@ if(sessionStorage.getItem("adminAuth") !== "ok"){
    window.location.href = "admin-login.html";
 }
 
-// 🔐 PROTECCIÓN ADMIN
-const PASSWORD = "Diosesbueno2026"; // ← cambia por tu clave
-
-function protegerAdmin(){
-   const acceso = sessionStorage.getItem("adminAcceso");
-
-   if(acceso !== "ok"){
-      const ingreso = prompt("Ingrese contraseña de administrador:");
-
-      if(ingreso === PASSWORD){
-         sessionStorage.setItem("adminAcceso","ok");
-      }else{
-         alert("Acceso denegado");
-         window.location.href = "/";
-      }
+firebase.auth().onAuthStateChanged(user=>{
+   if(!user){
+      window.location.href = "admin-login.html";
    }
-}
-
-protegerAdmin();
+});
 
 
 let cantidadAnteriorPedidos = 0;
