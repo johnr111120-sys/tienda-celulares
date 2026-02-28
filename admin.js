@@ -1,3 +1,16 @@
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function cargarPedidos(){
+  db.collection("pedidos")
+    .orderBy("fecha", "desc")
+    .onSnapshot((snapshot)=>{
+      const pedidos = [];
+      snapshot.forEach(doc=>{
+        pedidos.push({id: doc.id, ...doc.data()});
+      });
+    });
+}
 
 import { db } from "./firebase-db.js";
 import {
@@ -218,7 +231,12 @@ window.cambiarEstado = function(id, estado){
       pedidos[index].estado = estado;
    }
 
-   localStorage.setItem("pedidos", JSON.stringify(pedidos));
+  function guardarPedidoFirebase(pedido){
+  db.collection("pedidos").add({
+    ...pedido,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
 }
 
 
