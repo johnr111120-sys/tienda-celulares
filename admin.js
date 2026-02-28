@@ -1,18 +1,15 @@
 
-import { db } from "./firebase-db.js";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
 import { auth } from "./firebase-config.js";
 import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+onAuthStateChanged(auth, user=>{
+  if(!user){
+    window.location.href = "admin-login.html";
+  }
+});
 
 
 // 🔐 PROTEGER PANEL
@@ -89,26 +86,52 @@ cargarAdmin();
 
 
 window.cargarPedidos = function(){
+   const cont = document.getElementById("listaPedidos");
+   const filtro = document.getElementById("filtroEstado").value;
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   if(pedidos.length > cantidadAnteriorPedidos){
+   mostrarNotificacion("🛒 Nuevo pedido recibido");
 
-  const q = query(
-    collection(db, "pedidos"),
-    orderBy("fecha", "desc")
-  );
-
-  onSnapshot(q, (snapshot) => {
-
-    const pedidos = [];
-
-    snapshot.forEach(doc => {
-      pedidos.push({ id: doc.id, ...doc.data() });
-    });
-
-    mostrarPedidos(pedidos);
-    actualizarEstadisticas(pedidos);
-    crearGraficaVentas(pedidos);
-
-  });
+   const audio = document.getElementById("sonidoPedido");
+   if(audio) audio.play();
 }
+
+cantidadAnteriorPedidos = pedidos.length;
+   actualizarEstadisticas();
+   actualizarTituloNavegador();
+   
+   cont.innerHTML = "";
+
+   // contador pendientes
+   const pendientes = pedidos.filter(p => p.estado === "pendiente").length;
+   document.getElementById("contadorPendientes").innerHTML =
+      "Pedidos pendientes: " + pendientes;
+
+   if(pedidos.length === 0){
+      cont.innerHTML = "<p>No hay pedidos aún</p>";
+      return;
+   }
+
+  pedidos
+.filter(p => filtro === "todos" || p.estado === filtro)
+.slice()
+.reverse()
+.forEach(p => {
+
+      let productosHTML = "";
+
+      if (Array.isArray(p.productos)) {
+         p.productos.forEach(prod => {
+            const nombre = prod.nombre || "Producto";
+            const precio = Number(prod.precio) || 0;
+
+            productosHTML += `
+               <div style="margin-left:10px; font-size:14px;">
+                  • ${nombre} — $${precio.toLocaleString()}
+               </div>
+            `;
+         });
+      }
 
       const totalSeguro = Number(p.total) || 0;
 
@@ -224,6 +247,7 @@ if(pendientes > 0){
    badge.classList.add("animar");
    setTimeout(()=> badge.classList.remove("animar"), 400);
   }
+   actualizarTituloNavegador();
 }
 
 
@@ -249,6 +273,9 @@ window.cambiarEstado = function(id, estado){
 
    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }
+
+console.log("Pedidos cargados");
+cargarPedidos();
 
 
 window.mostrarNotificacion = function(){
@@ -547,3 +574,20 @@ if (logoutBtn) {
     });
   });
 }
+
+
+// Pedir permiso
+window.activarPush = async function(){
+   const permiso = await Notification.requestPermission();
+
+   if(permiso === "granted"){
+      const token = await messaging.getToken({
+         vapidKey: "BMH2Vy65M0dCREZgmMCNKUfgWhLT3Ce-nnQEX3OfZ-iO45dDep87rds5_Tda2_Su8KVd0QPDNOGHDfGYUVcrrHk"
+      });
+
+      console.log("TOKEN DEL DISPOSITIVO:");
+      console.log(token);
+   }
+}
+
+activarPush();
