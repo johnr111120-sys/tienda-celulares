@@ -1,13 +1,15 @@
-if(sessionStorage.getItem("adminAuth") !== "ok"){
-   window.location.href = "admin-login.html";
-}
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { auth } from "./firebase-config.js";
 import {
-  getAuth,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+onAuthStateChanged(auth, user=>{
+  if(!user){
+    window.location.href = "admin-login.html";
+  }
+});
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
@@ -31,7 +33,7 @@ let cantidadAnteriorPedidos = 0;
 
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
-function cargarAdmin(){
+window.cargarAdmin = function(){
    const cont = document.getElementById("listaAdmin");
    cont.innerHTML = "";
 
@@ -56,21 +58,21 @@ function cargarAdmin(){
 }
 
 
-function editar(id,campo,valor){
+window.editar = function(id,campo,valor){
    const p = productos.find(x=>x.id==id);
    p[campo] = valor;
    guardar();
 }
 
 
-function eliminar(id){
+window.eliminar = function(id){
    productos = productos.filter(p=>p.id!=id);
    guardar();
    cargarAdmin();
 }
 
 
-function nuevoProducto(){
+window.nuevoProducto = function(){
    const nuevo = {
       id: Date.now(),
       nombre: "Nuevo producto",
@@ -85,14 +87,14 @@ function nuevoProducto(){
 }
 
 
-function guardar(){
+window.guardar = function(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
 
 cargarAdmin();
 
 
-function cargarPedidos(){
+window.cargarPedidos = function(){
    const cont = document.getElementById("listaPedidos");
    const filtro = document.getElementById("filtroEstado").value;
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
@@ -172,7 +174,7 @@ cont.innerHTML += `
 
 let ultimoPedidoID = Number(localStorage.getItem("ultimoPedidoID")) || 0;
 
-function detectarPedidosNuevos(){
+window.detectarPedidosNuevos = function(){
 
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
@@ -192,7 +194,7 @@ function detectarPedidosNuevos(){
 }
 
 
-function actualizarEstadisticas(){
+window.actualizarEstadisticas = function(){
 
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
@@ -258,7 +260,7 @@ if(pendientes > 0){
 }
 
 
-function animarBadge(){
+window.animarBadge = function(){
    const badge = document.getElementById("badgePedidos");
    if(!badge) return;
 
@@ -270,7 +272,7 @@ function animarBadge(){
 }
 
 
-function cambiarEstado(id, estado){
+window.cambiarEstado = function(id, estado){
    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
    const index = pedidos.findIndex(p => p.id == id);
@@ -285,7 +287,7 @@ console.log("Pedidos cargados");
 cargarPedidos();
 
 
-function mostrarNotificacion(){
+window.mostrarNotificacion = function(){
    const n = document.getElementById("notificacionFlotante");
    if(!n) return;
 
@@ -299,7 +301,7 @@ function mostrarNotificacion(){
 }
 
 
-function crearGraficaVentas(){
+window.crearGraficaVentas = function(){
 
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
    const ahora = new Date();
@@ -399,7 +401,7 @@ function crearGraficaVentas(){
 }
 
 
-function cambiarGrafica(tipo, boton){
+window.cambiarGrafica = function(tipo, boton){
 
    tipoGrafica = tipo;
 
@@ -414,7 +416,7 @@ function cambiarGrafica(tipo, boton){
 }
 
 
-function compararMeses(ventas){
+window.compararMeses = function(ventas){
    const hoy = new Date();
    const mesActual = hoy.getMonth();
    const mesAnterior = mesActual === 0 ? 11 : mesActual - 1;
@@ -447,7 +449,7 @@ function compararMeses(ventas){
 let tipoGrafica = "semana";
 
 
-function cambiarTema(){
+window.cambiarTema = function(){
 
    const body = document.body;
    const sw = document.getElementById("switchTema");
@@ -478,7 +480,7 @@ document.addEventListener("click", () => {
    audioHabilitado = true;
 }, { once:true });
 
-function reproducirSonido(){
+window.reproducirSonido = function(){
    if(!audioHabilitado) return;
 
    const sonido = document.getElementById("sonidoPedido");
@@ -503,7 +505,7 @@ if(control){
 }
 
 
-function mostrarToast(){
+window.mostrarToast = function(){
    const t = document.getElementById("toastPedido");
    if(!t) return;
 
@@ -515,7 +517,7 @@ function mostrarToast(){
 }
 
 
-function actualizarTituloNavegador(){
+window.actualizarTituloNavegador = function(){
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
    const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
 
@@ -527,7 +529,7 @@ function actualizarTituloNavegador(){
 }
 
 
-function refrescarPanel(){
+window.refrescarPanel = function(){
    cargarPedidos();
    actualizarEstadisticas();
    crearGraficaVentas();
@@ -584,7 +586,7 @@ if (logoutBtn) {
 
 
 // Pedir permiso
-async function activarPush(){
+async window.activarPush = function(){
    const permiso = await Notification.requestPermission();
 
    if(permiso === "granted"){
