@@ -1,4 +1,5 @@
 
+
 import { db } from "./firebase-db.js";
 import {
   collection,
@@ -89,52 +90,26 @@ cargarAdmin();
 
 
 window.cargarPedidos = function(){
-   const cont = document.getElementById("listaPedidos");
-   const filtro = document.getElementById("filtroEstado").value;
-   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
-   if(pedidos.length > cantidadAnteriorPedidos){
-   mostrarNotificacion("🛒 Nuevo pedido recibido");
 
-   const audio = document.getElementById("sonidoPedido");
-   if(audio) audio.play();
+  const q = query(
+    collection(db, "pedidos"),
+    orderBy("fecha", "desc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+
+    const pedidos = [];
+
+    snapshot.forEach(doc => {
+      pedidos.push({ id: doc.id, ...doc.data() });
+    });
+
+    mostrarPedidos(pedidos);
+    actualizarEstadisticas(pedidos);
+    crearGraficaVentas(pedidos);
+
+  });
 }
-
-cantidadAnteriorPedidos = pedidos.length;
-   actualizarEstadisticas();
-   
-   cont.innerHTML = "";
-
-   // contador pendientes
-   const pendientes = pedidos.filter(p => p.estado === "pendiente").length;
-   document.getElementById("contadorPendientes").innerHTML =
-      "Pedidos pendientes: " + pendientes;
-
-   if(pedidos.length === 0){
-      cont.innerHTML = "<p>No hay pedidos aún</p>";
-      return;
-   }
-
-  pedidos
-.filter(p => filtro === "todos" || p.estado === filtro)
-.slice()
-.reverse()
-.forEach(p => {
-
-      let productosHTML = "";
-
-      if (Array.isArray(p.productos)) {
-         p.productos.forEach(prod => {
-            const nombre = prod.nombre || "Producto";
-            const precio = Number(prod.precio) || 0;
-
-            productosHTML += `
-               <div style="margin-left:10px; font-size:14px;">
-                  • ${nombre} — $${precio.toLocaleString()}
-               </div>
-            `;
-         });
-      }
-
 
       const totalSeguro = Number(p.total) || 0;
 
