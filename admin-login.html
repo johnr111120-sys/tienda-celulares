@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Zona VIP</title>
+<link rel="stylesheet" href="admin-login.css">
+</head>
+<body>
+
+<div class="login-box">
+   <img src="images/logo.png" class="logo">
+
+   <h2>Acceso VIP</h2>
+   <p class="sub">Zona privada administrativa</p>
+
+   <input type="text" id="user" placeholder="Usuario">
+   <input type="password" id="pass" placeholder="Contraseña">
+
+   <button onclick="login()">Entrar</button>
+</div>
+
+<script>
+const USER = "admin";
+const PASS = "2026VIP";
+
+function login(){
+   const u = document.getElementById("user").value;
+   const p = document.getElementById("pass").value;
+
+   if(u === USER && p === PASS){
+      sessionStorage.setItem("adminAuth","ok");
+      window.location.href = "admin.html";
+   }else{
+      alert("Acceso restringido");
+   }
+}
+</script>
+
+</body>
+</html>
