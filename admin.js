@@ -1,3 +1,23 @@
+// 🔐 PROTECCIÓN ADMIN
+const PASSWORD = "Diosesbueno2026"; // ← cambia por tu clave
+
+function protegerAdmin(){
+   const acceso = sessionStorage.getItem("adminAcceso");
+
+   if(acceso !== "ok"){
+      const ingreso = prompt("Ingrese contraseña de administrador:");
+
+      if(ingreso === PASSWORD){
+         sessionStorage.setItem("adminAcceso","ok");
+      }else{
+         alert("Acceso denegado");
+         window.location.href = "/";
+      }
+   }
+}
+
+protegerAdmin();
+
 
 let cantidadAnteriorPedidos = 0;
 
