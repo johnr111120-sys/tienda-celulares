@@ -67,3 +67,15 @@ button{
 button:hover{
    transform:scale(1.05);
 }
+
+.recuperar{
+  color:#FFD700;
+  font-size:12px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.recuperar:hover{
+  text-decoration:underline;
+}
+
