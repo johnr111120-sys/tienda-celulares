@@ -1,3 +1,7 @@
+if(sessionStorage.getItem("adminAuth") !== "ok"){
+   window.location.href = "admin-login.html";
+}
+
 // 🔐 PROTECCIÓN ADMIN
 const PASSWORD = "Diosesbueno2026"; // ← cambia por tu clave
 
