@@ -1,3 +1,4 @@
+
 import { auth } from "./firebase-config.js";
 import {
   onAuthStateChanged,
@@ -97,7 +98,6 @@ window.cargarPedidos = function(){
 
 cantidadAnteriorPedidos = pedidos.length;
    actualizarEstadisticas();
-   actualizarTituloNavegador();
    
    cont.innerHTML = "";
 
@@ -246,7 +246,6 @@ if(pendientes > 0){
    badge.classList.add("animar");
    setTimeout(()=> badge.classList.remove("animar"), 400);
   }
-   actualizarTituloNavegador();
 }
 
 
@@ -272,9 +271,6 @@ window.cambiarEstado = function(id, estado){
 
    localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }
-
-console.log("Pedidos cargados");
-cargarPedidos();
 
 
 window.mostrarNotificacion = function(){
