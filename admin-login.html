@@ -27,54 +27,31 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
    
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { auth } from "./firebase-config.js";
 import {
-  getAuth,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  onAuthStateChanged
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
-  authDomain: "moises-celulares.firebaseapp.com",
-  projectId: "moises-celulares",
-  appId: "1:392580256106:web:e31ae4c958effb4eb91513"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-// LOGIN
 window.login = function(){
   const email = document.getElementById("user").value;
   const password = document.getElementById("pass").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
+    .then(()=>{
       window.location.href = "admin.html";
     })
-    .catch((error) => {
+    .catch(()=>{
       alert("Correo o contraseña incorrectos");
-      console.log(error);
     });
 };
 
-// RECUPERAR CONTRASEÑA
 window.recuperar = function(){
   const email = document.getElementById("user").value;
 
-  if(!email){
-    alert("Escribe tu correo primero");
-    return;
-  }
-
   sendPasswordResetEmail(auth, email)
     .then(()=>{
-      alert("Te enviamos un correo para recuperar tu contraseña");
-    })
-    .catch(()=>{
-      alert("Error al enviar el correo");
+      alert("Correo enviado");
     });
 };
 </script>
