@@ -255,6 +255,12 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 
   <script>
+import { db } from "./firebase-db.js";
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 /* ===============================
    ESTADO GLOBAL Y DATOS
 =================================*/
@@ -809,7 +815,12 @@ function guardarPedido(){
 
    pedidos.push(pedido);
 
-   localStorage.setItem("pedidos", JSON.stringify(pedidos));
+async function guardarPedidoFirebase(pedido){
+  await addDoc(collection(db, "pedidos"), {
+    ...pedido,
+    fecha: serverTimestamp()
+  });
+}
 }
       
 // Función para generar un número de rastreo único (Ej: MC-2026-X892)
