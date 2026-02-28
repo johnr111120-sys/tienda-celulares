@@ -1,3 +1,22 @@
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function cargarPedidos(){
+  db.collection("pedidos")
+    .orderBy("fecha", "desc")
+    .onSnapshot((snapshot)=>{
+      const pedidos = [];
+      snapshot.forEach(doc=>{
+        pedidos.push({id: doc.id, ...doc.data()});
+      });
+
+      mostrarPedidos(pedidos);
+      actualizarEstadisticas(pedidos);
+      crearGraficaVentas(pedidos);
+    });
+}
+
+
 import { db } from "./firebase-db.js";
 import {
   collection,
