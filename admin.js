@@ -2,10 +2,28 @@ if(sessionStorage.getItem("adminAuth") !== "ok"){
    window.location.href = "admin-login.html";
 }
 
-firebase.auth().onAuthStateChanged(user=>{
-   if(!user){
-      window.location.href = "admin-login.html";
-   }
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
+  authDomain: "moises-celulares.firebaseapp.com",
+  projectId: "moises-celulares",
+  appId: "1:392580256106:web:e31ae4c958effb4eb91513"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 🔐 PROTEGER PANEL
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "admin-login.html";
+  }
 });
 
 
@@ -556,28 +574,14 @@ setInterval(refrescarPanel, 2000);
 
 const logoutBtn = document.getElementById("logoutBtn");
 
-if(logoutBtn){
-  logoutBtn.onclick = () => {
-    signOut(auth).then(()=>{
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    signOut(auth).then(() => {
       window.location.href = "admin-login.html";
     });
-  };
+  });
 }
 
-
-// 🔔 Inicializar Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
-  authDomain: "moises-celulares.firebaseapp.com",
-  projectId: "moises-celulares",
-  storageBucket: "moises-celulares.firebasestorage.app",
-  messagingSenderId: "392580256106",
-  appId: "1:392580256106:web:e31ae4c958effb4eb91513",
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const messaging = firebase.messaging();
 
 // Pedir permiso
 async function activarPush(){
