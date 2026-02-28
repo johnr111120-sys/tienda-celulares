@@ -553,6 +553,18 @@ window.addEventListener("load", ()=>{
 });
 setInterval(refrescarPanel, 2000);
 
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+if(logoutBtn){
+  logoutBtn.onclick = () => {
+    signOut(auth).then(()=>{
+      window.location.href = "admin-login.html";
+    });
+  };
+}
+
+
 // 🔔 Inicializar Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
