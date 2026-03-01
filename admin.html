@@ -45,6 +45,15 @@
   <option value="enviado">Enviados</option>
   <option value="entregado">Entregados</option>
 </select>
+
+<div id="formulario-producto" style="background:#222; padding:20px; color:white;">
+    <h3>Agregar Nuevo Producto</h3>
+    <input type="text" id="nombre-prod" placeholder="Nombre del Producto">
+    <textarea id="desc-prod" placeholder="Descripción"></textarea>
+    <input type="number" id="precio-prod" placeholder="Precio Base">
+    
+    <button onclick="capturarYGuardar()">GUARDAR EN NUBE</button>
+</div>
   
 <h2>Pedidos <span id="badgePedidos" class="badge">0</span></h2>
 <div id="listaPedidos"></div>
