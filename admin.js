@@ -65,35 +65,6 @@ window.cargarAdmin = function(){
 }
 
 
-window.editar = function(id,campo,valor){
-   const p = productos.find(x=>x.id==id);
-   p[campo] = valor;
-   guardar();
-}
-
-
-window.eliminar = function(id){
-   productos = productos.filter(p=>p.id!=id);
-   guardar();
-   cargarAdmin();
-}
-
-
-window.nuevoProducto = function(){
-   const nuevo = {
-      id: Date.now(),
-      nombre: "Nuevo producto",
-      precio: 0,
-      imagen: "",
-      stock: 0
-   };
-
-   productos.push(nuevo);
-   guardar();
-   cargarAdmin();
-}
-
-
 window.guardar = function(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
