@@ -18,14 +18,19 @@ window.guardar = function(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
 
-window.guardarEnNube = function(producto) {
-    window.guardar(); 
-    const idProducto = producto.id || Date.now().toString();
+window.guardarProductoEnFirebase = function(nuevoProducto) {
+    // Si el producto ya tiene un ID, lo usamos; si no, generamos uno nuevo
+    const idProducto = nuevoProducto.id || Date.now().toString();
     const productoRef = ref(db, 'productos/' + idProducto);
 
-    set(productoRef, producto)
-        .then(() => console.log("✅ Producto sincronizado con Firebase"))
-        .catch((error) => console.error("❌ Error Firebase:", error));
+    set(productoRef, nuevoProducto)
+        .then(() => {
+            alert("✅ Producto guardado en la nube correctamente.");
+            cargarAdmin(); // Recarga la lista para ver el cambio
+        })
+        .catch((error) => {
+            alert("❌ Error al guardar: " + error.message);
+        });
 };
 
 window.cargarAdmin = function(){
