@@ -40,6 +40,25 @@ body{
   margin-bottom:15px;
 }
 
+button{
+   width:100%;
+   padding:12px;
+   margin-top:10px;
+   border:none;
+   border-radius:6px;
+   background:linear-gradient(45deg,#FFD700,#b89600);
+   color:black;
+   font-weight:bold;
+   cursor:pointer;
+   transition:.3s;
+   align-items: center;
+   justify-content: center;
+}
+
+button:hover{
+   transform:scale(1.05);
+}
+
 .filtros-grafica button{
   flex:1;
   padding:10px;
@@ -232,7 +251,7 @@ body.modo-oscuro .pedido-card{
 }
 
 .badge.rebote {
-   animation: badgeBounce 0.6s ease;
+   animation: badgeBounce 0.3s ease;
 }
 
 #logoutBtn{
