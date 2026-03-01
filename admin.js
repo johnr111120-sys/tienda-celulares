@@ -13,26 +13,6 @@ let cantidadAnteriorPedidos = 0;
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
 // --- FUNCIONES DE PRODUCTOS ---
-
-window.guardar = function(){
-   localStorage.setItem("productos", JSON.stringify(productos));
-}
-
-window.guardarProductoEnFirebase = function(nuevoProducto) {
-    // Si el producto ya tiene un ID, lo usamos; si no, generamos uno nuevo
-    const idProducto = nuevoProducto.id || Date.now().toString();
-    const productoRef = ref(db, 'productos/' + idProducto);
-
-    set(productoRef, nuevoProducto)
-        .then(() => {
-            alert("✅ Producto guardado en la nube correctamente.");
-            cargarAdmin(); // Recarga la lista para ver el cambio
-        })
-        .catch((error) => {
-            alert("❌ Error al guardar: " + error.message);
-        });
-};
-
 window.cargarAdmin = function(){
    const cont = document.getElementById("listaAdmin");
    if(!cont) return;
@@ -50,12 +30,13 @@ window.cargarAdmin = function(){
    });
 }
 
-window.editar = function(id, campo, valor){
-   const p = productos.find(x => x.id == id);
-   if (p) {
-       p[campo] = valor;
-       window.guardarEnNube(p); // Sincroniza al editar
-   }
+window.editar = function(id, campo, valor) {
+    const p = productos.find(x => x.id == id);
+    if (p) {
+        p[campo] = valor;
+        // AQUÍ LLAMAS A LA NUEVA FUNCIÓN QUE SINCROINZA TODO
+        window.guardarEnNube(p); 
+    }
 }
 
 window.eliminar = function(id){
@@ -78,9 +59,28 @@ window.nuevoProducto = function(){
 }
 
 
+// Función para guardar localmente (respaldo)
 window.guardar = function(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
+
+// NUEVA FUNCIÓN PARA FIREBASE (Acumulativa)
+window.guardarEnNube = function(producto) {
+    // 1. Guardamos localmente primero para tener el respaldo
+    window.guardar(); 
+    
+    // 2. Ahora enviamos a Firebase
+    const idProducto = producto.id || Date.now().toString();
+    const productoRef = ref(db, 'productos/' + idProducto);
+
+    set(productoRef, producto)
+        .then(() => {
+            console.log("✅ Producto sincronizado con la nube.");
+        })
+        .catch((error) => {
+            console.error("❌ Error al sincronizar con Firebase:", error);
+        });
+};
 
 cargarAdmin();
 
