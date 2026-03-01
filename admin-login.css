@@ -50,18 +50,22 @@ input:focus{
 }
 
 .premium-btn{
-  background: linear-gradient(45deg,#b8860b,#ffd700);
-  border:none;
-  padding:12px 25px;
-  font-weight:bold;
-  color:black;
-  border-radius:30px;
-  cursor:pointer;
-  transition:0.3s;
+  width:100%;
+   padding:12px;
+   margin-top:10px;
+   border:none;
+   border-radius:6px;
+   background:linear-gradient(45deg,#FFD700,#b89600);
+   color:black;
+   font-weight:bold;
+   cursor:pointer;
+   transition:.3s;
+   align-items: center;
+   justify-content: center;
 }
 
 .premium-btn:hover{
-  transform:scale(1.1);
+  transform:scale(1.05);
   box-shadow:0 0 20px gold;
 }
 
