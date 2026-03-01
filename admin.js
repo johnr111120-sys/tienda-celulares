@@ -12,6 +12,22 @@ onAuthStateChanged(auth, user=>{
 });
 
 
+import { db } from "./firebase-config.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+window.migrarJsonAFirebase = function() {
+    // 'productos' es tu array cargado desde el localStorage/JSON
+    productos.forEach((p, index) => {
+        // Aseguramos que tenga un ID
+        const id = p.id || "prod_" + index;
+        set(ref(db, 'productos/' + id), p)
+            .then(() => console.log("Subido:", p.nombre))
+            .catch(err => console.error("Error:", err));
+    });
+    alert("¡Migración iniciada! Revisa tu Realtime Database.");
+};
+
+
 // 🔐 PROTEGER PANEL
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -114,6 +130,22 @@ window.editar = function(id, campo, valor) {
         window.guardarEnNube(p); 
     }
 }
+
+
+window.capturarYGuardar = function() {
+    const nuevoProducto = {
+        id: "prod_" + Date.now(),
+        nombre: document.getElementById("nombre-prod").value,
+        descripcion: document.getElementById("desc-prod").value,
+        precio: parseFloat(document.getElementById("precio-prod").value),
+        imagen: "images/default.jpg", // Aquí pondremos la lógica de subida de imagen
+        modelos: [], // Aquí deberás iterar los campos de modelos
+        colores: []  // Aquí deberás iterar los campos de colores
+    };
+
+    // Llamamos a la función que sincroniza con Firebase
+    window.guardarEnNube(nuevoProducto);
+};
 
 
 window.cargarPedidos = function(){
