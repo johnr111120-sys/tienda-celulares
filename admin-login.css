@@ -49,23 +49,20 @@ input:focus{
    border:1px solid #FFD700;
 }
 
-button{
-   width:100%;
-   padding:12px;
-   margin-top:10px;
-   border:none;
-   border-radius:6px;
-   background:linear-gradient(45deg,#FFD700,#b89600);
-   color:black;
-   font-weight:bold;
-   cursor:pointer;
-   transition:.3s;
-   align-items: center;
-   justify-content: center;
+.premium-btn{
+  background: linear-gradient(45deg,#b8860b,#ffd700);
+  border:none;
+  padding:12px 25px;
+  font-weight:bold;
+  color:black;
+  border-radius:30px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-button:hover{
-   transform:scale(1.05);
+.premium-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px gold;
 }
 
 .recuperar{
@@ -79,3 +76,50 @@ button:hover{
   text-decoration:underline;
 }
 
+#goldParticles{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+}
+
+.premium-card{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:40px;
+  box-shadow:
+    0 0 10px gold,
+    0 0 20px goldenrod,
+    0 0 40px rgba(255,215,0,0.6);
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{
+    box-shadow:
+      0 0 10px gold,
+      0 0 20px goldenrod;
+  }
+  to{
+    box-shadow:
+      0 0 20px gold,
+      0 0 40px orange;
+  }
+}
+
+.premium-card{
+  animation: entrance 0.8s ease-out, glow 2s infinite alternate;
+}
+
+@keyframes entrance{
+  0%{
+    transform: scale(0.5) rotateX(90deg);
+    opacity:0;
+  }
+  100%{
+    transform: scale(1) rotateX(0deg);
+    opacity:1;
+  }
+}
