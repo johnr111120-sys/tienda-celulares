@@ -329,6 +329,44 @@ window.cambiarTema = function(){
       localStorage.setItem("tema","claro");
    }
 }
+
+window.actualizarTituloNavegador = function(){
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
+
+   if(pendientes > 0){
+      document.title = `(${pendientes}) Panel Administración`;
+   } else {
+      document.title = "Panel Administración";
+   }
+}
+
+
+window.refrescarPanel = function(){
+   cargarPedidos();
+   actualizarEstadisticas();
+   crearGraficaVentas();
+   detectarPedidosNuevos(); // ✅ aquí sí
+}
+
+window.addEventListener("load", ()=>{
+
+   const tema = localStorage.getItem("tema");
+   const sw = document.getElementById("switchTema");
+   const circle = sw.querySelector(".switch-circle");
+   const text = sw.querySelector(".switch-text");
+
+   if(tema === "oscuro"){
+      document.body.classList.add("modo-oscuro");
+      sw.classList.add("oscuro");
+      circle.innerHTML = "🌙";
+      text.textContent = "NIGHT MODE";
+   }else{
+      sw.classList.add("claro");
+      circle.innerHTML = "☀️";
+      text.textContent = "DAY MODE";
+   }
+});
 // ... Aquí pega tus funciones de estadísticas y gráficas originales ...
 // Asegúrate de que usen la variable 'pedidos' que definimos arriba.
 
