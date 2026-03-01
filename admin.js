@@ -1,50 +1,72 @@
-import { auth } from "./firebase-config.js";
-import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// 1. IMPORTACIONES (Al principio, obligatorias para que funcione Firebase)
+import { auth, db } from "./firebase-config.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-onAuthStateChanged(auth, user=>{
-  if(!user){
-    window.location.href = "admin-login.html";
-  }
+// 2. LÓGICA DE FIREBASE (Nueva integración)
+window.guardarEnNube = function(producto) {
+    // Sincroniza local y nube
+    localStorage.setItem("productos", JSON.stringify(productos));
+    const idProducto = producto.id || Date.now().toString();
+    const productoRef = ref(db, 'productos/' + idProducto);
+
+    set(productoRef, producto)
+        .then(() => console.log("✅ Sincronizado con la nube"))
+        .catch((error) => console.error("❌ Error:", error));
+};
+
+// 3. TU CÓDIGO ORIGINAL (Todo lo que ya tenías)
+onAuthStateChanged(auth, user => {
+  if (!user) { window.location.href = "admin-login.html"; }
 });
-
-
-// 🔐 PROTEGER PANEL
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "admin-login.html";
-  }
-});
-
 
 let cantidadAnteriorPedidos = 0;
-
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
 window.cargarAdmin = function(){
    const cont = document.getElementById("listaAdmin");
+   if (!cont) return;
    cont.innerHTML = "";
-
    productos.forEach(p => {
       cont.innerHTML += `
          <div class="card-admin">
             <img src="${p.imagen}" width="60">
-
-            <input value="${p.nombre}" 
-              onchange="editar('${p.id}','nombre',this.value)">
-
-            <input type="number" value="${p.precio}" 
-              onchange="editar('${p.id}','precio',this.value)">
-
-            <input type="number" value="${p.stock || 0}" 
-              onchange="editar('${p.id}','stock',this.value)">
-
+            <input value="${p.nombre}" onchange="editar('${p.id}','nombre',this.value)">
+            <input type="number" value="${p.precio}" onchange="editar('${p.id}','precio',this.value)">
+            <input type="number" value="${p.stock || 0}" onchange="editar('${p.id}','stock',this.value)">
             <button onclick="eliminar('${p.id}')">Eliminar</button>
          </div>
       `;
    });
+}
+
+window.editar = function(id,campo,valor){
+   const p = productos.find(x => x.id == id);
+   if (p) {
+       p[campo] = valor;
+       window.guardarEnNube(p); // Llama a la nueva función de sincronización
+   }
+}
+
+window.eliminar = function(id){
+   productos = productos.filter(p=>p.id!=id);
+   guardar();
+   cargarAdmin();
+}
+
+
+window.nuevoProducto = function(){
+   const nuevo = {
+      id: Date.now(),
+      nombre: "Nuevo producto",
+      precio: 0,
+      imagen: "",
+      stock: 0
+   };
+
+   productos.push(nuevo);
+   guardar();
+   cargarAdmin();
 }
 
 
@@ -523,23 +545,6 @@ window.refrescarPanel = function(){
    detectarPedidosNuevos(); // ✅ aquí sí
 }
 
-
-// Auto refresh cada 5 segundos
-document.addEventListener("DOMContentLoaded", () => {
-
-   cargarPedidos();
-   actualizarEstadisticas();
-
-   // activar botón semanal manualmente
-   const botonInicial = document.querySelector(".filtros-grafica button.activo");
-
-   if(botonInicial){
-      crearGraficaVentas();
-   }
-
-});
-
-
 window.addEventListener("load", ()=>{
 
    const tema = localStorage.getItem("tema");
@@ -558,19 +563,6 @@ window.addEventListener("load", ()=>{
       text.textContent = "DAY MODE";
    }
 });
-setInterval(refrescarPanel, 2000);
-
-
-const logoutBtn = document.getElementById("logoutBtn");
-
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    signOut(auth).then(() => {
-      window.location.href = "admin-login.html";
-    });
-  });
-}
-
 
 // Pedir permiso
 window.activarPush = async function(){
@@ -587,3 +579,25 @@ window.activarPush = async function(){
 }
 
 activarPush();
+// window.cargarPedidos = ...
+// window.actualizarEstadisticas = ...
+// window.crearGraficaVentas = ...
+// window.activarPush = ...
+
+// 4. INICIALIZACIÓN (Mantenemos la tuya)
+document.addEventListener("DOMContentLoaded", () => {
+   cargarAdmin();
+   // Si tienes funciones de inicio, déjalas aquí:
+   if(typeof cargarPedidos === 'function') cargarPedidos();
+   if(typeof actualizarEstadisticas === 'function') actualizarEstadisticas();
+});
+
+// Mantén tu lógica de tema, logout y setInterval
+setInterval(refrescarPanel, 2000); 
+
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    signOut(auth).then(() => window.location.href = "admin-login.html");
+  });
+}
