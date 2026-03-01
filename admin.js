@@ -1,28 +1,3 @@
-
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-function cargarPedidos(){
-  db.collection("pedidos")
-    .orderBy("fecha", "desc")
-    .onSnapshot((snapshot)=>{
-      const pedidos = [];
-      snapshot.forEach(doc=>{
-        pedidos.push({id: doc.id, ...doc.data()});
-      });
-    });
-}
-
-import { db } from "./firebase-db.js";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
 import { auth } from "./firebase-config.js";
 import {
   onAuthStateChanged,
@@ -104,25 +79,79 @@ cargarAdmin();
 
 
 window.cargarPedidos = function(){
+   const cont = document.getElementById("listaPedidos");
+   const filtro = document.getElementById("filtroEstado").value;
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+   if(pedidos.length > cantidadAnteriorPedidos){
+   mostrarNotificacion("🛒 Nuevo pedido recibido");
 
-  const q = query(
-    collection(db, "pedidos"),
-    orderBy("fecha", "desc")
-  );
+   const audio = document.getElementById("sonidoPedido");
+   if(audio) audio.play();
+}
 
-  onSnapshot(q, (snapshot) => {
+cantidadAnteriorPedidos = pedidos.length;
+   actualizarEstadisticas();
+   
+   cont.innerHTML = "";
 
-    const pedidos = [];
+   // contador pendientes
+   const pendientes = pedidos.filter(p => p.estado === "pendiente").length;
+   document.getElementById("contadorPendientes").innerHTML =
+      "Pedidos pendientes: " + pendientes;
 
-    snapshot.forEach(doc => {
-      pedidos.push({ id: doc.id, ...doc.data() });
-    });
+   if(pedidos.length === 0){
+      cont.innerHTML = "<p>No hay pedidos aún</p>";
+      return;
+   }
 
-    mostrarPedidos(pedidos);
-    actualizarEstadisticas(pedidos);
-    crearGraficaVentas(pedidos);
+  pedidos
+.filter(p => filtro === "todos" || p.estado === filtro)
+.slice()
+.reverse()
+.forEach(p => {
 
-  });
+      let productosHTML = "";
+
+      if (Array.isArray(p.productos)) {
+         p.productos.forEach(prod => {
+            const nombre = prod.nombre || "Producto";
+            const precio = Number(prod.precio) || 0;
+
+            productosHTML += `
+               <div style="margin-left:10px; font-size:14px;">
+                  • ${nombre} — $${precio.toLocaleString()}
+               </div>
+            `;
+         });
+      }
+
+      const totalSeguro = Number(p.total) || 0;
+
+     let claseEstado = "";
+
+if(p.estado === "pendiente") claseEstado = "estado-pendiente";
+if(p.estado === "enviado") claseEstado = "estado-enviado";
+if(p.estado === "entregado") claseEstado = "estado-entregado";
+
+cont.innerHTML += `
+   <div class="pedido-card ${claseEstado}">
+            <strong>Pedido #${p.id}</strong><br>
+            Fecha: ${p.fecha}<br>
+            Total: $${totalSeguro.toLocaleString()}<br><br>
+
+            <strong>Productos:</strong>
+            ${productosHTML || "Sin productos"}
+
+            <br><br>
+            Estado:
+            <select onchange="cambiarEstado(${p.id}, this.value)">
+               <option value="pendiente" ${p.estado==="pendiente"?"selected":""}>Pendiente</option>
+               <option value="enviado" ${p.estado==="enviado"?"selected":""}>Enviado</option>
+               <option value="entregado" ${p.estado==="entregado"?"selected":""}>Entregado</option>
+            </select>
+         </div>
+      `;
+   });
 }
 
 
@@ -233,12 +262,7 @@ window.cambiarEstado = function(id, estado){
       pedidos[index].estado = estado;
    }
 
-  function guardarPedidoFirebase(pedido){
-  db.collection("pedidos").add({
-    ...pedido,
-    fecha: firebase.firestore.FieldValue.serverTimestamp()
-  });
-}
+   localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }
 
 
