@@ -1315,49 +1315,6 @@ let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
 let imagenSeleccionada = ""; // Nueva variable para la foto
-</script>
-      
-<script type="module">
-    // Importamos las herramientas necesarias
-    import { db } from "./firebase-config.js"; 
-    import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-    // 1. Declaramos la variable global 'productos' para que el resto de tu código la vea
-    window.productos = JSON.parse(localStorage.getItem("productos")) || [];
-
-    function cargarProductos() {
-        const productosRef = ref(db, 'productos');
-
-        onValue(productosRef, (snapshot) => {
-            const data = snapshot.val();
-            
-            if (data) {
-                // Convertimos a array
-                window.productos = Array.isArray(data) ? data : Object.values(data);
-                localStorage.setItem("productos", JSON.stringify(window.productos));
-                
-                console.log("✅ Productos actualizados desde Firebase");
-                // Llamamos a tu función original para pintar la tienda
-                if (typeof iniciarTienda === 'function') iniciarTienda();
-            } else {
-                // Si no hay nada en Firebase, intentamos cargar el JSON local
-                fetch("productos.json")
-                    .then(res => res.json())
-                    .then(data => {
-                        window.productos = data;
-                        localStorage.setItem("productos", JSON.stringify(window.productos));
-                        if (typeof iniciarTienda === 'function') iniciarTienda();
-                    })
-                    .catch(err => console.error("Error cargando productos:", err));
-            }
-        });
-    }
-
-    // Ejecutamos la carga al iniciar
-    cargarProductos();
-</script>
-
-      <script>
 /* ===============================
    NAVEGACIÓN SPA
 =================================*/
@@ -2351,7 +2308,7 @@ function actualizarResumenFactura() {
     
 </script>
 
-<script>
+<script type="module">
 function toggleInfoBancaria(mostrar) {
     const cuadroInfo = document.getElementById('info-bancaria');
     if (cuadroInfo) {
@@ -2363,6 +2320,71 @@ function toggleInfoBancaria(mostrar) {
     const radio = document.querySelector(`input[name="pago"][value="${valor}"]`);
     if (radio) radio.checked = true;
 }
+
+// --- INTEGRACIÓN DEFINITIVA FIREBASE (MODULO) ---
+import { db } from "./firebase-config.js";
+import { ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// 1. CARGA DE PRODUCTOS EN TIEMPO REAL
+function iniciarCargaFirebase() {
+    const productosRef = ref(db, 'productos');
+    onValue(productosRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            // Convertimos el objeto de Firebase a Array para tu función mostrarProductos()
+            window.productos = Object.keys(data).map(key => ({
+                id: key,
+                ...data[key]
+            }));
+            localStorage.setItem("productos", JSON.stringify(window.productos));
+            console.log("✅ Productos cargados desde Firebase");
+            
+            // Llamamos a tu función original que dibuja la tienda
+            if (typeof mostrarProductos === 'function') {
+                mostrarProductos();
+            } else if (typeof cargarProductos === 'function') {
+                cargarProductos();
+            }
+        } else {
+            console.warn("Firebase vacío, usando respaldo local...");
+            // Tu respaldo original si Firebase no tiene nada
+            fetch("productos.json")
+                .then(res => res.json())
+                .then(data => {
+                    window.productos = data;
+                    mostrarProductos();
+                });
+        }
+    });
+}
+
+// 2. ENVIAR PEDIDO A FIREBASE (Reemplaza tu función finalizarPedido)
+window.enviarPedidoAFirebase = function() {
+    // Validar que el carrito no esté vacío
+    if (carrito.length === 0) return alert("El carrito está vacío");
+
+    const nuevoPedido = {
+        cliente: document.getElementById("nombre-cliente")?.value || "Cliente Web",
+        telefono: document.getElementById("telefono-cliente")?.value || "",
+        productos: carrito,
+        total: total, // Asegúrate de que esta variable sea la de tu total actual
+        estado: "pendiente",
+        fecha: Date.now()
+    };
+
+    const pedidosRef = ref(db, 'pedidos');
+    push(pedidosRef, nuevoPedido)
+        .then(() => {
+            alert("🚀 ¡Pedido recibido! Nos contactaremos pronto.");
+            carrito = [];
+            localStorage.removeItem("carrito_moises");
+            location.reload();
+        })
+        .catch(err => alert("Error al enviar: " + err.message));
+};
+
+// Iniciar proceso
+iniciarCargaFirebase();
     
 </script>
       
