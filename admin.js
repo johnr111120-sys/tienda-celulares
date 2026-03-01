@@ -1,17 +1,4 @@
 
-import { auth } from "./firebase-config.js";
-import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-onAuthStateChanged(auth, user=>{
-  if(!user){
-    window.location.href = "admin-login.html";
-  }
-});
-
-
 import { db } from "./firebase-config.js";
 import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
@@ -26,6 +13,19 @@ window.migrarJsonAFirebase = function() {
     });
     alert("¡Migración iniciada! Revisa tu Realtime Database.");
 };
+
+
+import { auth } from "./firebase-config.js";
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+onAuthStateChanged(auth, user=>{
+  if(!user){
+    window.location.href = "admin-login.html";
+  }
+});
 
 
 // 🔐 PROTEGER PANEL
