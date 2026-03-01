@@ -65,35 +65,6 @@ window.cargarAdmin = function(){
 }
 
 
-window.editar = function(id,campo,valor){
-   const p = productos.find(x=>x.id==id);
-   p[campo] = valor;
-   guardar();
-}
-
-
-window.eliminar = function(id){
-   productos = productos.filter(p=>p.id!=id);
-   guardar();
-   cargarAdmin();
-}
-
-
-window.nuevoProducto = function(){
-   const nuevo = {
-      id: Date.now(),
-      nombre: "Nuevo producto",
-      precio: 0,
-      imagen: "",
-      stock: 0
-   };
-
-   productos.push(nuevo);
-   guardar();
-   cargarAdmin();
-}
-
-
 window.guardar = function(){
    localStorage.setItem("productos", JSON.stringify(productos));
 }
@@ -130,6 +101,22 @@ window.editar = function(id, campo, valor) {
         window.guardarEnNube(p); 
     }
 }
+
+
+window.capturarYGuardar = function() {
+    const nuevoProducto = {
+        id: "prod_" + Date.now(),
+        nombre: document.getElementById("nombre-prod").value,
+        descripcion: document.getElementById("desc-prod").value,
+        precio: parseFloat(document.getElementById("precio-prod").value),
+        imagen: "images/default.jpg", // Aquí pondremos la lógica de subida de imagen
+        modelos: [], // Aquí deberás iterar los campos de modelos
+        colores: []  // Aquí deberás iterar los campos de colores
+    };
+
+    // Llamamos a la función que sincroniza con Firebase
+    window.guardarEnNube(nuevoProducto);
+};
 
 
 window.cargarPedidos = function(){
