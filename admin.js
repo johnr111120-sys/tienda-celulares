@@ -1,20 +1,3 @@
-
-import { db } from "./firebase-config.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-window.migrarJsonAFirebase = function() {
-    // 'productos' es tu array cargado desde el localStorage/JSON
-    productos.forEach((p, index) => {
-        // Aseguramos que tenga un ID
-        const id = p.id || "prod_" + index;
-        set(ref(db, 'productos/' + id), p)
-            .then(() => console.log("Subido:", p.nombre))
-            .catch(err => console.error("Error:", err));
-    });
-    alert("¡Migración iniciada! Revisa tu Realtime Database.");
-};
-
-
 import { auth } from "./firebase-config.js";
 import {
   onAuthStateChanged,
