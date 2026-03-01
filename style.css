@@ -221,8 +221,8 @@ button {
 }
 
 .header-logo{
-   top: -20px !important;
-   right: 4% !important;
+   top: -5px !important;
+   right: -20% !important;
    position: relative !important;
    padding: 62px
    width: 100% !important; /* Obliga al logo a ocupar todo el ancho del header */
