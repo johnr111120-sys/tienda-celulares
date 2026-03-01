@@ -54,6 +54,11 @@ window.recuperar = function(){
       alert("Correo enviado");
     });
 };
+
+const sound = document.getElementById("premiumSound");
+sound.volume = 0.6;
+sound.play().catch(()=>{});
+   
 </script>
 
 </body>
