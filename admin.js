@@ -1,99 +1,152 @@
-import { auth, db } from "./firebase-config.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { ref, set, onValue, push, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// --- PROTECCIÓN ---
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function cargarPedidos(){
+  db.collection("pedidos")
+    .orderBy("fecha", "desc")
+    .onSnapshot((snapshot)=>{
+      const pedidos = [];
+      snapshot.forEach(doc=>{
+        pedidos.push({id: doc.id, ...doc.data()});
+      });
+    });
+}
+
+import { db } from "./firebase-db.js";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+import { auth } from "./firebase-config.js";
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
+// 🔐 PROTEGER PANEL
 onAuthStateChanged(auth, (user) => {
-    if (!user) window.location.href = "admin-login.html";
+  if (!user) {
+    window.location.href = "admin-login.html";
+  }
 });
 
-// --- VARIABLES ---
-let productos = [];
-let pedidos = [];
+
 let cantidadAnteriorPedidos = 0;
 
-// --- 1. CARGAR PRODUCTOS DESDE CLOUD ---
-const productosRef = ref(db, 'productos');
-onValue(productosRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-        productos = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-        localStorage.setItem("productos", JSON.stringify(productos));
-        window.cargarAdmin(); // Refresca la lista en el panel
-    }
-});
+let productos = JSON.parse(localStorage.getItem("productos")) || [];
 
-// --- 2. CARGAR PEDIDOS DESDE CLOUD ---
-const pedidosRef = ref(db, 'pedidos');
-onValue(pedidosRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-        pedidos = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-        if (pedidos.length > cantidadAnteriorPedidos && cantidadAnteriorPedidos !== 0) {
-            window.mostrarNotificacion("🛒 ¡Nuevo Pedido Recibido!");
-            document.getElementById("sonidoPedido")?.play();
-        }
-        cantidadAnteriorPedidos = pedidos.length;
-        window.cargarPedidos();
-        window.actualizarEstadisticas();
-    }
-});
+window.cargarAdmin = function(){
+   const cont = document.getElementById("listaAdmin");
+   cont.innerHTML = "";
 
-// --- FUNCIONES GLOBALES ---
-window.cargarAdmin = function() {
-    const cont = document.getElementById("listaAdmin");
-    if (!cont) return;
-    cont.innerHTML = "";
-    productos.forEach(p => {
-        cont.innerHTML += `
-            <div class="card-admin">
-                <img src="${p.imagen}" width="60">
-                <input value="${p.nombre}" onchange="editar('${p.id}','nombre',this.value)">
-                <input type="number" value="${p.precio}" onchange="editar('${p.id}','precio',this.value)">
-                <button onclick="eliminar('${p.id}')">Eliminar</button>
-            </div>`;
+   productos.forEach(p => {
+      cont.innerHTML += `
+         <div class="card-admin">
+            <img src="${p.imagen}" width="60">
+
+            <input value="${p.nombre}" 
+              onchange="editar('${p.id}','nombre',this.value)">
+
+            <input type="number" value="${p.precio}" 
+              onchange="editar('${p.id}','precio',this.value)">
+
+            <input type="number" value="${p.stock || 0}" 
+              onchange="editar('${p.id}','stock',this.value)">
+
+            <button onclick="eliminar('${p.id}')">Eliminar</button>
+         </div>
+      `;
+   });
+}
+
+
+window.editar = function(id,campo,valor){
+   const p = productos.find(x=>x.id==id);
+   p[campo] = valor;
+   guardar();
+}
+
+
+window.eliminar = function(id){
+   productos = productos.filter(p=>p.id!=id);
+   guardar();
+   cargarAdmin();
+}
+
+
+window.nuevoProducto = function(){
+   const nuevo = {
+      id: Date.now(),
+      nombre: "Nuevo producto",
+      precio: 0,
+      imagen: "",
+      stock: 0
+   };
+
+   productos.push(nuevo);
+   guardar();
+   cargarAdmin();
+}
+
+
+window.guardar = function(){
+   localStorage.setItem("productos", JSON.stringify(productos));
+}
+
+cargarAdmin();
+
+
+window.cargarPedidos = function(){
+
+  const q = query(
+    collection(db, "pedidos"),
+    orderBy("fecha", "desc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+
+    const pedidos = [];
+
+    snapshot.forEach(doc => {
+      pedidos.push({ id: doc.id, ...doc.data() });
     });
-};
 
-window.nuevoProducto = function() {
-    const nuevoId = "prod_" + Date.now();
-    const nuevo = { nombre: "Nuevo Producto", precio: 0, imagen: "images/default.jpg", stock: 0 };
-    set(ref(db, 'productos/' + nuevoId), nuevo);
-};
+    mostrarPedidos(pedidos);
+    actualizarEstadisticas(pedidos);
+    crearGraficaVentas(pedidos);
 
-window.editar = function(id, campo, valor) {
-    const actualizaciones = {};
-    actualizaciones[`productos/${id}/${campo}`] = campo === 'precio' || campo === 'stock' ? Number(valor) : valor;
-    update(ref(db), actualizaciones);
-};
+  });
+}
 
-window.eliminar = function(id) {
-    if (confirm("¿Eliminar producto?")) {
-        set(ref(db, 'productos/' + id), null);
-    }
-};
 
-window.cambiarEstado = function(idPedido, nuevoEstado) {
-    update(ref(db, `pedidos/${idPedido}`), { estado: nuevoEstado });
-};
+let ultimoPedidoID = Number(localStorage.getItem("ultimoPedidoID")) || 0;
 
-// --- MANTENER TUS FUNCIONES DE UI ---
-window.cargarPedidos = function() {
-    const cont = document.getElementById("listaPedidos");
-    if (!cont) return;
-    cont.innerHTML = pedidos.length === 0 ? "<p>No hay pedidos</p>" : "";
-    pedidos.slice().reverse().forEach(p => {
-        cont.innerHTML += `
-            <div class="pedido-card estado-${p.estado}">
-                <strong>Pedido #${p.id.substring(0,6)}</strong> - ${p.cliente || 'Anonimo'}<br>
-                Total: $${Number(p.total).toLocaleString()}<br>
-                <select onchange="window.cambiarEstado('${p.id}', this.value)">
-                    <option value="pendiente" ${p.estado==='pendiente'?'selected':''}>Pendiente</option>
-                    <option value="entregado" ${p.estado==='entregado'?'selected':''}>Entregado</option>
-                </select>
-            </div>`;
-    });
-};
+window.detectarPedidosNuevos = function(){
+
+   const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   if(pedidos.length === 0) return;
+
+   const masReciente = pedidos[pedidos.length - 1];
+
+   if(masReciente.id > ultimoPedidoID){
+         mostrarToast();
+         reproducirSonido();
+         animarBadge();
+         actualizarTituloNavegador();
+
+      ultimoPedidoID = masReciente.id;
+      localStorage.setItem("ultimoPedidoID", ultimoPedidoID);
+   }
+}
+
 
 window.actualizarEstadisticas = function(){
 
@@ -158,6 +211,50 @@ if(pendientes > 0){
    setTimeout(()=> badge.classList.remove("animar"), 400);
   }
 }
+
+
+window.animarBadge = function(){
+   const badge = document.getElementById("badgePedidos");
+   if(!badge) return;
+
+   badge.classList.add("rebote");
+
+   setTimeout(()=>{
+      badge.classList.remove("rebote");
+   },600);
+}
+
+
+window.cambiarEstado = function(id, estado){
+   let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+   const index = pedidos.findIndex(p => p.id == id);
+   if(index !== -1){
+      pedidos[index].estado = estado;
+   }
+
+  function guardarPedidoFirebase(pedido){
+  db.collection("pedidos").add({
+    ...pedido,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+}
+
+
+window.mostrarNotificacion = function(){
+   const n = document.getElementById("notificacionFlotante");
+   if(!n) return;
+
+   n.classList.remove("ocultar");
+   n.classList.add("mostrar");
+
+   setTimeout(()=>{
+      n.classList.remove("mostrar");
+      n.classList.add("ocultar");
+   },4000);
+}
+
 
 window.crearGraficaVentas = function(){
 
@@ -306,6 +403,7 @@ window.compararMeses = function(ventas){
 
 let tipoGrafica = "semana";
 
+
 window.cambiarTema = function(){
 
    const body = document.body;
@@ -330,6 +428,50 @@ window.cambiarTema = function(){
    }
 }
 
+
+let audioHabilitado = false;
+
+document.addEventListener("click", () => {
+   audioHabilitado = true;
+}, { once:true });
+
+window.reproducirSonido = function(){
+   if(!audioHabilitado) return;
+
+   const sonido = document.getElementById("sonidoPedido");
+   if(sonido){
+      sonido.volume = volumenActual;
+      sonido.currentTime = 0;
+      sonido.play().catch(()=>{});
+   }
+}
+
+let volumenActual = localStorage.getItem("volumenPanel") || 0.7;
+
+const control = document.getElementById("controlVolumen");
+
+if(control){
+   control.value = volumenActual;
+
+   control.addEventListener("input", e=>{
+      volumenActual = e.target.value;
+      localStorage.setItem("volumenPanel", volumenActual);
+   });
+}
+
+
+window.mostrarToast = function(){
+   const t = document.getElementById("toastPedido");
+   if(!t) return;
+
+   t.classList.add("mostrar");
+
+   setTimeout(()=>{
+      t.classList.remove("mostrar");
+   }, 3500);
+}
+
+
 window.actualizarTituloNavegador = function(){
    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
    const pendientes = pedidos.filter(p=>p.estado==="pendiente").length;
@@ -349,6 +491,23 @@ window.refrescarPanel = function(){
    detectarPedidosNuevos(); // ✅ aquí sí
 }
 
+
+// Auto refresh cada 5 segundos
+document.addEventListener("DOMContentLoaded", () => {
+
+   cargarPedidos();
+   actualizarEstadisticas();
+
+   // activar botón semanal manualmente
+   const botonInicial = document.querySelector(".filtros-grafica button.activo");
+
+   if(botonInicial){
+      crearGraficaVentas();
+   }
+
+});
+
+
 window.addEventListener("load", ()=>{
 
    const tema = localStorage.getItem("tema");
@@ -367,13 +526,15 @@ window.addEventListener("load", ()=>{
       text.textContent = "DAY MODE";
    }
 });
-// ... Aquí pega tus funciones de estadísticas y gráficas originales ...
-// Asegúrate de que usen la variable 'pedidos' que definimos arriba.
+setInterval(refrescarPanel, 2000);
 
-window.mostrarNotificacion = function(msj) {
-    const toast = document.getElementById("toastPedido");
-    if (toast) {
-        toast.classList.add("mostrar");
-        setTimeout(() => toast.classList.remove("mostrar"), 5000);
-    }
-};
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    signOut(auth).then(() => {
+      window.location.href = "admin-login.html";
+    });
+  });
+}
