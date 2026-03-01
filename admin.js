@@ -86,22 +86,6 @@ window.editar = function(id, campo, valor) {
 }
 
 
-window.capturarYGuardar = function() {
-    const nuevoProducto = {
-        id: "prod_" + Date.now(),
-        nombre: document.getElementById("nombre-prod").value,
-        descripcion: document.getElementById("desc-prod").value,
-        precio: parseFloat(document.getElementById("precio-prod").value),
-        imagen: "images/default.jpg", // Aquí pondremos la lógica de subida de imagen
-        modelos: [], // Aquí deberás iterar los campos de modelos
-        colores: []  // Aquí deberás iterar los campos de colores
-    };
-
-    // Llamamos a la función que sincroniza con Firebase
-    window.guardarEnNube(nuevoProducto);
-};
-
-
 window.cargarPedidos = function(){
    const cont = document.getElementById("listaPedidos");
    const filtro = document.getElementById("filtroEstado").value;
