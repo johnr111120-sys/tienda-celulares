@@ -1316,18 +1316,44 @@ let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
 let imagenSeleccionada = ""; // Nueva variable para la foto
-let productos = JSON.parse(localStorage.getItem("productos"));
+// Asegúrate de tener estas importaciones si usas módulos (o las librerías globales cargadas)
+import { db } from "./firebase-config.js"; // Ajusta tu ruta a firebase-config
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-if (productos && productos.length > 0) {
-   iniciarTienda();   // usa los productos guardados
-} else {
-  fetch("productos.json")
-.then(res => res.json())
-.then(data => {
-   productos = data;
-   mostrarProductos(); // o la función que carga tus productos
-});
+// Función de carga acumulativa
+function cargarProductos() {
+    const productosRef = ref(db, 'productos');
+
+    // 1. Intentamos cargar desde Firebase en tiempo real
+    onValue(productosRef, (snapshot) => {
+        const data = snapshot.val();
+        
+        if (data) {
+            // Convertimos el objeto de Firebase a array si es necesario
+            productos = Array.isArray(data) ? data : Object.values(data);
+            
+            // Guardamos en localStorage como "respaldo" por si el usuario pierde conexión
+            localStorage.setItem("productos", JSON.stringify(productos));
+            
+            console.log("Productos cargados desde Firebase");
+            iniciarTienda(); 
+        } else {
+            // 2. Si Firebase está vacío, intentamos cargar desde el JSON local (respaldo final)
+            fetch("productos.json")
+                .then(res => res.json())
+                .then(data => {
+                    productos = data;
+                    localStorage.setItem("productos", JSON.stringify(productos));
+                    iniciarTienda();
+                })
+                .catch(err => console.error("Error cargando productos:", err));
+        }
+    });
 }
+
+// Ejecutamos la carga
+cargarProductos();
+    
 /* ===============================
    NAVEGACIÓN SPA
 =================================*/
