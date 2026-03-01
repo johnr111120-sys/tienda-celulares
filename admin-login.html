@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="admin-login.css">
 </head>
 <body>
-
-<canvas id="goldParticles"></canvas>
    
 <div class="premium-card">
    <img src="images/Logo3Expand.png" class="logo">
@@ -59,10 +57,10 @@ window.recuperar = function(){
 
 const sound = document.getElementById("premiumSound");
 sound.volume = 0.6;
-sound.play().catch(()=>{});
    
 </script>
-
+<audio id="premiumSound" src="Software interface start.mp3"></audio>
+<canvas id="goldParticles"></canvas>
 <script src="particles.js"></script>
    
 </body>
