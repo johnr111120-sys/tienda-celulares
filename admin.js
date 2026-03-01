@@ -85,6 +85,37 @@ window.guardar = function(){
 cargarAdmin();
 
 
+import { db } from "./firebase-config.js";
+import { ref, set, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+// NUEVA FUNCIÓN PARA FIREBASE (Acumulativa)
+window.guardarEnNube = function(producto) {
+    // 1. Guardamos localmente primero para tener el respaldo
+    window.guardar(); 
+    
+    // 2. Ahora enviamos a Firebase
+    const idProducto = producto.id || Date.now().toString();
+    const productoRef = ref(db, 'productos/' + idProducto);
+
+    set(productoRef, producto)
+        .then(() => {
+            console.log("✅ Producto sincronizado con la nube.");
+        })
+        .catch((error) => {
+            console.error("❌ Error al sincronizar con Firebase:", error);
+        });
+};
+
+
+window.editar = function(id, campo, valor) {
+    const p = productos.find(x => x.id == id);
+    if (p) {
+        p[campo] = valor;
+        // AQUÍ LLAMAS A LA NUEVA FUNCIÓN QUE SINCROINZA TODO
+        window.guardarEnNube(p); 
+    }
+}
+
+
 window.cargarPedidos = function(){
    const cont = document.getElementById("listaPedidos");
    const filtro = document.getElementById("filtroEstado").value;
