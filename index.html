@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -829,6 +830,12 @@ async function guardarPedidoFirebase(pedido){
 }
 }
       
+// Función para generar un número de rastreo único (Ej: MC-2026-X892)
+function generarNumeroRastreo() {
+    const random = Math.floor(1000 + Math.random() * 9000);
+    return `MC-2026-${random}`;
+}
+      
 function enviarPedidoWhatsApp(tracking) {
     // ... (tus capturas de nombre, apellido, etc.)
     const nombre = document.getElementById("ch-nombre").value.trim();
@@ -908,11 +915,6 @@ function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, cost
     todasLasCompras.unshift(nuevaCompra);
     localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
 }
-
-// Asegúrate de importar esto en tu index.html (dentro del script type="module")
-import { db } from "./firebase-config.js";
-import { ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
       
 function crearContenedorSPA() {
     const div = document.createElement("div");
@@ -1315,6 +1317,18 @@ let modeloSeleccionado = "";
 let colorSeleccionado = "";
 let precioActual = "";
 let imagenSeleccionada = ""; // Nueva variable para la foto
+let productos = JSON.parse(localStorage.getItem("productos"));
+
+if (productos && productos.length > 0) {
+   iniciarTienda();   // usa los productos guardados
+} else {
+  fetch("productos.json")
+.then(res => res.json())
+.then(data => {
+   productos = data;
+   mostrarProductos(); // o la función que carga tus productos
+});
+}
 /* ===============================
    NAVEGACIÓN SPA
 =================================*/
@@ -2308,7 +2322,7 @@ function actualizarResumenFactura() {
     
 </script>
 
-<script type="module">
+<script>
 function toggleInfoBancaria(mostrar) {
     const cuadroInfo = document.getElementById('info-bancaria');
     if (cuadroInfo) {
@@ -2320,71 +2334,6 @@ function toggleInfoBancaria(mostrar) {
     const radio = document.querySelector(`input[name="pago"][value="${valor}"]`);
     if (radio) radio.checked = true;
 }
-
-// --- INTEGRACIÓN DEFINITIVA FIREBASE (MODULO) ---
-import { db } from "./firebase-config.js";
-import { ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-// 1. CARGA DE PRODUCTOS EN TIEMPO REAL
-function iniciarCargaFirebase() {
-    const productosRef = ref(db, 'productos');
-    onValue(productosRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            // Convertimos el objeto de Firebase a Array para tu función mostrarProductos()
-            window.productos = Object.keys(data).map(key => ({
-                id: key,
-                ...data[key]
-            }));
-            localStorage.setItem("productos", JSON.stringify(window.productos));
-            console.log("✅ Productos cargados desde Firebase");
-            
-            // Llamamos a tu función original que dibuja la tienda
-            if (typeof mostrarProductos === 'function') {
-                mostrarProductos();
-            } else if (typeof cargarProductos === 'function') {
-                cargarProductos();
-            }
-        } else {
-            console.warn("Firebase vacío, usando respaldo local...");
-            // Tu respaldo original si Firebase no tiene nada
-            fetch("productos.json")
-                .then(res => res.json())
-                .then(data => {
-                    window.productos = data;
-                    mostrarProductos();
-                });
-        }
-    });
-}
-
-// 2. ENVIAR PEDIDO A FIREBASE (Reemplaza tu función finalizarPedido)
-window.enviarPedidoAFirebase = function() {
-    // Validar que el carrito no esté vacío
-    if (carrito.length === 0) return alert("El carrito está vacío");
-
-    const nuevoPedido = {
-        cliente: document.getElementById("nombre-cliente")?.value || "Cliente Web",
-        telefono: document.getElementById("telefono-cliente")?.value || "",
-        productos: carrito,
-        total: total, // Asegúrate de que esta variable sea la de tu total actual
-        estado: "pendiente",
-        fecha: Date.now()
-    };
-
-    const pedidosRef = ref(db, 'pedidos');
-    push(pedidosRef, nuevoPedido)
-        .then(() => {
-            alert("🚀 ¡Pedido recibido! Nos contactaremos pronto.");
-            carrito = [];
-            localStorage.removeItem("carrito_moises");
-            location.reload();
-        })
-        .catch(err => alert("Error al enviar: " + err.message));
-};
-
-// Iniciar proceso
-iniciarCargaFirebase();
     
 </script>
       
