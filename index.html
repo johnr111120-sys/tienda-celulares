@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,77 +40,66 @@
     
   <div class="nav-left">
   <!-- IZQUIERDA -->
-    <button id="btn-perfil" class="nav-icon" onclick="navegarSPA('perfil')"><i class="fas fa-user"></i></button>
-    <button id="btn-carrito-nav" class="nav-icon" onclick="toggleCarritoIzquierdo()">
-    <div style="position: relative; display: inline-block;">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="contador-carrito" class="badge-carrito">0</span>
-    </div>
-</button>
+ <button class="nav-icon"><i class="fas fa-user"></i></button>
+    <button class="nav-icon"><i class="fas fa-shopping-cart"></i></button>
+    <button class="nav-icon"><i class="fas fa-heart"></i></button>
+</div>
 </nav>   
  </header>
 
 <div class="barra-herramientas-fija">
-    <div class="parte-azul" onclick="toggleMenuProductos()">
-        <span id="btn-menu-trigger">☰</span>
-        <span class="texto-cat">CATEGORIAS</span>
-    </div>
-
-    <div class="parte-negra">
-        <div class="contenedor-busqueda">
-            <i class="fas fa-search icono-lupa"></i>
-            <input type="text" 
-                   id="inputBuscador" 
-                   class="buscador-barra" 
-                   placeholder="Buscar producto..." 
-                   oninput="buscarEnTiempoReal()">
+    <button class="btn-categoria-rect" onclick="toggleMenuProductos()">
+        <div class="parte-azul">
+            <span id="icono-menu">☰</span>
+            <span>CATEGORÍA</span>
         </div>
+        <div class="parte-negra">
+        <div class="contenedor-busqueda">
+        <i class="fas fa-search icono-lupa"></i>
+    <input type="text" class="buscador-barra" placeholder="Buscar productos...">
     </div>
+    </button>
 </div>
       
+<h2 id="titulo-categoria">Productos</h2>
 <!-- OVERLAY -->
-<div id="menu-overlay" onclick="toggleMenuProductos()"></div>
+<div id="menu-overlay"></div>
 
+<!-- MENU CATEGORÍAS -->
 <aside id="menu-categorias">
-    <h3>Categorías</h3>
+  <h3>Categorías</h3>
 
-    <div class="acordeon-contenedor">
-        
-        <div class="acordeon-item">
-            <div class="acordeon-header" onclick="toggleAcordeon(this)">
-                Celulares <i class="fi fi-bs-angle-down"></i>
-            </div>
-            <div class="acordeon-contenido">
-                <a href="#/productos/Iphone" onclick="toggleMenuProductos()"> 🍎Iphone</a>
-                <a href="#/productos/Samsung" onclick="toggleMenuProductos()"> 🤖Samsung</a>
-                <a href="#/productos/ZTE" onclick="toggleMenuProductos()"> 📱ZTE</a>
-            </div>
-        </div>
+<div id="lista-productos"></div>    
+  <button class="categoria">
+    Celulares
+    <i class="fi fi-bs-angle-up"></i>
+  </button>
+  <div class="subcategorias">
+  <a href="#/productos/Iphone">Iphone</a>
+<a href="#/productos/Samsung">Samsung</a> 
+<a href="#/productos/ZTE">ZTE</a>
+  </div>
 
-        <div class="acordeon-item">
-            <div class="acordeon-header" onclick="toggleAcordeon(this)">
-                Accesorios <i class="fi fi-bs-angle-down"></i>
-            </div>
-            <div class="acordeon-contenido">
-                <a href="#/productos/Covers" onclick="toggleMenuProductos()"> 🛡️Covers</a>
-                <a href="#/productos/Audifonos" onclick="toggleMenuProductos()"> 🎧Audifonos</a>
-                <a href="#/productos/Smartwatch" onclick="toggleMenuProductos()"> ⌚Smartwatch</a>
-                <a href="#/productos/Usb" onclick="toggleMenuProductos()"> 💾Usb</a>
-            </div>
-        </div>
-
-        <div class="acordeon-item">
-            <div class="acordeon-header" onclick="toggleAcordeon(this)">
-                Tablets <i class="fi fi-bs-angle-down"></i>
-            </div>
-            <div class="acordeon-contenido">
-                <a href="#/productos/Ipad" onclick="toggleMenuProductos()"> 🍎Ipad</a>
-                <a href="#/productos/Android" onclick="toggleMenuProductos()"> 🤖Android</a>
-            </div>
-        </div>
-
+  <button class="categoria">
+    Accesorios
+    <i class="fi fi-bs-angle-up"></i>
+  </button>
+  <div class="subcategorias">
+   <a href="#/productos/Covers">Covers</a>
+ <a href="#/productos/Audifonos">Audifonos</a>
+  <a href="#/productos/Smartwatch">Smartwatch</a>
+ <a href="#/productos/Usb">Usb</a>
+  </div>
+    
+     <button class="categoria">
+       Tablets
+        <i class="fi fi-bs-angle-up"></i>
+      </button>
+      <div class="subcategorias">
+      <a href="#/productos/Ipad">Ipad</a>
+      <a href="#/productos/Android">Android</a>
     </div>
-</aside>
+  </aside>
       
 <main id="contenido" class="contenido">      
 
@@ -154,7 +142,6 @@ al lado de Plaza La Canela.
         <li>🔓 Desbloqueos</li>
     </ul>
 </section>
-
     
 <section id="galeria">
   <h2>Galería</h2>
@@ -222,10 +209,7 @@ al lado de Plaza La Canela.
   </div>
 
 </main>
-
-<footer>
-    <div class="mapa-contacto-footer">
-        
+      
 <section>
     <h2>Contacto</h2>
     <p>Visítanos en nuestro local o escríbenos por WhatsApp.</p>
@@ -238,15 +222,12 @@ loading="lazy"
 referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </section>
-</div>
-
-        <p>📍 La Canela, Santiago, R.D. — Calle Pricipal, Al lado de Plaza La Canela</p>
-        <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
-        <p>📞 WhatsApp: +1 829 201 7321</p>
+  </div>
     
-<div class="footer-negro-final">
-        <p>© 2026 Moises Celulares - Todos los derechos reservados</p>
-    </div>
+    <footer>
+  <p>📍 La Canela, Santiago, R.D. — Al lado de Plaza La Canela</p>
+  <p>🕒 Horario: Lun a Sab 9:00 - 18:00</p>
+  <p>📞 WhatsApp: +1 829 201 7321</p>
 </footer>
     
     <!-- MODAL DE IMAGEN (AISLADO) -->
@@ -254,700 +235,6 @@ referrerpolicy="no-referrer-when-downgrade">
   <button class="img-modal-close" onclick="cerrarImgModal()">✕</button>
   <img id="img-modal-src" src="" alt="Vista ampliada">
 </div>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script>
-const firebaseConfig = {
- apiKey: "AIzaSyB0YrXAOE7eg04N6c3ZqLsBUUz8VBfHD58",
-  authDomain: "moises-celulares.firebaseapp.com",
-  projectId: "moises-celulares",
-  appId: "1:392580256106:web:e31ae4c958effb4eb91513"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();      
-/* ===============================
-   ESTADO GLOBAL Y DATOS
-=================================*/
-// Variables Globales faltantes para evitar el error de consola      
-let favoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
-let vistasRecientes = JSON.parse(localStorage.getItem('vistas_recientes')) || [];
-let usuarioLogueado = false;
-// Intentar cargar datos guardados o usar los de prueba si no hay nada
-let datosUsuario = JSON.parse(localStorage.getItem("datos_usuario_moises")) || {
-    nombre: "Juan Pérez",
-    correo: "cliente@ejemplo.com",
-    direccion: "Av. Independencia #123, Santo Domingo",
-    historial: [
-        { id: "MC-2026-1024", fecha: "10/02/2024", total: "25,500", estado: "Entregado" }
-    ]
-};
-      
-/* ===============================
-   LÓGICA DE LOGIN
-=================================*/
-function mostrarModalLogin() {
-    const modal = document.getElementById("modal-login-contenedor");
-    if(modal) modal.style.display = "flex";
-}
-
-function cerrarLogin() {
-    const modal = document.getElementById("modal-login-contenedor");
-    if (modal) modal.style.display = "none";
-    
-    // Si no estamos logueados o simplemente cerramos el modal:
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if (contenedorSPA) {
-        contenedorSPA.style.display = "none"; // Apagamos el hueco gris
-        contenedorSPA.innerHTML = "";        // Limpiamos contenido
-    }
-
-    // Volvemos a mostrar la tienda normal
-    document.getElementById("vista-inicio").style.display = "block";
-    
-    // Opcional: resetear URL al inicio
-    window.location.hash = "#/";
-    router();
-}
-
-function procesarLogin() {
-    // Seleccionamos los inputs correctamente dentro de la card
-    const inputs = document.querySelectorAll('.login-card input');
-    const correo = inputs[0].value.trim();
-    const pass = inputs[1].value.trim();
-
-    if (correo.length > 3 && pass.length > 3) {
-        usuarioLogueado = true;
-        cerrarLogin();
-        
-        // Al loguearse, vamos directo al perfil
-        navegarSPA('perfil'); 
-        
-        // Feedback visual en el nav
-        const btnPerfil = document.getElementById("btn-perfil");
-        if(btnPerfil) btnPerfil.style.color = "#00ff00"; 
-        
-        console.log("Sesión iniciada con éxito");
-    } else {
-        alert("Por favor, ingresa un correo y contraseña válidos.");
-    }
-}
-
-function cerrarSesion() {
-    usuarioLogueado = false;
-    const btnPerfil = document.getElementById("btn-perfil");
-    if(btnPerfil) btnPerfil.style.color = "";
-    location.hash = "#/";
-    location.reload(); 
-}
-
-/* ===============================
-   NAVEGACIÓN SPA (PERFIL / FAVORITOS)
-=================================*/
-function navegarSPA(seccion) {
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-    // Buscamos o creamos el contenedor para la sección del cliente
-    let contenedorSPA = document.getElementById("vista-spa-cliente");
-    
-    if (!contenedorSPA) {
-        contenedorSPA = crearContenedorSPA();
-    }
-
-    // Si NO está logueado, forzamos el modal de login
-    if (!usuarioLogueado) {
-        mostrarModalLogin();
-        // Ocultamos lo demás para que el fondo se vea limpio
-        if(vistaInicio) vistaInicio.style.display = "none";
-        if(vistaProductos) vistaProductos.style.display = "none";
-        contenedorSPA.style.display = "block";
-        contenedorSPA.innerHTML = `
-            <div style="text-align:center; padding:100px 20px; color:white;">
-                <i class="fas fa-user-lock" style="font-size:50px; margin-bottom:20px; color:#3498db;"></i>
-                <h2>Inicia Sesión</h2>
-                <p>Ingresa a tu cuenta para ver tus datos y favoritos.</p>
-                <button class="btn-comprar" onclick="mostrarModalLogin()" style="margin-top:20px; width:200px;">Abrir Login</button>
-            </div>`;
-        return;
-    }
-
-    // Si ya está logueado, mostramos la sección correspondiente
-    if(vistaInicio) vistaInicio.style.display = "none";
-    if(vistaProductos) vistaProductos.style.display = "none";
-    contenedorSPA.style.display = "block";
-
-    if (seccion === 'perfil') renderizarPerfil(contenedorSPA);
-    
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function renderizarPerfil(contenedor) {
-    contenedor.innerHTML = `
-        <div class="perfil-container" style="padding:40px 20px; max-width:800px; margin:auto; color:white;">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444; padding-bottom:15px;">
-                <h1>Hola, ${datosUsuario.nombre}</h1>
-                <button onclick="cerrarSesion()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Cerrar Sesión</button>
-            </div>
-            <div style="margin-top:30px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
-                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
-                    <h3 style="color:#3498db;"><i class="fas fa-id-card"></i> Mis Datos</h3>
-                    <p style="margin:10px 0;"><b>Correo:</b> ${datosUsuario.correo}</p>
-                    <p style="margin:10px 0;"><b>Dirección:</b> ${datosUsuario.direccion}</p>
-                </div>
-                <div style="background:#1a1a1a; padding:25px; border-radius:15px; border: 1px solid #333;">
-                    <h3 style="color:#3498db;"><i class="fas fa-history"></i> Pedidos Recientes</h3>
-                   ${datosUsuario.historial.map(p => `
-    <div style="border-bottom:1px solid #333; padding:12px 0; font-size:13px; line-height: 1.4;">
-        <b style="color:#3498db;">Rastreo: ${p.id}</b><br>
-        <span>Fecha: ${p.fecha}</span> | <b>RD$ ${p.total}</b><br>
-        <span style="color:${p.estado === 'Entregado' ? '#00ff00' : '#f1c40f'}">
-            <i class="fas fa-circle" style="font-size:8px;"></i> ${p.estado}
-        </span>
-    </div>
-`).join('')}
-                </div>
-            </div>
-        </div>`;
-}
-
-function toggleFavorito(idProducto, evento) {
-    if (evento) evento.stopPropagation(); // Evita que se abra el modal del producto al dar clic al corazón
-
-    const index = favoritos.findIndex(p => p.id === idProducto);
-    const producto = productos.find(p => p.id === idProducto);
-
-    if (index === -1) {
-        // No está, lo agregamos
-        favoritos.push(producto);
-        alert("❤️ Añadido a favoritos");
-    } else {
-        // Ya está, lo quitamos
-        favoritos.splice(index, 1);
-        alert("🖤 Eliminado de favoritos");
-    }
-
-    // Guardamos en la memoria del navegador
-    localStorage.setItem("mis_favoritos", JSON.stringify(favoritos));
-    
-    // Si estamos en la vista de favoritos, refrescarla de inmediato
-    if (document.getElementById("vista-spa-cliente").style.display === "block") {
-        renderizarFavoritos(document.getElementById("vista-spa-cliente"));
-  }
-}
-    
-function actualizarContadorFavoritos() {
-    const contador = document.getElementById("contador-favoritos");
-    if (!contador) return;
-
-    const cantidad = favoritos.length;
-    contador.innerText = cantidad;
-
-    // Si no hay favoritos, ocultamos el círculo rojo
-    contador.style.display = cantidad > 0 ? "flex" : "none";
-
-    // Pequeña animación de "brinco" al actualizar
-    contador.classList.add("badge-animacion");
-    setTimeout(() => contador.classList.remove("badge-animacion"), 300);
-}
-
-// --- IMPORTANTE ---
-// Llama a esta función al cargar la página para que el número aparezca de una vez
-window.addEventListener("load", actualizarContadorFavoritos);
-      
-function renderizarFavoritos(contenedor) {
-    if (favoritos.length === 0) {
-        contenedor.innerHTML = `
-            <div style="padding:60px 20px; color:white; text-align:center;">
-                <i class="fas fa-heart" style="font-size:60px; color:#333; margin-bottom:20px;"></i>
-                <h1>Tus Favoritos</h1>
-                <p>No has guardado ningún producto todavía.</p>
-                <button class="btn-comprar" onclick="location.hash='#/'" style="margin-top:20px; width:auto; padding:10px 20px;">Volver a la tienda</button>
-            </div>`;
-        return;
-    }
-
-    contenedor.innerHTML = `
-        <div style="padding:40px 20px; max-width:1200px; margin:auto;">
-            <h1 style="color:white; margin-bottom:30px; text-align:center;">❤️ Mis Favoritos</h1>
-            <div id="grid-favoritos" class="productos-grid"></div>
-        </div>`;
-
-    const grid = contenedor.querySelector("#grid-favoritos");
-    
-    favoritos.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "producto-card";
-        div.innerHTML = `
-            <i class="fas fa-trash btn-eliminar-fav" onclick="toggleFavorito(${p.id}, event)"></i>
-            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
-            <h3>${p.nombre}</h3>
-            <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
-        `;
-        grid.appendChild(div);
-    });
-}
-
-function crearContenedorSPA() {
-    const div = document.createElement("div");
-    div.id = "vista-spa-cliente";
-    div.style.minHeight = "70vh";
-    div.style.backgroundColor = "#000";
-    // Lo insertamos antes del footer
-    const footer = document.querySelector("footer");
-    if(footer) footer.before(div);
-    else document.body.appendChild(div);
-    return div;
-}
-// --- CARRITO LADO IZQUIERDO ---
-document.getElementById("btn-carrito-nav").onclick = toggleCarritoIzquierdo;
-
-function agregarAlCarrito(producto, variacion = null) {
-    const item = {
-        id: producto.id,
-        nombre: variacion ? `${producto.nombre} (${variacion.nombre})` : producto.nombre,
-        precio: variacion ? variacion.precio : producto.precio,
-        imagen: producto.imagen,
-        slug: producto.slug
-    };
-
-    carrito.push(item);
-    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
-
-    actualizarContadorCarrito();
-    renderizarCarrito();
-}
-
-    // Variable global (asegúrate de que agregarAlCarrito la use)
-    let carrito = JSON.parse(localStorage.getItem("carrito_compras")) || [];
-
-function actualizarContadorCarrito() {
-    const contador = document.getElementById("contador-carrito");
-    if (!contador) return;
-    
-    const cantidad = carrito.length;
-    contador.innerText = cantidad;
-    contador.style.display = cantidad > 0 ? "flex" : "none";
-}
-
-// Función para calcular el subtotal de productos
-function calcularSubtotal() {
-    return carrito.reduce((acc, p) => acc + parseInt(p.precio), 0);
-}
-
-// Función para renderizar el Carrito Lateral con el Subtotal y Botones
-function renderizarCarrito() {
-    const contenedor = document.getElementById("carrito-contenido-izq");
-    if (!contenedor) return;
-
-    if (carrito.length === 0) {
-        contenedor.innerHTML = `<p class="carrito-vacio">No hay productos en el carrito.</p>`;
-    } else {
-        let htmlProductos = carrito.map((p, index) => `
-            <div class="item-carrito">
-                <img src="${p.imagen}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
-                <div style="flex:1;">
-                    <p style="margin:0; font-weight:bold; color:white; font-size:13px;">${p.nombre}</p>
-                    <p style="margin:2px 0 0; color:#3498db; font-size:12px;">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-                </div>
-                <i class="fas fa-trash" onclick="eliminarDelCarrito(${index})" style="color:#ff4757; cursor:pointer; font-size:12px;"></i>
-            </div>
-        `).join("");
-
-           contenedor.innerHTML = `
-            <div class="carrito-items-scroll" style="flex: 1; overflow-y: auto;">
-               ${htmlProductos}
-           </div>
-            
-           <div class="carrito-footer-fijo">
-        <div class="subtotal-box">
-            <span>SUBTOTAL:</span>
-            <span>RD$ ${calcularSubtotal().toLocaleString()}</span>
-        </div>
-        
-        <button class="btn-carrito-estilo" onclick="navegarAVerCarrito()">VER CARRITO</button>
-       </div>
-     `;
-    }
-}
-
-// Esta función reemplaza a la antigua irAWhatsApp
-function añadirAlCarritoDesdeDetalle(nombreProducto) {
-    // 1. Obtener variaciones y precio
-    const capacidad = typeof modeloSeleccionado !== 'undefined' ? modeloSeleccionado : "N/A"; 
-    const color = typeof colorSeleccionado !== 'undefined' ? colorSeleccionado : "Original";
-    
-    const precioElemento = document.getElementById("spanPrecio");
-    const precioTexto = precioElemento ? precioElemento.innerText : "0";
-    const precioLimpio = precioTexto.replace(/[^\d]/g, "");
-
-    // 2. Buscar imagen del producto
-    const productoBase = productos.find(p => p.nombre === nombreProducto);
-
-    // 3. Crear objeto para el carrito
-    const productoParaCarrito = {
-        id: productoBase ? productoBase.id : Date.now(),
-        nombre: nombreProducto,
-        variacion: `${capacidad} / ${color}`, 
-        precio: precioLimpio,
-        imagen: productoBase ? productoBase.imagen : ""
-    };
-
-    // 4. Agregar al carrito internamente
-    // Importante: Asegúrate de que tu función 'agregarAlCarrito' NO tenga 
-    // líneas que abran el panel lateral (como classList.add('activo'))
-    agregarAlCarrito(productoParaCarrito, { 
-        nombre: productoParaCarrito.variacion, 
-        precio: precioLimpio 
-    });
-
-    // 5. CERRAR EL MODAL AUTOMÁTICAMENTE
-    // Usamos la función que ya tienes en tu código para cerrar el detalle
-    cerrarProducto(); 
-
-    // 6. Mostrar notificación de confirmación
-    mostrarNotificacion(`${nombreProducto} añadido al carrito`);
-}
-
-// Función para la notificación (Toast)
-function mostrarNotificacion(mensaje) {
-    const aviso = document.createElement("div");
-    aviso.className = "notificacion-carrito";
-    aviso.innerHTML = `<i class="fas fa-check-circle"></i> ${mensaje}`;
-    document.body.appendChild(aviso);
-
-    setTimeout(() => { aviso.remove(); }, 3000);
-}
-      
-// Función SPA para la vista "Ver Carrito" detallada
-function navegarAVerCarrito() {
-    // Cerramos el carrito lateral de forma segura
-    if (typeof toggleCarritoIzquierdo === 'function') {
-        const carritoLat = document.getElementById("carrito-izquierdo");
-        if (carritoLat && carritoLat.classList.contains("activo")) {
-            toggleCarritoIzquierdo();
-        }
-    }
-
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
-
-    // 1. Ocultar Logo y Vistas
-    const headerLogo = document.querySelector(".header-principal");
-    if(headerLogo) headerLogo.style.display = "none";
-    if(vistaInicio) vistaInicio.style.display = "none";
-    if(vistaProductos) vistaProductos.style.display = "none";
-
-    // 2. Ocultar Categorías y Mapa
-    const barraCat = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
-    if(barraCat) barraCat.style.display = "none";
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "none";
-
-    // 3. Preparar contenedor con MARGEN SUPERIOR
-    contenedorSPA.style.display = "block";
-    contenedorSPA.style.backgroundColor = "#f4f4f4";
-    
-    // Calculamos subtotal de forma segura
-    let subtotalFinal = 0;
-    try {
-        subtotalFinal = (typeof calcularSubtotal === 'function') ? calcularSubtotal() : 0;
-    } catch (e) { console.error("Error al calcular subtotal", e); }
-
-    // Solo mostramos el botón si hay productos en el carrito
-    const tieneProductos = (typeof carrito !== 'undefined' && carrito.length > 0);
-
-    contenedorSPA.innerHTML = `
-        <div style="padding: 40px 15px 15px; max-width: 1100px; margin: 0 auto; text-align: left;">
-            <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display:flex; align-items:center; gap:8px;">
-                <i class="fas fa-arrow-left"></i> VOLVER A LA TIENDA
-            </button>
-        </div>
-
-        <div class="carrito-container-completo" style="max-width: 1100px; margin: 0 auto; padding: 0 15px;">
-            <h1 style="margin-bottom: 20px;">Tu Carrito</h1>
-            
-            <div id="espacio-tabla-carrito"></div>
-
-            ${tieneProductos ? `
-                <div id="checkout-sector-spa" style="background: white; padding: 25px; border-radius: 8px; margin-top: 20px; text-align: right; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 40px;">
-                    <h2 style="margin-bottom: 15px; color: #333;">Total: RD$ ${subtotalFinal.toLocaleString()}</h2>
-                    <button onclick="navegarAFinalizarCompra()" 
-                            class="btn-realizar-compra" 
-                            style="width: auto; padding: 15px 50px; font-size: 18px; cursor: pointer; background-color: #27ae60; color: white; border: none; border-radius: 5px; font-weight: bold;">
-                        PROCEDER AL PAGO (CHECKOUT)
-                    </button>
-                </div>
-            ` : `<p style="text-align:center; padding: 50px;">Tu carrito está vacío actualmente.</p>`}
-        </div>
-    `;
-
-    // 4. Renderizar la tabla
-    const destinoTabla = document.getElementById("espacio-tabla-carrito");
-    if (destinoTabla && typeof renderizarTablaCarrito === 'function') {
-        renderizarTablaCarrito(destinoTabla);
-    }
-    
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function regresarALaTienda() {
-    // 1. Mostrar de nuevo el Logo Header y las vistas
-    const headerLogo = document.querySelector(".header-principal");
-    if(headerLogo) headerLogo.style.display = "block";
-
-    const vistaInicio = document.getElementById("vista-inicio");
-    if(vistaInicio) vistaInicio.style.display = "block";
-
-    // 2. Mostrar categorías y Mapa
-    const barraCat = document.getElementById("menu-categorias");
-    if(barraCat) barraCat.style.display = "block";
-
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "block";
-
-    // 3. Limpiar y ocultar el espacio SPA
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if(contenedorSPA) {
-        contenedorSPA.style.display = "none";
-        contenedorSPA.innerHTML = "";
-    }
-
-    // 4. Resetear URL y navegar al inicio
-    window.location.hash = "#/";
-    router();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-      
-function renderizarTablaCarrito(contenedor) {
-    // Si no le pasas contenedor, que use el de por defecto
-    const target = contenedor || document.getElementById("vista-spa-cliente");
-    
-    if (carrito.length === 0) {
-        target.innerHTML = "<h3 style='text-align:center; padding:50px;'>Tu carrito está vacío</h3>";
-        return;
-    }
-
-    // Renderizamos solo la tabla de productos
-    target.innerHTML = `
-        <div class="tabla-carrito-container" style="background:white; color:#333; padding:20px; border-radius:8px 8px 0 0;">
-            <table class="carrito-tabla-detallada" style="width:100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="border-bottom: 2px solid #eee;">
-                        <th style="text-align:left; padding:10px;">Producto</th>
-                        <th style="text-align:left; padding:10px;">Precio</th>
-                        <th style="text-align:left; padding:10px;">Cantidad</th>
-                        <th style="text-align:left; padding:10px;">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${carrito.map(p => `
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding:15px 10px;">
-                                <div style="display:flex; align-items:center; gap:15px; text-align: left;">
-                                 <img src="${p.imagen}" width="60" style="border-radius:5px; object-fit: cover; flex-shrink: 0;">
-                                 <div style="display: flex; flex-direction: column;">
-                                 <span style="font-weight: bold; line-height: 1.2; font-size: 15px;">${p.nombre}</span>
-                                 <small style="color: #888;">Ref: ${p.id}</small> 
-                               </div>
-                             </div>
-                            </td>
-                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                            <td style="padding:15px 10px;">1</td>
-                            <td style="padding:15px 10px;">RD$ ${parseInt(p.precio).toLocaleString()}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-            <div class="totales-tabla-box">
-               <div class="fila-total"><span>Envío:</span> <span>A Cordinar</span></div>   
-            </div>
-        </div>
-    `;
-}
-      
-function eliminarDelCarrito(index) {
-    carrito.splice(index, 1);
-    localStorage.setItem("carrito_compras", JSON.stringify(carrito));
-    renderizarCarrito();
-    actualizarContadorCarrito();
-}
-
-// Llama a estas funciones al iniciar la página
-window.addEventListener("load", () => {
-    actualizarContadorCarrito();
-    renderizarCarrito();
-});
-
-function toggleCarritoIzquierdo() {
-    try {
-        const carrito = document.getElementById("carrito-izquierdo");
-        if (!carrito) return; // Si no hay carrito, no hace nada y no rompe
-
-        carrito.classList.toggle("activo");
-
-        // Lógica de WhatsApp protegida
-        const btnWhatsapp = document.querySelector(".btn-whatsapp") || 
-                           document.querySelector('[href*="wa.me"]') || 
-                           document.querySelector(".float-whatsapp");
-
-        if (btnWhatsapp) {
-            if (carrito.classList.contains("activo")) {
-                btnWhatsapp.style.opacity = "0";
-                btnWhatsapp.style.pointerEvents = "none";
-            } else {
-                btnWhatsapp.style.opacity = "1";
-                btnWhatsapp.style.pointerEvents = "auto";
-            }
-        }
-    } catch (error) {
-        console.warn("Error en el toggle del carrito, pero la web sigue funcionando.");
-    }
-}
-
-function guardarPedido(){
-
-   let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
-
-   const pedido = {
-      id: Date.now(),
-      fecha: new Date().toISOString(),
-      productos: carrito,
-     total: carrito.reduce((acc, prod) => acc + Number(prod.precio), 0),
-      estado: "pendiente"
-   };
-
-   pedidos.push(pedido);
-
-async function guardarPedidoFirebase(pedido){
-  await addDoc(collection(db, "pedidos"), {
-    ...pedido,
-    fecha: serverTimestamp()
-  });
-}
-}
-      
-// Función para generar un número de rastreo único (Ej: MC-2026-X892)
-function generarNumeroRastreo() {
-    const random = Math.floor(1000 + Math.random() * 9000);
-    return `MC-2026-${random}`;
-}
-      
-function enviarPedidoWhatsApp(tracking) {
-    // ... (tus capturas de nombre, apellido, etc.)
-    const nombre = document.getElementById("ch-nombre").value.trim();
-    const apellido = document.getElementById("ch-apellido").value.trim();
-    const telefono = document.getElementById("ch-telefono").value.trim();
-    const ciudad = document.getElementById("ch-ciudad").value.trim();
-    const direccion = document.getElementById("ch-direccion").value.trim();
-
-    // CAPTURA CORRECTA DE ENVÍO Y PAGO
-    const radioEnvio = document.querySelector('input[name="envio"]:checked');
-    const costoEnvio = radioEnvio ? parseInt(radioEnvio.value) : 0;
-    const totalFinal = calcularSubtotal() + costoEnvio;
-    const metodoEnvioTexto = costoEnvio > 0 ? "Envío a domicilio" : "Retiro en el local";
-
-    // CORRECCIÓN AQUÍ: Capturamos el método de pago por el radio seleccionado
-    const radioPago = document.querySelector('input[name="pago"]:checked');
-    const metodoPagoTexto = (radioPago && radioPago.value === "transferencia") ? "Transferencia Bancaria" : "Efectivo contra entrega";
-
-    const subtotalVenta = calcularSubtotal();
-
-    let listaProductos = carrito.map(p => `- ${p.nombre} (RD$ ${Number(p.precio).toLocaleString()})`).join('\n');
-    let notaTexto = document.getElementById("ch-notas")?.value.trim() || "Sin notas";
-
-    const mensaje = `*📦 NUEVO PEDIDO - MOISES CELULARES*\n` +
-                    `*Rastreo:* ${tracking}\n` +
-                    `--------------------------\n` +
-                    `*CLIENTE:* ${nombre} ${apellido}\n` +
-                    `*TELÉFONO:* ${telefono}\n` +
-                    `*CIUDAD:* ${ciudad}\n` +
-                    `*DIRECCIÓN:* ${direccion}\n` +
-                    `--------------------------\n` +
-                    `*ENVÍO:* ${metodoEnvioTexto}\n` +
-                    `*METODO DE PAGO:* ${metodoPagoTexto}\n` +
-                    `--------------------------\n` +
-                    `*PRODUCTOS:*\n${listaProductos}\n` +
-                    `--------------------------\n` +
-                    `*NOTA DEL PEDIDO:* ${notaTexto}\n` +
-                    `--------------------------\n` +
-                    `*TOTAL A PAGAR:* RD$ ${totalFinal.toLocaleString()}\n` +
-                    `--------------------------\n` +
-                    `_Enviado desde el Checkout de la web._`;
-                         guardarPedido();
-
-   // IMPORTANTE: Guardamos el costo de envío en el objeto de la compra para la factura
-    if (typeof registrarCompraEnPerfil === "function") {
-        registrarCompraEnPerfil(carrito, totalFinal, tracking, costoEnvio);
-    }
-
-    const numWhatsApp = "59891547599";
-    window.open(`https://wa.me/${numWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
-    
-    // 7. Limpieza
-    carrito = [];
-    localStorage.removeItem("carrito_compras");
-    if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
-    if (typeof renderizarCarrito === "function") renderizarCarrito();
-    
-    alert(`✅ ¡Pedido realizado con éxito!. Tu número de rastreo es: ${tracking}`);
-    location.reload();
-}
-      
-function registrarCompraEnPerfil(carritoActual, totalConEnvio, trackingNum, costoEnvio) {
-    const sesion = JSON.parse(localStorage.getItem('sesion_moises'));
-    if (!sesion) return;
-
-    let todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-
-    const nuevaCompra = {
-        usuarioEmail: sesion.email,
-        idOrden: trackingNum,
-        fecha: new Date().toLocaleString(),
-        productos: [...carritoActual],
-        total: totalConEnvio,
-        envio: costoEnvio // <--- GUARDAMOS EL COSTO AQUÍ
-    };
-
-    todasLasCompras.unshift(nuevaCompra);
-    localStorage.setItem('db_compras_moises', JSON.stringify(todasLasCompras));
-}
-      
-function crearContenedorSPA() {
-    const div = document.createElement("div");
-    div.id = "vista-spa-cliente";
-    // Insertar antes del footer
-    document.querySelector("footer").before(div);
-    return div;
-}
-</script> 
-
-  <script>
-function alternarVisibilidadTienda(mostrar) {
-    const estado = mostrar ? "block" : "none";
-
-    // 1. Ocultar el Header Principal (Donde está el logo grande)
-    const headerLogo = document.querySelector(".header-principal"); 
-    if(headerLogo) headerLogo.style.display = estado;
-
-    // 2. Ocultar Barra de Categorías
-    const barraCategorias = document.getElementById("menu-categorias");
-    if(barraCategorias) barraCategorias.style.display = estado;
-    
-    // 3. Ocultar Mapa y Contacto
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = estado;
-
-    // 4. Ocultar Vistas de productos
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-    if(vistaInicio) vistaInicio.style.display = estado;
-    if(vistaProductos) vistaProductos.style.display = estado;
-}
-</script>
 
   <script>
 const imgModal = document.getElementById("img-modal");
@@ -976,26 +263,14 @@ imgModal.addEventListener("click", e=>{
 
 <script>
 
+const modalProducto = document.getElementById("modal-producto");
+
 /* --- FUNCIONES DEL MODAL (SPA) --- */
 
 function abrirProducto(id) {
-    // Limpia la barra al entrar al detalle
-    const buscador = document.getElementById("inputBuscador");
-    if (buscador) {
-        buscador.value = "";
-        buscador.blur(); // Cierra el teclado en móviles
-    }
-
-    // ... (aquí sigue el resto de tu código para abrir el modal)
     const p = productos.find(prod => prod.id == id);
     if (!p) return;
 
-    // Valores por defecto al abrir
-    precioActual = p.precio;
-    modeloSeleccionado = p.modelos ? p.modelos[0].nombre : "Estándar";
-    colorSeleccionado = "No seleccionado";
-    imagenSeleccionada = window.location.origin + "/" + p.imagen; // Captura la URL completa de la imagen
-    
     const modal = document.getElementById("modalProducto");
     const contenedor = document.getElementById("modalContenido");
 
@@ -1006,7 +281,7 @@ function abrirProducto(id) {
 
    // ... dentro de abrirProducto ...
     contenedor.innerHTML = `
-        <button class="cerrar-modal" onclick="cerrarProducto()">✕</button>
+        <button class="cerrar-modal" onclick="cerrarProducto()">✕ Volver</button>
         <div class="spa-layout">
             <div class="spa-header">
                 <img src="${p.imagen}" id="imgPrincipal" class="modal-img">
@@ -1023,9 +298,9 @@ function abrirProducto(id) {
                 <div class="modal-precio">RD$ <span id="spanPrecio">${parseInt(precioActual).toLocaleString()}</span></div>
             </div>
             <div class="contenedor-accion-fija">
-               <button class="btn-comprar-ahora" onclick="añadirAlCarritoDesdeDetalle('${p.nombre}')">
-        COMPRAR AHORA
-    </button>
+                <button class="btn-comprar-spa" onclick="irAWhatsApp('${p.nombre}')">
+                    Comprar ahora
+                </button>
             </div>
         </div>
    `;
@@ -1052,11 +327,7 @@ function renderOpciones(p) {
         html += `<p class="label-opcion">Color:</p><div class="colores-grid">`;
         p.colores.forEach(c => {
             if (typeof c === 'object') {
-                html += `<div class="color-opcion" 
-                  data-img="${c.imagen}" 
-                  data-name="${c.nombre}" 
-                  style="background:${c.codigo}">
-             </div>`;
+                html += `<div class="color-opcion" data-img="${c.imagen}" data-name="${c.codigo}" style="background:${c.codigo}"></div>`;
             } else {
                 html += `<div class="modelo-opcion" data-name="${c}">${c}</div>`;
             }
@@ -1074,36 +345,32 @@ function activarOpcionesProducto() {
     areaOpciones.onclick = function(e) {
         const target = e.target;
 
-       // --- Lógica de MODELO (Capacidad) ---
+        // Si hacemos clic en un MODELO (Capacidad)
         if (target.classList.contains('modelo-opcion') && target.dataset.precio) {
             const hermanos = target.parentElement.querySelectorAll('.modelo-opcion');
             hermanos.forEach(h => h.classList.remove('activo'));
             target.classList.add('activo');
 
+            // Actualizar precio
             precioActual = target.dataset.precio;
             modeloSeleccionado = target.dataset.nombre;
             document.getElementById("spanPrecio").innerText = parseInt(precioActual).toLocaleString();
         }
-        
-      // --- Lógica de COLOR ---
+
+        // Si hacemos clic en un COLOR
         if (target.classList.contains('color-opcion')) {
             const hermanos = target.parentElement.querySelectorAll('.color-opcion');
             hermanos.forEach(h => h.classList.remove('activo'));
             target.classList.add('activo');
 
-            // Guardamos el nombre (ej: "Azul") que viene del dataset
-            colorSeleccionado = target.dataset.name; 
-
+            // Actualizar imagen principal
             if (target.dataset.img) {
-                const nuevaImg = target.dataset.img;
-                document.getElementById("imgPrincipal").src = nuevaImg;
-                // Actualizamos la imagen para WhatsApp (URL completa)
-                imagenSeleccionada = window.location.origin + "/" + nuevaImg;
+                document.getElementById("imgPrincipal").src = target.dataset.img;
             }
+            colorSeleccionado = target.dataset.name;
         }
-    }; // Cerramos el onclick correctamente
-} // Cerramos la función activarOpcionesProducto correctamente
-    
+    };
+}
 function cerrarProducto(){
   document.getElementById("modalProducto").style.display = "none";
   document.body.classList.remove("no-scroll");
@@ -1138,45 +405,6 @@ function toggleDescripcion() {
  
 </script>
 
-   <script>  
-// Variable para rastrear el estado del menú
-let menuAbierto = false;
-
-function toggleMenuProductos() {
-    const menu = document.getElementById("menu-categorias");
-    const overlay = document.getElementById("menu-overlay");
-    const icono = document.getElementById("btn-menu-trigger");
-
-    // Alternamos las clases
-    const estaActivo = menu.classList.toggle("activo");
-    overlay.classList.toggle("activo");
-
-    // Cambiamos el icono según el estado
-    if (estaActivo) {
-        icono.innerText = "✕"; // Transformar a X
-        document.body.classList.add("no-scroll"); // Bloquear scroll fondo
-    } else {
-        icono.innerText = "☰"; // Volver a hamburguesa
-        document.body.classList.remove("no-scroll");
-    }
-}
-
-function toggleAcordeon(elemento) {
-    const itemActual = elemento.parentElement;
-    const todosLosItems = document.querySelectorAll('.acordeon-item');
-
-    // Cierra cualquier otro que esté abierto
-    todosLosItems.forEach(item => {
-        if (item !== itemActual) {
-            item.classList.remove('activo');
-        }
-    });
-
-    // Abre o cierra el que tocaste
-    itemActual.classList.toggle('activo');
-}
-       </script>
-    
      <script>
 const modalProducto = document.getElementById("modalProducto");
 
@@ -1313,22 +541,24 @@ document.querySelectorAll(".categoria").forEach(btn => {
 /* ===============================
    VARIABLES GLOBALES
 =================================*/
-let modeloSeleccionado = "";
-let colorSeleccionado = "";
-let precioActual = "";
-let imagenSeleccionada = ""; // Nueva variable para la foto
-let productos = JSON.parse(localStorage.getItem("productos"));
+let productos = [];
+let modeloSeleccionado = null;
+let colorSeleccionado = null;
+let precioActual = 0;
 
-if (productos && productos.length > 0) {
-   iniciarTienda();   // usa los productos guardados
-} else {
-  fetch("productos.json")
-.then(res => res.json())
-.then(data => {
-   productos = data;
-   mostrarProductos(); // o la función que carga tus productos
-});
-}
+/* ===============================
+   CARGAR JSON
+=================================*/
+
+fetch("productos.json")
+  .then(res => res.json())
+  .then(data => {
+    productos = data;
+    console.log("✅ Productos cargados");
+    router(); // ejecutar router cuando ya cargó el JSON
+  })
+
+
 /* ===============================
    NAVEGACIÓN SPA
 =================================*/
@@ -1370,50 +600,37 @@ window.addEventListener("hashchange", router);
 =================================*/
 
 function router() {
+
   const hash = window.location.hash || '#/';
   console.log("Router ejecutado", hash);
 
   const vistaInicio = document.getElementById("vista-inicio");
   const vistaProductos = document.getElementById("vista-productos");
-  const contenedorSPA = document.getElementById("vista-spa-cliente");
 
-  // --- 1. LIMPIEZA PREVENTIVA AL NAVEGAR ---
-  // Cerramos menús laterales
-  const menu = document.getElementById("menu-categorias");
-  const overlay = document.getElementById("menu-overlay");
-  if (menu) menu.classList.remove("activo");
-  if (overlay) overlay.classList.remove("activo");
-
-  // --- 2. GESTIÓN DE VISTA SPA (Favoritos, Carrito, Checkout) ---
-  // Si volvemos al inicio o categorías, nos aseguramos de apagar el contenedor SPA
-  // para que no deje el hueco gris antes del footer.
-  if (hash === '#/' || hash.startsWith("#/productos/")) {
-    if (contenedorSPA) {
-      contenedorSPA.style.display = "none";
-      contenedorSPA.innerHTML = "";
-    }
-    // Restauramos visibilidad de elementos principales por si venimos de Checkout
-    const headerLogo = document.querySelector(".header-principal");
-    if(headerLogo) headerLogo.style.display = "block";
+  // --- ESTO CIERRA EL MENÚ AL NAVEGAR ---
+    const menu = document.getElementById("menu-categorias");
+    const overlay = document.getElementById("menu-overlay");
+    if (menu) menu.classList.remove("activo");
+    if (overlay) overlay.classList.remove("activo");
+    // --------------------------------------
     
-    const mapaFooter = document.querySelector(".mapa-contacto-footer");
-    if(mapaFooter) mapaFooter.style.display = "block";
-    
-    if (menu) menu.style.display = "block";
-  }
-
   // ===============================
   // SUBCATEGORÍAS
   // ===============================
   if (hash.startsWith("#/productos/")) {
-    const subcategoria = decodeURIComponent(hash.split("#/productos/")[1]);
+
+    const subcategoria = decodeURIComponent(
+      hash.split("#/productos/")[1]
+    );
 
     if (vistaInicio) vistaInicio.style.display = "none";
     if (vistaProductos) vistaProductos.style.display = "block";
 
     mostrarProductosPorSubcategoria(subcategoria);
 
+     // 🔥 SOLO aquí hacemos scroll
     window.scrollTo({ top: 0, behavior: "smooth" });
+      
     return;
   }
 
@@ -1421,42 +638,29 @@ function router() {
   // PRODUCTO INDIVIDUAL
   // ===============================
   if (hash.startsWith("#/producto/")) {
+
     const slug = hash.split("#/producto/")[1];
     const producto = productos.find(p => p.slug === slug);
 
     if (producto) {
-      abrirProducto(producto.id);
+     abrirProducto(producto.id);
     }
-    return;
-  }
 
-  // ===============================
-  // FAVORITOS (Si usas hash para favoritos)
-  // ===============================
-  if (hash === "#/favoritos") {
-    if (vistaInicio) vistaInicio.style.display = "none";
-    if (vistaProductos) vistaProductos.style.display = "none";
-    if (contenedorSPA) {
-        contenedorSPA.style.display = "block";
-        // Aquí llamarías a tu función de renderizar favoritos
-        // renderizarFavoritos(contenedorSPA); 
-    }
+   
+    // ❌ AQUÍ NO HACEMOS SCROLL
     return;
   }
 
   // ===============================
   // INICIO
   // ===============================
-  if (hash === '#/') {
-    if (vistaInicio) vistaInicio.style.display = "block";
-    if (vistaProductos) vistaProductos.style.display = "none";
+  if (vistaInicio) vistaInicio.style.display = "block";
+  if (vistaProductos) vistaProductos.style.display = "none";
 
-    // Limpiamos el contenedor de búsqueda/productos si es necesario
-    const prodsDiv = document.getElementById("productos");
-    if (prodsDiv) prodsDiv.innerHTML = "";
+  document.getElementById("productos").innerHTML = "";
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+   // 🔥 SOLO aquí hacemos scroll
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 /* ===============================
@@ -1486,31 +690,29 @@ function mostrarProductosPorSubcategoria(subcategoria) {
   // 🔥 Si tiene modelos
   if (p.modelos && p.modelos.length > 0) {
 
-    // ... dentro del if (p.modelos && p.modelos.length > 0)
-const modeloInicial = p.modelos[0];
+    const modeloInicial = p.modelos[0];
 
-div.innerHTML = `
-    <div class="card-container">
-        <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
-           onclick="toggleFavorito(${p.id}, event)"></i>
-        <img src="${p.imagen}" alt="${p.nombre}" onclick="navegar('/producto/${p.slug}')">
-        <h3>${p.nombre}</h3>
-        <p class="descripcion">Disponible en varios modelos</p>
+    div.innerHTML = `
+      <img src="${p.imagen}" alt="${p.nombre}"
+           onclick="navegar('/producto/${p.slug}')">
+      <h3>${p.nombre}</h3>
+      <p class="descripcion">Disponible en varios modelos</p>
 
-        <button class="btn-modelo">Elegir modelo ▼</button>
+      <button class="btn-modelo">Elegir modelo ▼</button>
 
-        <div class="modelos-dropdown" style="display:none;">
-            ${p.modelos.map(m => `
-                <div class="modelo-opcion" data-precio="${m.precio}">
-                    ${m.nombre}
-                </div>
-            `).join("")}
-        </div>
+      <div class="modelos-dropdown" style="display:none;">
+        ${p.modelos.map(m => `
+          <div class="modelo-opcion"
+               data-precio="${m.precio}">
+            ${m.nombre}
+          </div>
+        `).join("")}
+      </div>
 
-        <p class="precio">$${modeloInicial.precio}</p>
-        <button class="btn-comprar">Comprar</button>
-    </div>
-`;
+      <p class="precio">$${modeloInicial.precio}</p>
+      <button class="btn-comprar">Comprar</button>
+    `;
+
     const btnModelo = div.querySelector(".btn-modelo");
     const dropdown = div.querySelector(".modelos-dropdown");
     const precioElemento = div.querySelector(".precio");
@@ -1553,18 +755,15 @@ btnComprar.addEventListener("click", () => {
 
   } else {
 
-   // ... dentro del else (Si NO tiene modelos)
-div.innerHTML = `
-    <div class="card-container">
-        <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
-           onclick="toggleFavorito(${p.id}, event)"></i>
-        <img src="${p.imagen}" alt="${p.nombre}" onclick="navegar('/producto/${p.slug}')">
-        <h3>${p.nombre}</h3>
-        <p class="descripcion">Producto disponible</p>
-        <p class="precio">$${p.precio}</p>
-        <button class="btn-comprar">Comprar</button>
-    </div>
-`;
+    // 🔥 Si NO tiene modelos
+   div.innerHTML = `
+    <img src="${p.imagen}" alt="${p.nombre}"
+         onclick="navegar('/producto/${p.slug}')">
+    <h3>${p.nombre}</h3>
+    <p class="descripcion">Producto disponible</p>
+    <p class="precio">$${p.precio}</p>
+    <button class="btn-comprar">Comprar</button>
+  `;
 
 div.querySelector(".btn-comprar").addEventListener("click", () => {
   agregarAlCarrito(p);
@@ -1577,209 +776,299 @@ div.querySelector(".btn-comprar").addEventListener("click", () => {
 
 </script>
 
-     <script>
-function buscarEnTiempoReal() {
-    const texto = document.getElementById("inputBuscador").value.toLowerCase().trim();
-    const vistaInicio = document.getElementById("vista-inicio");
-    const vistaProductos = document.getElementById("vista-productos");
-    const contenedor = document.getElementById("productos"); // El grid de 2 columnas
+    <script>
+function animarAgregar(btn) {
 
-    // Si el usuario escribe algo
-    if (texto.length > 0) {
-        // Switch de vistas SPA
-        if (vistaInicio) vistaInicio.style.display = "none";
-        if (vistaProductos) vistaProductos.style.display = "block";
+  const card = btn.closest(".producto-card");
+  const img = card.querySelector("img");
+  const carrito = document.getElementById("icono-carrito");
 
-        // Filtrar en el JSON
-        const resultados = productos.filter(p => 
-            p.nombre.toLowerCase().includes(texto) || 
-            p.subcategoria.toLowerCase().includes(texto)
-        );
+  if (!img || !carrito) return;
 
-        // Renderizar los que coincidan
-        renderizarListaFiltrada(resultados);
-    } else {
-        // Si borra el texto, regresamos al estado inicial (Router)
-        router(); 
-    }
+  // efecto pop
+  card.classList.add("agregado");
+  setTimeout(() => card.classList.remove("agregado"), 350);
+
+  // clonar imagen
+  const clon = img.cloneNode(true);
+  const rectImg = img.getBoundingClientRect();
+  const rectCarrito = carrito.getBoundingClientRect();
+
+  clon.classList.add("img-voladora");
+
+  clon.style.top = rectImg.top + "px";
+  clon.style.left = rectImg.left + "px";
+  clon.style.width = rectImg.width + "px";
+
+  document.body.appendChild(clon);
+
+  // animación vuelo
+  requestAnimationFrame(() => {
+    clon.style.transform = `translate(${rectCarrito.left - rectImg.left}px,
+                                      ${rectCarrito.top - rectImg.top}px)
+                            scale(.2)`;
+    clon.style.opacity = "0.5";
+  });
+
+  setTimeout(() => {
+    clon.remove();
+    carrito.classList.add("carrito-bounce");
+    setTimeout(() => carrito.classList.remove("carrito-bounce"), 400);
+  }, 700);
 }
 
-function renderizarListaFiltrada(lista) {
-    const contenedor = document.getElementById("productos");
-    contenedor.innerHTML = ""; // Limpiar grid
+    </script>
 
-    if (lista.length === 0) {
-        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: white;">No se encontraron resultados.</p>`;
-        return;
-    }
 
-   lista.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "producto-card";
-    div.innerHTML = `
-        <div class="card-container">
-            <i class="fas fa-heart btn-favorito-corazon ${favoritos.some(f => f.id === p.id) ? 'activo' : ''}" 
-               onclick="toggleFavorito(${p.id}, event)"></i>
-            <img src="${p.imagen}" onclick="location.hash='#/producto/${p.slug}'">
-            <h3>${p.nombre}</h3>
-            <p class="precio">RD$ ${parseInt(p.precio).toLocaleString()}</p>
-            <button class="btn-comprar" onclick="location.hash='#/producto/${p.slug}'">Ver Detalles</button>
-        </div>
-    `;
-    contenedor.appendChild(div);
-});
+<script>
+function animarCarrito() {
+  const icono = document.querySelector('[title="Carrito"]');
+  icono.classList.add("shake");
+
+  setTimeout(() => {
+    icono.classList.remove("shake");
+  }, 400);
 }
     </script>
 
-     <script>
-function navegarAFinalizarCompra() {
-    // Si el carrito lateral está abierto, lo cerramos
-    const carritoLateral = document.getElementById("carrito-izquierdo");
-    if (carritoLateral && carritoLateral.classList.contains("activo")) {
-        toggleCarritoIzquierdo(); 
-    }
-    // 1. Manejo de Vistas SPA
-    document.getElementById("vista-inicio").style.display = "none";
-    document.getElementById("vista-productos").style.display = "none";
-    
-    // 2. Ocultar Barra de Categorías y Footer (Lo que marcaste en verde)
-    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
-    if(barraCategorias) barraCategorias.style.display = "none";
-    
-    const mapaContacto = document.querySelector(".mapa-contacto-footer");
-    if(mapaContacto) mapaContacto.style.display = "none";
+<script>
+function actualizarIconoCarrito() {
+  const icono = document.getElementById("icono-carrito");
+  if (!icono) return;
 
-    // 3. Renderizar el Checkout
-    const contenedorSPA = document.getElementById("vista-spa-cliente") || crearContenedorSPA();
-    contenedorSPA.style.display = "block";
-    contenedorSPA.style.backgroundColor = "#f4f4f4";
+  const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
 
-    const trackingNum = generarNumeroRastreo();
-    const subtotal = calcularSubtotal();
+  // eliminar contador anterior
+  let badge = icono.querySelector(".carrito-contador");
+  if (badge) badge.remove();
 
-    contenedorSPA.innerHTML = `
-       <div style="padding: 40px 15px 15px; width: 100%; max-width: 1100px; margin: 0 auto;">
-        <button onclick="regresarALaTienda()" style="background:none; border:none; color:#3498db; cursor:pointer; font-weight:bold; font-size:16px; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
-        </button>
-    </div>
-
-        <div class="checkout-container">
-            <h1 class="checkout-titulo" style="text-align: center; margin-bottom: 30px;">Finalizar Pedido</h1>
-           
-            <div class="checkout-grid">
-                <div class="checkout-col">
-                    <div class="checkout-card">
-                        <h3>Detalles de Facturación</h3>
-                        <div class="form-grid">
-                            <input type="text" id="ch-nombre" placeholder="Nombre *">
-                            <input type="text" id="ch-apellido" placeholder="Apellido *">
-                            <input type="text" id="ch-cedula" placeholder="Documento Identidad *">
-                            <input type="text" id="ch-telefono" placeholder="Teléfono *">
-                            <input type="text" id="ch-correo" placeholder="Correo *">
-                            <input type="text" id="ch-ciudad" placeholder="Ciudad / Localidad *">
-                            <textarea id="ch-direccion" placeholder="Dirección Completa *" rows="3"></textarea>
-                            <textarea id="ch-notas" placeholder="Instrucciones especiales..."></textarea>
-                        </div>
-                    </div>                        
-                </div>
-
-                <div class="checkout-col">
-                    <div class="checkout-card">
-                        <h3>Tu Pedido</h3>
-                        <div class="tracking-box">
-                            <span>Número de Rastreo:</span>
-                            <strong id="num-tracking-final">${trackingNum}</strong>
-                        </div>
-                        
-                        <div class="resumen-pedido">
-                        <div class="resumen-fila"><span>Subtotal</span> <span>RD$ ${subtotal.toLocaleString()}</span></div>
-                        <div class="resumen-fila"><span>Envío</span> <span id="resumen-envio-texto">RD$ 50</span></div>
-                        <div class="resumen-fila total"><span>Total</span> <span id="resumen-total-texto">RD$ ${(subtotal + 50).toLocaleString()}</span></div>
-                        </div>
-
-                <div class="metodo-envio-container" style="margin-bottom: 20px; text-align: center;">
-                <h4>Método de Envio</h4>
-                  <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Envío</p>
-    
-                      <label style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                      <input type="radio" name="envio" value="50" onchange="actualizarResumenFactura()" checked> 
-                        <span style="color: white; margin-center: 10px;">Envío a domicilio (RD$ 50)</span>
-                    </label>
-
-                       <label style="display: block; background: #222; padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid #333;">
-                     <input type="radio" name="envio" value="0" onchange="actualizarResumenFactura()"> 
-                    <span style="color: white; margin-center: 10px;">Retiro en el local (Gratis)</span>
-                   </label>
-                   </div>
-
-                        <div class="metodo-pago" style="margin-top:20px; text-align:center; border-top:1px solid #333; padding-top:15px;">
-                         <h4>Método de Pago</h4>
-                             <p style="font-weight: bold; margin-bottom: 10px; color: white;">Método de Pago</p>
-                            
-                           <label onclick="toggleInfoBancaria(false)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                          <input type="radio" name="pago" value="efectivo" checked> 
-                        <span style="color: white; margin-left: 10px;">Efectivo contra entrega</span>
-                    </label>
-
-                         <label onclick="toggleInfoBancaria(true)" style="display: block; background: #222; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid #333;">
-                        <input type="radio" name="pago" value="transferencia"> 
-                       <span style="color: white; margin-left: 10px;">Transferencia Bancaria</span>
-                     </label>
-
-                        <div id="info-bancaria" style="display:none; background:#1a1a1a; border:1px solid #007bff; padding:15px; border-radius:8px; margin-top:10px; font-size:13px; color:#ddd; line-height:1.5; animation: fadeIn 0.4s;">
-                        <i class="fas fa-info-circle" style="color:#007bff; margin-right:5px;"></i>
-                         Realiza tu pago directamente en nuestra cuenta bancaria. Por favor, usa el número de <b>Rastreo del pedido</b> como referencia de pago. Tu pedido no se procesará hasta que se haya recibido el importe en nuestra cuenta.
-                       </div>
-                    </div>
-
-                        <button class="btn-realizar-compra" onclick="enviarPedidoWhatsApp('${trackingNum}')">
-                            FINALIZAR LA COMPRA
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    // Después de renderizar el HTML en navegarAFinalizarCompra:
-const u = SistemaMoisesAuth.sesionActiva;
-if(u) {
-    document.getElementById('ch-nombre').value = u.nombre || '';
-    document.getElementById('ch-apellido').value = u.apellidos || '';
-    document.getElementById('ch-documento').value = u.documento || '';
-    document.getElementById('ch-telefono').value = u.celular || '';
-    document.getElementById('ch-email').value = u.email || '';
-    document.getElementById('ch-ciudad').value = u.ciudad || '';
-    document.getElementById('ch-direccion').value = u.dir || '';
+  if (total > 0) {
+    badge = document.createElement("span");
+    badge.className = "carrito-contador";
+    badge.textContent = total;
+    icono.appendChild(badge);
   }
 }
-         
-function regresarALaTienda() {
-    // 1. Mostrar de nuevo la tienda
-    document.getElementById("vista-inicio").style.display = "block";
-    
-    // 2. Encender barra de categorías
-    const barraCategorias = document.getElementById("menu-categorias") || document.querySelector(".barra-categorias");
-    if(barraCategorias) barraCategorias.style.display = "block";
-    
-    // 3. Encender el mapa y los datos que acabamos de agrupar
-    const infoFooter = document.querySelector(".mapa-contacto-footer");
-    if(infoFooter) infoFooter.style.display = "block";
 
-    // 4. Limpiar el checkout
-    const contenedorSPA = document.getElementById("vista-spa-cliente");
-    if(contenedorSPA) {
-        contenedorSPA.style.display = "none";
-        contenedorSPA.innerHTML = "";
+ </script>
+    
+    
+<script>
+// ===============================
+// ABRIR / CERRAR CATEGORIAS
+// ===============================
+document.addEventListener("click", function(e) {
+
+  const categoriaBtn = e.target.closest(".categoria");
+
+  if (categoriaBtn) {
+
+    const subcategorias = categoriaBtn.nextElementSibling;
+
+    if (subcategorias && subcategorias.classList.contains("subcategorias")) {
+      subcategorias.classList.toggle("activa");
     }
 
-    window.location.hash = "#/";
-    router();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+});
+</script>
+
+<script>
+document.addEventListener("touchstart", function(e) {
+ const producto = e.target.closest(".producto-card");
+  if (!producto) return;
+
+  producto.classList.add("touch-activo");
+
+  setTimeout(() => {
+    producto.classList.remove("touch-activo");
+  }, 150);
+});
+</script>
+
+<script>
+const panel = document.getElementById("panel-lateral");
+const contenidoPanel = document.getElementById("panel-contenido");
+
+function abrirPanel(html){
+  contenidoPanel.innerHTML = html;
+  panel.classList.add("activo");
+}
+
+function cerrarPanel(){
+  panel.classList.remove("activo");
+}
+
+// cerrar tocando fuera
+panel.addEventListener("click", e=>{
+  if(e.target === panel) cerrarPanel();
+});
+
+// BOTONES NAV
+document.getElementById("btn-cuenta").onclick = () => {
+  abrirPanel(`
+    <h2>Mi Cuenta</h2>
+    <p>Inicia sesión para ver tus pedidos.</p>
+    <button>Iniciar sesión</button>
+  `);
+};
+
+document.getElementById("btn-carrito").onclick = () => {
+  abrirPanel(`
+    <h2>🛒 Carrito</h2>
+    <p>Tu carrito está vacío.</p>
+  `);
+};
+
+document.getElementById("btn-favoritos").onclick = () => {
+  abrirPanel(`
+    <h2>❤️ Favoritos</h2>
+    <p>No tienes productos guardados.</p>
+  `);
+};
+</script>
+
+   </div>
+
+<script>
+    let carrito = [];
+
+  function agregarAlCarrito(id){
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  const clave = id + "-" + (modeloSeleccionado || "base");
+
+  const item = carrito.find(p => p.clave === clave);
+
+  if(item){
+    item.cantidad++;
+  } else {
+    carrito.push({
+      id: id,
+      modelo: modeloSeleccionado,
+      precio: precioActual,
+      color: colorSeleccionado,
+      cantidad: 1,
+      clave: clave
+    });
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarContadorCarrito();
+}
+    
+</script>
+
+ <script>   
+const modalCarrito = document.getElementById("modal-carrito");
+const carritoBtn = document.querySelector('[title="Carrito"]');
+
+carritoBtn.addEventListener("click", () => {
+  renderizarCarrito();
+  modalCarrito.style.display = "flex";
+});
+
+document.getElementById("cerrar-carrito").onclick = () => {
+  modalCarrito.style.display = "none";
+};
+
+function renderizarCarrito() {
+
+  const contenedor = document.getElementById("carrito-items");
+  const totalElemento = document.getElementById("carrito-total-precio");
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  contenedor.innerHTML = "";
+
+  let total = 0;
+
+  carrito.forEach((item, index) => {
+
+    total += item.precio * item.cantidad;
+
+    const div = document.createElement("div");
+    div.className = "carrito-item";
+
+    div.innerHTML = `
+      <span>${item.nombre}</span>
+      <span>${item.cantidad} x $${item.precio}</span>
+    `;
+
+    contenedor.appendChild(div);
+  });
+
+  totalElemento.textContent = "$" + total;
+}
+     
+function eliminarDelCarrito(index) {
+    
+ const carritoLS = JSON.parse(localStorage.getItem("carrito")) || carrito;
+
+  carrito.splice(index, 1);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  renderizarCarrito();
+  actualizarContadorCarrito();
+}
+
+document.getElementById("vaciar-carrito").onclick = () => {
+  localStorage.removeItem("carrito");
+  renderizarCarrito();
+  actualizarContadorCarrito();
+};
+
+</script>
+
+ <script> 
+const modalCarrito = document.getElementById("modal-carrito");
+
+// abrir modal
+function abrirCarrito(){
+  document.getElementById("modal-carrito").style.display = "flex";
+  renderizarCarrito();
+  document.body.classList.add("no-scroll");
+}
+
+// cerrar modal
+function cerrarCarrito() {
+  modalCarrito.style.display = "none";
+  document.body.classList.remove("no-scroll");
+}
+
+// botón cerrar
+document.querySelector(".cerrar-carrito")
+  .addEventListener("click", cerrarCarrito);
+
+// cerrar tocando fuera
+modalCarrito.addEventListener("click", e => {
+  if (e.target === modalCarrito) cerrarCarrito();
+});
+</script>
+
+ <script> 
+function irAWhatsApp(nombreProducto) {
+    // Si no se seleccionó nada, usamos los valores por defecto que definimos en abrirProducto
+    const capacidad = modeloSeleccionado || "64GB"; 
+    const color = colorSeleccionado || "el de la imagen";
+    const precio = document.getElementById("spanPrecio").innerText;
+
+    // Mensaje personalizado para el vendedor
+    const mensaje = `Hola Moises Celulares, me interesa comprar el *${nombreProducto}*.\n\n` +
+                    `• *Capacidad:* ${capacidad}\n` +
+                    `• *Color:* ${color}\n` +
+                    `• *Precio:* RD$ ${precio}\n\n` +
+                    `¿Está disponible?`;
+
+    const telefono = "18292017321"; // Tu número
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+    
+    window.open(url, '_blank');
 }
 </script>
-      
+    
 <div id="panel-lateral" class="panel-lateral">
   <div class="panel-contenido" id="panel-contenido"></div>
 </div>
@@ -1804,567 +1093,11 @@ document.getElementById("modalProducto").addEventListener("click", e=>{
   }
 });
 </script>
-
-    <script>
-// --- ESCUDO DE AUTENTICACIÓN MOISÉS CELULARES V3 ---
-const SistemaMoisesAuth = {
-    usuariosDB: JSON.parse(localStorage.getItem('usuarios_registrados')) || [],
-    sesionActiva: JSON.parse(localStorage.getItem('sesion_moises')) || null,
-
-    init: function() {
-        const btnPerfil = document.getElementById('btn-perfil');
-        if(btnPerfil) {
-            btnPerfil.onclick = (e) => { e.preventDefault(); this.abrirInterfaz(); };
-        }
-        // Si hay sesión recordada, actualizar el icono
-        if(this.sesionActiva) {
-            if(btnPerfil) btnPerfil.innerHTML = '<i class="fas fa-user-check" style="color:#007bff;"></i>';
-        }
-    },
-
-    abrirInterfaz: function() {
-        if(this.sesionActiva) this.renderMenuFlotante();
-        else { this.renderLogin(); mostrarModalLogin(); }
-    },
-
-    // --- LOGIN ---
-    renderLogin: function() {
-        const contenedor = document.querySelector('.login-card');
-        contenedor.innerHTML = `
-            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
-            <img src="./images/Logo3Expand.png" class="login-logo" alt="Logo">
-            <p style="color:white; margin-bottom:10px;"><b>MI CUENTA</b></p>
-            <input type="text" id="log-email" placeholder="Correo electrónico">
-            <input type="password" id="log-pass" placeholder="Contraseña">
-            <div style="text-align:left; font-size:12px; color:#888; margin:10px 0;">
-                <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
-            </div>
-            <button class="btn-comprar" style="width:100%" onclick="SistemaMoisesAuth.intentarLogin()">INGRESAR</button>
-            <div style="margin-top:15px; font-size:12px;">
-                <a href="javascript:void(0)" onclick="SistemaMoisesAuth.renderRegistro()" style="color:#007bff; display:block; margin-bottom:5px;">¿No tienes cuenta? Crea una aquí</a>
-                <a href="javascript:void(0)" style="color:#888;">¿Olvidaste tu contraseña?</a>
-            </div>
-        `;
-    },
-
-    // --- REGISTRO COMPLETO ---
-    renderRegistro: function() {
-        const contenedor = document.querySelector('.login-card');
-        contenedor.innerHTML = `
-            <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px; color:black;">✕</button>
-            <h2 style="color:#007bff; margin-bottom:5px;">NUEVO USUARIO</h2>
-            <p style="color:#ff4757; font-size:11px; margin-bottom:15px;">* Requerido</p>
-            
-            <div style="height:350px; overflow-y:auto; padding-right:10px; text-align:left; margin-bottom:15px;">
-                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-bottom:10px;">Datos De Registro</p>
-                <input type="text" id="reg-nom" placeholder="* Nombre" class="auth-input">
-                <input type="text" id="reg-ape" placeholder="* Apellidos" class="auth-input">
-                <input type="text" id="reg-tel" placeholder="Telefono" class="auth-input">
-                <input type="text" id="reg-cel" placeholder="* Celular" class="auth-input">
-                
-                <select id="reg-pai" class="auth-input">
-                   <option value="">* Seleccione País</option>
-                    <option value="República Dominicana">República Dominicana</option>
-                    <option value="Estados Unidos">Estados Unidos</option>
-                    <option value="Puerto Rico">Puerto Rico</option>
-                </select>
-                <input type="text" id="reg-ciu" placeholder="* Ciudad" class="auth-input">
-                <input type="text" id="reg-mun" placeholder="* Municipio" class="auth-input">
-                <input type="text" id="reg-dir" placeholder="* Direccion" class="auth-input">
-
-                <p style="color:#007bff; font-weight:bold; border-bottom:1px solid #333; margin-top:15px; margin-bottom:10px; font-size:13px;">Datos de usuario</p>
-                <input type="email" id="reg-ema" placeholder="* E-mail" class="auth-input">
-                <input type="email" id="reg-con-ema" placeholder="* Confirmar e-mail" class="auth-input">
-                <input type="password" id="reg-pas" placeholder="* Contraseña" class="auth-input">
-                <input type="password" id="reg-con-pas" placeholder="* Confirmar Contraseña" class="auth-input">
-
-                <p style="color:#007bff; margin-top:10px;">Política de Privacidad</p>
-                <div class="auth-scroll-box">
-                    <strong>Política de privacidad</strong><br>
-                   En este sitio web, respetamos su información personal y en vista de cumplir con las políticas de seguridad respectivas concernientes a todo sitio web, que deberían ser obligatorias, informo a ustedes lo siguiente.
-Privacidad de los datos personales:
-Sus datos personales le corresponden solo a usted y este sitio web es responsable de no revelar ninguna clase de información que le pertenezca (como email, números de ip, etc.), salvo su expresa autorización o fuerzas de naturaleza mayor de tipo legal que lo involucren, como hackeos o suplantaciones.
-Responsabilidad de las opiniones vertidas:
-Las publicaciones a modo de artículos (también llamados posts) son responsabilidad del autor del blog. Los comentarios, vertidos por los visitantes, son responsabilidad de ellos mismos y en caso alguno viole las reglas mínimas de respeto a los demás y a las buenas costumbres, éstos serían borrados por el editor del blog, sin esperar su consentimiento.
-Seguridad de su información personal:
-Este sitio web se hace responsable de velar por su seguridad, por la privacidad de su información y por el respeto a sus datos, de acuerdo con las limitaciones que la actual Internet nos provee, siendo conscientes que no estamos excluídos de sufrir algún ataque por parte de crackers o usuarios malintencionados que ejerzan la delincuencia informática.
-Obtención de su información:
-Todos sus datos personales consignados en este sitio son suministrados por usted mismo, haciendo uso entero de su libertad. La información aquí almacenada sólo comprende datos básicos ingresados mediante formularios de contacto, comentarios u otros similares.
-Uso de la información:
-Al proporcionarnos sus datos personales, estando de acuerdo con la Política de Privacidad aquí consignada, nos autoriza para el siguiente uso de su información: a) para el fin mismo por lo cual se ha suministrado; b) para considerarlo dentro de nuestras estadísticas de tráfico, incrementando así nuestra oferta publicitaria y de mercado; c) para orientar mejor los servicios aquí ofrecidos y valorarlos a su criterio, y d) para enviar e-mails con nuestros boletines, responder inquietudes o comentarios, y mantener informado a nuestros usuarios.
-Uso de los cookies:
-El uso de cookies y su dirección IP, tomados por este sitio, se realiza solo con la finalidad de mantenerles un sitio de acuerdo a sus preferencias locales (tales como navegador web usado, sistema operativo, ISP, etc.). Las “cookies” permiten entregar un contenido ajustado a los intereses y necesidades de nuestros usuarios/visitantes. También podrían usarse cookies de Terceros que estén presentes en este Weblog, como anunciantes o publicidad del mismo, con el único fin de proveer informaciones adicionales o relevantes a la Navegación del Usuario en este Sitio Web.
-Modificaciones a nuestras Políticas de Privacidad:
-El sitio web se reserva el derecho de modificar, rectificar, alterar, agregar o eliminar cualquier punto del presente escrito en cualquier momento y sin previo aviso, siendo su responsabilidad el mantenerse informado del mismo para una adecuada administración de su información.
-                </div>
-               <div style="color:black; font-size:12px; margin:10px 0;">
-                    <input type="checkbox" id="reg-politicas" style="width:auto;"> He leído y acepto las políticas.
-                </div>
-            </div>
-            
-          <button onclick="SistemaMoisesAuth.ejecutarRegistro()" class="btn-listo-azul">Listo</button>
-          <button onclick="SistemaMoisesAuth.renderLogin()" style="background:none; border:none; color:#888; font-size:12px; margin-top:10px; cursor:pointer;">Volver</button>
-        `;
-    },
-
-    ejecutarRegistro: function() {
-        const pass = document.getElementById('reg-pas').value;
-        const passConf = document.getElementById('reg-con-pas').value;
-        if(pass !== passConf) return alert("Las contraseñas no coinciden");
-        if(!document.getElementById('reg-chk').checked) return alert("Debe aceptar las políticas");
-
-        const nuevoUser = {
-            nombre: document.getElementById('reg-nom').value,
-            apellidos: document.getElementById('reg-ape').value,
-            celular: document.getElementById('reg-cel').value,
-            pais: document.getElementById('reg-pai').value,
-            ciudad: document.getElementById('reg-ciu').value,
-            muni: document.getElementById('reg-mun').value,
-            dir: document.getElementById('reg-dir').value,
-            email: document.getElementById('reg-ema').value,
-            pass: pass,
-            fechaRegistro: new Date().toLocaleString()
-        };
-        this.usuariosDB.push(nuevoUser);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        alert("¡Registro exitoso!");
-        this.renderLogin();
-    },
-
-    intentarLogin: function() {
-        const email = document.getElementById('log-email').value;
-        const pass = document.getElementById('log-pass').value;
-        const user = this.usuariosDB.find(u => u.email === email && u.pass === pass);
-        if(user) {
-            this.sesionActiva = user;
-            user.ultimoIngreso = new Date().toLocaleString();
-            localStorage.setItem('sesion_moises', JSON.stringify(user));
-            location.reload();
-        } else alert("Datos incorrectos");
-    },
-
-    // --- MODAL FLOTANTE OSCURO ---
-   renderMenuFlotante: function() {
-       const overlay = document.createElement('div');
-        overlay.id = 'overlay-moises-perfil';
-        overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; display:flex; align-items:center; justify-content:center;";
-        overlay.innerHTML = `
-            <div style="background:#111; border:1px solid #333; border-radius:15px; width:280px; padding:25px; text-align:center;">
-                <div style="background:#007bff; width:50px; height:50px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold;">${this.sesionActiva.nombre.charAt(0)}</div>
-                <p style="color:white; font-weight:bold; margin-bottom:15px;">HOLA, ${this.sesionActiva.nombre.toUpperCase()}</p>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('compras')">Mis compras</button>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('datos')">Mis datos</button>
-                <button class="opcion-perfil-spa" onclick="SistemaMoisesAuth.irA('favoritos')">Mis Favoritos</button>
-                <button class="opcion-perfil-spa" style="color:#ff4757; border-top:1px solid #222;" onclick="SistemaMoisesAuth.confirmarCerrar()">Cerrar sesión</button>
-            </div>
-        `;
-        overlay.onclick = (e) => { if(e.target.id === 'overlay-moises-perfil') overlay.remove(); };
-        document.body.appendChild(overlay);
-    },
-
-    confirmarCerrar: function() {
-        if(confirm("¿CONFIRMA CERRAR SESIÓN?")) {
-            localStorage.removeItem('sesion_moises');
-            location.reload();
-        }
-    },
-
-    // --- VISTAS SPA ---
-    irA: function(seccion) {
-        document.getElementById('overlay-moises-perfil').remove();
-        navegarSPA('perfil'); // Cambia a la vista SPA
-        const contenedor = document.getElementById('vista-spa-cliente');
-        const u = this.sesionActiva;
-
-     // 1. CERRAR TODO LO QUE ESTÉ ABIERTO (Modales y Overlays)
-    const overlayFlotante = document.getElementById('overlay-moises-perfil');
-    if(overlayFlotante) overlayFlotante.remove();
-        
-    // ESTO ES LO QUE TE ESTÁ PASANDO: El modal login se queda abierto o se activa. 
-    // Lo cerramos a la fuerza:
-    const modalLogin = document.getElementById('modal-login-contenedor');
-    if(modalLogin) modalLogin.style.display = 'none';
-        
-       // --- LÓGICA DE COMPRAS ---
-    if(seccion === 'compras') {
-        const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-        const misCompras = todasLasCompras.filter(c => c.usuarioEmail === u.email);
-
-        let contenidoCompras = `<p style="color:#888;">Aun no tiene ordenes de compra efectuadas.</p>
-                                <button onclick="location.reload()" class="btn-comprar" style="margin-top:10px;">Ir a la tienda</button>`;
-
-        if(misCompras.length > 0) {
-            contenidoCompras = misCompras.map(compra => `
-                <div class="card-historial-compra" style="background:#111; border:1px solid #222; padding:15px; border-radius:12px; margin-bottom:15px; text-align:left;">
-                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #222; padding-bottom:10px; margin-bottom:10px;">
-                        <span style="color:#007bff; font-weight:bold;">ID: ${compra.idOrden}</span>
-                        <span style="color:#555; font-size:12px;">${compra.fecha}</span>
-                    </div>
-                    <div style="color:white; font-size:13px;">
-                        ${compra.productos.map(p => `• ${p.cantidad}x ${p.nombre}`).join('<br>')}
-                    </div>
-                    <p style="color:#007bff; font-weight:bold; margin-top:10px;">Total: RD$ ${compra.total.toLocaleString()}</p>
-                    <div style="display:flex; gap:10px; margin-top:15px;">
-                        <button onclick="SistemaMoisesAuth.verFactura('${compra.idOrden}')" style="flex:1; padding:8px; background:#222; color:white; border:1px solid #444; border-radius:5px; cursor:pointer; font-size:12px;">Ver Factura</button>
-                        <button onclick="abrirProducto(${compra.productos[0].id})" style="flex:1; padding:8px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; font-size:12px;">Repetir Pedido</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:15px 0;">Mis Compras</h2>
-                ${contenidoCompras}
-                ${this.renderVistasRecientes()}
-            </div>`;
-        
-        } else if(seccion === 'datos') {
-            contenedor.innerHTML = `
-                <div class="auth-spa-seccion">
-                    <button class="btn-volver-atras" onclick="regresarALaTienda()">← VOLVER ATRAS</button>
-                    <h2 style="color:#007bff; margin:15px 0;">Mis Datos</h2>
-                    <div style="background:#007bff; width:80px; height:80px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; color:white; font-size:30px;">${u.nombre.charAt(0)}</div>
-                    <h3 style="color:white;">HOLA, ${u.nombre}</h3>
-                    <p style="color:#007bff; font-weight:bold;">¡¡Gracias por preferirnos!!</p>
-                    <p style="font-size:11px; color:#555;">Ultimo ingreso: ${u.ultimoIngreso}</p>
-                   <div style="max-width:500px; margin:0 auto; text-align:left; background:#111; padding:20px; border-radius:15px; border:1px solid #222;">
-                <p style="color:#007bff; font-weight:bold; margin-bottom:15px; border-bottom:1px solid #222;">Información Personal</p>
-                
-                <label class="label-auth">Nombre</label>
-                <input type="text" id="edit-nom" value="${u.nombre}" class="auth-input-edit">
-                
-                <label class="label-auth">Apellidos</label>
-                <input type="text" id="edit-ape" value="${u.apellidos}" class="auth-input-edit">
-                
-                <label class="label-auth">Celular</label>
-                <input type="text" id="edit-cel" value="${u.celular}" class="auth-input-edit">
-
-               <label class="label-auth">País</label>
-<div style="position:relative;">
-    <div id="pais-actual-display" onclick="document.getElementById('dropdown-paises').style.display='block'" 
-         style="background:#1a1a1a; padding:12px; border:1px solid #333; border-radius:8px; color:white; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-        <span>${u.pais || 'Seleccionar país'}</span>
-        <i class="fas fa-chevron-down"></i>
-    </div>
     
-    <div id="dropdown-paises" style="display:none; position:absolute; top:100%; left:0; width:100%; background:#111; border:1px solid #333; z-index:1000; border-radius:8px; margin-top:5px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-        <input type="text" id="search-pais" placeholder="Buscar país..." onkeyup="SistemaMoisesAuth.filtrarPaises()" 
-               style="width:100%; padding:10px; background:#222; border:none; border-bottom:1px solid #333; color:white; outline:none;">
-        <div id="lista-paises-scroll" style="max-height:150px; overflow-y:auto;">
-            ${['República Dominicana', 'Estados Unidos', 'España', 'México', 'Colombia', 'Venezuela', 'Argentina', 'Chile', 'Ecuador', 'Perú'].map(p => `
-                <div class="opcion-pais" onclick="SistemaMoisesAuth.seleccionarPais('${p}')" 
-                     style="padding:10px; color:white; cursor:pointer; border-bottom:1px solid #222;">${p}</div>
-            `).join('')}
-        </div>
-    </div>
-</div>
-<input type="hidden" id="edit-pai" value="${u.pais || ''}">
-                </div>
-
-                 <label class="label-auth">Ciudad</label>
-                <input type="text" id="edit-ciu" value="${u.ciudad}" class="auth-input-edit">
-                
-                <label class="label-auth">Direccion</label>
-                <input type="text" id="edit-dir" value="${u.direccion}" class="auth-input-edit">
-                
-                <label class="label-auth">Correo</label>
-                <input type="text" id="edit-cor" value="${u.correo}" class="auth-input-edit">
-
-                 <label class="label-auth">Documento</label>
-                <input type="text" id="edit-doc" value="${u.documento}" class="auth-input-edit">
-
-                 <button onclick="SistemaMoisesAuth.guardarCambiosDatos()" class="btn-auth-listo" style="margin-top:10px; background:#28a745;">Guardar Cambios</button>
-
-                  <p style="color:#007bff; font-weight:bold; margin-top:30px; margin-bottom:15px; border-bottom:1px solid #222;">Seguridad</p>
-                
-                <label class="label-auth">Nueva Contraseña</label>
-                <input type="password" id="pass-nueva" placeholder="Escribir nueva contraseña" class="auth-input-edit">
-                
-                <label class="label-auth">Confirmar Contraseña</label>
-                <input type="password" id="pass-confirm" placeholder="Repetir nueva contraseña" class="auth-input-edit">
-                
-                <button onclick="SistemaMoisesAuth.cambiarPassword()" class="btn-auth-listo" style="margin-top:10px; background:#dc3545;">Modificar Contraseña</button>
-                 </div>
-                    ${this.renderVistasRecientes()}
-                </div>`;
-        
-      // --- LÓGICA DE FAVORITOS ---
-    } else if(seccion === 'favoritos') {
-        const misFavoritos = JSON.parse(localStorage.getItem('favoritos_moises')) || [];
-        
-        let contenidoFavs = `<p style="color:#888;">0 agregados</p>`;
-
-        if(misFavoritos.length > 0) {
-            contenidoFavs = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                ${misFavoritos.map(p => `
-                    <div style="background:#111; border:1px solid #222; padding:10px; border-radius:10px; text-align:center;">
-                        <img src="${p.imagen}" style="width:100%; height:100px; object-fit:contain;">
-                        <p style="color:white; font-size:12px; height:30px; overflow:hidden; margin-top:5px;">${p.nombre}</p>
-                        <p style="color:#007bff; font-weight:bold;">RD$ ${p.precio.toLocaleString()}</p>
-                        <button onclick="agregarAlCarritoDesdeFav(${p.id})" style="background:#007bff; color:white; border:none; width:100%; padding:5px; border-radius:5px; margin-top:5px; font-size:11px; cursor:pointer;">Comprar</button>
-                    </div>
-                `).join('')}
-            </div>`;
-        }
-
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion">
-                <button class="btn-volver-atras" onclick="location.reload()">← VOLVER A LA TIENDA</button>
-                <h2 style="color:#007bff; margin:15px 0;">Mis Favoritos</h2>
-                ${contenidoFavs}
-                ${this.renderVistasRecientes()}
-            </div>`;
-    }
-},
-    
-    seleccionarPais: function(pais) {
-    document.getElementById('edit-pai').value = pais;
-    document.getElementById('pais-actual-display').querySelector('span').innerText = pais;
-    document.getElementById('dropdown-paises').style.display = 'none';
-},
-    
-    // --- FUNCIONES INTERNAS DEL OBJETO ---
-  filtrarPaises: function() {
-    let input = document.getElementById('search-pais').value.toLowerCase();
-    let opciones = document.querySelectorAll('.opcion-pais');
-    opciones.forEach(opc => {
-        opc.style.display = opc.innerText.toLowerCase().includes(input) ? "block" : "none";
-    });
-},
-
-   guardarCambiosDatos: function() {
-    // 1. Obtener la sesión actual desde el objeto para editarla
-    let u = this.sesionActiva;
-
-    // 2. Capturar los nuevos valores de los inputs
-    u.nombre = document.getElementById('edit-nom').value;
-    u.apellidos = document.getElementById('edit-ape').value;
-    u.celular = document.getElementById('edit-cel').value;
-    u.pais = document.getElementById('edit-pai').value;
-    u.ciudad = document.getElementById('edit-ciu').value;
-    u.direccion = document.getElementById('edit-dir').value; // Asegúrate de que el ID coincida con tu HTML
-    u.correo = document.getElementById('edit-cor').value;
-    u.documento = document.getElementById('edit-doc').value;
-
-    // 3. ACTUALIZAR LA BASE DE DATOS GLOBAL (Lo más importante)
-    let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios_registrados')) || [];
-    
-    // Reemplazamos el usuario viejo por el nuevo en la lista completa
-    this.usuariosDB = usuariosGuardados.map(user => {
-        if (user.email === u.email) {
-            return u; // Este es el usuario con datos nuevos
-        }
-        return user;
-    });
-
-    // 4. GUARDAR TODO DE VUELTA AL LOCALSTORAGE
-    localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-    localStorage.setItem('sesion_moises', JSON.stringify(u));
-    
-    // 5. Actualizar la sesión en tiempo real sin recargar si es posible
-    this.sesionActiva = u;
-
-    alert("¡Datos guardados permanentemente!");
-    location.reload(); // Ahora sí, al recargar, leerá los datos nuevos
-},
-
-    cambiarPassword: function() {
-        const p1 = document.getElementById('pass-nueva').value;
-        if(p1.length < 4) return alert("Contraseña muy corta");
-        const u = this.sesionActiva;
-        u.pass = p1;
-        this.usuariosDB = this.usuariosDB.map(user => user.email === u.email ? u : user);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(this.usuariosDB));
-        localStorage.setItem('sesion_moises', JSON.stringify(u));
-        alert("Contraseña actualizada.");
-    },
-
-verFactura: function(idOrden) {
-        const todasLasCompras = JSON.parse(localStorage.getItem('db_compras_moises')) || [];
-        const compra = todasLasCompras.find(c => c.idOrden === idOrden);
-
-        if (!compra) {
-            alert("Factura no encontrada");
-            return;
-        }
-
-        const contenedor = document.getElementById('vista-spa-cliente');
-        
-        // --- Lógica de limpieza para evitar NaN ---
-       let filasHtml = "";
-    compra.productos.forEach(p => {
-        let pPrecio = typeof p.precio === 'string' ? parseFloat(p.precio.replace(/[^0-9.]/g, '')) : p.precio;
-        filasHtml += `
-            <tr>
-                <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px;">1x ${p.nombre}</td>
-                <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">RD$ ${pPrecio.toLocaleString()}</td>
-            </tr>`;
-    });
-
-     // --- DENTRO DE verFactura ---
-const montoEnvio = compra.envio || 0; // Lee el valor que guardamos
-const textoEnvio = montoEnvio > 0 ? `RD$ ${montoEnvio.toLocaleString()}` : "Gratis";
-
-filasHtml += `
-    <tr>
-        <td style="padding:10px 0; border-bottom:1px solid #eee; font-size:12px; color: #666;">
-            <i class="fas fa-truck" style="margin-right:5px;"></i> Envio / Entrega
-        </td>
-        <td style="padding:10px 0; border-bottom:1px solid #eee; text-align:right; font-size:12px;">
-            ${textoEnvio}
-        </td>
-    </tr>`;
-    
-        contenedor.innerHTML = `
-            <div class="auth-spa-seccion" style="background:#f0f0f0; padding: 20px 10px; min-height:100vh;">
-                <div style="max-width: 500px; margin: 0 auto;">
-                    
-                   <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <button onclick="SistemaMoisesAuth.renderMenuFlotante()" 
-                      style="flex: 1; background:#333; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:5px;">
-                      <i class="fas fa-bars"></i> VOLVER AL MENÚ
-                    </button>
-    
-                    <button onclick="regresarALaTienda()" 
-                     style="flex: 1; background:#ff4757; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; display:flex; align-items:center; justify-content:center; gap:5px;">
-                     <i class="fas fa-times"></i> CERRAR FACTURA
-                    </button>
-                   </div>
-
-                    <div id="ticket-factura" style="background:white; padding:30px; border-radius:2px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color:#333; font-family: 'Courier New', Courier, monospace;">
-                        <div style="text-align:center; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-bottom: 20px;">
-                            <h2 style="margin:0; color:#000;">MOISÉS CELULARES</h2>
-                            <p style="font-size:10px; margin:5px 0;">Tienda Online y Física de Celulares y Accesorios</p>
-                        </div>
-
-                        <div style="font-size:12px; margin-bottom: 20px;">
-                            <p><b>No. Factura:</b> ${compra.idOrden}</p>
-                            <p><b>Fecha:</b> ${compra.fecha}</p>
-                            <p><b>Cliente:</b> ${this.sesionActiva ? this.sesionActiva.nombre : 'Cliente'} ${this.sesionActiva ? (this.sesionActiva.apellidos || '') : ''}</p>
-                        </div>
-
-                        <table style="width:100%; border-collapse: collapse; font-size:12px;">
-                            <thead>
-                                <tr style="border-bottom: 1px solid #000;">
-                                    <th style="text-align:left; padding-bottom:5px;">DESCRIPCIÓN</th>
-                                    <th style="text-align:right; padding-bottom:5px;">SUBTOTAL</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${filasHtml}
-                            </tbody>
-                        </table>
-
-                        <div style="margin-top: 20px; text-align: right;">
-                            <h3 style="font-size:18px; margin-top:10px; color:#000;">TOTAL: RD$ ${Number(String(compra.total).replace(/[^0-9.]/g, '')).toLocaleString()}</h3>
-                        </div>
-
-                        <div style="margin-top: 30px; text-align: center; border-top: 2px dashed #ccc; padding-top: 20px;">
-                            <p style="font-size:11px;">¡Gracias por tu compra!</p>
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${compra.idOrden}" 
-                                 style="width:70px; margin-top:10px; opacity:0.7;">
-                        </div>
-                    </div>
-
-                    <button onclick="window.print()" 
-                            style="width:100%; margin-top:20px; padding:15px; background:#007bff; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
-                        <i class="fas fa-print"></i> IMPRIMIR FACTURA
-                    </button>
-                </div>
-            </div>
-        `;
-        window.scrollTo(0,0)
-            ;
-    }, // <-- ESTA COMA ES VITAL PARA QUE NO SE ROMPA EL OBJETO
-    
-    renderVistasRecientes: function() {
-        const vistos = JSON.parse(localStorage.getItem('vistos_recientes_moises')) || [];
-        let htmlVistos = vistos.map(p => `
-            <div style="background:#111; border:1px solid #222; padding:10px; border-radius:8px; width:120px; flex-shrink:0;">
-                <img src="${p.imagen}" style="width:100%; height:60px; object-fit:contain;">
-                <p style="color:white; font-size:10px;">${p.nombre}</p>
-            </div>`).join('');
-        
-        return `<div style="margin-top:40px; border-top:1px solid #333; padding-top:20px;">
-                    <p style="color:#666; font-size:12px; margin-bottom:10px;">VISTO RECIENTEMENTE</p>
-                    <div style="display:flex; gap:10px; overflow-x:auto;">${htmlVistos}</div>
-                </div>`;
-    }
-}; // AQUÍ CIERRA EL OBJETO
-
-document.addEventListener('DOMContentLoaded', () => SistemaMoisesAuth.init());
-</script>
-
-<script>
-function actualizarResumenFactura() {
-    // 1. Verificamos cuál radio está seleccionado
-    const radioSeleccionado = document.querySelector('input[name="envio"]:checked');
-    if (!radioSeleccionado) return;
-
-    const costoEnvio = parseInt(radioSeleccionado.value);
-    const subtotal = calcularSubtotal();
-    const totalFinal = subtotal + costoEnvio;
-
-    // 2. Buscamos los elementos por su ID para cambiar el texto
-    const txtEnvio = document.getElementById("resumen-envio-texto");
-    const txtTotal = document.getElementById("resumen-total-texto");
-
-    if (txtEnvio) {
-        txtEnvio.innerText = costoEnvio > 0 ? `RD$ ${costoEnvio}` : "Gratis";
-    }
-    
-    if (txtTotal) {
-        txtTotal.innerText = `RD$ ${totalFinal.toLocaleString()}`;
-    }
-}
-    
-</script>
-
-<script>
-function toggleInfoBancaria(mostrar) {
-    const cuadroInfo = document.getElementById('info-bancaria');
-    if (cuadroInfo) {
-        cuadroInfo.style.display = mostrar ? 'block' : 'none';
-    }
-    
-    // Forzamos a que el radio button se seleccione al tocar el cuadro
-    const valor = mostrar ? "transferencia" : "efectivo";
-    const radio = document.querySelector(`input[name="pago"][value="${valor}"]`);
-    if (radio) radio.checked = true;
-}
-    
-</script>
-      
 <!-- MODAL PRODUCTO -->
 <div id="modalProducto" class="modal-producto">
   <div class="modal-contenido" id="modalContenido"></div>
 </div>
 
-<div id="carrito-izquierdo" class="carrito-lateral">
-    <button class="cerrar-carrito-x" onclick="toggleCarritoIzquierdo()">✕</button>
-    <h2 class="carrito-titulo">🛒 Tu Carrito</h2>
-    <div id="carrito-contenido-izq"></div>
-</div>
-
-<div id="modal-login-contenedor" class="modal-login">
-    <div class="login-card" id="auth-card-container">
-        <button onclick="cerrarLogin()" style="position:absolute; right:15px; top:10px; border:none; background:none; cursor:pointer; font-size:20px;">✕</button>
-         <img src="./images/Logo3Expand.png" class="login-logo"alt="Logo">
-        <p><b>MI CUENTA</b></p>
-        <input type="text" placeholder="Correo electrónico">
-        <input type="password" placeholder="Contraseña">
-        <div style="text-align:left; font-size:12px;">
-            <input type="checkbox" id="recuerdame" style="width:auto;"> Recordarme en este equipo
-        </div>
-        <button class="btn-ingresar">INGRESAR</button>
-        <p style="font-size:12px; margin-top:15px;">
-            <a href="#">Olvidé mi contraseña</a><br>
-            No soy usuario registrado y quiero <a href="#">crear una cuenta</a>
-        </p>
-    </div>
-</div>
-      
   </body>
 </html>
