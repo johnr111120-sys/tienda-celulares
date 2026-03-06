@@ -1,3 +1,4 @@
+
 /* =========================
    RESET + BASE
 ========================= */
@@ -63,7 +64,7 @@ html, body {
 .nav-right {
     display: flex !important;
     /* Aumentamos la separación a 25px para que no estén pegados */
-    gap: 40px !important; 
+    gap: 25px !important; 
     padding-right: 5px;
 }
 
@@ -99,7 +100,7 @@ html, body {
 /* --- AJUSTE DE REDES SOCIALES (Instagram y Facebook) --- */
 .nav-socials {
     display: flex;
-    gap: -10px;
+    gap: 20px;
     justify-content: center;
     flex-grow: 1; /* Ocupa el espacio central */
 }
@@ -221,8 +222,7 @@ button {
 }
 
 .header-logo{
-   top: 2px !important;
-   right: -10% !important;
+   right: -35px !important;
    position: relative !important;
    padding: 62px
    width: 100% !important; /* Obliga al logo a ocupar todo el ancho del header */
@@ -677,12 +677,13 @@ font-size: 28px !important;
 }
 
 .reseña{
+  display: none;
   max-width: 1000px;
   margin: 20px auto;
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.85);
 }
 
 .reseña p{
@@ -694,22 +695,11 @@ font-size: 28px !important;
   color: #f5b301;
   font-weight: bold;
 }
-.carrusel{
-  position: relative;
-  max-width: 1000px;
-  margin: auto;
-}
 
-.reseña{
-  display: none;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.reseña.activa{
-  display: block;
+.reseñas,
+.reviews,
+.testimonios{
+  padding-bottom: 90px;
 }
 
 .btn-google{
@@ -867,6 +857,37 @@ body.modal-abierto .whatsapp{
   transform: translateX(-100%);
   opacity: 0;
 }
+
+/* =========================
+   MODALES
+========================= */
+.modal-carrito {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 2000;
+}
+
+.modal-carrito.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carrito-contenido {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  width: min(90%, 420px);
+}
+
 /* =========================
    UTILIDADES
 ========================= */
@@ -988,7 +1009,7 @@ iframe {
   position: fixed;
   top: 108px;
   left: 0;
-  width: 250px;
+  width: 280px;
   height: 100vh;
   background: #000;
   color: #fff;
@@ -1154,7 +1175,7 @@ body.menu-abierto {
   margin-top: 8px;
   padding: 8px;
   border: none;
-  background: #007BFF;
+  background: #4A4A4A;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
@@ -1642,538 +1663,6 @@ body.menu-abierto {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Contenedor del acordeón dentro del menú negro */
-.acordeon-contenido {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background: rgba(255, 255, 255, 0.05); /* Fondo muy sutil */
-    display: flex;
-    flex-direction: column;
-}
-
-/* Cuando el item está activo, mostramos el contenido */
-.acordeon-item.activo .acordeon-contenido {
-    max-height: 500px; /* Altura suficiente para los links */
-}
-
-/* Estilo de los encabezados (Celulares, Accesorios...) */
-.acordeon-header {
-    padding: 15px;
-    cursor: pointer;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Rotación del icono al abrir */
-.acordeon-item.activo .acordeon-header i {
-    transform: rotate(180deg);
-    transition: 0.3s;
-}
-
-/* Estilo de los links de subcategoría */
-.acordeon-contenido a {
-    padding: 12px 25px;
-    color: #ccc;
-    text-decoration: none;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.acordeon-contenido a:active {
-    background: #007bff;
-    color: white;
-}
-
-#btn-menu-trigger {
-    display: inline-block;
-    width: 25px; /* Ancho fijo para que no se mueva el texto al lado */
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    transition: transform 0.2s ease;
-}
-
-.parte-azul {
-    cursor: pointer; /* Indica que solo esta parte es clickeable */
-    user-select: none;
-}
-
-.parte-negra {
-    cursor: default; /* El buscador no debe tener cursor de puntero */
-}
-
-/* Modal de Login (Estilo imagen adjunta) */
-.modal-login {
-    display: none;
-    position: fixed;
-    z-index: 3000;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    align-items: center;
-    justify-content: center;
-}
-
-.login-card {
-    background: white;
-    width: 90%;
-    max-width: 400px;
-    padding: 30px;
-    border-radius: 8px;
-    position: relative;
-    text-align: center;
-}
-
-.login-logo { width: 100%; margin-bottom: 20px; }
-
-.login-card input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.btn-ingresar {
-    background: #2c3e50;
-    color: white;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Estilo para el contenedor SPA */
-#vista-spa-cliente {
-    min-height: 60vh;
-    background-color: #111; /* Color de fondo oscuro para que resalte el texto blanco */
-    margin-top: 10px;
-}
-
-.perfil-container h3 {
-    color: #3498db;
-    margin-bottom: 15px;
-}
-
-/* Animación para que el modal aparezca suave */
-.modal-login {
-    backdrop-filter: blur(5px);
-    transition: all 0.3s;
-}
-
-.card-container { position: relative; }
-
-.btn-favorito-corazon {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 22px;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    z-index: 5;
-    transition: 0.3s;
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
-
-.btn-favorito-corazon.activo, .btn-favorito-corazon:hover {
-    color: #ff4757;
-    transform: scale(1.2);
-}
-
-.btn-eliminar-fav {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    color: blue;
-    background: rgba(255, 0, 0, 0.7);
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-/* Animación cuando cambia el número */
-.badge-animacion {
-    transform: scale(1.4);
-}
-
-/* Badge del Carrito */
-.badge-carrito {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: #3498db; /* Azul para diferenciar de favoritos */
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #000;
-}
-
-/* Panel Lateral del Carrito */
-.carrito-lateral {
-    background-color: #111; /* Negro muy oscuro pero no total */
-    color: white;
-    padding-top: 60px; /* Espacio para que la X no tape el título */
-}
-
-.carrito-titulo {
-    color: white;
-    text-align: center;
-    border-bottom: 1px solid #333;
-    padding-bottom: 15px;
-}
-
-.cerrar-carrito-x:hover {
-    background: white; /* Resalta al pasar el mouse */
-}
-
-/* Carrito lateral desde la DERECHA */
-.carrito-lateral {
-    position: fixed;
-    top: 15px;
-    right: -100%; /* Escondido a la derecha */
-    width: 250px;
-    height: 100%;
-    background-color: #111; /* Fondo oscuro */
-    z-index: 3000;
-    transition: 0.4s ease-in-out;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    color: white; /* Fuerza el texto a blanco */
-}
-
-/* Cuando se activa */
-.carrito-lateral.activo {
-    right: 0;
-}
-
-/* La X Roja Circular con sombra (Esquina superior IZQUIERDA del panel) */
-.cerrar-carrito-x {
-    position: absolute;
-    top: 95px;
-    left: -1px; /* Sobresale un poco hacia afuera del panel */
-    background: white; 
-    color: #ff4757; /* Rojo */
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra gris */
-    z-index: 3100;
-}
-
-/* Estilo para el texto dentro del carrito */
-.carrito-titulo {
-    padding: 20px;
-    font-size: 20px;
-    text-align: center;
-    border-bottom: 1px solid #333;
-    margin-top: 20px;
-}
-
-.carrito-vacio {
-    color: #aaaaaa; /* Gris claro para que se vea */
-    text-align: center;
-    margin-top: 50px;
-    font-size: 16px;
-}
-
-.item-carrito {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    border-bottom: 1px solid #222;
-}
-
-/* Footer fijo en el panel lateral */
-.carrito-footer-fijo {
-    padding: 20px;
-    background: #111;
-    border-top: 1px solid #333;
-}
-
-.subtotal-box {
-    background: #000; /* Rectángulo gris */
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-radius: 2px;
-    border: 1px solid white;
-    font-weight: bold;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-/* Botones con estilo Surfing Clouds (Borde blanco) */
-.btn-carrito-estilo {
-    width: 100%;
-    padding: 15px;
-    background: transparent;
-    border: 1px solid white;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 13px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-
-.btn-carrito-estilo:hover {
-    background: white;
-    color: black; /* Invierte colores al pasar el mouse */
-}
-/* Ajuste para que los items no choquen con los botones */
-.carrito-items-scroll {
-    max-height: 60vh;
-    overflow-y: auto;
-}
-
-.btn-ver-carrito {
-    width: 100%;
-    padding: 12px;
-    background: transparent;
-    border: 1px solid white;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* Estilo para la Tabla SPA (Inspirado en Surfing Clouds) */
-.carrito-tabla-detallada {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-}
-
-.carrito-tabla-detallada th {
-    border-bottom: 2px solid #eee;
-    padding: 10px;
-    text-align: left;
-    color: #666;
-}
-
-.carrito-tabla-detallada td {
-    padding: 15px 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.totales-tabla-box {
-    max-width: 400px;
-    margin-left: auto;
-    border: 1px solid #eee;
-    padding: 20px;
-}
-
-.fila-total {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.total-final {
-    font-size: 1.2rem;
-    color: #007bff; /* Color naranja como el checkout */
-}
-
-.btn-checkout {
-    width: 100%;
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 0px;
-    margin-top: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transform: scale(0.96); /* Efecto de pulsación al tocar */
-    background-color: #ED2100;
-}
-
-.checkout-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 auto !important;
-        padding-left: 5px !important;
-        padding-right: 5px !important;
-        box-sizing: border-box !important; /* ¡Fundamental! */
-    }
-
-.checkout-titulo {
-    font-size: 32px;
-    margin-bottom: 30px;
-    font-weight: bold;
-}
-
-.checkout-grid {
-        display: flex !important;
-        flex-direction: column !important; /* Apila las columnas una debajo de otra */
-        align-items: center !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-/* En móviles, que ocupe todo el ancho */
-@media (max-width: 768px) {
-    .checkout-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.checkout-col {
-        width: 100% !important;
-        padding: 0 !important;
-        margin-bottom: 20px;
-    }
-
-.checkout-col input {
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important; /* Evita que el padding los ensanche */
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-/* Esto asegura que en pantallas pequeñas todo se centre */
-@media (max-width: 768px) {
-    #vista-spa-cliente {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        margin-left: 0 !important; /* Elimina el espacio del menú lateral si existía */
-    }
-   
-.checkout-card {
-    background: white;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.checkout-card h3 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    font-size: 16px;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-}
-
-.form-grid input, .form-grid textarea {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important; /* Evita que el padding los ensanche */
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    grid-column: span 1;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.form-grid textarea, #ch-cedula, #ch-email, #ch-ciudad {
-    grid-column: span 2;
-}
-
-/* Tracking Box */
-.tracking-box {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    border-left: 4px solid #007bff;
-}
-
-.resumen-fila {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.resumen-fila.total {
-    font-weight: bold;
-    font-size: 18px;
-    border-bottom: none;
-    color: #000;
-}
-
-.btn-realizar-compra {
-    width: 100%;
-    background: #007bff; /* El color naranja de tu marca */
-    color: white;
-    border: none;
-    padding: 18px;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-.btn-realizar-compra:hover {
-    background: #ED2100;
-}
-
-@media (max-width: 768px) {
-    .checkout-grid { grid-template-columns: 1fr; }
-    .form-grid { grid-template-columns: 1fr; }
-    .form-grid input, .form-grid textarea { grid-column: span 1; }
-}
-
-/* CSS de la notificación */
-.notificacion-carrito {
-    position: fixed;
-    top: 100px; /* Ajustado para que no tape el Nav */
-    width: 100%;
-    background: #27ae60;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    animation: fadeInOut 3s forwards;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translateY(-20px); }
-    10% { opacity: 1; transform: translateY(0); }
-    90% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-20px); }
-}
-
 /* Contenedor fijo en la parte inferior del modal */
 .contenedor-accion-fija {
     position: sticky;
@@ -2186,24 +1675,48 @@ body.menu-abierto {
     z-index: 100;
 }
 
-.btn-comprar-ahora {
-    background-color: #007bff; /* Tu azul original */
+/* El Botón de WhatsApp estilo SPA */
+.btn-comprar-spa {
+    position: relative; /* Necesario para el brillo */
+    overflow: hidden;   /* Para que el brillo no se salga del botón */
+    background-color: #1591EA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%; /* Ancho completo en móvil */
+    background-color: #007bff; /* Verde WhatsApp */
     color: white;
     border: none;
-    padding: 15px 30px;
-    font-size: 16px;
+    padding: 18px; /* Más alto para que sea fácil de tocar */
+    border-radius: 12px;
+    font-size: 18px;
     font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 5px;
     cursor: pointer;
-    width: 100%; /* Para que ocupe todo el ancho en móviles */
-    transition: background 0.3s ease;
-    margin-top: 15px;
+    transition: transform 0.4s, background-color 0.2s;
+    text-decoration: none;
 }
 
-.btn-comprar-ahora:hover {
-    background-color: #ED2100; /* Un rojo un poco más oscuro al pasar el mouse */
-    transform: scale(1.02);
+.btn-comprar-spa:active {
+    transform: scale(0.96); /* Efecto de pulsación al tocar */
+    background-color: #ED2100;
+}
+
+.btn-comprar-spa i {
+    font-size: 22px; /* Icono un poco más grande */
+    margin-right: 10px;
+}
+/* El elemento que hace el brillo */
+.btn-comprar-spa::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 45px;
+    background: rgba(255, 255, 255, 0.4);
+    transform: skewX(-45deg); /* Inclinación del brillo */
+    left: -150%;
+    animation: brilloEfecto 2s infinite; /* Se repite cada 3 segundos */
 }
 /* Ajuste para pantallas grandes (PC) */
 @media (min-width: 768px) {
@@ -2221,393 +1734,7 @@ body.menu-abierto {
 
 /* Definición de la animación de brillo */
 @keyframes brilloEfecto {
- .contenedor-accion-fija {
     0% { left: -150%; }
     50% { left: 150%; }
     100% { left: 150%; }
-}
-}
-
-/* Espaciado para que el contenido no se pegue al Nav */
-#vista-spa-cliente {
-    padding-top: 80px; /* Ajusta este valor según el alto de tu Nav */
-    min-height: 100vh;
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.checkout-container, .carrito-container {
-    margin-top: 20px;
-}
-
-/* Cuando el carrito tiene la clase 'activo', escondemos el botón de WhatsApp */
-#carrito-izquierdo.activo ~ .btn-whatsapp, 
-#carrito-izquierdo.activo + .btn-whatsapp,
-body:has(#carrito-izquierdo.activo) .btn-whatsapp {
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    transform: scale(0); /* Opcional: para que se vea un efecto de encogimiento */
-    transition: 0.3s all ease;
-}
-
-/* Estilo base del botón para que la transición sea suave */
-.btn-whatsapp {
-    transition: 0.3s all ease;
-}
-
-/* Oculta el total y el botón rojo antiguos dentro de la tabla del SPA */
-#espacio-tabla-carrito .total, 
-#espacio-tabla-carrito .btn-checkout,
-#espacio-tabla-carrito button[style*="background-color: red"] {
-    display: none !important;
-}
-
-@media (max-width: 768px) {
-    /* Convertimos la tabla en bloques individuales */
-    .carrito-tabla-detallada, 
-    .carrito-tabla-detallada thead, 
-    .carrito-tabla-detallada tbody, 
-    .carrito-tabla-detallada tr, 
-    .carrito-tabla-detallada td {
-        display: block;
-        width: 100%;
-    }
-
-    /* Escondemos el encabezado de la tabla en móvil */
-    .carrito-tabla-detallada thead {
-        display: none;
-    }
-
-    .carrito-tabla-detallada tr {
-        margin-bottom: 20px;
-        border: 1px solid #eee;
-        padding: 15px;
-        border-radius: 8px;
-        background: #fff;
-    }
-
-    .carrito-tabla-detallada td {
-        text-align: right;
-        padding: 8px 0;
-        position: relative;
-        border: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 14px;
-    }
-
-    /* El nombre del producto lo dejamos a la izquierda y con espacio */
-    .carrito-tabla-detallada td:first-child {
-        justify-content: flex-start;
-        border-bottom: 1px solid #f9f9f9;
-        padding-bottom: 12px;
-        margin-bottom: 10px;
-    }
-
-    /* Añadimos etiquetas para saber qué es cada número */
-    .carrito-tabla-detallada td:nth-child(2):before { content: "Precio:"; font-weight: bold; color: #888; }
-    .carrito-tabla-detallada td:nth-child(3):before { content: "Cantidad:"; font-weight: bold; color: #888; }
-    .carrito-tabla-detallada td:nth-child(4):before { content: "Subtotal:"; font-weight: bold; color: #888; }
-}
-
-.carrito-tabla-detallada span {
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Máximo 2 líneas de texto */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.footer-negro-final{
-    background: #ffffff;
-    color: #222;
-    text-align: center;
-    padding: 10px 8px;
-    font-size: 11px;
-    border-top: 1px solid #e5e5e5;
-    letter-spacing: 0.5px;
-    box-shadow: 0 -1px 4px rgba(0,0,0,0.04);
-}
-
-.footer-negro-final p{
-    margin: 0;
-    white-space: nowrap;
-    opacity: 0.85;
-}
-
-body{
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-negro-final{
-    margin-top: auto;
-    font-family: system-ui, -apple-system, Arial, sans-serif;
-}
-
-/* Escudo de Estilos Auth */
-.auth-scroll-box {
-    height: 150px;
-    overflow-y: scroll;
-    background: #f9f9f9;
-    padding: 10px;
-    font-size: 11px;
-    color: #333;
-    border: 1px solid #ddd;
-    text-align: center;
-    margin: 10px 0;
-}
-.auth-input-group { margin-bottom: 10px; text-align: left; }
-.auth-input-group label { display: block; font-size: 12px; font-weight: bold; color: white; }
-.auth-required { color: #ff4757; }
-.btn-auth-listo {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
-.auth-spa-seccion { color: white; padding: 20px; }
-.auth-avatar { width: 80px; height: 80px; border-radius: 50%; background: #007bff; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
-
-.btn-menu-perfil {
-    background: none;
-    border: none;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    width: 100%;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: 500;
-}
-
-.btn-menu-perfil:hover {
-    background: #222;
-    color: #007bff;
-}
-
-/* EL ESCUDO DE INTERFAZ - MODAL FLOTANTE */
-.perfil-overlay-oscuro {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.85); /* Oscurece el fondo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999999; /* Por encima de todo */
-}
-
-.modal-flotante-perfil {
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 15px;
-    width: 280px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    text-align: center;
-    position: relative;
-}
-
-.opcion-perfil-spa {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    background: none;
-    border: none;
-    border-bottom: 1px solid #222;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.3s;
-}
-
-.opcion-perfil-spa:hover { color: #1a1a1a; background: #007bff; }
-
-/* Estilos para el Formulario SPA de Registro */
-.auth-input {
-    top: 30px;
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    background: white;
-    border: 1px solid #444;
-    color: #222;
-    border-radius: 5px;
-}
-
-.politicas-box {
-    background: #fff;
-    color: #333;
-    padding: 10px;
-    height: 120px;
-    overflow-y: scroll;
-    font-size: 11px;
-    margin-top: 10px;
-    border-radius: 5px;
-    line-height: 1.4;
-}
-
-.btn-listo-azul {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 50px;
-    width: 100%;
-    margin-top: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* Modal Perfil Flotante */
-.perfil-overlay {
-    position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.8);
-    z-index: 100000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.perfil-modal-card {
-    background: #111;
-    border: 1px solid #333;
-    padding: 20px;
-    border-radius: 15px;
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.perfil-modal-card a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    border-bottom: 1px solid #222;
-}
-
-.perfil-modal-card a:hover {
-    color: #007bff;
-}
-
-.auth-spa-seccion {
-    padding: 40px 20px;
-    background: #000;
-    min-height: 80vh;
-    color: white;
-    animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.btn-volver-atras {
-    background: #222;
-    color: #007bff;
-    border: 1px solid #007bff;
-    padding: 10px 20px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.btn-volver-atras:hover {
-    background: #007bff;
-    color: white;
-}
-
-.card-visto-reciente:hover {
-    border-color: #007bff !important;
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
-}
-
-.auth-spa-seccion {
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.label-auth {
-    display: block;
-    color: #888;
-    font-size: 11px;
-    margin-top: 10px;
-    margin-bottom: 3px;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.auth-input-edit {
-    width: 100%;
-    padding: 12px;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    color: white;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-}
-
-.auth-input-edit:focus {
-    border-color: #007bff;
-    background: #222;
-}
-
-.pais-selector-container {
-    background: #1a1a1a;
-    padding: 5px;
-    border-radius: 8px;
-    border: 1px solid #333;
-}
-
-.opcion-pais:hover {
-    background: #007bff !important;
-    color: white !important;
-}
-
-/* Scrollbar personalizada para el selector */
-#lista-paises-scroll::-webkit-scrollbar {
-    width: 5px;
-}
-#lista-paises-scroll::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 10px;
-}
-
-@media print {
-    .btn-volver-atras, button, .header-principal, .nav-principal {
-        display: none !important;
-    }
-    body {
-        background: white !important;
-    }
-    #ticket-factura {
-        box-shadow: none !important;
-        margin: 0 !important;
-        width: 100% !important;
-    }
 }
